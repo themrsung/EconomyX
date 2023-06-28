@@ -88,6 +88,32 @@ public final class CashStack implements AssetStack {
         return result;
     }
 
+    /**
+     * Whether this stack is bigger than the other
+     * @param other Stack to compare against
+     * @return Whether this is bigger
+     * @throws IllegalArgumentException When a different denotation is given
+     */
+    @JsonIgnore
+    public boolean isSmallerThan(CashStack other) throws IllegalArgumentException {
+        if (!getAsset().equals(other.getAsset())) throw new IllegalArgumentException();
+
+        return getQuantity() < other.getQuantity();
+    }
+
+    /**
+     * Whether this stack is smaller than the other
+     * @param other Stack to compare against
+     * @return Whether this is bigger
+     * @throws IllegalArgumentException When a different denotation is given
+     */
+    @JsonIgnore
+    public boolean isGreaterThan(CashStack other) throws IllegalArgumentException {
+        if (!getAsset().equals(other.getAsset())) throw new IllegalArgumentException();
+
+        return getQuantity() > other.getQuantity();
+    }
+
     @Override
     public @NonNull AssetMeta getMeta() {
         return new CashMeta(meta);

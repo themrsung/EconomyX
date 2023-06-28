@@ -10,6 +10,9 @@ import org.joda.time.DateTime;
 
 import java.util.UUID;
 
+/**
+ * A forward can represent the future delivery of any asset in exchange for cash (even another forward contract)
+ */
 public final class Forward implements Contract {
     public Forward() {
         this.uniqueId = UUID.randomUUID();

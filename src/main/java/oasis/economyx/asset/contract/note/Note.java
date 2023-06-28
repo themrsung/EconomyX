@@ -10,6 +10,9 @@ import org.joda.time.DateTime;
 
 import java.util.UUID;
 
+/**
+ * A note can represent the unconditional delivery of any asset (even another note)
+ */
 public final class Note implements Contract {
     public Note() {
         this.uniqueId = UUID.randomUUID();

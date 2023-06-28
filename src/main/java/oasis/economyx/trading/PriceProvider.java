@@ -1,7 +1,13 @@
 package oasis.economyx.trading;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.trading.auction.Auction;
+import oasis.economyx.trading.market.Marketplace;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -9,6 +15,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Provides fair value of an asset
  * Price is used for exercising options and settling swaps
  */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type"
+)
+
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Marketplace.class, name = "market"),
+        @JsonSubTypes.Type(value = Auction.class, name = "auction")
+})
+
 public interface PriceProvider {
     /**
      * The asset of which price is provided for
@@ -16,6 +32,7 @@ public interface PriceProvider {
      * @return Unit asset
      */
     @NonNull
+    @JsonProperty("asset")
     AssetStack getAsset();
 
     /**
@@ -23,6 +40,7 @@ public interface PriceProvider {
      * @return Contract size
      */
     @NonNegative
+    @JsonIgnore
     default long getContractSize() {
         return getAsset().getQuantity();
     }
@@ -32,6 +50,7 @@ public interface PriceProvider {
      * @return Price
      */
     @NonNull
+    @JsonProperty("price")
     CashStack getPrice();
 
     /**
@@ -39,5 +58,6 @@ public interface PriceProvider {
      * @return Volume
      */
     @NonNegative
+    @JsonIgnore
     long getVolume();
 }

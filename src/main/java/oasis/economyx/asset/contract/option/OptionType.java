@@ -20,4 +20,23 @@ public enum OptionType {
      * A put option that can only be exercised on expiry
      */
     EUROPEAN_PUT;
+
+    public boolean isCall() {
+        switch (this) {
+            case AMERICAN_CALL:
+            case EUROPEAN_CALL:
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isAmerican() {
+        switch (this) {
+            case AMERICAN_CALL:
+            case AMERICAN_PUT:
+                return true;
+        }
+
+        return false;
+    }
 }
