@@ -37,7 +37,6 @@ public interface EconomyState {
      * @param uniqueId Unique ID of actor
      * @return Whether actor exists
      */
-    @JsonIgnore
     boolean isActor(UUID uniqueId);
 
     /**
@@ -49,13 +48,10 @@ public interface EconomyState {
      * @throws IllegalArgumentException When actor cannot be found
      */
     @NonNull
-    @JsonIgnore
     Actor getActor(UUID uniqueId) throws IllegalArgumentException;
 
-    @JsonIgnore
     void addActor(@NonNull Actor actor);
 
-    @JsonIgnore
     void removeActor(@NonNull Actor actor);
 
     /**

@@ -2,8 +2,10 @@ package oasis.economyx.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import oasis.economyx.EconomyX;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.codehaus.plexus.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
@@ -83,12 +85,14 @@ public final class EconomyXState implements EconomyState {
         this.actors = actors;
     }
 
-    public static String PATH = "oasis/economy";
+    public static final String PATH = "oasis/economy";
+    private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory())
+            .registerModule(new JodaModule());
 
     public static EconomyXState load(@NonNull EconomyX EX) {
         File path = new File(PATH);
         if (!path.exists()) {
-            EX.getLogger().info("Plugin folder found. Loading empty state.");
+            EX.getLogger().info("Plugin folder not found. Loading empty state.");
             return new EconomyXState(EX);
         }
 
@@ -103,8 +107,6 @@ public final class EconomyXState implements EconomyState {
             EX.getLogger().info("No actor save data found. Loading empty state.");
             return new EconomyXState(EX);
         }
-
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         List<Actor> actors = new ArrayList<>();
 
@@ -140,8 +142,6 @@ public final class EconomyXState implements EconomyState {
             getEX().getLogger().info("Failed to clean actors directory. Save halted.");
             return;
         }
-
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         for (Actor a : getActors()) {
             try {

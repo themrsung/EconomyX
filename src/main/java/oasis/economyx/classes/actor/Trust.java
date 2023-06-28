@@ -1,12 +1,18 @@
-package oasis.economyx.classes;
+package oasis.economyx.classes.actor;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.fund.Fund;
 import oasis.economyx.actor.person.Person;
 import oasis.economyx.asset.stock.Stock;
+import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,43 +50,54 @@ public final class Trust extends EconomicActor implements Fund {
         this.trustee = other.trustee;
     }
 
+    @JsonProperty
     private final UUID stockId;
+    @JsonProperty
     private long shareCount;
 
     @Nullable
+    @JsonProperty
+    @JsonIdentityReference
     private Person trustee;
 
     @Override
+    @JsonIgnore
     public @Nullable Person getRepresentative() {
         return trustee;
     }
 
     @Override
+    @JsonIgnore
     public void setRepresentative(Person representative) {
         this.trustee = representative;
     }
 
     @Override
-    public UUID getStockId() {
+    @JsonIgnore
+    public @NotNull UUID getStockId() {
         return stockId;
     }
 
     @Override
+    @JsonIgnore
     public @NonNegative long getShareCount() {
         return shareCount;
     }
 
     @Override
+    @JsonIgnore
     public void setShareCount(@NonNegative long shares) {
         this.shareCount = shares;
     }
 
     @Override
+    @JsonIgnore
     public void addShareCount(@NonNegative long delta) {
         this.shareCount += delta;
     }
 
     @Override
+    @JsonIgnore
     public List<Actor> getShareholders(EconomyState state) {
         List<Actor> holders = new ArrayList<>();
 
@@ -101,6 +118,7 @@ public final class Trust extends EconomicActor implements Fund {
     }
 
     @Override
+    @JsonIgnore
     public List<Actor> getMajorityShareholders(EconomyState state) {
         List<Actor> holders = new ArrayList<>();
 
@@ -129,5 +147,13 @@ public final class Trust extends EconomicActor implements Fund {
         }
 
         return holders;
+    }
+
+    @JsonProperty
+    private final ActorType type = ActorType.TRUST;
+    @Override
+    @JsonIgnore
+    public ActorType getType() {
+        return type;
     }
 }

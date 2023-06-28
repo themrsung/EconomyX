@@ -1,11 +1,13 @@
 package oasis.economyx.trading.market;
 
+import oasis.economyx.asset.cash.CashStack;
+
 /**
- * Represents a bid/ask tick in a market
- * Used to structure market data without exposing individual orders
+ * Represents a bid/ask tick in a trading
+ * Used to structure trading data without exposing individual orders
  */
 public final class MarketTick {
-    public MarketTick(boolean buy, double price, long quantity) {
+    public MarketTick(boolean buy, CashStack price, long quantity) {
         this.buy = buy;
         this.price = price;
         this.quantity = quantity;
@@ -18,14 +20,14 @@ public final class MarketTick {
     }
 
     private final boolean buy;
-    private final double price;
+    private final CashStack price;
     private long quantity;
 
     public boolean isBuy() {
         return buy;
     }
 
-    public double getPrice() {
+    public CashStack getPrice() {
         return price;
     }
 

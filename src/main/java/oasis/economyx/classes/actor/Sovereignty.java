@@ -1,7 +1,12 @@
-package oasis.economyx.classes;
+package oasis.economyx.classes.actor;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.person.Person;
 import oasis.economyx.actor.sovereign.Sovereign;
+import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
@@ -29,6 +34,7 @@ public final class Sovereignty extends EconomicActor implements Sovereign {
     }
 
     @Nullable
+    @JsonIdentityReference
     private Person headOfState;
 
     @Override
@@ -37,8 +43,16 @@ public final class Sovereignty extends EconomicActor implements Sovereign {
     }
 
     @Override
+    @JsonIgnore
     public void setRepresentative(@Nullable Person representative) {
         this.headOfState = representative;
     }
 
+    @JsonProperty
+    private final ActorType type = ActorType.SOVEREIGNTY;
+    @Override
+    @JsonIgnore
+    public ActorType getType() {
+        return type;
+    }
 }

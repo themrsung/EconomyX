@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.commodity.CommodityStack;
+import oasis.economyx.asset.contract.collateral.CollateralStack;
+import oasis.economyx.asset.contract.forward.ForwardStack;
+import oasis.economyx.asset.contract.note.NoteStack;
+import oasis.economyx.asset.contract.option.OptionStack;
+import oasis.economyx.asset.contract.swap.SwapStack;
 import oasis.economyx.asset.stock.StockStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -19,10 +24,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         property = "type"
 )
 
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = CashStack.class, name = "cash"),
-        @JsonSubTypes.Type(value = StockStack.class, name = "stock"),
-        @JsonSubTypes.Type(value = CommodityStack.class, name = "commodity"),
+@JsonSubTypes({ // Uses AssetType to designate stack types
+        @JsonSubTypes.Type(value = CashStack.class, name = "CASH_"),
+        @JsonSubTypes.Type(value = StockStack.class, name = "STOCK"),
+        @JsonSubTypes.Type(value = CommodityStack.class, name = "COMMODITY"),
+        @JsonSubTypes.Type(value = CollateralStack.class, name = "COLLATERAL"),
+        @JsonSubTypes.Type(value = ForwardStack.class, name = "FORWARD"),
+        @JsonSubTypes.Type(value = NoteStack.class, name = "NOTE"),
+        @JsonSubTypes.Type(value = OptionStack.class, name = "OPTION"),
+        @JsonSubTypes.Type(value = SwapStack.class, name = "SWAP"),
 })
 
 public interface AssetStack {
@@ -31,7 +41,6 @@ public interface AssetStack {
      * @return Asset being held
      */
     @NonNull
-    @JsonProperty("asset")
     Asset getAsset();
 
     /**
@@ -39,21 +48,18 @@ public interface AssetStack {
      * @return Quantity
      */
     @NonNegative
-    @JsonProperty("quantity")
     long getQuantity();
 
     /**
      * Sets the quantity of this stack
      * @param quantity New quantity
      */
-    @JsonIgnore
     void setQuantity(@NonNegative long quantity);
 
     /**
      * Adds quantity to this stack
      * @param delta How much to add
      */
-    @JsonIgnore
     void addQuantity(@NonNegative long delta);
 
     /**
@@ -61,17 +67,14 @@ public interface AssetStack {
      * @param delta How much to remove
      * @throws IllegalArgumentException When the resulting quantity is negative
      */
-    @JsonIgnore
     void removeQuantity(@NonNegative long delta) throws IllegalArgumentException;
 
     /**
-     * A shortcut getter to asset classification
-     * @return Classification of the asset being held
+     * Gets the classification ot the asset being held
+     * @return Classification
      */
-    @JsonIgnore
-    default AssetType getType() {
-        return getAsset().getType();
-    }
+    @NonNull
+    AssetType getType();
 
     /**
      * The metadata of this asset stack
@@ -79,7 +82,6 @@ public interface AssetStack {
      * @return Copy of metadata
      */
     @NonNull
-    @JsonProperty("meta")
     AssetMeta getMeta();
 
     /**
@@ -87,6 +89,19 @@ public interface AssetStack {
      * @param meta New meta of this stack
      * @throws IllegalArgumentException When metadata is incompatible with asset classification
      */
-    @JsonIgnore
     void setMeta(@NonNull AssetMeta meta) throws IllegalArgumentException;
+
+    /**
+     * Compares this to another asset stack to check for equality
+     * Only checks asset and quantity; Does NOT check metadata
+     *
+     * @param asset Asset to compare to
+     * @return Whether asset stack is the same
+     * @throws IllegalArgumentException When asset type if different
+     */
+    default boolean equals(AssetStack asset) throws IllegalArgumentException {
+        if (!getAsset().equals(asset.getAsset())) throw new IllegalArgumentException();
+
+        return getQuantity() == asset.getQuantity();
+    }
 }

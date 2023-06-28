@@ -1,5 +1,7 @@
 package oasis.economyx.asset.commodity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetType;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -26,6 +28,7 @@ public final class Commodity implements Asset {
     }
 
     @NonNull
+    @JsonProperty
     private final ItemType itemType;
 
     /**
@@ -33,6 +36,7 @@ public final class Commodity implements Asset {
      * @return Type of item
      */
     @NonNull
+    @JsonIgnore
     public ItemType getItemType() {
         return itemType;
     }
@@ -43,12 +47,17 @@ public final class Commodity implements Asset {
      */
     @Override
     @NonNull
+    @JsonIgnore
     public UUID getUniqueId() {
         return UUID.nameUUIDFromBytes(getItemType().toString().getBytes());
     }
 
+    @JsonProperty
+    private final AssetType type = AssetType.COMMODITY;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
-        return AssetType.COMMODITY;
+        return type;
     }
 }

@@ -3,6 +3,8 @@ package oasis.economyx.portfolio;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -14,21 +16,14 @@ import java.util.List;
  * A list of assets
  * Ensures that only one instance of each asset type is stored along with their quantity
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "type"
-)
-
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = AssetPortfolio.class, name = "asset")
-})
+@JsonSerialize(as = AssetPortfolio.class)
+@JsonDeserialize(as = AssetPortfolio.class)
 
 public interface Portfolio {
     /**
      * Gets every asset in this portfolio
      * @return A copied list of every asset
      */
-    @JsonIgnore
     List<AssetStack> get();
 
     /**
@@ -36,7 +31,6 @@ public interface Portfolio {
      * @param i Index
      * @return Asset if found, null if not found
      */
-    @JsonIgnore
     @Nullable
     AssetStack get(int i);
 
@@ -45,7 +39,6 @@ public interface Portfolio {
      * @param asset Type
      * @return Asset if found, null if not found
      */
-    @JsonIgnore
     @Nullable
     AssetStack get(Asset asset);
 
@@ -53,21 +46,18 @@ public interface Portfolio {
      * Gets the size of this portfolio
      * @return How many assets there are
      */
-    @JsonIgnore
     int size();
 
     /**
      * Adds an asset to this portfolio
      * @param asset Asset to add
      */
-    @JsonIgnore
     void add(@NonNull AssetStack asset);
 
     /**
      * Adds a portfolio to this portfolio
      * @param portfolio Portfolio to add
      */
-    @JsonIgnore
     void add(@NonNull Portfolio portfolio);
 
     /**
@@ -75,7 +65,6 @@ public interface Portfolio {
      * @param asset Asset to remove
      * @throws IllegalArgumentException When the resulting asset's quantity is negative
      */
-    @JsonIgnore
     void remove(@NonNull AssetStack asset) throws IllegalArgumentException;
 
     /**
@@ -83,7 +72,6 @@ public interface Portfolio {
      * @param portfolio Portfolio to remove
      * @throws IllegalArgumentException When the resulting portfolio has at least one negative quantity
      */
-    @JsonIgnore
     void remove(@NonNull Portfolio portfolio) throws IllegalArgumentException;
 
     /**
@@ -92,7 +80,6 @@ public interface Portfolio {
      * @param asset Asset to query
      * @return Whether this portfolio contains the asset
      */
-    @JsonIgnore
     boolean contains(@NonNull AssetStack asset);
 
     /**
@@ -101,7 +88,6 @@ public interface Portfolio {
      * @param asset Asset to query
      * @return Whether this portfolio has the asset
      */
-    @JsonIgnore
     boolean has(@NonNull Asset asset);
 
     /**
@@ -110,6 +96,5 @@ public interface Portfolio {
      * @param checkMeta Whether to check for matching metadata
      * @return Whether this portfolio has the asset
      */
-    @JsonIgnore
     boolean has(@NonNull AssetStack asset, boolean checkMeta);
 }

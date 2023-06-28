@@ -1,5 +1,6 @@
 package oasis.economyx.asset.contract.swap;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
@@ -44,40 +45,49 @@ public final class Swap implements Contract {
     }
 
     @NonNull
+    @JsonProperty
     private final UUID uniqueId;
     @NonNull
+    @JsonProperty
+    @JsonIdentityReference
     private final Actor counterparty;
 
     @NonNull
-    @JsonProperty("denotation")
+    @JsonProperty
     private final Cash denotation;
 
     /**
      * The base price of this swap
      */
     @NonNull
-    @JsonProperty("base")
+    @JsonProperty
     private final PriceProvider base;
 
     /**
      * The quote price of this swap
      */
     @NonNull
-    @JsonProperty("quote")
+    @JsonProperty
     private final PriceProvider quote;
 
     @Nullable
+    @JsonProperty
     private final DateTime expiry;
 
     @NonNull
     @Override
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
+    @JsonProperty
+    private final AssetType type = AssetType.SWAP;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
-        return AssetType.SWAP;
+        return type;
     }
 
     /**
@@ -86,6 +96,7 @@ public final class Swap implements Contract {
      */
     @NonNull
     @Override
+    @JsonIgnore
     public CashStack getDelivery() {
         CashStack delivery = new CashStack(denotation, 0, new CashMeta());
 
@@ -115,12 +126,14 @@ public final class Swap implements Contract {
 
     @Nullable
     @Override
+    @JsonIgnore
     public DateTime getExpiry() {
         return expiry;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public Actor getCounterparty() {
         return counterparty;
     }

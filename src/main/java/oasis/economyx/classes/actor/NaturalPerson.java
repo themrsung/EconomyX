@@ -1,6 +1,10 @@
-package oasis.economyx.classes;
+package oasis.economyx.classes.actor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.person.Person;
+import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
@@ -24,5 +28,14 @@ public final class NaturalPerson extends EconomicActor implements Person {
 
     public NaturalPerson(NaturalPerson other) {
         super(other);
+    }
+
+    @JsonProperty
+    private final ActorType type = ActorType.NATURAL_PERSON;
+
+    @Override
+    @JsonIgnore
+    public ActorType getType() {
+        return type;
     }
 }

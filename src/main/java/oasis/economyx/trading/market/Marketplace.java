@@ -1,9 +1,8 @@
 package oasis.economyx.trading.market;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.state.EconomyState;
+import oasis.economyx.actor.Actor;
 import oasis.economyx.trading.PriceProvider;
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -13,47 +12,66 @@ import java.util.List;
 /**
  * A marketplace provides price by orders' price competition
  */
+
 public interface Marketplace extends PriceProvider {
     /**
-     * Gets the minimum tick size of this marketplace
-     * All orders non-compliant will be cancelled
+     * Gets all unfulfilled orders
+     * @return A copied list or orders
      */
-    @JsonProperty("tickSize")
-    double getTickSize();
+    List<Order> getOrders();
 
     /**
-     * Gets a copied list of all unfulfilled orders
+     * Gets all buy orders
+     * @return List of buy orders
      */
-    @JsonProperty("orders")
-    List<Order> getOrders();
+    default List<Order> getBuyOrders() {
+        List<Order> buyOrders = new ArrayList<>();
+
+        for (Order o : getOrders()) {
+            if (o.isBuy()) buyOrders.add(o);
+        }
+
+        return buyOrders;
+    }
+
+    /**
+     * Gets all sell orders
+     * @return List of sell orders
+     */
+    default List<Order> getSellOrders() {
+        List<Order> sellOrders = new ArrayList<>();
+
+        for (Order o : getOrders()) {
+            if (!o.isBuy()) sellOrders.add(o);
+        }
+
+        return sellOrders;
+    }
 
     /**
      * Places a new order
      * @param order Order to place
-     * @param state Current running state
+     * @param exchange The actor running this market
      */
-    @JsonIgnore
-    void placeOrder(@NonNull Order order, @NonNull EconomyState state);
+    void placeOrder(@NonNull Order order, @NonNull Actor exchange);
 
     /**
      * Cancels an existing order
      * @param order Order to place
-     * @param state Current running state
+     * @param exchange The actor running this market
      */
-    @JsonIgnore
-    void cancelOrder(@NonNull Order order, @NonNull EconomyState state);
+    void cancelOrder(@NonNull Order order, @NonNull Actor exchange);
 
     /**
-     * Processes all orders
-     * @param state Current running state
+     * Processes orders
+     * Called every market tick
+     * @param exchange The actor running this market
      */
-    @JsonIgnore
-    void processOrders(EconomyState state);
+    void processOrders(Actor exchange);
 
     /**
      * Gets structured buy tick data sorted by price descending
      */
-    @JsonIgnore
     default List<MarketTick> getBidTicks() {
         List<MarketTick> ticks = new ArrayList<>();
 
@@ -62,19 +80,19 @@ public interface Marketplace extends PriceProvider {
                 boolean exists = false;
 
                 for (MarketTick t : ticks) {
-                    if (t.getPrice() == o.getPrice().getQuantity()) {
+                    if (t.getPrice().equals(o.getPrice())) {
                         t.setQuantity(t.getQuantity() + t.getQuantity());
                         exists = true;
                     }
                 }
 
                 if (!exists) {
-                    ticks.add(new MarketTick(true, o.getPrice().getQuantity(), o.getQuantity()));
+                    ticks.add(new MarketTick(true, o.getPrice(), o.getQuantity()));
                 }
             }
         }
 
-        ticks.sort((t1, t2) -> Double.compare(t2.getPrice(), t1.getPrice()));
+        ticks.sort((t1, t2) -> t2.getPrice().compare(t1.getPrice()));
 
         return ticks;
     }
@@ -82,7 +100,6 @@ public interface Marketplace extends PriceProvider {
     /**
      * Gets lowest bid
      */
-    @JsonIgnore
     @Nullable
     default MarketTick getLowestBid() {
         List<MarketTick> bids = getBidTicks();
@@ -92,7 +109,6 @@ public interface Marketplace extends PriceProvider {
     /**
      * Gets structured sell tick data sorted by price ascending
      */
-    @JsonIgnore
     default List<MarketTick> getAskTicks() {
         List<MarketTick> ticks = new ArrayList<>();
 
@@ -101,19 +117,19 @@ public interface Marketplace extends PriceProvider {
                 boolean exists = false;
 
                 for (MarketTick t : ticks) {
-                    if (t.getPrice() == o.getPrice().getQuantity()) {
+                    if (t.getPrice().equals(o.getPrice())) {
                         t.setQuantity(t.getQuantity() + t.getQuantity());
                         exists = true;
                     }
                 }
 
                 if (!exists) {
-                    ticks.add(new MarketTick(false, o.getPrice().getQuantity(), o.getQuantity()));
+                    ticks.add(new MarketTick(false, o.getPrice(), o.getQuantity()));
                 }
             }
         }
 
-        ticks.sort((t1, t2) -> Double.compare(t1.getPrice(), t2.getPrice()));
+        ticks.sort((t1, t2) -> t1.getPrice().compare(t2.getPrice()));
 
         return ticks;
     }
@@ -121,11 +137,18 @@ public interface Marketplace extends PriceProvider {
     /**
      * Gets highest ask
      */
-    @JsonIgnore
     @Nullable
     default MarketTick getHighestAsk() {
         List<MarketTick> asks = getAskTicks();
         return asks.size() > 0 ? asks.get(0) : null;
     }
 
+    /**
+     * Gets the minimum tick size of this marketplace
+     * All orders non-compliant will be cancelled
+     */
+    @NonNegative
+    default double getTickSize() {
+        return getAsset().getQuantity();
+    }
 }

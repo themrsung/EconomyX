@@ -9,6 +9,7 @@ import oasis.economyx.asset.contract.forward.ForwardMeta;
 import oasis.economyx.asset.contract.note.NoteMeta;
 import oasis.economyx.asset.contract.option.OptionMeta;
 import oasis.economyx.asset.contract.swap.SwapMeta;
+import oasis.economyx.asset.stock.StockMeta;
 
 /**
  * Metadata of an asset
@@ -20,13 +21,14 @@ import oasis.economyx.asset.contract.swap.SwapMeta;
 )
 
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = CashMeta.class, name = "cashMeta"),
-        @JsonSubTypes.Type(value = CommodityMeta.class, name = "commodityMeta"),
-        @JsonSubTypes.Type(value = CollateralMeta.class, name = "collateralMeta"),
-        @JsonSubTypes.Type(value = ForwardMeta.class, name = "forwardMeta"),
-        @JsonSubTypes.Type(value = NoteMeta.class, name = "noteMeta"),
-        @JsonSubTypes.Type(value = OptionMeta.class, name = "optionMeta"),
-        @JsonSubTypes.Type(value = SwapMeta.class, name = "swapMeta")
+        @JsonSubTypes.Type(value = CashMeta.class, name = "cash_meta"),
+        @JsonSubTypes.Type(value = CommodityMeta.class, name = "commodity_meta"),
+        @JsonSubTypes.Type(value = StockMeta.class, name = "stock_meta"),
+        @JsonSubTypes.Type(value = CollateralMeta.class, name = "collateral_meta"),
+        @JsonSubTypes.Type(value = ForwardMeta.class, name = "forward_meta"),
+        @JsonSubTypes.Type(value = NoteMeta.class, name = "note_meta"),
+        @JsonSubTypes.Type(value = OptionMeta.class, name = "option_meta"),
+        @JsonSubTypes.Type(value = SwapMeta.class, name = "swap_meta")
 })
 
 public interface AssetMeta {

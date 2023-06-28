@@ -8,16 +8,13 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashMeta;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.note.NoteStack;
 import oasis.economyx.asset.stock.Stock;
-import oasis.economyx.asset.stock.StockMeta;
 import oasis.economyx.asset.stock.StockStack;
-import oasis.economyx.classes.Company;
-import oasis.economyx.classes.NaturalPerson;
-import oasis.economyx.portfolio.AssetPortfolio;
+import oasis.economyx.classes.actor.Company;
+import oasis.economyx.classes.actor.NaturalPerson;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +31,6 @@ import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**

@@ -1,5 +1,7 @@
 package oasis.economyx.asset.contract.forward;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
 import oasis.economyx.asset.Purchasable;
 import oasis.economyx.asset.cash.CashStack;
@@ -23,28 +25,34 @@ public final class ForwardMeta implements AssetMeta, Purchasable {
     }
 
     @Nullable
+    @JsonProperty
     private CashStack purchasePrice;
 
     @Nullable
+    @JsonProperty
     private DateTime purchaseDate;
 
 
     @Override
+    @JsonIgnore
     public @Nullable CashStack getPurchasePrice() {
         return purchasePrice;
     }
 
     @Override
+    @JsonIgnore
     public @Nullable DateTime getPurchaseDate() {
         return purchaseDate;
     }
 
     @Override
+    @JsonIgnore
     public void setPurchasePrice(@Nullable CashStack price) {
         this.purchasePrice = price;
     }
 
     @Override
+    @JsonIgnore
     public void setPurchaseDate(@Nullable DateTime date) {
         this.purchaseDate = date;
     }

@@ -1,5 +1,7 @@
 package oasis.economyx.asset.stock;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetType;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -23,16 +25,23 @@ public final class Stock implements Asset {
     }
 
     @NonNull
+    @JsonProperty
     private final UUID uniqueId;
 
     @Override
+    @JsonIgnore
     public @NonNull UUID getUniqueId() {
         return uniqueId;
     }
 
+
+    @JsonProperty
+    private final AssetType type = AssetType.STOCK;
+
     @Override
     @NonNull
+    @JsonIgnore
     public AssetType getType() {
-        return AssetType.STOCK;
+        return type;
     }
 }

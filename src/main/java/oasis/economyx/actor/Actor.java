@@ -1,7 +1,10 @@
 package oasis.economyx.actor;
 
 import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.classes.EconomicActor;
+import oasis.economyx.classes.actor.Company;
+import oasis.economyx.classes.actor.NaturalPerson;
+import oasis.economyx.classes.actor.Sovereignty;
+import oasis.economyx.classes.actor.Trust;
 import oasis.economyx.portfolio.Portfolio;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -15,15 +18,13 @@ import java.util.UUID;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = EconomicActor.class, name = "economic_actor")
+        @JsonSubTypes.Type(value = Company.class, name = "COMPANY"),
+        @JsonSubTypes.Type(value = NaturalPerson.class, name = "NATURAL_PERSON"),
+        @JsonSubTypes.Type(value = Sovereignty.class, name = "SOVEREIGNTY"),
+        @JsonSubTypes.Type(value = Trust.class, name = "TRUST"),
 })
-
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "uniqueId"
-)
 
 public interface Actor {
     /**
@@ -39,21 +40,18 @@ public interface Actor {
      * @return Name
      */
     @Nullable
-    @JsonProperty("name")
     String getName();
 
     /**
      * Sets the semantic name of this actor
      * @param name Can be null and does not require uniqueness
      */
-    @JsonIgnore
     void setName(@Nullable String name);
 
     /**
      * Gets the gross holdings of this actor
      * @return Assets
      */
-    @JsonProperty("assets")
     Portfolio getAssets();
 
     /**
@@ -61,7 +59,6 @@ public interface Actor {
      * @param state Current running state
      * @return Collaterals
      */
-    @JsonIgnore
     Portfolio getOutstandingCollateral(EconomyState state);
 
     /**
@@ -69,7 +66,6 @@ public interface Actor {
      * @param state Current running state
      * @return Liabilities
      */
-    @JsonIgnore
     Portfolio getLiabilities(EconomyState state);
 
     /**
@@ -77,7 +73,6 @@ public interface Actor {
      * @param state Current running state
      * @return Gross assets - Outstanding collateral
      */
-    @JsonIgnore
     Portfolio getPayableAssets(EconomyState state);
 
     /**
@@ -86,6 +81,12 @@ public interface Actor {
      * @param state Current running state
      * @return Net assets
      */
-    @JsonIgnore
     Portfolio getNetAssets(EconomyState state);
+
+    /**
+     * Gets the type of this actor
+     * @return Type
+     */
+    @JsonProperty("type")
+    ActorType getType();
 }

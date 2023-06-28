@@ -1,5 +1,8 @@
 package oasis.economyx.asset.contract.forward;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
@@ -36,35 +39,48 @@ public final class Forward implements Contract {
     }
 
     @NonNull
+    @JsonProperty
     private final UUID uniqueId;
     @NonNull
+    @JsonProperty
+    @JsonIdentityReference
     private final Actor counterparty;
     @NonNull
+    @JsonProperty
     private final AssetStack delivery;
     @Nullable
+    @JsonProperty
     private final DateTime expiry;
 
     @Override
+    @JsonIgnore
     public @NonNull UUID getUniqueId() {
         return uniqueId;
     }
 
+    @JsonProperty
+    private final AssetType type = AssetType.FORWARD;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
-        return AssetType.FORWARD;
+        return type;
     }
 
     @Override
+    @JsonIgnore
     public @NonNull AssetStack getDelivery() {
         return delivery;
     }
 
     @Override
+    @JsonIgnore
     public @Nullable DateTime getExpiry() {
         return expiry;
     }
 
     @Override
+    @JsonIgnore
     public @NonNull Actor getCounterparty() {
         return counterparty;
     }

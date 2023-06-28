@@ -1,5 +1,8 @@
 package oasis.economyx.asset.contract.note;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
@@ -36,41 +39,54 @@ public final class Note implements Contract {
     }
 
     @NonNull
+    @JsonProperty
     private final UUID uniqueId;
     @NonNull
+    @JsonProperty
+    @JsonIdentityReference
     private final Actor counterparty;
 
     @NonNull
+    @JsonProperty
     private final AssetStack delivery;
 
     @Nullable
+    @JsonProperty
     private final DateTime expiry;
 
     @NonNull
     @Override
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
+    @JsonProperty
+    private final AssetType type = AssetType.NOTE;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
-        return AssetType.NOTE;
+        return type;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public AssetStack getDelivery() {
         return delivery;
     }
 
     @Nullable
     @Override
+    @JsonIgnore
     public DateTime getExpiry() {
         return expiry;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public Actor getCounterparty() {
         return counterparty;
     }

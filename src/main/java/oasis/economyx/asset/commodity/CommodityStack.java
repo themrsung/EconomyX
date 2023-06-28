@@ -1,7 +1,11 @@
 package oasis.economyx.asset.commodity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.AssetStackType;
+import oasis.economyx.asset.AssetType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -28,33 +32,41 @@ public final class CommodityStack implements AssetStack {
     }
 
     @NonNull
+    @JsonProperty
     private final Commodity asset;
     @NonNegative
+    @JsonProperty
     private long quantity;
     @NonNull
+    @JsonProperty
     private CommodityMeta meta;
 
     @Override
+    @JsonIgnore
     public @NonNull Commodity getAsset() {
         return new Commodity(asset);
     }
 
     @Override
+    @JsonIgnore
     public @NonNegative long getQuantity() {
         return quantity;
     }
 
     @Override
+    @JsonIgnore
     public void setQuantity(@NonNegative long quantity) {
         this.quantity = quantity;
     }
 
     @Override
+    @JsonIgnore
     public void addQuantity(@NonNegative long delta) {
         this.quantity += delta;
     }
 
     @Override
+    @JsonIgnore
     public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
         if (this.quantity - delta < 0L) throw new IllegalArgumentException();
 
@@ -62,15 +74,24 @@ public final class CommodityStack implements AssetStack {
     }
 
     @Override
+    @JsonIgnore
     public @NonNull CommodityMeta getMeta() {
         return new CommodityMeta(meta);
     }
 
     @Override
+    @JsonIgnore
     public void setMeta(@NonNull AssetMeta meta) throws IllegalArgumentException {
         if (!(meta instanceof CommodityMeta)) throw new IllegalArgumentException();
 
         this.meta = (CommodityMeta) meta;
+    }
+
+    private final AssetType type = AssetType.COMMODITY;
+
+    @Override
+    public @NonNull AssetType getType() {
+        return type;
     }
 
     /**

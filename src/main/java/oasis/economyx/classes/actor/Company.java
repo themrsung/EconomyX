@@ -1,12 +1,19 @@
-package oasis.economyx.classes;
+package oasis.economyx.classes.actor;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.corporation.Corporation;
 import oasis.economyx.actor.person.Person;
 import oasis.economyx.asset.stock.Stock;
+import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,75 +60,99 @@ public final class Company extends EconomicActor implements Corporation {
         this.ceo = other.ceo;
     }
 
+    @JsonProperty
     private final UUID stockId;
+
+    @JsonProperty
     private long shareCount;
 
+    @JsonProperty
+    @JsonIdentityReference
     private final List<Person> employees;
+
+    @JsonProperty
+    @JsonIdentityReference
     private final List<Person> directors;
+
     @Nullable
+    @JsonProperty
+    @JsonIdentityReference
     private Person ceo;
 
 
     @Override
-    public UUID getStockId() {
+    @JsonIgnore
+    public @NotNull UUID getStockId() {
         return stockId;
     }
 
     @Override
+    @JsonIgnore
     public @NonNegative long getShareCount() {
         return shareCount;
     }
     @Override
+    @JsonIgnore
     public List<Person> getEmployees() {
         return new ArrayList<>(employees);
     }
 
     @Override
+    @JsonIgnore
     public void addEmployee(Person employee) {
         employees.add(employee);
     }
 
     @Override
+    @JsonIgnore
     public void removeEmployee(Person employee) {
         employees.remove(employee);
     }
 
     @Override
+    @JsonIgnore
     public List<Person> getDirectors() {
         return new ArrayList<>(directors);
     }
 
     @Override
+    @JsonIgnore
     public void addDirector(Person director) {
         directors.add(director);
     }
 
     @Override
+    @JsonIgnore
     public void removeDirector(Person director) {
         directors.remove(director);
     }
 
     @Override
+    @JsonIgnore
     public @Nullable Person getRepresentative() {
         return ceo;
     }
 
     @Override
+    @JsonIgnore
     public void setRepresentative(@Nullable Person representative) {
         this.ceo = representative;
     }
 
     @Override
+    @JsonIgnore
     public void setShareCount(@NonNegative long shares) {
         this.shareCount = shares;
     }
 
     @Override
+    @JsonIgnore
     public void addShareCount(@NonNegative long delta) {
         this.shareCount += delta;
     }
 
     @Override
+    @JsonIgnore
     public List<Actor> getShareholders(EconomyState state) {
         List<Actor> holders = new ArrayList<>();
 
@@ -142,6 +173,7 @@ public final class Company extends EconomicActor implements Corporation {
     }
 
     @Override
+    @JsonIgnore
     public List<Actor> getMajorityShareholders(EconomyState state) {
         List<Actor> holders = new ArrayList<>();
 
@@ -170,5 +202,14 @@ public final class Company extends EconomicActor implements Corporation {
         }
 
         return holders;
+    }
+
+    @JsonProperty
+    private final ActorType type = ActorType.COMPANY;
+
+    @Override
+    @JsonIgnore
+    public @NonNull ActorType getType() {
+        return type;
     }
 }

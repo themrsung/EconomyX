@@ -1,5 +1,6 @@
 package oasis.economyx.classes;
 
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.contract.collateral.CollateralStack;
@@ -36,10 +37,12 @@ public abstract class EconomicActor implements Actor {
         this.portfolio = other.portfolio;
     }
 
-
+    @JsonProperty
     private final UUID uniqueId;
     @Nullable
+    @JsonProperty
     private String name;
+    @JsonProperty
     private final Portfolio portfolio;
 
     @Override
@@ -58,11 +61,13 @@ public abstract class EconomicActor implements Actor {
     }
 
     @Override
+    @JsonIgnore
     public Portfolio getAssets() {
         return portfolio;
     }
 
     @Override
+    @JsonIgnore
     public Portfolio getOutstandingCollateral(EconomyState state) {
         Portfolio collateral = new AssetPortfolio();
 
@@ -80,6 +85,7 @@ public abstract class EconomicActor implements Actor {
     }
 
     @Override
+    @JsonIgnore
     public Portfolio getLiabilities(EconomyState state) {
         Portfolio liabilities = new AssetPortfolio();
 
@@ -113,6 +119,7 @@ public abstract class EconomicActor implements Actor {
     }
 
     @Override
+    @JsonIgnore
     public Portfolio getPayableAssets(EconomyState state) {
         Portfolio assets = new AssetPortfolio(getAssets());
 
@@ -122,6 +129,7 @@ public abstract class EconomicActor implements Actor {
     }
 
     @Override
+    @JsonIgnore
     public Portfolio getNetAssets(EconomyState state) {
         Portfolio assets = new AssetPortfolio(getAssets());
 

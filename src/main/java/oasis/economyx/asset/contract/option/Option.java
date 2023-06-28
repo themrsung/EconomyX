@@ -1,5 +1,6 @@
 package oasis.economyx.asset.contract.option;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
@@ -49,53 +50,67 @@ public final class Option implements Contract {
     }
 
     @NonNull
+    @JsonProperty
     private final UUID uniqueId;
     @NonNull
+    @JsonProperty
+    @JsonIdentityReference
     private final Actor counterparty;
 
     @NonNull
+    @JsonProperty
     private final AssetStack delivery;
 
     @NonNull
+    @JsonProperty
     private final DateTime expiry;
 
     @NonNull
-    @JsonProperty("market")
+    @JsonProperty
+    @JsonIdentityReference
     private final PriceProvider market;
 
     @NonNull
-    @JsonProperty("optionType")
+    @JsonProperty
     private final OptionType optionType;
 
     @NonNull
-    @JsonProperty("exercisePrice")
+    @JsonProperty
     private final CashStack exercisePrice;
 
     @NonNull
     @Override
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
+    @JsonProperty
+    private final AssetType type = AssetType.OPTION;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
-        return AssetType.OPTION;
+        return type;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public AssetStack getDelivery() {
         return delivery;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public DateTime getExpiry() {
         return expiry;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public Actor getCounterparty() {
         return counterparty;
     }
@@ -125,7 +140,7 @@ public final class Option implements Contract {
     /**
      * Checks if option is exercisable
      * @return Whether it is exercisable or not
-     * @throws IllegalArgumentException When exercise price is in a different denotation than the market price
+     * @throws IllegalArgumentException When exercise price is in a different denotation than the trading price
      */
     @JsonIgnore
     public boolean isExercisable() throws IllegalArgumentException {

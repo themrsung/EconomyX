@@ -1,7 +1,11 @@
 package oasis.economyx.asset.contract.note;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.AssetStackType;
+import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.contract.forward.Forward;
 import oasis.economyx.asset.contract.forward.ForwardMeta;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -30,34 +34,42 @@ public final class NoteStack implements AssetStack {
     }
 
     @NonNull
+    @JsonProperty
     private final Note asset;
     @NonNegative
+    @JsonProperty
     private long quantity;
     @NonNull
+    @JsonProperty
     private NoteMeta meta;
 
     @NotNull
     @Override
+    @JsonIgnore
     public Note getAsset() {
         return asset;
     }
 
     @Override
+    @JsonIgnore
     public long getQuantity() {
         return quantity;
     }
 
     @Override
+    @JsonIgnore
     public void setQuantity(@NonNegative long quantity) {
         this.quantity = quantity;
     }
 
     @Override
+    @JsonIgnore
     public void addQuantity(@NonNegative long delta) {
         this.quantity += delta;
     }
 
     @Override
+    @JsonIgnore
     public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
         if (this.quantity - delta < 0L) throw new IllegalArgumentException();
 
@@ -66,15 +78,23 @@ public final class NoteStack implements AssetStack {
 
     @NotNull
     @Override
+    @JsonIgnore
     public NoteMeta getMeta() {
         return meta;
     }
 
     @Override
+    @JsonIgnore
     public void setMeta(@NonNull AssetMeta meta) throws IllegalArgumentException {
         if (!(meta instanceof NoteMeta)) throw new IllegalArgumentException();
 
         this.meta = (NoteMeta) meta;
+    }
+
+    private final AssetType type = AssetType.NOTE;
+    @Override
+    public @NonNull AssetType getType() {
+        return type;
     }
 
     /**

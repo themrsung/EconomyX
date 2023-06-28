@@ -3,10 +3,15 @@ package oasis.economyx.asset;
 import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.commodity.Commodity;
-import oasis.economyx.asset.contract.Contract;
+import oasis.economyx.asset.contract.collateral.Collateral;
+import oasis.economyx.asset.contract.forward.Forward;
+import oasis.economyx.asset.contract.note.Note;
+import oasis.economyx.asset.contract.option.Option;
+import oasis.economyx.asset.contract.swap.Swap;
 import oasis.economyx.asset.stock.Stock;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -19,17 +24,15 @@ import java.util.UUID;
 )
 
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Cash.class, name = "cash"),
-        @JsonSubTypes.Type(value = Commodity.class, name = "commodity"),
-        @JsonSubTypes.Type(value = Stock.class, name = "stock"),
-        @JsonSubTypes.Type(value = Contract.class, name = "contract")
+        @JsonSubTypes.Type(value = Cash.class, name = "CASH"),
+        @JsonSubTypes.Type(value = Commodity.class, name = "COMMODITY"),
+        @JsonSubTypes.Type(value = Stock.class, name = "STOCK"),
+        @JsonSubTypes.Type(value = Collateral.class, name = "COLLATERAL"),
+        @JsonSubTypes.Type(value = Forward.class, name = "FORWARD"),
+        @JsonSubTypes.Type(value = Note.class, name = "NOTE"),
+        @JsonSubTypes.Type(value = Option.class, name = "OPTION"),
+        @JsonSubTypes.Type(value = Swap.class, name = "SWAP"),
 })
-
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "uniqueId"
-)
-
 public interface Asset {
     /**
      * The unique identifier of this asset type
@@ -38,7 +41,6 @@ public interface Asset {
      * @return The unique ID of this asset
      */
     @NonNull
-    @JsonProperty("uniqueId")
     UUID getUniqueId();
 
     /**
@@ -46,6 +48,5 @@ public interface Asset {
      * @return Classification
      */
     @NonNull
-    @JsonProperty("type")
     AssetType getType();
 }

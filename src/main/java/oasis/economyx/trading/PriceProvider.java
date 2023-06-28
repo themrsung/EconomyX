@@ -1,12 +1,13 @@
 package oasis.economyx.trading;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.trading.auction.Auction;
+import oasis.economyx.trading.auction.Auctioneer;
 import oasis.economyx.trading.market.Marketplace;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -19,10 +20,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Marketplace.class, name = "market"),
-        @JsonSubTypes.Type(value = Auction.class, name = "auction")
+        @JsonSubTypes.Type(value = Marketplace.class, name = "trading"),
+        @JsonSubTypes.Type(value = Auctioneer.class, name = "auction")
 })
 
 public interface PriceProvider {
@@ -32,7 +34,6 @@ public interface PriceProvider {
      * @return Unit asset
      */
     @NonNull
-    @JsonProperty("asset")
     AssetStack getAsset();
 
     /**
@@ -40,7 +41,6 @@ public interface PriceProvider {
      * @return Contract size
      */
     @NonNegative
-    @JsonIgnore
     default long getContractSize() {
         return getAsset().getQuantity();
     }
@@ -50,14 +50,20 @@ public interface PriceProvider {
      * @return Price
      */
     @NonNull
-    @JsonProperty("price")
     CashStack getPrice();
+
+    /**
+     * Shortcut getter for currency
+     * @return Currency
+     */
+    default Cash getCurrency() {
+        return getPrice().getAsset();
+    }
 
     /**
      * The cumulative trading volume of this trading day
      * @return Volume
      */
     @NonNegative
-    @JsonIgnore
     long getVolume();
 }

@@ -1,7 +1,11 @@
 package oasis.economyx.asset.contract.option;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.AssetStackType;
+import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.note.NoteMeta;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -30,34 +34,42 @@ public final class OptionStack implements AssetStack {
     }
 
     @NonNull
+    @JsonProperty
     private final Option asset;
     @NonNegative
+    @JsonProperty
     private long quantity;
     @NonNull
+    @JsonProperty
     private OptionMeta meta;
 
     @NotNull
     @Override
+    @JsonIgnore
     public Option getAsset() {
         return asset;
     }
 
     @Override
+    @JsonIgnore
     public long getQuantity() {
         return quantity;
     }
 
     @Override
+    @JsonIgnore
     public void setQuantity(@NonNegative long quantity) {
         this.quantity = quantity;
     }
 
     @Override
+    @JsonIgnore
     public void addQuantity(@NonNegative long delta) {
         this.quantity += delta;
     }
 
     @Override
+    @JsonIgnore
     public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
         if (this.quantity - delta < 0L) throw new IllegalArgumentException();
 
@@ -66,15 +78,24 @@ public final class OptionStack implements AssetStack {
 
     @NotNull
     @Override
+    @JsonIgnore
     public OptionMeta getMeta() {
         return meta;
     }
 
     @Override
+    @JsonIgnore
     public void setMeta(@NonNull AssetMeta meta) throws IllegalArgumentException {
         if (!(meta instanceof OptionMeta)) throw new IllegalArgumentException();
 
         this.meta = (OptionMeta) meta;
+    }
+
+    private final AssetType type = AssetType.OPTION;
+
+    @Override
+    public @NonNull AssetType getType() {
+        return type;
     }
 
     /**

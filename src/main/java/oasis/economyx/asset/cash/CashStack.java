@@ -1,9 +1,8 @@
 package oasis.economyx.asset.cash;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import oasis.economyx.asset.Asset;
-import oasis.economyx.asset.AssetMeta;
-import oasis.economyx.asset.AssetStack;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.asset.*;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -31,31 +30,39 @@ public final class CashStack implements AssetStack {
         this.meta = other.meta;
     }
 
+    @JsonProperty
     private final Cash asset;
+    @JsonProperty
     private long quantity;
+    @JsonProperty
     private CashMeta meta;
 
     @Override
-    public @NonNull Asset getAsset() {
+    @JsonIgnore
+    public @NonNull Cash getAsset() {
         return new Cash(asset);
     }
 
     @Override
+    @JsonIgnore
     public @NonNegative long getQuantity() {
         return quantity;
     }
 
     @Override
+    @JsonIgnore
     public void setQuantity(@NonNegative long quantity) {
         this.quantity = quantity;
     }
 
     @Override
+    @JsonIgnore
     public void addQuantity(@NonNegative long delta) {
         this.quantity += delta;
     }
 
     @Override
+    @JsonIgnore
     public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
         if (this.quantity - delta < 0L) throw new IllegalArgumentException();
 
@@ -120,16 +127,28 @@ public final class CashStack implements AssetStack {
         return getQuantity() > other.getQuantity();
     }
 
+    public int compare(CashStack asset) throws IllegalArgumentException {
+        return this.equals(asset) ? 0 : (this.isSmallerThan(asset) ? -1 : 1);
+    }
+
     @Override
+    @JsonIgnore
     public @NonNull AssetMeta getMeta() {
         return new CashMeta(meta);
     }
 
     @Override
+    @JsonIgnore
     public void setMeta(@NonNull AssetMeta meta) throws IllegalArgumentException {
         if (!(meta instanceof CashMeta)) throw new IllegalArgumentException();
 
         this.meta = (CashMeta) meta;
+    }
+
+    private final AssetType type = AssetType.CASH;
+    @Override
+    public @NonNull AssetType getType() {
+        return type;
     }
 
     /**

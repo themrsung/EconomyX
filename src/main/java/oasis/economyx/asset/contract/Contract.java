@@ -19,18 +19,6 @@ import org.joda.time.DateTime;
 /**
  * A contract denotes the mandatory/conditional delivery of an asset on expiry
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "contractType"
-)
-
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Forward.class, name = "forward"),
-        @JsonSubTypes.Type(value = Note.class, name = "note"),
-        @JsonSubTypes.Type(value = Option.class, name = "option"),
-        @JsonSubTypes.Type(value = Swap.class, name = "swap"),
-        @JsonSubTypes.Type(value = Collateral.class, name = "collateral")
-})
 
 public interface Contract extends Asset {
     /**
@@ -38,7 +26,6 @@ public interface Contract extends Asset {
      * @return Asset to be delivered
      */
     @NonNull
-    @JsonProperty("delivery")
     AssetStack getDelivery();
 
     /**
@@ -46,8 +33,6 @@ public interface Contract extends Asset {
      * @return Counterparty
      */
     @NonNull
-    @JsonProperty("counterparty")
-    @JsonIdentityReference
     Actor getCounterparty();
 
     /**
@@ -55,6 +40,5 @@ public interface Contract extends Asset {
      * @return Expiration
      */
     @Nullable
-    @JsonProperty("expiry")
     DateTime getExpiry();
 }

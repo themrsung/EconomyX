@@ -23,15 +23,17 @@ public class AssetPortfolio implements Portfolio {
         this.assets = other.get();
     }
 
-    @JsonProperty("assets")
+    @JsonProperty
     private final List<AssetStack> assets;
 
     @Override
+    @JsonIgnore
     public List<AssetStack> get() {
         return new ArrayList<>(assets);
     }
 
     @Override
+    @JsonIgnore
     public @Nullable AssetStack get(int i){
         try {
             return assets.get(i);
@@ -41,6 +43,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public @Nullable AssetStack get(Asset asset) {
         for (AssetStack stack : assets) {
             if (stack.getAsset().equals(asset)) {
@@ -52,11 +55,13 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public int size() {
         return assets.size();
     }
 
     @Override
+    @JsonIgnore
     public void add(@NonNull AssetStack asset) {
         AssetStack existing = get(asset.getAsset());
 
@@ -68,6 +73,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public void add(@NonNull Portfolio portfolio) {
         for (AssetStack stack : portfolio.get()) {
             add(stack);
@@ -75,6 +81,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public void remove(@NonNull AssetStack asset) throws IllegalArgumentException {
         AssetStack existing = get(asset.getAsset());
         if (existing == null) return;
@@ -84,6 +91,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public void remove(@NonNull Portfolio portfolio) throws IllegalArgumentException {
         for (AssetStack stack : portfolio.get()) {
             remove(stack);
@@ -99,6 +107,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public boolean contains(@NonNull AssetStack asset) {
         AssetStack existing = get(asset.getAsset());
 
@@ -108,6 +117,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public boolean has(@NonNull Asset asset) {
         for (AssetStack stack : get()) {
             if (stack.getAsset().equals(asset)) {
@@ -119,6 +129,7 @@ public class AssetPortfolio implements Portfolio {
     }
 
     @Override
+    @JsonIgnore
     public boolean has(@NonNull AssetStack asset, boolean checkMeta) {
         for (AssetStack stack : get()) {
             if (stack.getAsset().equals(asset.getAsset())) {

@@ -1,7 +1,5 @@
 package oasis.economyx.actor.types;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -18,7 +16,6 @@ public interface Shared extends Representable {
      * Gets the symbol of this actor's stock
      * @return Stock's unique ID
      */
-    @JsonProperty("stockId")
     @NonNull
     UUID getStockId();
 
@@ -28,7 +25,6 @@ public interface Shared extends Representable {
      * The difference can come from shares being lost, counterfeiting shares, or non-backed short selling
      * @return Total issued share count
      */
-    @JsonProperty("shareCount")
     @NonNegative
     long getShareCount();
 
@@ -36,7 +32,6 @@ public interface Shared extends Representable {
      * Sets the share count of this actor
      * @param shares New share count
      */
-    @JsonIgnore
     void setShareCount(@NonNegative long shares);
 
     /**
@@ -44,7 +39,6 @@ public interface Shared extends Representable {
      * Please note that this does not trigger the actual increase of number of shares in circulation
      * @param delta Amount of shares to add
      */
-    @JsonIgnore
     void addShareCount(@NonNegative long delta);
 
     /**
@@ -53,7 +47,6 @@ public interface Shared extends Representable {
      * @param state Current running state
      * @return List of shareholders
      */
-    @JsonIgnore
     List<Actor> getShareholders(EconomyState state);
 
     /**
@@ -64,6 +57,5 @@ public interface Shared extends Representable {
      * @param state Current running state
      * @return List of majority shareholders
      */
-    @JsonIgnore
     List<Actor> getMajorityShareholders(EconomyState state);
 }
