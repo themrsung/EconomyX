@@ -4,6 +4,7 @@ import org.spongepowered.plugin.metadata.model.PluginDependency
 plugins {
     `java-library`
     id("org.spongepowered.gradle.plugin") version "2.1.1"
+    id ("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "oasis"
@@ -20,14 +21,12 @@ sponge {
         name(PluginLoaders.JAVA_PLAIN)
         version("1.0")
     }
-    plugin("EconomyX") {
+    plugin("economyx") {
         displayName("EconomyX")
         entrypoint("oasis.economyx.EconomyX")
-        description("My plugin description")
+        description("An overpowered economy plugin for geeks.")
         links {
-            // homepage("https://spongepowered.org")
-            // source("https://spongepowered.org/source")
-            // issues("https://spongepowered.org/issues")
+            source("https://github.com/themrsung/EconomyX")
         }
         dependency("spongeapi") {
             loadOrder(PluginDependency.LoadOrder.AFTER)

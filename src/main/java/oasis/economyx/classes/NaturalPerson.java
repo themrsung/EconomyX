@@ -1,10 +1,6 @@
 package oasis.economyx.classes;
 
 import oasis.economyx.actor.person.Person;
-import oasis.economyx.portfolio.Portfolio;
-import org.checkerframework.checker.nullness.qual.Nullable;
-
-import java.util.UUID;
 
 /**
  * A natural person
@@ -15,11 +11,7 @@ public final class NaturalPerson extends EconomicActor implements Person {
         super();
     }
 
-    public NaturalPerson(UUID uniqueId, @Nullable String name, Portfolio portfolio) {
-        super(uniqueId, name, portfolio);
-    }
-
-    public NaturalPerson(EconomicActor other) {
+    public NaturalPerson(NaturalPerson other) {
         super(other);
     }
 }

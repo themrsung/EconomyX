@@ -1,6 +1,7 @@
 package oasis.economyx.asset;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
@@ -9,11 +10,11 @@ import org.joda.time.DateTime;
  * A type of asset that can be purchased with cash
  */
 public interface Purchasable {
-    @JsonIgnore
+    @JsonProperty("purchasePrice")
     @Nullable
     CashStack getPurchasePrice();
 
-    @JsonIgnore
+    @JsonProperty("purchaseDate")
     @Nullable
     DateTime getPurchaseDate();
 

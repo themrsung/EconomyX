@@ -2,7 +2,7 @@ package oasis.economyx.asset.contract.option;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.types.Counterparty;
+import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.cash.CashStack;
@@ -28,7 +28,7 @@ public final class Option implements Contract {
         this.exercisePrice = null;
     }
 
-    public Option(@NonNull UUID uniqueId, @NonNull Counterparty counterparty, @NonNull AssetStack delivery, @NonNull DateTime expiry, @NonNull PriceProvider market, @NonNull OptionType optionType, @NonNull CashStack exercisePrice) {
+    public Option(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull AssetStack delivery, @NonNull DateTime expiry, @NonNull PriceProvider market, @NonNull OptionType optionType, @NonNull CashStack exercisePrice) {
         this.uniqueId = uniqueId;
         this.counterparty = counterparty;
         this.delivery = delivery;
@@ -51,7 +51,7 @@ public final class Option implements Contract {
     @NonNull
     private final UUID uniqueId;
     @NonNull
-    private final Counterparty counterparty;
+    private final Actor counterparty;
 
     @NonNull
     private final AssetStack delivery;
@@ -96,7 +96,7 @@ public final class Option implements Contract {
 
     @NonNull
     @Override
-    public Counterparty getCounterparty() {
+    public Actor getCounterparty() {
         return counterparty;
     }
 

@@ -1,6 +1,7 @@
 package oasis.economyx.portfolio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -22,6 +23,7 @@ public class AssetPortfolio implements Portfolio {
         this.assets = other.get();
     }
 
+    @JsonProperty("assets")
     private final List<AssetStack> assets;
 
     @Override

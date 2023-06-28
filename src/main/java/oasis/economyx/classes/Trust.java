@@ -1,7 +1,7 @@
 package oasis.economyx.classes;
 
 import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.corporation.Corporation;
+import oasis.economyx.actor.fund.Fund;
 import oasis.economyx.actor.person.Person;
 import oasis.economyx.asset.stock.Stock;
 import oasis.economyx.state.EconomyState;
@@ -13,34 +13,37 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class Company extends EconomicActor implements Corporation {
-    public Company() {
-        super();
 
+public final class Trust extends EconomicActor implements Fund {
+    public Trust() {
+        super();
         this.stockId = UUID.randomUUID();
         this.shareCount = 0L;
-        this.employees = new ArrayList<>();
-        this.directors = new ArrayList<>();
-        this.ceo = null;
+        this.trustee = null;
     }
 
-    public Company(Company other) {
+    public Trust(Trust other) {
         super(other);
         this.stockId = other.stockId;
         this.shareCount = other.shareCount;
-        this.employees = other.employees;
-        this.directors = other.directors;
-        this.ceo = other.ceo;
+        this.trustee = other.trustee;
     }
 
     private final UUID stockId;
     private long shareCount;
 
-    private final List<Person> employees;
-    private final List<Person> directors;
     @Nullable
-    private Person ceo;
+    private Person trustee;
 
+    @Override
+    public @Nullable Person getRepresentative() {
+        return trustee;
+    }
+
+    @Override
+    public void setRepresentative(Person representative) {
+        this.trustee = representative;
+    }
 
     @Override
     public UUID getStockId() {
@@ -50,45 +53,6 @@ public final class Company extends EconomicActor implements Corporation {
     @Override
     public @NonNegative long getShareCount() {
         return shareCount;
-    }
-    @Override
-    public List<Person> getEmployees() {
-        return new ArrayList<>(employees);
-    }
-
-    @Override
-    public void addEmployee(Person employee) {
-        employees.add(employee);
-    }
-
-    @Override
-    public void removeEmployee(Person employee) {
-        employees.remove(employee);
-    }
-
-    @Override
-    public List<Person> getDirectors() {
-        return new ArrayList<>(directors);
-    }
-
-    @Override
-    public void addDirector(Person director) {
-        directors.add(director);
-    }
-
-    @Override
-    public void removeDirector(Person director) {
-        directors.remove(director);
-    }
-
-    @Override
-    public @Nullable Person getRepresentative() {
-        return ceo;
-    }
-
-    @Override
-    public void setRepresentative(@Nullable Person representative) {
-        this.ceo = representative;
     }
 
     @Override

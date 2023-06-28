@@ -1,6 +1,6 @@
 package oasis.economyx.asset.contract.forward;
 
-import oasis.economyx.actor.types.Counterparty;
+import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.contract.Contract;
@@ -21,7 +21,7 @@ public final class Forward implements Contract {
         this.expiry = new DateTime();
     }
 
-    public Forward(@NonNull UUID uniqueId, @NonNull Counterparty counterparty, @NonNull AssetStack delivery, @Nullable DateTime expiry) {
+    public Forward(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull AssetStack delivery, @Nullable DateTime expiry) {
         this.uniqueId = uniqueId;
         this.counterparty = counterparty;
         this.delivery = delivery;
@@ -38,7 +38,7 @@ public final class Forward implements Contract {
     @NonNull
     private final UUID uniqueId;
     @NonNull
-    private final Counterparty counterparty;
+    private final Actor counterparty;
     @NonNull
     private final AssetStack delivery;
     @Nullable
@@ -65,7 +65,7 @@ public final class Forward implements Contract {
     }
 
     @Override
-    public @NonNull Counterparty getCounterparty() {
+    public @NonNull Actor getCounterparty() {
         return counterparty;
     }
 }

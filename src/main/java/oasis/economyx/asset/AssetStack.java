@@ -68,6 +68,7 @@ public interface AssetStack {
      * A shortcut getter to asset classification
      * @return Classification of the asset being held
      */
+    @JsonIgnore
     default AssetType getType() {
         return getAsset().getType();
     }

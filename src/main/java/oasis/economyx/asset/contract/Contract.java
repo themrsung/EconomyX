@@ -12,6 +12,7 @@ import oasis.economyx.asset.contract.forward.Forward;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.option.Option;
 import oasis.economyx.asset.contract.swap.Swap;
+import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;

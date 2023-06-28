@@ -24,12 +24,6 @@ public abstract class EconomicActor implements Actor {
         this.portfolio = new AssetPortfolio();
     }
 
-    public EconomicActor(UUID uniqueId, @Nullable String name, Portfolio portfolio) {
-        this.uniqueId = uniqueId;
-        this.name = name;
-        this.portfolio = portfolio;
-    }
-
     public EconomicActor(EconomicActor other) {
         this.uniqueId = other.uniqueId;
         this.name = other.name;

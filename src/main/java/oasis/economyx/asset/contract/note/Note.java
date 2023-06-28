@@ -1,6 +1,6 @@
 package oasis.economyx.asset.contract.note;
 
-import oasis.economyx.actor.types.Counterparty;
+import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.contract.Contract;
@@ -21,7 +21,7 @@ public final class Note implements Contract {
         this.expiry = new DateTime();
     }
 
-    public Note(@NonNull UUID uniqueId, @NonNull Counterparty counterparty, @NonNull AssetStack delivery, @Nullable DateTime expiry) {
+    public Note(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull AssetStack delivery, @Nullable DateTime expiry) {
         this.uniqueId = uniqueId;
         this.counterparty = counterparty;
         this.delivery = delivery;
@@ -38,7 +38,7 @@ public final class Note implements Contract {
     @NonNull
     private final UUID uniqueId;
     @NonNull
-    private final Counterparty counterparty;
+    private final Actor counterparty;
 
     @NonNull
     private final AssetStack delivery;
@@ -71,7 +71,7 @@ public final class Note implements Contract {
 
     @NonNull
     @Override
-    public Counterparty getCounterparty() {
+    public Actor getCounterparty() {
         return counterparty;
     }
 }

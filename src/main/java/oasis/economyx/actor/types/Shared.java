@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +19,7 @@ public interface Shared extends Representable {
      * @return Stock's unique ID
      */
     @JsonProperty("stockId")
+    @NonNull
     UUID getStockId();
 
     /**
