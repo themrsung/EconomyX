@@ -1,6 +1,8 @@
 package oasis.economyx.actor.types;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.actor.person.Person;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -13,8 +15,9 @@ public interface Representable extends Actor {
      * Gets the person with authority to execute actions on this actor's behalf
      * @return Current representative
      */
-    @JsonIgnore
     @Nullable
+    @JsonProperty("representative")
+    @JsonIdentityReference
     Person getRepresentative();
 
     /**

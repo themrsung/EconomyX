@@ -1,9 +1,6 @@
 package oasis.economyx.actor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.portfolio.Portfolio;
 import oasis.economyx.state.EconomyState;
@@ -20,8 +17,13 @@ import java.util.UUID;
 )
 
 @JsonSubTypes({
-//        @JsonSubTypes.Type(value = EconomicActor.class, name = "economic_actor")
+        @JsonSubTypes.Type(value = EconomicActor.class, name = "economic_actor")
 })
+
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "uniqueId"
+)
 
 public interface Actor {
     /**

@@ -18,6 +18,12 @@ import java.util.UUID;
  * Base class for all actors
  */
 public abstract class EconomicActor implements Actor {
+    public EconomicActor(UUID uniqueId, @Nullable String name) {
+        this.uniqueId = uniqueId;
+        this.name = name;
+        this.portfolio = new AssetPortfolio();
+    }
+
     public EconomicActor() {
         this.uniqueId = UUID.randomUUID();
         this.name = null;
@@ -29,6 +35,7 @@ public abstract class EconomicActor implements Actor {
         this.name = other.name;
         this.portfolio = other.portfolio;
     }
+
 
     private final UUID uniqueId;
     @Nullable

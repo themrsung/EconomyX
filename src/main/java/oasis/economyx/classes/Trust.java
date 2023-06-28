@@ -13,8 +13,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-
+/**
+ * The instantiable class of Fund
+ */
 public final class Trust extends EconomicActor implements Fund {
+    /**
+     * Constructs a new trust
+     * @param uniqueId Unique ID of this trust
+     * @param name Name of this trust (not unique)
+     * @param stockId Unique ID of this trust's stock
+     * @param shareCount Initial share count
+     */
+    public Trust(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount) {
+        super(uniqueId, name);
+        this.stockId = stockId;
+        this.shareCount = shareCount;
+    }
+
     public Trust() {
         super();
         this.stockId = UUID.randomUUID();

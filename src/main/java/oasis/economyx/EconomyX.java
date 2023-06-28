@@ -67,6 +67,9 @@ public class EconomyX {
         // Assuming game state has been saved and can be safely wiped.
         this.state = EconomyXState.load(this);
 
+        Company comp = new Company();
+
+
         this.logger.info("Plugin loaded.");
     }
 

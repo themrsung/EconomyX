@@ -1,6 +1,6 @@
 package oasis.economyx.asset.contract;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,7 +12,6 @@ import oasis.economyx.asset.contract.forward.Forward;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.option.Option;
 import oasis.economyx.asset.contract.swap.Swap;
-import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
@@ -47,7 +46,8 @@ public interface Contract extends Asset {
      * @return Counterparty
      */
     @NonNull
-    @JsonIgnore
+    @JsonProperty("counterparty")
+    @JsonIdentityReference
     Actor getCounterparty();
 
     /**

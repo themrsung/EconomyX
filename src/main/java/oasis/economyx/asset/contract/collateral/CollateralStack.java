@@ -11,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class CollateralStack implements AssetStack {
+    public CollateralStack(@NonNull Collateral asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new CollateralMeta();
+    }
+
     public CollateralStack(@NonNull Collateral asset, @NonNegative long quantity, @NonNull CollateralMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

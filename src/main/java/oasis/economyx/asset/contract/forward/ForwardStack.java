@@ -9,6 +9,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class ForwardStack implements AssetStack {
+    public ForwardStack(@NonNull Forward asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new ForwardMeta();
+    }
+
     public ForwardStack(@NonNull Forward asset, @NonNegative long quantity, @NonNull ForwardMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

@@ -9,6 +9,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class CommodityStack implements AssetStack {
+    public CommodityStack(@NonNull Commodity asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new CommodityMeta();
+    }
+
     public CommodityStack(@NotNull Commodity asset, @NonNegative long quantity, @NonNull CommodityMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

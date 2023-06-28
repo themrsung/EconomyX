@@ -11,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class OptionStack implements AssetStack {
+    public OptionStack(@NonNull Option asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new OptionMeta();
+    }
+
     public OptionStack(@NonNull Option asset, @NonNegative long quantity, @NonNull OptionMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

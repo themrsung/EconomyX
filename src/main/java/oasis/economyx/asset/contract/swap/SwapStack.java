@@ -11,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class SwapStack implements AssetStack {
+    public SwapStack(@NonNull Swap asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new SwapMeta();
+    }
+
     public SwapStack(@NonNull Swap asset, @NonNegative long quantity, @NonNull SwapMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

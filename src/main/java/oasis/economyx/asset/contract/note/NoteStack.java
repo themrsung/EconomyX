@@ -11,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class NoteStack implements AssetStack {
+    public NoteStack(@NonNull Note asset, @NonNegative long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new NoteMeta();
+    }
+
     public NoteStack(@NonNull Note asset, @NonNegative long quantity, @NonNull NoteMeta meta) {
         this.asset = asset;
         this.quantity = quantity;

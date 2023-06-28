@@ -1,8 +1,6 @@
 package oasis.economyx.asset;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.commodity.Commodity;
 import oasis.economyx.asset.contract.Contract;
@@ -26,6 +24,11 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Stock.class, name = "stock"),
         @JsonSubTypes.Type(value = Contract.class, name = "contract")
 })
+
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "uniqueId"
+)
 
 public interface Asset {
     /**

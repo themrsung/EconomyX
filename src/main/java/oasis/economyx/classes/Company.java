@@ -13,7 +13,27 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * The instantiable class of Corporation
+ */
 public final class Company extends EconomicActor implements Corporation {
+    /**
+     * Constructs a new company
+     * @param uniqueId Unique ID of this company
+     * @param name Name of this company (not unique)
+     * @param stockId Unique ID of this company's stock
+     * @param shareCount Initial share count
+     */
+    public Company(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount) {
+        super(uniqueId, name);
+        this.stockId = stockId;
+        this.shareCount = shareCount;
+
+        this.employees = new ArrayList<>();
+        this.directors = new ArrayList<>();
+        this.ceo = null;
+    }
+
     public Company() {
         super();
 

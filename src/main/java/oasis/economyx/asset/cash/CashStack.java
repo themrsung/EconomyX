@@ -13,6 +13,12 @@ import java.beans.ConstructorProperties;
  * A stack of cash
  */
 public final class CashStack implements AssetStack {
+    public CashStack(Cash asset, long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new CashMeta();
+    }
+
     public CashStack(Cash asset, long quantity, CashMeta meta) {
         this.asset = asset;
         this.quantity = quantity;
