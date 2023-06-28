@@ -10,6 +10,8 @@ import net.kyori.adventure.text.format.TextDecoration;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashMeta;
 import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.asset.contract.note.Note;
+import oasis.economyx.asset.contract.note.NoteStack;
 import oasis.economyx.asset.stock.Stock;
 import oasis.economyx.asset.stock.StockMeta;
 import oasis.economyx.asset.stock.StockStack;
@@ -19,6 +21,7 @@ import oasis.economyx.portfolio.AssetPortfolio;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.Command;
 import org.spongepowered.api.command.CommandResult;
@@ -67,8 +70,29 @@ public class EconomyX {
         // Assuming game state has been saved and can be safely wiped.
         this.state = EconomyXState.load(this);
 
-        Company comp = new Company();
+        Company comp = new Company(UUID.randomUUID(), "Oasis Corporation", UUID.randomUUID(), 100L);
+        this.state.addActor(comp);
 
+        NaturalPerson np = new NaturalPerson(UUID.randomUUID(), "Parzival");
+        this.state.addActor(np);
+
+        UUID currency = UUID.randomUUID();
+
+        np.getAssets().add(new CashStack(new Cash(currency), 100L));
+        comp.getAssets().add(new StockStack(new Stock(comp.getStockId()), 100L));
+
+        Note note = new Note(
+                UUID.randomUUID(),
+                comp,
+                new CashStack(new Cash(currency), 1000L),
+                new DateTime().plusDays(10)
+        );
+
+        NoteStack ns = new NoteStack(note, 100);
+
+        np.getAssets().add(ns);
+
+        this.state.save();
 
         this.logger.info("Plugin loaded.");
     }

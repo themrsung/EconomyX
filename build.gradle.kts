@@ -46,6 +46,7 @@ java {
 dependencies {
     implementation("joda-time:joda-time:2.12.5")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.14.2")
 }
 
 tasks.withType(JavaCompile::class).configureEach {

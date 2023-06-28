@@ -9,6 +9,12 @@ import org.jetbrains.annotations.NotNull;
 import java.beans.ConstructorProperties;
 
 public final class StockStack implements AssetStack {
+    public StockStack(Stock asset, long quantity) {
+        this.asset = asset;
+        this.quantity = quantity;
+        this.meta = new StockMeta();
+    }
+
     public StockStack(Stock asset, long quantity, StockMeta meta) {
         this.asset = asset;
         this.quantity = quantity;
