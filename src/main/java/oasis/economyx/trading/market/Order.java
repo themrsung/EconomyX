@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.asset.contract.Contract;
+import oasis.economyx.asset.contract.collateral.Collateral;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -107,7 +107,7 @@ public interface Order {
      */
     @Nullable
     @JsonProperty("colateral")
-    Contract getCollateral();
+    Collateral getCollateral();
 
     /**
      * Called on order submission

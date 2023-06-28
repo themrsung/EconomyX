@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.contract.collateral.Collateral;
 import oasis.economyx.asset.contract.forward.Forward;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.option.Option;
@@ -27,7 +28,8 @@ import org.joda.time.DateTime;
         @JsonSubTypes.Type(value = Forward.class, name = "forward"),
         @JsonSubTypes.Type(value = Note.class, name = "note"),
         @JsonSubTypes.Type(value = Option.class, name = "option"),
-        @JsonSubTypes.Type(value = Swap.class, name = "swap")
+        @JsonSubTypes.Type(value = Swap.class, name = "swap"),
+        @JsonSubTypes.Type(value = Collateral.class, name = "collateral")
 })
 
 public interface Contract extends Asset {

@@ -30,7 +30,7 @@ public interface Marketplace extends PriceProvider {
     /**
      * Places a new order
      * @param order Order to place
-     * @param state State of this EconomyX instance
+     * @param state Current running state
      */
     @JsonIgnore
     void placeOrder(@NonNull Order order, @NonNull EconomyState state);
@@ -38,14 +38,14 @@ public interface Marketplace extends PriceProvider {
     /**
      * Cancels an existing order
      * @param order Order to place
-     * @param state State of this EconomyX instance
+     * @param state Current running state
      */
     @JsonIgnore
     void cancelOrder(@NonNull Order order, @NonNull EconomyState state);
 
     /**
      * Processes all orders
-     * @param state State of this EconomyX instance
+     * @param state Current running state
      */
     @JsonIgnore
     void processOrders(EconomyState state);

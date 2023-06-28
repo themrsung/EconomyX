@@ -2,14 +2,12 @@ package oasis.economyx.asset.contract.swap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.AssetStack;
+import oasis.economyx.actor.types.Counterparty;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashMeta;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.contract.Contract;
-import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.trading.PriceProvider;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -27,7 +25,7 @@ public final class Swap implements Contract {
         this.quote = null;
     }
 
-    public Swap(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull Cash denotation, @NonNull PriceProvider base, @NonNull PriceProvider quote, @Nullable DateTime expiry) {
+    public Swap(@NonNull UUID uniqueId, @NonNull Counterparty counterparty, @NonNull Cash denotation, @NonNull PriceProvider base, @NonNull PriceProvider quote, @Nullable DateTime expiry) {
         this.uniqueId = uniqueId;
         this.counterparty = counterparty;
         this.denotation = denotation;
@@ -48,7 +46,7 @@ public final class Swap implements Contract {
     @NonNull
     private final UUID uniqueId;
     @NonNull
-    private final Actor counterparty;
+    private final Counterparty counterparty;
 
     @NonNull
     @JsonProperty("denotation")
@@ -123,7 +121,7 @@ public final class Swap implements Contract {
 
     @NonNull
     @Override
-    public Actor getCounterparty() {
+    public Counterparty getCounterparty() {
         return counterparty;
     }
 }

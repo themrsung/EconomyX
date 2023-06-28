@@ -14,6 +14,10 @@ public final class Stock implements Asset {
         this.uniqueId = UUID.randomUUID();
     }
 
+    public Stock(@NonNull UUID uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
     public Stock(Stock other) {
         this.uniqueId = other.uniqueId;
     }

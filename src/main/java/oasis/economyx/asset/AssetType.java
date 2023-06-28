@@ -11,5 +11,5 @@ public enum AssetType {
     NOTE,
     OPTION,
     SWAP,
-    DERIVATIVE;
+    COLLATERAL;
 }

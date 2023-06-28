@@ -2,6 +2,7 @@ package oasis.economyx.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.trading.PriceProvider;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
@@ -42,4 +43,11 @@ public interface Auction extends PriceProvider {
     @JsonIgnore
     void placeBid(@NonNull Bid bid);
 
+    /**
+     * Called every auction tick
+     * Processes bids differently depending on auction type
+     * @param state Current running state
+     */
+    @JsonIgnore
+    void processBids(EconomyState state);
 }
