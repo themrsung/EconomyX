@@ -49,4 +49,11 @@ public interface Asset {
      */
     @NonNull
     AssetType getType();
+
+    /**
+     * Copies this asset
+     * @return An identical copy of this asset
+     */
+    @NonNull
+    Asset copy();
 }

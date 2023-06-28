@@ -87,11 +87,19 @@ public final class CommodityStack implements AssetStack {
         this.meta = (CommodityMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.COMMODITY;
 
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull CommodityStack copy() {
+        return new CommodityStack(this);
     }
 
     /**

@@ -60,4 +60,10 @@ public final class Commodity implements Asset {
     public @NonNull AssetType getType() {
         return type;
     }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Commodity copy() {
+        return new Commodity(this);
+    }
 }

@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.trading.PriceProviderType;
 import oasis.economyx.trading.market.MarketTick;
 import oasis.economyx.trading.market.Marketplace;
 import oasis.economyx.trading.market.Order;
 import oasis.economyx.trading.market.OrderType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * An instantiable class of Marketplace
  */
-public abstract class Market implements Marketplace {
+public final class Market implements Marketplace {
     public Market() {
         this.asset = null;
         this.orders = new ArrayList<>();
@@ -34,6 +36,7 @@ public abstract class Market implements Marketplace {
     }
 
     @JsonProperty
+    @NonNull
     private final AssetStack asset;
     @JsonProperty
     private final List<Order> orders;
@@ -45,6 +48,12 @@ public abstract class Market implements Marketplace {
     @NonNegative
     @JsonIgnore
     private transient long volume;
+
+    @NotNull
+    @Override
+    public AssetStack getAsset() {
+        return asset.copy();
+    }
 
     @Override
     @JsonIgnore
@@ -181,5 +190,15 @@ public abstract class Market implements Marketplace {
         for (Order o : getSellOrders()) {
             if (o.isMarket()) o.setPrice(bidPrice);
         }
+    }
+
+    @NonNull
+    @JsonProperty
+    private final PriceProviderType type = PriceProviderType.MARKET;
+
+    @NonNull
+    @JsonIgnore
+    public PriceProviderType getType() {
+        return type;
     }
 }

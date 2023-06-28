@@ -91,10 +91,18 @@ public final class CollateralStack implements AssetStack {
         this.meta = (CollateralMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.COLLATERAL;
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull CollateralStack copy() {
+        return new CollateralStack(this);
     }
 
     /**

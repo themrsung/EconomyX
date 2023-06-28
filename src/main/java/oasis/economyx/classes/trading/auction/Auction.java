@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.trading.auction.AuctionType;
 import oasis.economyx.trading.auction.Auctioneer;
 import oasis.economyx.trading.auction.Bid;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -20,44 +21,84 @@ import java.util.List;
 public abstract class Auction implements Auctioneer {
     public Auction() {
         this.asset = null;
-        this.type = null;
+        this.denotation = null;
         this.deadline = null;
         this.bids = new ArrayList<>();
+        this.price = null;
+        this.sold = false;
     }
 
     public Auction(Auction other) {
         this.asset = other.asset;
-        this.type = other.type;
+        this.denotation = other.denotation;
         this.deadline = other.deadline;
         this.bids = other.bids;
+        this.price = other.price;
+        this.sold = other.sold;
     }
 
     @JsonProperty
+    @NonNull
     private final AssetStack asset;
+
     @JsonProperty
-    private final AuctionType type;
+    @NonNull
+    private final Cash denotation;
+
     @JsonProperty
+    @NonNull
     private final DateTime deadline;
+
     @JsonProperty
+    @NonNull
     private final List<Bid> bids;
 
-    @Override
-    @JsonIgnore
-    public AuctionType getType() {
-        return type;
-    }
+    @JsonProperty
+    @NotNull
+    private CashStack price;
+
+    @JsonProperty
+    private boolean sold;
 
     @Override
     @JsonIgnore
-    public DateTime getDeadline() {
+    public boolean isSold() {
+        return sold;
+    }
+
+    @JsonIgnore
+    protected void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
+    @NotNull
+    @Override
+    public AssetStack getAsset() {
+        return asset.copy();
+    }
+    @Override
+    @JsonIgnore
+    public @NotNull DateTime getDeadline() {
         return deadline;
     }
 
+    @NotNull
     @Override
     @JsonIgnore
-    public List<Bid> getBids() {
+    public CashStack getPrice() {
+        return new CashStack(price);
+    }
+
+    @JsonIgnore
+    protected void setPrice(@NonNull CashStack price) {
+        this.price = price;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NotNull List<Bid> getBids() {
         List<Bid> bids = new ArrayList<>(this.bids);
-        bids.sort((b1, b2) -> b1.getTime().compareTo(b2.getTime()));
+        bids.sort((b1, b2) -> b2.getPrice().compare(b1.getPrice()));
         return bids;
     }
 
@@ -65,39 +106,5 @@ public abstract class Auction implements Auctioneer {
     @JsonIgnore
     public void placeBid(@NonNull Bid bid) {
         bids.add(bid);
-    }
-
-    @Override
-    @JsonIgnore
-    public void cancelBid(@NonNull Bid bid) {
-        bids.remove(bid);
-    }
-
-    @Override
-    @JsonIgnore
-    public void processBids(Actor auctioneer) {
-        // Dutch auctions are closed immediately after the first bid
-        if (getType() == AuctionType.DUTCH) {
-            if (getBids().size() > 0L) {
-                onDeadlineReached(auctioneer);
-                return;
-            }
-        }
-
-
-    }
-
-    @Override
-    @JsonIgnore
-    public void onDeadlineReached(Actor auctioneer) {
-        if (getBids().size() == 0L) return;
-        else if (getBids().size() == 1L) {
-            // Every auction behaves the same when only one bid is placed
-            Bid bid = getBids().get(0);
-            CashStack price = bid.getPrice();
-            bid.onSucceeded(auctioneer, price);
-        } else {
-            // TODO
-        }
     }
 }

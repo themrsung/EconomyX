@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.contract.Contract;
@@ -89,5 +90,11 @@ public final class Note implements Contract {
     @JsonIgnore
     public Actor getCounterparty() {
         return counterparty;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Note copy() {
+        return new Note(this);
     }
 }

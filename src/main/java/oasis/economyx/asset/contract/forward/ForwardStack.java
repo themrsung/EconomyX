@@ -89,11 +89,18 @@ public final class ForwardStack implements AssetStack {
         this.meta = (ForwardMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.FORWARD;
 
+    @JsonIgnore
     @Override
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    public @NonNull ForwardStack copy() {
+        return new ForwardStack(this);
     }
 
     /**

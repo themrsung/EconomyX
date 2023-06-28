@@ -104,4 +104,11 @@ public interface AssetStack {
 
         return getQuantity() == asset.getQuantity();
     }
+
+    /**
+     * Copies this asset stack
+     * @return An identical copy
+     */
+    @NonNull
+    AssetStack copy();
 }

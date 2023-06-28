@@ -42,4 +42,10 @@ public final class Cash implements Asset {
     public @NonNull AssetType getType() {
         return type;
     }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Cash copy() {
+        return new Cash(this);
+    }
 }

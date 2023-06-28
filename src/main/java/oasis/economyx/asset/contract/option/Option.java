@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.cash.CashStack;
@@ -151,5 +152,11 @@ public final class Option implements Contract {
         final boolean exercisableNow = isAmerican() || getExpiry().isBeforeNow();
 
         return !outOfTheMoney && exercisableNow;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Option copy() {
+        return new Option(this);
     }
 }

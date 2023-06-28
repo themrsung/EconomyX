@@ -44,4 +44,10 @@ public final class Stock implements Asset {
     public AssetType getType() {
         return type;
     }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Stock copy() {
+        return new Stock(this);
+    }
 }

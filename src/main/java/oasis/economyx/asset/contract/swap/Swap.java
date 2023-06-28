@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.asset.Asset;
 import oasis.economyx.asset.AssetType;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashMeta;
@@ -136,5 +137,11 @@ public final class Swap implements Contract {
     @JsonIgnore
     public Actor getCounterparty() {
         return counterparty;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull Swap copy() {
+        return new Swap(this);
     }
 }

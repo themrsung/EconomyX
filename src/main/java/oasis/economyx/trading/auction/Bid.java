@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 /**
  * Bids are placed in auctions
  * Unlike orders, there is no collateral backing the bid
+ * A bid is not cancellable
  */
 public interface Bid {
     /**

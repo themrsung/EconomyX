@@ -91,10 +91,18 @@ public final class NoteStack implements AssetStack {
         this.meta = (NoteMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.NOTE;
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull NoteStack copy() {
+        return new NoteStack(this);
     }
 
     /**

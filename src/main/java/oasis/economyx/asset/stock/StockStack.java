@@ -88,11 +88,19 @@ public final class StockStack implements AssetStack {
         this.meta = (StockMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.STOCK;
 
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull StockStack copy() {
+        return new StockStack(this);
     }
 
     /**

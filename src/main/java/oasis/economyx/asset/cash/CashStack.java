@@ -145,10 +145,19 @@ public final class CashStack implements AssetStack {
         this.meta = (CashMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.CASH;
+
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull CashStack copy() {
+        return new CashStack(this);
     }
 
     /**

@@ -7,8 +7,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.trading.auction.Auctioneer;
-import oasis.economyx.trading.market.Marketplace;
+import oasis.economyx.classes.trading.auction.DutchAuction;
+import oasis.economyx.classes.trading.auction.EnglishAuction;
+import oasis.economyx.classes.trading.auction.FirstPriceSealedAuction;
+import oasis.economyx.classes.trading.auction.SecondPriceSealedAuction;
+import oasis.economyx.classes.trading.market.Market;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -20,13 +23,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Marketplace.class, name = "trading"),
-        @JsonSubTypes.Type(value = Auctioneer.class, name = "auction")
+        @JsonSubTypes.Type(value = Market.class, name = "MARKET"),
+        @JsonSubTypes.Type(value = DutchAuction.class, name = "DUTCH_AUCTION"),
+        @JsonSubTypes.Type(value = EnglishAuction.class, name = "ENGLISH_AUCTION"),
+        @JsonSubTypes.Type(value = FirstPriceSealedAuction.class, name = "FIRST_PRICE_AUCTION"),
+        @JsonSubTypes.Type(value = SecondPriceSealedAuction.class, name = "SECOND_PRICE_AUCTION"),
 })
-
 public interface PriceProvider {
     /**
      * The asset of which price is provided for

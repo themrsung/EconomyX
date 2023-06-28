@@ -91,11 +91,19 @@ public final class SwapStack implements AssetStack {
         this.meta = (SwapMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.SWAP;
 
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull SwapStack copy() {
+        return new SwapStack(this);
     }
 
     /**

@@ -91,11 +91,19 @@ public final class OptionStack implements AssetStack {
         this.meta = (OptionMeta) meta;
     }
 
+    @JsonProperty
     private final AssetType type = AssetType.OPTION;
 
     @Override
+    @JsonIgnore
     public @NonNull AssetType getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull OptionStack copy() {
+        return new OptionStack(this);
     }
 
     /**
