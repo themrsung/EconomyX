@@ -1,5 +1,6 @@
 package oasis.economyx.classes.trading.market;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
@@ -20,7 +21,7 @@ import java.util.List;
 public abstract class Market implements Marketplace {
     public Market() {
         this.asset = null;
-        this.orders = null;
+        this.orders = new ArrayList<>();
         this.price = null;
         this.volume = 0L;
     }
@@ -38,33 +39,40 @@ public abstract class Market implements Marketplace {
     private final List<Order> orders;
 
     @NonNull
+    @JsonProperty
     private CashStack price;
 
     @NonNegative
+    @JsonIgnore
     private transient long volume;
 
     @Override
+    @JsonIgnore
     public @NonNull CashStack getPrice() {
         return new CashStack(price);
     }
 
     @Override
+    @JsonIgnore
     public @NonNegative long getVolume() {
         return volume;
     }
 
     @Override
+    @JsonIgnore
     public List<Order> getOrders() {
         return new ArrayList<>(orders);
     }
 
     @Override
+    @JsonIgnore
     public void placeOrder(@NonNull Order order, @NonNull Actor exchange) {
         orders.add(order);
         order.onSubmitted(exchange);
     }
 
     @Override
+    @JsonIgnore
     public void cancelOrder(@NonNull Order order, @NonNull Actor exchange) {
         if (orders.remove(order)) {
             order.onCancelled(exchange);
@@ -72,6 +80,7 @@ public abstract class Market implements Marketplace {
     }
 
     @Override
+    @JsonIgnore
     public void processOrders(Actor exchange) {
         enforceTickSize(exchange);
 
@@ -90,8 +99,8 @@ public abstract class Market implements Marketplace {
                     CashStack p = bo.getTime().isBefore(so.getTime()) ? bo.getPrice() : so.getPrice();
                     long q = Math.min(bo.getQuantity(), so.getQuantity());
 
-                    if (q == bo.getQuantity() || bo.allowsPartialFulfillment()) {
-                        if (q == so.getQuantity() || so.allowsPartialFulfillment()) {
+                    if (q >= bo.getQuantity() || bo.allowsPartialFulfillment()) {
+                        if (q >= so.getQuantity() || so.allowsPartialFulfillment()) {
                             bo.onFulfilled(exchange, p, q);
                             so.onFulfilled(exchange, p, q);
 
@@ -104,6 +113,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void enforceTickSize(Actor exchange) {
         for (Order o : getOrders()) {
             double price = o.getPrice().getQuantity();
@@ -114,6 +124,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void cancelFulfilledOrders(Actor exchange) {
         for (Order o : getOrders()) {
             if (o.getQuantity() <= 0L) {
@@ -122,6 +133,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void triggerStopLoss() {
         for (Order o : getOrders()) {
             if (o.getOrderType() == OrderType.STOP_LOSS_SELL) {
@@ -132,6 +144,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void triggerStopLimit() {
         for (Order o : getOrders()) {
             if (o.getOrderType() == OrderType.STOP_LIMIT_SELL) {
@@ -142,6 +155,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void killImmediateOrders(Actor exchange) {
         for (Order o : getOrders()) {
             if (o.isImmediate()) {
@@ -152,6 +166,7 @@ public abstract class Market implements Marketplace {
         }
     }
 
+    @JsonIgnore
     private void repriceMarketOrders() {
         MarketTick highestAsk = getHighestAsk();
         CashStack askPrice = highestAsk != null ? highestAsk.getPrice() : new CashStack(getCurrency(), Long.MAX_VALUE);
