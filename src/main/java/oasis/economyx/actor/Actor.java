@@ -1,7 +1,6 @@
 package oasis.economyx.actor;
 
 import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.classes.actor.NaturalPerson;
 import oasis.economyx.classes.actor.company.common.*;
 import oasis.economyx.classes.actor.company.finance.Bank;
@@ -12,18 +11,19 @@ import oasis.economyx.classes.actor.company.special.LawFirm;
 import oasis.economyx.classes.actor.company.special.Mercenary;
 import oasis.economyx.classes.actor.company.trading.AuctionHouse;
 import oasis.economyx.classes.actor.company.trading.Exchange;
-import oasis.economyx.classes.actor.company.vaulting.Vault;
+import oasis.economyx.classes.actor.company.vaulting.VaultCompany;
 import oasis.economyx.classes.actor.institution.monetary.CentralBank;
 import oasis.economyx.classes.actor.institution.monetary.Mint;
 import oasis.economyx.classes.actor.institution.tripartite.Administration;
 import oasis.economyx.classes.actor.institution.tripartite.Judiciary;
 import oasis.economyx.classes.actor.institution.tripartite.Legislature;
 import oasis.economyx.classes.actor.institution.warfare.Military;
-import oasis.economyx.classes.actor.institution.warfare.Researcher;
-import oasis.economyx.classes.actor.sovereignty.Sovereignty;
+import oasis.economyx.classes.actor.institution.warfare.ResearchCenter;
+import oasis.economyx.classes.actor.organization.corporate.Cartel;
+import oasis.economyx.classes.actor.organization.personal.Party;
 import oasis.economyx.classes.actor.sovereignty.federal.Empire;
 import oasis.economyx.classes.actor.sovereignty.federal.Federation;
-import oasis.economyx.classes.actor.sovereignty.international.Alliance;
+import oasis.economyx.classes.actor.organization.international.Alliance;
 import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.classes.actor.sovereignty.singular.Republic;
 import oasis.economyx.classes.actor.trust.Trust;
@@ -54,7 +54,7 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Bank.class, name = "BANK"),
         @JsonSubTypes.Type(value = SecuritiesBroker.class, name = "SECURITIES_BROKER"),
         @JsonSubTypes.Type(value = Guarantor.class, name = "GUARANTOR"),
-        @JsonSubTypes.Type(value = Vault.class, name = "VAULT"),
+        @JsonSubTypes.Type(value = VaultCompany.class, name = "VAULT_COMPANY"),
         @JsonSubTypes.Type(value = Mercenary.class, name = "MERCENARY"),
         @JsonSubTypes.Type(value = LawFirm.class, name = "LAW_FIRM"),
         @JsonSubTypes.Type(value = HoldingsCompany.class, name = "HOLDINGS_COMPANY"),
@@ -67,12 +67,16 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Federation.class, name = "FEDERATION"),
         @JsonSubTypes.Type(value = Republic.class, name = "REPUBLIC"),
         @JsonSubTypes.Type(value = Principality.class, name = "PRINCIPALITY"),
+
+        // Organizations
         @JsonSubTypes.Type(value = Alliance.class, name = "ALLIANCE"),
+        @JsonSubTypes.Type(value = Cartel.class, name = "CARTEL"),
+        @JsonSubTypes.Type(value = Party.class, name = "PARTY"),
 
         // Institutions
         @JsonSubTypes.Type(value = CentralBank.class, name = "CENTRAL_BANK"),
         @JsonSubTypes.Type(value = Mint.class, name = "MINT"),
-        @JsonSubTypes.Type(value = Researcher.class, name = "RESEARCHER"),
+        @JsonSubTypes.Type(value = ResearchCenter.class, name = "RESEARCH_CENTER"),
         @JsonSubTypes.Type(value = Military.class, name = "MILITARY"),
         @JsonSubTypes.Type(value = Administration.class, name = "ADMINISTRATION"),
         @JsonSubTypes.Type(value = Legislature.class, name = "LEGISLATURE"),

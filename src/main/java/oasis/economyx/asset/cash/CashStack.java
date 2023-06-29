@@ -102,6 +102,72 @@ public final class CashStack implements AssetStack {
     }
 
     /**
+     * Multiplies two cash stacks
+     * @param other Other stack
+     * @return The resulting cash stack
+     * @throws IllegalArgumentException When a different denotation is given
+     */
+    @JsonIgnore
+    public CashStack multiply(CashStack other) throws IllegalArgumentException {
+        if (!getAsset().equals(other.getAsset())) throw new IllegalArgumentException();
+
+        CashStack result = new CashStack(this);
+        result.setQuantity(getQuantity() * other.getQuantity());
+
+        return result;
+    }
+
+    /**
+     * Multiplies this cash stack by a given modifier
+     * @param modifier modifier
+     * @return The resulting cash stack
+     */
+    @JsonIgnore
+    public CashStack multiply(float modifier) {
+        CashStack result = new CashStack(this);
+        result.setQuantity(Math.round(getQuantity() * modifier));
+
+        return result;
+    }
+
+    /**
+     * Divides this cash stack by another
+     * @param other Other stack
+     * @return The resulting stack
+     * @throws IllegalArgumentException When a different denotation is given
+     * @throws ArithmeticException When the other stack has 0 as its quantity
+     */
+    @JsonIgnore
+    public CashStack divide(CashStack other) throws IllegalArgumentException, ArithmeticException {
+        if (!getAsset().equals(other.getAsset())) throw new IllegalArgumentException();
+
+        CashStack result = new CashStack(this);
+        try {
+            result.setQuantity(getQuantity() / other.getQuantity());
+            return result;
+        } catch (ArithmeticException e) {
+            throw new ArithmeticException();
+        }
+    }
+
+    /**
+     * Divides this cash stack by a given denominator
+     * @param denominator denominator
+     * @return The resulting cash stack
+     */
+    @JsonIgnore
+    public CashStack divide(float denominator) throws ArithmeticException {
+        CashStack result = new CashStack(this);
+        try {
+            result.setQuantity(Math.round(getQuantity() / denominator));
+        } catch (ArithmeticException e) {
+            throw new ArithmeticException();
+        }
+
+        return result;
+    }
+
+    /**
      * Whether this stack is bigger than the other
      * @param other Stack to compare against
      * @return Whether this is bigger

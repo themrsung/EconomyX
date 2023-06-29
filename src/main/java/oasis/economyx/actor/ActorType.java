@@ -64,7 +64,7 @@ public enum ActorType {
     /**
      * Able to hold commodities on their client's behalf
      */
-    VAULT,
+    VAULT_COMPANY,
 
     /**
      * Able to meet clients' military needs
@@ -111,10 +111,22 @@ public enum ActorType {
      */
     PRINCIPALITY,
 
+    // Organizations
+
     /**
-     * An international military alliance
+     * An organization of sovereigns
      */
     ALLIANCE,
+
+    /**
+     * An organization of corporations
+     */
+    CARTEL,
+
+    /**
+     * An organization of people
+     */
+    PARTY,
 
     // Institutions
 
@@ -131,7 +143,7 @@ public enum ActorType {
     /**
      * Can produce WMDs and ICBMs
      */
-    RESEARCHER,
+    RESEARCH_CENTER,
 
     /**
      * Represents its parent sovereignty in warfare

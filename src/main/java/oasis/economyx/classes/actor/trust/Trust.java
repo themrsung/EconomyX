@@ -7,10 +7,13 @@ import oasis.economyx.actor.Actor;
 import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.fund.Fund;
 import oasis.economyx.actor.person.Person;
+import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.stock.Stock;
 import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,11 +32,13 @@ public final class Trust extends EconomicActor implements Fund {
      * @param name Name of this trust (not unique)
      * @param stockId Unique ID of this trust's stock
      * @param shareCount Initial share count
+     * @param currency Currency to pay the trustee in
      */
-    public Trust(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount) {
+    public Trust(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name);
         this.stockId = stockId;
         this.shareCount = shareCount;
+        this.trusteePay = new CashStack(currency, 0L);
     }
 
     public Trust() {
@@ -41,6 +46,7 @@ public final class Trust extends EconomicActor implements Fund {
         this.stockId = UUID.randomUUID();
         this.shareCount = 0L;
         this.trustee = null;
+        this.trusteePay = null;
     }
 
     public Trust(Trust other) {
@@ -48,6 +54,7 @@ public final class Trust extends EconomicActor implements Fund {
         this.stockId = other.stockId;
         this.shareCount = other.shareCount;
         this.trustee = other.trustee;
+        this.trusteePay = other.trusteePay;
     }
 
     @JsonProperty
@@ -60,6 +67,10 @@ public final class Trust extends EconomicActor implements Fund {
     @JsonIdentityReference
     private Person trustee;
 
+    @NonNull
+    @JsonProperty
+    private CashStack trusteePay;
+
     @Override
     @JsonIgnore
     public @Nullable Person getRepresentative() {
@@ -70,6 +81,16 @@ public final class Trust extends EconomicActor implements Fund {
     @JsonIgnore
     public void setRepresentative(Person representative) {
         this.trustee = representative;
+    }
+
+    @Override
+    public @NonNull CashStack getRepresentativePay() {
+        return new CashStack(trusteePay);
+    }
+
+    @Override
+    public void setRepresentativePay(@NonNull CashStack pay) {
+        this.trusteePay = pay;
     }
 
     @Override

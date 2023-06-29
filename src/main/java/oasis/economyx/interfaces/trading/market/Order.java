@@ -2,6 +2,7 @@ package oasis.economyx.interfaces.trading.market;
 
 import oasis.economyx.actor.Actor;
 import oasis.economyx.actor.types.finance.Brokerage;
+import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.contract.collateral.Collateral;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -124,7 +125,7 @@ public interface Order {
      * Handles contract registration by default
      * @param exchange The actor running this market
      */
-    void onSubmitted(Actor exchange);
+    void onSubmitted(MarketHost exchange);
 
     /**
      * Called on order fulfillment
@@ -133,13 +134,13 @@ public interface Order {
      * @param price Price of fulfillment
      * @param quantity Quantity of fulfillment
      */
-    void onFulfilled(Actor exchange, @NonNull CashStack price, @NonNegative long quantity);
+    void onFulfilled(MarketHost exchange, @NonNull CashStack price, @NonNegative long quantity);
 
     /**
      * Called on order cancellation
      * Safely cancels the order
      * @param exchange The actor running this market
      */
-    void onCancelled(Actor exchange);
+    void onCancelled(MarketHost exchange);
 
 }

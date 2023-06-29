@@ -7,13 +7,17 @@ import net.kyori.adventure.text.LinearComponents;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
+import oasis.economyx.event.payment.PaymentEvent;
+import oasis.economyx.listener.PaymentListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Server;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.Command;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.parameter.Parameter;
+import org.spongepowered.api.event.EventListenerRegistration;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
@@ -43,9 +47,15 @@ public class EconomyX {
 
     private EconomyState state;
 
+    public EconomyState getState() {
+        return state;
+    }
+
     @Listener
     public void onConstructPlugin(final ConstructPluginEvent event) {
         this.logger.info("Loading EconomyX.");
+
+        Sponge.eventManager().registerListeners(container, new PaymentListener(this));
 
         this.state = new EconomyXState(this);
     }

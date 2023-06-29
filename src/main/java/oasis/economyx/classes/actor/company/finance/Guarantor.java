@@ -16,7 +16,14 @@ import java.util.List;
 import java.util.UUID;
 
 public final class Guarantor extends Company implements Credible {
-
+    /**
+     * Creates a new guarantor
+     * @param uniqueId Unique ID of this guarantor
+     * @param name Name of this guarantor (not unique)
+     * @param stockId ID of this guarantor's stock
+     * @param shareCount Initial share count
+     * @param currency Currency to use
+     */
     public Guarantor(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);
 

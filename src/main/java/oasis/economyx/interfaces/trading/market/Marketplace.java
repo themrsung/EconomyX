@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.trading.market;
 
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -21,8 +22,7 @@ public interface Marketplace extends PriceProvider {
     List<Order> getOrders();
 
     /**
-     * Gets all buy orders
-     * Sorted by fulfillment priority
+     * Gets all buy orders, sorted by fulfillment priority descending
      * @return List of buy orders
      */
     default List<Order> getBuyOrders() {
@@ -50,8 +50,7 @@ public interface Marketplace extends PriceProvider {
     }
 
     /**
-     * Gets all sell orders
-     * Sorted by fulfillment priority
+     * Gets all sell orders, sorted by fulfillment priority descending
      * @return List of sell orders
      */
     default List<Order> getSellOrders() {
@@ -83,21 +82,21 @@ public interface Marketplace extends PriceProvider {
      * @param order Order to place
      * @param exchange The actor running this market
      */
-    void placeOrder(@NonNull Order order, @NonNull Actor exchange);
+    void placeOrder(@NonNull Order order, @NonNull MarketHost exchange);
 
     /**
      * Cancels an existing order
      * @param order Order to place
      * @param exchange The actor running this market
      */
-    void cancelOrder(@NonNull Order order, @NonNull Actor exchange);
+    void cancelOrder(@NonNull Order order, @NonNull MarketHost exchange);
 
     /**
      * Processes orders
      * Called every market tick
      * @param exchange The actor running this market
      */
-    void processOrders(Actor exchange);
+    void processOrders(MarketHost exchange);
 
     /**
      * Gets structured buy tick data sorted by price descending

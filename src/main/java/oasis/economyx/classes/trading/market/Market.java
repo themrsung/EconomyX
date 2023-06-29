@@ -3,6 +3,7 @@ package oasis.economyx.classes.trading.market;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.PriceProviderType;
@@ -75,14 +76,14 @@ public final class Market implements Marketplace {
 
     @Override
     @JsonIgnore
-    public void placeOrder(@NonNull Order order, @NonNull Actor exchange) {
+    public void placeOrder(@NonNull Order order, @NonNull MarketHost exchange) {
         orders.add(order);
         order.onSubmitted(exchange);
     }
 
     @Override
     @JsonIgnore
-    public void cancelOrder(@NonNull Order order, @NonNull Actor exchange) {
+    public void cancelOrder(@NonNull Order order, @NonNull MarketHost exchange) {
         if (orders.remove(order)) {
             order.onCancelled(exchange);
         }
@@ -90,7 +91,7 @@ public final class Market implements Marketplace {
 
     @Override
     @JsonIgnore
-    public void processOrders(Actor exchange) {
+    public void processOrders(MarketHost exchange) {
         enforceTickSize(exchange);
 
         cancelFulfilledOrders(exchange);
@@ -123,7 +124,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void enforceTickSize(Actor exchange) {
+    private void enforceTickSize(MarketHost exchange) {
         for (Order o : getOrders()) {
             double price = o.getPrice().getQuantity();
 
@@ -134,7 +135,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void cancelFulfilledOrders(Actor exchange) {
+    private void cancelFulfilledOrders(MarketHost exchange) {
         for (Order o : getOrders()) {
             if (o.getQuantity() <= 0L) {
                 cancelOrder(o, exchange);

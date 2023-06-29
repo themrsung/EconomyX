@@ -27,6 +27,8 @@ import java.util.UUID;
 public abstract class Company extends EconomicActor implements Corporation {
     public Company(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name);
+        this.currency = currency;
+
         this.stockId = stockId;
         this.shareCount = shareCount;
 
@@ -42,6 +44,8 @@ public abstract class Company extends EconomicActor implements Corporation {
     public Company() {
         super();
 
+        this.currency = null;
+
         this.stockId = UUID.randomUUID();
         this.shareCount = 0L;
         this.employees = new ArrayList<>();
@@ -55,6 +59,8 @@ public abstract class Company extends EconomicActor implements Corporation {
 
     public Company(Company other) {
         super(other);
+        this.currency = other.currency;
+
         this.stockId = other.stockId;
         this.shareCount = other.shareCount;
         this.employees = other.employees;
@@ -65,6 +71,9 @@ public abstract class Company extends EconomicActor implements Corporation {
         this.directorPay = other.directorPay;
         this.ceoPay = other.ceoPay;
     }
+
+    @JsonProperty
+    private final Cash currency;
 
     @JsonProperty
     private final UUID stockId;
@@ -85,6 +94,11 @@ public abstract class Company extends EconomicActor implements Corporation {
     @JsonIdentityReference
     private Person ceo;
 
+    @Override
+    @JsonIgnore
+    public Cash getCurrency() {
+        return currency;
+    }
 
     @Override
     @JsonIgnore

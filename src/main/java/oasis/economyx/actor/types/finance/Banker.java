@@ -1,8 +1,15 @@
 package oasis.economyx.actor.types.finance;
 
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.corporation.Corporation;
+import oasis.economyx.actor.types.institutional.InterestRateProvider;
+import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.event.payment.PaymentEvent;
 import oasis.economyx.interfaces.banking.Account;
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.spongepowered.api.Sponge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +20,7 @@ import java.util.UUID;
  * Accounts can contain any asset
  * Multiple accounts can be created for each client
  */
-public interface Banker {
+public interface Banker extends Corporation, InterestRateProvider {
     /**
      * Gets every account held by this banker
      * @return Copied list of accounts
@@ -60,4 +67,39 @@ public interface Banker {
      * @param account Account to remove
      */
     void removeAccount(Account account);
+
+    @Override
+    @NonNegative
+    float getInterestRate();
+
+    /**
+     * Commercial banks cannot have negative interest rates
+     * @param rate Annual interest rate
+     * @throws IllegalArgumentException When given rate is negative
+     */
+    @Override
+    void setInterestRate(@NonNegative float rate) throws IllegalArgumentException;
+
+    /**
+     * Called every hour
+     * Interest rate is converted to hourly rate so that the compounded interest over a year will equal the annual rate
+     */
+    default void payInterest() {
+        for (Account a : getAccounts()) {
+            AssetStack content = a.getContent();
+            if (content instanceof CashStack c) try {
+                CashStack i = c.multiply(getDailyInterestRate());
+                Sponge.eventManager().post(new PaymentEvent(
+                        this,
+                        a.getClient(),
+                        i,
+                        null, // TODO
+                        true
+                ));
+
+            } catch (IllegalArgumentException e) {
+                // Account has foreign currency in it content
+            }
+        }
+    }
 }
