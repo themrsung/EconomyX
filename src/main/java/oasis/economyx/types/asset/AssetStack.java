@@ -25,7 +25,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 )
 
 @JsonSubTypes({ // Uses AssetType to designate stack types
-        @JsonSubTypes.Type(value = CashStack.class, name = "CASH_"),
+        @JsonSubTypes.Type(value = CashStack.class, name = "CASH"),
         @JsonSubTypes.Type(value = StockStack.class, name = "STOCK"),
         @JsonSubTypes.Type(value = CommodityStack.class, name = "COMMODITY"),
         @JsonSubTypes.Type(value = PropertyStack.class, name = "PROPERTY"),
