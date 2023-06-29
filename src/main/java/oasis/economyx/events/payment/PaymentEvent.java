@@ -10,6 +10,14 @@ import org.spongepowered.api.event.Cause;
  * A payment events denotes the one-way flow of an asset stack from one holder to another
  */
 public final class PaymentEvent extends EconomyEvent {
+    /**
+     * Creates a new payment event
+     * @param sender Actor to take asset from
+     * @param recipient Actor to give asset to
+     * @param asset Asset to transfer
+     * @param cause Cause of this payment
+     * @param checkSolvency Whether to check if the sender is capable of fulfilling this payment
+     */
     public PaymentEvent(@NonNull Actor sender, @NonNull Actor recipient, @NonNull AssetStack asset, Cause cause, boolean checkSolvency) {
         super(cause);
 
