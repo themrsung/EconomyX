@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.vaulting;
 
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.commodity.CommodityStack;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.commodity.CommodityStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

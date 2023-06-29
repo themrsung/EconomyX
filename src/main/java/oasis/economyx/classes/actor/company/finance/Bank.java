@@ -2,14 +2,16 @@ package oasis.economyx.classes.actor.company.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.types.finance.Banker;
-import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.banking.Account;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public final class Bank extends Company implements Banker {
 
         this.accounts = new ArrayList<>();
         this.interestRate = 0f;
+        this.issuedCards = new ArrayList<>();
     }
 
     public Bank() {
@@ -36,12 +39,15 @@ public final class Bank extends Company implements Banker {
 
         this.accounts = new ArrayList<>();
         this.interestRate = 0f;
+        this.issuedCards = new ArrayList<>();
     }
 
     public Bank(Bank other) {
         super(other);
+
         this.accounts = other.accounts;
         this.interestRate = other.interestRate;
+        this.issuedCards = other.issuedCards;
     }
 
     @JsonProperty
@@ -50,6 +56,10 @@ public final class Bank extends Company implements Banker {
     @JsonProperty
     @NonNegative
     private float interestRate;
+
+    @NonNull
+    @JsonProperty
+    private final List<Card> issuedCards;
 
     @Override
     @JsonIgnore
@@ -84,6 +94,28 @@ public final class Bank extends Company implements Banker {
         this.interestRate = rate;
     }
 
+
+    @Override
+    public @NonNull List<Card> getIssuedCards() {
+        return new ArrayList<>(issuedCards);
+    }
+
+    @Override
+    public ItemStack issueCard(@NonNull Card card) {
+        issuedCards.add(card);
+
+        ItemStack physicalCard = ItemStack.builder().itemType(Card.CARD_ITEM).build();
+
+        // TODO add enchantments
+
+        return physicalCard;
+    }
+
+    @Override
+    public void cancelCard(@NonNull Card card) {
+        issuedCards.remove(card);
+    }
+
     @JsonProperty
     private final ActorType type = ActorType.BANK;
 
@@ -92,4 +124,5 @@ public final class Bank extends Company implements Banker {
     public @NonNull ActorType getType() {
         return type;
     }
+
 }

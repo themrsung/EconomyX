@@ -3,11 +3,11 @@ package oasis.economyx.classes.actor.sovereignty.singular;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.corporation.Corporation;
-import oasis.economyx.actor.person.Person;
-import oasis.economyx.actor.types.institutional.Institutional;
-import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.corporation.Corporation;
+import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.actor.types.institutional.Institutional;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -49,12 +49,17 @@ public final class Principality extends Sovereignty {
         this.institutions = other.institutions;
     }
 
+    @NonNull
     @JsonProperty
     @JsonIdentityReference
     private final List<Person> citizens;
+
+    @NonNull
     @JsonProperty
     @JsonIdentityReference
     private final List<Corporation> corporations;
+
+    @NonNull
     @JsonProperty
     @JsonIdentityReference
     private final List<Institutional> institutions;

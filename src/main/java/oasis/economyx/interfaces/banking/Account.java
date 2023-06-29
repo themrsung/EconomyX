@@ -1,9 +1,11 @@
 package oasis.economyx.interfaces.banking;
 
-import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.types.finance.Banker;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.contract.collateral.CollateralStack;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -16,6 +18,7 @@ import java.util.UUID;
  *     A collateral with the debtor as the institution is issued per account, and is updated evey deposit/withdrawal.
  * </p>
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 public interface Account {
     /**
      * Gets the unique ID of this account

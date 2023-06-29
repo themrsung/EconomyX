@@ -2,10 +2,10 @@ package oasis.economyx.classes.actor.company.vaulting;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.types.services.VaultKeeper;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
 import org.checkerframework.checker.nullness.qual.NonNull;

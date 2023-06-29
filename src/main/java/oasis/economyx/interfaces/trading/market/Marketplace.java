@@ -1,7 +1,6 @@
 package oasis.economyx.interfaces.trading.market;
 
-import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;

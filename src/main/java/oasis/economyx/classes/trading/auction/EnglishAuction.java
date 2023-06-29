@@ -2,9 +2,10 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.PriceProviderType;
 import oasis.economyx.interfaces.trading.auction.Bid;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -36,7 +37,7 @@ public final class EnglishAuction extends Auction {
 
     @Override
     @JsonIgnore
-    public void processBids(Actor auctioneer) {
+    public void processBids(AuctionHost auctioneer) {
         if (getBids().size() == 0L) return;
         else {
             // Highest bid is always the most recent bid in an English auction
@@ -49,7 +50,7 @@ public final class EnglishAuction extends Auction {
 
     @Override
     @JsonIgnore
-    public void onDeadlineReached(Actor auctioneer) {
+    public void onDeadlineReached(AuctionHost auctioneer) {
         if (getBids().size() == 0L) {
             setSold(false);
             setPrice(new CashStack(getCurrency(), 0L));

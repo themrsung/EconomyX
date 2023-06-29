@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.trading.auction;
 
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.cash.CashStack;
 import org.joda.time.DateTime;
 
 /**

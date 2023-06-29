@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.guarantee;
 
-import oasis.economyx.actor.types.finance.Credible;
-import oasis.economyx.asset.AssetStack;
+import oasis.economyx.interfaces.actor.types.finance.Credible;
+import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;

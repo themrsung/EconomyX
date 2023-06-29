@@ -1,31 +1,31 @@
 package oasis.economyx.state;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.EconomyX;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.corporation.Corporation;
-import oasis.economyx.actor.fund.Fund;
-import oasis.economyx.actor.organization.Organization;
-import oasis.economyx.actor.person.Person;
-import oasis.economyx.actor.sovereign.Sovereign;
-import oasis.economyx.actor.types.employment.Employer;
-import oasis.economyx.actor.types.finance.Banker;
-import oasis.economyx.actor.types.finance.Brokerage;
-import oasis.economyx.actor.types.finance.Credible;
-import oasis.economyx.actor.types.governance.Representable;
-import oasis.economyx.actor.types.institutional.*;
-import oasis.economyx.actor.types.manufacturing.BillCreator;
-import oasis.economyx.actor.types.manufacturing.Distiller;
-import oasis.economyx.actor.types.manufacturing.Producer;
-import oasis.economyx.actor.types.manufacturing.Scientific;
-import oasis.economyx.actor.types.ownership.Private;
-import oasis.economyx.actor.types.ownership.Shared;
-import oasis.economyx.actor.types.services.*;
-import oasis.economyx.actor.types.sovereign.Federal;
-import oasis.economyx.actor.types.trading.AuctionHost;
-import oasis.economyx.actor.types.trading.MarketHost;
-import oasis.economyx.asset.AssetStack;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.corporation.Corporation;
+import oasis.economyx.interfaces.actor.fund.Fund;
+import oasis.economyx.interfaces.actor.organization.Organization;
+import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.actor.sovereign.Sovereign;
+import oasis.economyx.interfaces.actor.types.employment.Employer;
+import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.interfaces.actor.types.finance.Brokerage;
+import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
+import oasis.economyx.interfaces.actor.types.finance.Credible;
+import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.actor.types.institutional.*;
+import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
+import oasis.economyx.interfaces.actor.types.manufacturing.Distiller;
+import oasis.economyx.interfaces.actor.types.manufacturing.Producer;
+import oasis.economyx.interfaces.actor.types.manufacturing.Scientific;
+import oasis.economyx.interfaces.actor.types.ownership.Private;
+import oasis.economyx.interfaces.actor.types.ownership.Shared;
+import oasis.economyx.interfaces.actor.types.services.*;
+import oasis.economyx.interfaces.actor.types.sovereign.Federal;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.gaming.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
@@ -36,7 +36,7 @@ import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
-import oasis.economyx.portfolio.Portfolio;
+import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.logging.log4j.Logger;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -539,6 +539,7 @@ public interface EconomyState {
 
     /**
      * Gets all market hosts.
+     * Final subtypes:
      * <ul>
      *     Exchange
      * </ul>
@@ -546,6 +547,17 @@ public interface EconomyState {
      * @return Market hosts
      */
     List<MarketHost> getMarketHosts();
+
+    /**
+     * Gets all card issuers.
+     * Final subtypes:
+     * <ul>
+     *     Bank
+     * </ul>
+     *
+     * @return Card issuers
+     */
+    List<CardIssuer> getCardIssuers();
 
     // Other interface getters
 
@@ -632,6 +644,12 @@ public interface EconomyState {
      * @return Assets
      */
     List<AssetStack> getAssets();
+
+    /**
+     * Gets every active card.
+     * @return Cards
+     */
+    List<Card> getCards();
 
     /**
      * Attempts to save

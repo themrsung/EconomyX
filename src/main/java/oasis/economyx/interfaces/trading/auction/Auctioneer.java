@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.trading.auction;
 
-import oasis.economyx.actor.Actor;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.PriceProviderType;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -59,13 +60,13 @@ public interface Auctioneer extends PriceProvider {
      * Processes bids differently depending on auction type
      * @param auctioneer The actor who runs this auction
      */
-    void processBids(Actor auctioneer);
+    void processBids(AuctionHost auctioneer);
 
     /**
      * Called after final auction tick
      * @param auctioneer The actor who runs this auction
      */
-    void onDeadlineReached(Actor auctioneer);
+    void onDeadlineReached(AuctionHost auctioneer);
 
     /**
      * Whether this auction was successful

@@ -1,6 +1,6 @@
 package oasis.economyx.interfaces.trading.market;
 
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.types.asset.cash.CashStack;
 
 /**
  * Represents a bid/ask tick in a trading

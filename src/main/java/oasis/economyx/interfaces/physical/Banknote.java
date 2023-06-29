@@ -1,6 +1,6 @@
 package oasis.economyx.interfaces.physical;
 
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;

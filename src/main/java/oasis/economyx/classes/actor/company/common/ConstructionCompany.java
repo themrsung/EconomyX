@@ -2,9 +2,9 @@ package oasis.economyx.classes.actor.company.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.types.services.Builder;
-import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.types.services.Builder;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

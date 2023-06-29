@@ -1,7 +1,7 @@
 package oasis.economyx.listener;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.event.EconomyEvent;
+import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.event.EventListener;

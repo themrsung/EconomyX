@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.organization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.organization.Organization;
-import oasis.economyx.actor.person.Person;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.organization.Organization;
+import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

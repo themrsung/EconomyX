@@ -2,12 +2,12 @@ package oasis.economyx.classes.actor.institution.monetary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.sovereign.Sovereign;
-import oasis.economyx.actor.types.institutional.CurrencyIssuer;
-import oasis.economyx.actor.types.institutional.InterestRateProvider;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.sovereign.Sovereign;
+import oasis.economyx.interfaces.actor.types.institutional.CurrencyIssuer;
+import oasis.economyx.interfaces.actor.types.institutional.InterestRateProvider;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

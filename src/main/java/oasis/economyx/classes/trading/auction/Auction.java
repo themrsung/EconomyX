@@ -2,9 +2,9 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.auction.Bid;
 import org.checkerframework.checker.nullness.qual.NonNull;

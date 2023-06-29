@@ -2,9 +2,9 @@ package oasis.economyx.classes.actor.company.trading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.types.trading.AuctionHost;
-import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import org.checkerframework.checker.index.qual.NonNegative;

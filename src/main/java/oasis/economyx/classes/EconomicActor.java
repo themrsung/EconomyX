@@ -1,15 +1,17 @@
 package oasis.economyx.classes;
 
 import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.contract.collateral.CollateralStack;
-import oasis.economyx.asset.contract.forward.ForwardStack;
-import oasis.economyx.asset.contract.note.NoteStack;
-import oasis.economyx.asset.contract.option.OptionStack;
-import oasis.economyx.asset.contract.swap.SwapStack;
-import oasis.economyx.portfolio.AssetPortfolio;
-import oasis.economyx.portfolio.Portfolio;
+import oasis.economyx.classes.card.CreditCard;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.contract.collateral.CollateralStack;
+import oasis.economyx.types.asset.contract.forward.ForwardStack;
+import oasis.economyx.types.asset.contract.note.NoteStack;
+import oasis.economyx.types.asset.contract.option.OptionStack;
+import oasis.economyx.types.asset.contract.swap.SwapStack;
+import oasis.economyx.types.portfolio.AssetPortfolio;
+import oasis.economyx.types.portfolio.Portfolio;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -91,25 +93,44 @@ public abstract class EconomicActor implements Actor {
 
         for (Actor a : state.getActors()) {
             for (AssetStack as : a.getAssets().get()) {
+
+                // Outstanding collateral
                 if (as instanceof CollateralStack cs) {
                     if (cs.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(cs);
                     }
+
+                // Undelivered forwards
                 } else if (as instanceof ForwardStack fs) {
                     if (fs.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(fs);
                     }
+
+                // Undelivered notes
                 } else if (as instanceof NoteStack ns) {
                     if (ns.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(ns);
                     }
+
+                // Premature options (where this actor is the writer)
                 } else if (as instanceof OptionStack os) {
                     if (os.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(os);
                     }
+
+                // Premature swaps (this can be an asset depending on the base and quote asset's prices)
                 } else if (as instanceof SwapStack ss) {
                     if (ss.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(ss);
+                    }
+                }
+            }
+
+            // Outstanding credit card balance
+            for (Card c : state.getCards()) {
+                if (c.getHolder().equals(this)) {
+                    if (c instanceof CreditCard cc) {
+                        liabilities.add(cc.getBalance());
                     }
                 }
             }

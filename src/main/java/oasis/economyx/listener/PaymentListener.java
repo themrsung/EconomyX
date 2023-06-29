@@ -1,9 +1,9 @@
 package oasis.economyx.listener;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.actor.Actor;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.event.payment.PaymentEvent;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.events.payment.PaymentEvent;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class PaymentListener extends EconomyListener<PaymentEvent>{

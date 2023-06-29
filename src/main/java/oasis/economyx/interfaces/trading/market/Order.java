@@ -1,10 +1,10 @@
 package oasis.economyx.interfaces.trading.market;
 
-import oasis.economyx.actor.Actor;
-import oasis.economyx.actor.types.finance.Brokerage;
-import oasis.economyx.actor.types.trading.MarketHost;
-import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.asset.contract.collateral.Collateral;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.finance.Brokerage;
+import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.asset.contract.collateral.Collateral;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

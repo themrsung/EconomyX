@@ -2,8 +2,8 @@ package oasis.economyx.classes.actor.person;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.ActorType;
-import oasis.economyx.actor.person.Person;
+import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

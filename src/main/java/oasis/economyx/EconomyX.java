@@ -7,17 +7,26 @@ import net.kyori.adventure.text.LinearComponents;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
-import oasis.economyx.event.payment.PaymentEvent;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.employment.Employer;
+import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.listener.PaymentListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.contract.Contract;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.Command;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.parameter.Parameter;
-import org.spongepowered.api.event.EventListenerRegistration;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
@@ -27,10 +36,12 @@ import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * The main class of your Sponge plugin.
  *
- * <p>All methods are optional -- some manufacturing event registrations are included as a jumping-off point.</p>
+ * <p>All methods are optional -- some manufacturing events registrations are included as a jumping-off point.</p>
  */
 @Plugin("economyx")
 public class EconomyX {
@@ -103,7 +114,7 @@ public class EconomyX {
     @Listener
     public void onRegisterCommands(final RegisterCommandEvent<Command.Parameterized> event) {
         // Register a simple command
-        // When possible, all commands should be registered within a command register event
+        // When possible, all commands should be registered within a command register events
         final Parameter.Value<String> nameParam = Parameter.string().key("name").build();
         event.register(this.container, Command.builder()
             .addParameter(nameParam)
@@ -123,5 +134,76 @@ public class EconomyX {
     }
 
     private void registerTasks() {
+        Task.Builder builder = Task.builder();
+
+        // Payments
+        Task paymentTask = builder.execute(() -> {
+            for (Banker b : getState().getBankers()) {
+                b.payInterest();
+            }
+
+            for (Employer e : getState().getEmployers()) {
+                e.paySalaries();
+            }
+
+            for (Representable r : getState().getRepresentables()) {
+                r.payRepresentative();
+            }
+        }).interval(1, TimeUnit.HOURS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(paymentTask);
+
+        // Contract expiry
+        Task contractExpiryTask = builder.execute(() -> {
+            for (Actor a : getState().getActors()) {
+                for (AssetStack as : a.getAssets().get()) {
+                    if (as.getAsset() instanceof Contract c) {
+
+                        // Contract expiry as to be called once for every contract instance
+                        for (int i = 0; i < as.getQuantity(); i++) {
+                            c.onExpired(a);
+                        }
+
+                        // Delete contract
+                        a.getAssets().remove(as);
+                    }
+                }
+            }
+        }).interval(1, TimeUnit.HOURS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(contractExpiryTask);
+
+        // Card expiry
+        Task cardExpiryTask = builder.execute(() -> {
+            for (Card c : getState().getCards()) {
+                c.onExpired();
+            }
+        }).interval(1, TimeUnit.HOURS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(cardExpiryTask);
+
+        // Market ticks
+        Task marketTickTask = builder.execute(() -> {
+            for (MarketHost h : getState().getMarketHosts()) {
+                for (Marketplace m : h.getMarkets()) {
+                    m.processOrders(h);
+                }
+            }
+        }).interval(75, TimeUnit.MILLISECONDS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(marketTickTask);
+
+        // Auction ticks
+        Task auctionTickTask = builder.execute(() -> {
+            for (AuctionHost h : getState().getAuctionHosts()) {
+                for (Auctioneer a : h.getAuctions()) {
+                    a.processBids(h);
+
+                    if (a.hasExpired()) a.onDeadlineReached(h);
+                }
+            }
+        }).interval(1, TimeUnit.SECONDS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(auctionTickTask);
     }
 }

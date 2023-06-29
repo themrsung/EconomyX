@@ -2,10 +2,10 @@ package oasis.economyx.classes.trading.market;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.types.trading.MarketHost;
-import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.PriceProviderType;
 import oasis.economyx.interfaces.trading.market.MarketTick;
 import oasis.economyx.interfaces.trading.market.Marketplace;
