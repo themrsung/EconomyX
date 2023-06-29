@@ -147,6 +147,5 @@ public interface Actor {
      * Gets the type of this actor
      * @return Type
      */
-    @JsonProperty("type")
     ActorType getType();
 }
