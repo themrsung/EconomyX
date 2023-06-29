@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
 import oasis.economyx.asset.AssetStack;
-import oasis.economyx.asset.AssetStackType;
 import oasis.economyx.asset.AssetType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;

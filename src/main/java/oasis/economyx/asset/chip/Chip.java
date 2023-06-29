@@ -9,7 +9,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.UUID;
 
 /**
- * Cash is a fungible, stackable asset
+ * Chips used in casinos
+ * Fungible and stackable
  */
 public final class Chip implements Asset {
     public Chip() {
