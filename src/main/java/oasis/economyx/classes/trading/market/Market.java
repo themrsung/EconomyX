@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.PriceProviderType;
 import oasis.economyx.interfaces.trading.market.MarketTick;
@@ -21,6 +22,18 @@ import java.util.List;
  * An instantiable class of Marketplace
  */
 public final class Market implements Marketplace {
+    /**
+     * Creates a new market
+     * @param asset Asset to be traded (quantity denotes contract size)
+     * @param currency Quote currency of this market
+     */
+    public Market(@NonNull AssetStack asset, @NonNull Cash currency) {
+        this.asset = asset;
+        this.orders = new ArrayList<>();
+        this.price = new CashStack(currency, 0L);
+        this.volume = 0L;
+    }
+
     public Market() {
         this.asset = null;
         this.orders = new ArrayList<>();

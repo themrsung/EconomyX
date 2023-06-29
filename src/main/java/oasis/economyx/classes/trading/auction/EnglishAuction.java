@@ -3,16 +3,37 @@ package oasis.economyx.classes.trading.auction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.PriceProviderType;
 import oasis.economyx.interfaces.trading.auction.Bid;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.DateTime;
 
 /**
  * A public auction where the highest bidder is chosen
  * Auction will wait for 1 hour for higher bids
  */
 public final class EnglishAuction extends Auction {
+    /**
+     * Creates a new English auction
+     * @param asset Asset to sell
+     * @param deadline Deadline of this auction
+     * @param reservePrice Starting price of this auction (price will rise from reserve price)
+     */
+    public EnglishAuction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack reservePrice) {
+        super(asset, deadline, reservePrice);
+    }
+
+    public EnglishAuction() {
+        super();
+    }
+
+    public EnglishAuction(EnglishAuction other) {
+        super(other);
+    }
+
     @Override
     @JsonIgnore
     public void processBids(Actor auctioneer) {
@@ -35,6 +56,8 @@ public final class EnglishAuction extends Auction {
         } else {
             Bid bid = getBids().get(0);
             bid.onSucceeded(auctioneer, bid.getPrice());
+
+            // No need to check for reserve price; Bids are always higher than reserve
 
             setSold(true);
             setPrice(bid.getPrice());

@@ -18,6 +18,15 @@ import java.util.List;
  * An instantiable class of Auctioneer
  */
 public abstract class Auction implements Auctioneer {
+    public Auction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack reservePrice) {
+        this.asset = asset;
+        this.denotation = reservePrice.getAsset();
+        this.deadline = deadline;
+        this.bids = new ArrayList<>();
+        this.price = reservePrice;
+        this.sold = false;
+    }
+
     public Auction() {
         this.asset = null;
         this.denotation = null;
