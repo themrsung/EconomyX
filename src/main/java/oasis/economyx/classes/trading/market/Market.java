@@ -2,7 +2,6 @@ package oasis.economyx.classes.trading.market;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.Actor;
 import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.CashStack;
@@ -166,7 +165,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void killImmediateOrders(Actor exchange) {
+    private void killImmediateOrders(MarketHost exchange) {
         for (Order o : getOrders()) {
             if (o.isImmediate()) {
                 if (o.getTime().plusSeconds(1).isBeforeNow()) {
