@@ -88,8 +88,16 @@ public interface EconomyState {
     @NonNull
     Actor getActor(UUID uniqueId) throws IllegalArgumentException;
 
+    /**
+     * Adds an actor to this state.
+     * @param actor Actor to add
+     */
     void addActor(@NonNull Actor actor);
 
+    /**
+     * Removes an actor from this state.
+     * @param actor Actor to remove
+     */
     void removeActor(@NonNull Actor actor);
 
     // Actor type interface getters

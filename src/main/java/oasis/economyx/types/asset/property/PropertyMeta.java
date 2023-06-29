@@ -1,5 +1,6 @@
 package oasis.economyx.types.asset.property;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.Protector;
@@ -21,6 +22,7 @@ public final class PropertyMeta implements AssetMeta {
 
     @Nullable
     @JsonProperty
+    @JsonIdentityReference
     private Protector protector;
 
     @Nullable
