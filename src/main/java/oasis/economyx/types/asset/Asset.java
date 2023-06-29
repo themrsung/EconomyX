@@ -1,7 +1,9 @@
 package oasis.economyx.types.asset;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.chip.Chip;
 import oasis.economyx.types.asset.commodity.Commodity;
@@ -24,6 +26,8 @@ import java.util.UUID;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Cash.class, name = "CASH"),

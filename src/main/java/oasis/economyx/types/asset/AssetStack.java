@@ -1,7 +1,9 @@
 package oasis.economyx.types.asset;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.chip.ChipStack;
 import oasis.economyx.types.asset.commodity.CommodityStack;
@@ -23,6 +25,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
 @JsonSubTypes({ // Uses AssetType to designate stack types
         @JsonSubTypes.Type(value = CashStack.class, name = "CASH"),
