@@ -1,4 +1,4 @@
-package oasis.economyx.asset;
+package oasis.economyx.asset.meta;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

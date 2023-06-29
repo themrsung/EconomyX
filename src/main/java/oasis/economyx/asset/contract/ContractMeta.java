@@ -2,7 +2,7 @@ package oasis.economyx.asset.contract;
 
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetMeta;
-import oasis.economyx.asset.Purchasable;
+import oasis.economyx.asset.meta.Purchasable;
 import oasis.economyx.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

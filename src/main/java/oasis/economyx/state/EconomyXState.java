@@ -27,6 +27,7 @@ import oasis.economyx.actor.types.sovereign.Federal;
 import oasis.economyx.actor.types.trading.AuctionHost;
 import oasis.economyx.actor.types.trading.MarketHost;
 import oasis.economyx.asset.AssetStack;
+import oasis.economyx.asset.contract.Contract;
 import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.interfaces.banking.Account;
@@ -595,6 +596,9 @@ public final class EconomyXState implements EconomyState {
         return portfolios;
     }
 
+    /**
+     * Searching within contracts is not necessary.
+     */
     @Override
     public List<AssetStack> getAssets() {
         List<AssetStack> stacks = new ArrayList<>();

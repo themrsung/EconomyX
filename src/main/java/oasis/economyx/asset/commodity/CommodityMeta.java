@@ -3,7 +3,7 @@ package oasis.economyx.asset.commodity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.asset.AssetMeta;
-import oasis.economyx.asset.Purchasable;
+import oasis.economyx.asset.meta.Purchasable;
 import oasis.economyx.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

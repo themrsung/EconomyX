@@ -45,13 +45,13 @@ import java.util.UUID;
 
 public interface EconomyState {
     /**
-     * Gets the plugin instance
+     * Gets the plugin instance.
      * @return Plugin
      */
     EconomyX getEX();
 
     /**
-     * Shortcut getter for logger
+     * Shortcut getter for logger.
      * @return Logger
      */
     default Logger getLogger() {
@@ -59,21 +59,22 @@ public interface EconomyState {
     }
 
     /**
-     * Gets all actors currently present within this state
+     * Gets all actors currently present within this state.
      * @return Copied list of actors
      */
     List<Actor> getActors();
 
     /**
-     * Checks if actor exists
+     * Checks if actor exists.
+     *
      * @param uniqueId Unique ID of actor
      * @return Whether actor exists
      */
     boolean isActor(UUID uniqueId);
 
     /**
-     * Gets actor by unique ID
-     * Check if actor exists with isActor(UUID) first
+     * Gets actor by unique ID.
+     * Check if actor exists with isActor(UUID) first.
      *
      * @param uniqueId Unique ID of actor
      * @return Actor
@@ -89,7 +90,7 @@ public interface EconomyState {
     // Actor type interface getters
 
     /**
-     * Gets all corporations
+     * Gets all corporations.
      * Final subtypes:
      * <ul>
      *     Exchange,
@@ -114,7 +115,7 @@ public interface EconomyState {
     List<Corporation> getCorporations();
 
     /**
-     * Gets all funds
+     * Gets all funds.
      * Final subtypes:
      * <ul>
      *     Trust
@@ -124,7 +125,7 @@ public interface EconomyState {
     List<Fund> getFunds();
 
     /**
-     * Gets all organizations
+     * Gets all organizations.
      * Final subtypes:
      * <ul>
      *     Alliance,
@@ -137,7 +138,7 @@ public interface EconomyState {
     List<Organization<?>> getOrganizations();
 
     /**
-     * Gets all persons
+     * Gets all persons.
      * Final subtypes:
      * <ul>
      *     NaturalPerson
@@ -148,7 +149,7 @@ public interface EconomyState {
     List<Person> getPersons();
 
     /**
-     * Gets all sovereignties
+     * Gets all sovereignties.
      * Final subtypes:
      * <ul>
      *     Republic,
@@ -162,7 +163,7 @@ public interface EconomyState {
     List<Sovereign> getSovereigns();
 
     /**
-     * Gets all employers
+     * Gets all employers.
      * Final subtypes:
      * <ul>
      *     Exchange,
@@ -193,7 +194,7 @@ public interface EconomyState {
     List<Employer> getEmployers();
 
     /**
-     * Gets all bankers
+     * Gets all bankers.
      * Final subtypes:
      * <ul>
      *     Bank,
@@ -205,7 +206,7 @@ public interface EconomyState {
     List<Banker> getBankers();
 
     /**
-     * Gets all brokerages
+     * Gets all brokerages.
      * Final subtypes:
      * <ul>
      *     SecuritiesBroker
@@ -216,7 +217,7 @@ public interface EconomyState {
     List<Brokerage> getBrokerages();
 
     /**
-     * Gets all credibles
+     * Gets all credibles.
      * Final subtypes:
      * <ul>
      *     Guarantor
@@ -227,7 +228,7 @@ public interface EconomyState {
     List<Credible> getCredibles();
 
     /**
-     * Gets all representables
+     * Gets all representables.
      * Final subtypes:
      * <ul>
      *     Exchange,
@@ -268,7 +269,7 @@ public interface EconomyState {
     List<Representable> getRepresentables();
 
     /**
-     * Gets all administratives
+     * Gets all administratives.
      * Final subtypes:
      * <ul>
      *     Administration
@@ -279,7 +280,7 @@ public interface EconomyState {
     List<Administrative> getAdministratives();
 
     /**
-     * Gets all banknote issuers
+     * Gets all banknote issuers.
      * Final subtypes:
      * <ul>
      *     Mint
@@ -290,7 +291,7 @@ public interface EconomyState {
     List<BanknoteIssuer> getBanknoteIssuers();
 
     /**
-     * Gets all currency issuers
+     * Gets all currency issuers.
      * Final subtypes:
      * <ul>
      *     CentralBank
@@ -301,7 +302,7 @@ public interface EconomyState {
     List<CurrencyIssuer> getCurrencyIssuers();
 
     /**
-     * Gets all institutionals
+     * Gets all institutionals.
      * Final subtypes:
      * <ul>
      *     Legislature,
@@ -318,7 +319,7 @@ public interface EconomyState {
     List<Institutional> getInstitutionals();
 
     /**
-     * Gets all interest rate providers
+     * Gets all interest rate providers.
      * Final subtypes:
      * <ul>
      *     Bank (always positive),
@@ -331,7 +332,7 @@ public interface EconomyState {
     List<InterestRateProvider> getInterestRateProviders();
 
     /**
-     * Gets all judicials
+     * Gets all judicials.
      * Final subtypes:
      * <ul>
      *     Judiciary
@@ -342,7 +343,7 @@ public interface EconomyState {
     List<Judicial> getJudicials();
 
     /**
-     * Gets all legislatives
+     * Gets all legislatives.
      * Final subtypes:
      * <ul>
      *     Legislature
@@ -353,7 +354,7 @@ public interface EconomyState {
     List<Legislative> getLegislatives();
 
     /**
-     * Gets all bill creators
+     * Gets all bill creators.
      * Final subtypes:
      * <ul>
      *     PaperMill
@@ -364,7 +365,7 @@ public interface EconomyState {
     List<BillCreator> getBillCreators();
 
     /**
-     * Gets all distillers
+     * Gets all distillers.
      * Final subtypes:
      * <ul>
      *     Distillery
@@ -375,7 +376,7 @@ public interface EconomyState {
     List<Distiller> getDistillers();
 
     /**
-     * Gets all producers
+     * Gets all producers.
      * Final subtypes:
      * <ul>
      *     Manufacturer
@@ -386,7 +387,7 @@ public interface EconomyState {
     List<Producer> getProducers();
 
     /**
-     * Gets all scientifics
+     * Gets all scientifics.
      * Final subtypes:
      * <ul>
      *     ResearchCenter
@@ -397,7 +398,7 @@ public interface EconomyState {
     List<Scientific> getScientifics();
 
     /**
-     * Gets all privates
+     * Gets all privates.
      * Final subtypes:
      * <ul>
      *
@@ -408,7 +409,7 @@ public interface EconomyState {
     List<Private> getPrivates();
 
     /**
-     * Gets all shareds
+     * Gets all shareds.
      * Final subtypes:
      * <ul>
      *     Exchange,
@@ -434,7 +435,7 @@ public interface EconomyState {
     List<Shared> getShareds();
 
     /**
-     * Gets all builders
+     * Gets all builders.
      * Final subtypes:
      * <ul>
      *     ConstructionCompany
@@ -445,7 +446,7 @@ public interface EconomyState {
     List<Builder> getBuilders();
 
     /**
-     * Gets all card acceptors
+     * Gets all card acceptors.
      * Final subtypes:
      * <ul>
      *     Merchant
@@ -456,7 +457,7 @@ public interface EconomyState {
     List<CardAcceptor> getCardAccpetors();
 
     /**
-     * Gets all factions
+     * Gets all factions.
      * Final subtypes:
      * <ul>
      *     Mercenary,
@@ -469,7 +470,7 @@ public interface EconomyState {
     List<Faction> getFactions();
 
     /**
-     * Gets all houses
+     * Gets all houses.
      * Final subtypes:
      * <ul>
      *     Casino
@@ -480,7 +481,7 @@ public interface EconomyState {
     List<House> getHouses();
 
     /**
-     * Gets all legals
+     * Gets all legals.
      * Final subtypes:
      * <ul>
      *     LawFirm
@@ -491,7 +492,7 @@ public interface EconomyState {
     List<Legal> getLegals();
 
     /**
-     * Gets all protectors
+     * Gets all protectors.
      * Final subtypes:
      * <ul>
      *     Republic,
@@ -505,7 +506,7 @@ public interface EconomyState {
     List<Protector> getProtectors();
 
     /**
-     * Gets all vault keepers
+     * Gets all vault keepers.
      * Final subtypes:
      * <ul>
      *     VaultCompany
@@ -516,7 +517,7 @@ public interface EconomyState {
     List<VaultKeeper> getVaultKeepers();
 
     /**
-     * Gets all federals
+     * Gets all federals.
      * <ul>
      *     Empire,
      *     Federation
@@ -527,7 +528,7 @@ public interface EconomyState {
     List<Federal> getFederals();
 
     /**
-     * Gets all auction hosts
+     * Gets all auction hosts.
      * <ul>
      *     AuctionHouse
      * </ul>
@@ -537,7 +538,7 @@ public interface EconomyState {
     List<AuctionHost> getAuctionHosts();
 
     /**
-     * Gets all market hosts
+     * Gets all market hosts.
      * <ul>
      *     Exchange
      * </ul>
@@ -549,55 +550,55 @@ public interface EconomyState {
     // Other interface getters
 
     /**
-     * Gets all accounts
+     * Gets all accounts.
      * @return Accounts
      */
     List<Account> getAccounts();
 
     /**
-     * Gets all casino tables
+     * Gets all casino tables.
      * @return Tables
      */
     List<Table> getTables();
 
     /**
-     * Gets all guarantees
+     * Gets all guarantees.
      * @return Guarantees
      */
     List<Guarantee> getGuarantees();
 
     /**
-     * Gets all banknotes
+     * Gets all banknotes.
      * @return Banknotes
      */
     List<Banknote> getBanknotes();
 
     /**
-     * Gets all open auctions
+     * Gets all open auctions.
      * @return Auctioneers
      */
     List<Auctioneer> getAuctioneers();
 
     /**
-     * Gets all bids in auctions
+     * Gets all bids in auctions.
      * @return Bids
      */
     List<Bid> getBids();
 
     /**
-     * Gets all open markets
+     * Gets all open markets.
      * @return Marketplaces
      */
     List<Marketplace> getMarketplaces();
 
     /**
-     * Gets all orders in markets
+     * Gets all orders in markets.
      * @return Orders
      */
     List<Order> getOrders();
 
     /**
-     * Gets all price prociders
+     * Gets all price providers.
      * Final subtypes:
      * <ul>
      *     Market,
@@ -612,21 +613,22 @@ public interface EconomyState {
     List<PriceProvider> getPriceProviders();
 
     /**
-     * Gets all vault blocks
+     * Gets all vault blocks.
      * @return Vaults
      */
     List<VaultBlock> getVaultBlocks();
 
     /**
-     * Gets every portfolio of every actor
-     * This a DIRECT pointer, not a copy
+     * Gets every portfolio of every actor.
+     * This a DIRECT pointer, not a copy.
      * @return Portfolios
      */
     List<Portfolio> getPortfolios();
 
     /**
-     * Gets every asset stack in every portfolio
-     * This is a DIRECT pointer, not a copy
+     * Gets every asset stack in every portfolio.
+     * Only assets directly owned by an actor will be returns, as derivative assets are pointers to the original.
+     * This is a DIRECT pointer, not a copy.
      * @return Assets
      */
     List<AssetStack> getAssets();
