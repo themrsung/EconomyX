@@ -7,8 +7,8 @@ import org.spongepowered.api.event.impl.AbstractEvent;
 import org.spongepowered.api.util.Tristate;
 
 /**
- * A base class for EconomyX events
- * All EconomyX events are cancellable
+ * A base class for EconomyX events.
+ * All EconomyX events are cancellable.
  */
 public abstract class EconomyEvent extends AbstractEvent implements Cancellable {
     public EconomyEvent(Cause cause) {
