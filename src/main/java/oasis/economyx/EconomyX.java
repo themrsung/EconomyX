@@ -161,7 +161,7 @@ public class EconomyX {
                 for (AssetStack as : a.getAssets().get()) {
                     if (as.getAsset() instanceof Contract c) {
 
-                        // Contract expiry as to be called once for every contract instance
+                        // Contract expiry has to be called once for every contract instance
                         for (int i = 0; i < as.getQuantity(); i++) {
                             c.onExpired(a);
                         }
