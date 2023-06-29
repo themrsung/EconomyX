@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * An organization is a group of actor with a representing person
- * @param <M>
+ * @param <M> Type of member
  */
 public interface Organization<M extends Actor> extends Representable {
     /**
