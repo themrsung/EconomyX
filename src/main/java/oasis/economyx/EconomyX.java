@@ -11,7 +11,6 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
-import oasis.economyx.interfaces.actor.types.services.Protector;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.card.Card;
@@ -22,7 +21,6 @@ import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.Contract;
-import oasis.economyx.types.asset.property.PropertyStack;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.Sponge;
@@ -70,6 +68,8 @@ public class EconomyX {
         this.logger.info("Loading EconomyX.");
 
         Sponge.eventManager().registerListeners(container, new PaymentListener(this));
+
+        registerTasks();
 
         this.state = new EconomyXState(this);
     }
