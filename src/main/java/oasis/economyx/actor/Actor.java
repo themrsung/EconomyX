@@ -1,7 +1,7 @@
 package oasis.economyx.actor;
 
 import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.classes.actor.NaturalPerson;
+import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.classes.actor.company.common.*;
 import oasis.economyx.classes.actor.company.finance.Bank;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
@@ -81,6 +81,8 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Administration.class, name = "ADMINISTRATION"),
         @JsonSubTypes.Type(value = Legislature.class, name = "LEGISLATURE"),
         @JsonSubTypes.Type(value = Judiciary.class, name = "JUDICIARY"),
+
+        // Funds
         @JsonSubTypes.Type(value = Trust.class, name = "TRUST"),
 })
 

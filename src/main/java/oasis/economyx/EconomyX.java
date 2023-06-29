@@ -23,6 +23,7 @@ import org.spongepowered.api.event.lifecycle.ConstructPluginEvent;
 import org.spongepowered.api.event.lifecycle.RegisterCommandEvent;
 import org.spongepowered.api.event.lifecycle.StartingEngineEvent;
 import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
+import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
@@ -89,6 +90,7 @@ public class EconomyX {
 //
 //        this.state.save();
 
+
         this.logger.info("Plugin loaded.");
     }
 
@@ -118,5 +120,8 @@ public class EconomyX {
                 return CommandResult.success();
             })
             .build(), "greet", "wave");
+    }
+
+    private void registerTasks() {
     }
 }

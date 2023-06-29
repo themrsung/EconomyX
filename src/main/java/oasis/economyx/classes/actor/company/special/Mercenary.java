@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.ActorType;
 import oasis.economyx.actor.types.services.Faction;
+import oasis.economyx.actor.types.services.Protector;
 import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.classes.actor.company.Company;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -14,7 +16,7 @@ import java.util.UUID;
 /**
  * aka PMC
  */
-public final class Mercenary extends Company implements Faction {
+public final class Mercenary extends Company implements Faction, Protector {
     /**
      * Creates a new mercenary
      * @param uniqueId Unique ID of this mercenary
@@ -25,14 +27,32 @@ public final class Mercenary extends Company implements Faction {
      */
     public Mercenary(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);
+
+        this.protectionFee = new CashStack(currency, 0L);
     }
 
     public Mercenary() {
         super();
+
+        this.protectionFee = null;
     }
 
     public Mercenary(Mercenary other) {
         super(other);
+
+        this.protectionFee = other.protectionFee;
+    }
+
+    private CashStack protectionFee;
+
+    @Override
+    public @NonNull CashStack getProtectionFee() {
+        return new CashStack(protectionFee);
+    }
+
+    @Override
+    public void setProtectionFee(@NonNull CashStack fee) {
+        this.protectionFee = fee;
     }
 
     @JsonProperty

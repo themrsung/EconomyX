@@ -5,7 +5,41 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import oasis.economyx.EconomyX;
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.corporation.Corporation;
+import oasis.economyx.actor.fund.Fund;
+import oasis.economyx.actor.organization.Organization;
+import oasis.economyx.actor.person.Person;
+import oasis.economyx.actor.sovereign.Sovereign;
+import oasis.economyx.actor.types.employment.Employer;
+import oasis.economyx.actor.types.finance.Banker;
+import oasis.economyx.actor.types.finance.Brokerage;
+import oasis.economyx.actor.types.finance.Credible;
+import oasis.economyx.actor.types.governance.Representable;
+import oasis.economyx.actor.types.institutional.*;
+import oasis.economyx.actor.types.manufacturing.BillCreator;
+import oasis.economyx.actor.types.manufacturing.Distiller;
+import oasis.economyx.actor.types.manufacturing.Producer;
+import oasis.economyx.actor.types.manufacturing.Scientific;
+import oasis.economyx.actor.types.ownership.Private;
+import oasis.economyx.actor.types.ownership.Shared;
+import oasis.economyx.actor.types.services.*;
+import oasis.economyx.actor.types.sovereign.Federal;
+import oasis.economyx.actor.types.trading.AuctionHost;
+import oasis.economyx.actor.types.trading.MarketHost;
+import oasis.economyx.asset.AssetStack;
 import oasis.economyx.classes.EconomicActor;
+import oasis.economyx.classes.actor.company.finance.Guarantor;
+import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.interfaces.gaming.Table;
+import oasis.economyx.interfaces.guarantee.Guarantee;
+import oasis.economyx.interfaces.physical.Banknote;
+import oasis.economyx.interfaces.trading.PriceProvider;
+import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.interfaces.trading.auction.Bid;
+import oasis.economyx.interfaces.trading.market.Marketplace;
+import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.portfolio.Portfolio;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.codehaus.plexus.util.FileUtils;
 import org.jetbrains.annotations.NotNull;
@@ -71,6 +105,506 @@ public final class EconomyXState implements EconomyState {
         actors.remove(actor);
     }
 
+    @Override
+    public List<Corporation> getCorporations() {
+        List<Corporation> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Corporation c) list.add(c);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Fund> getFunds() {
+        List<Fund> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Fund f) list.add(f);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Organization<?>> getOrganizations() {
+        List<Organization<?>> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Organization<?> o) list.add(o);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Person> getPersons() {
+        List<Person> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Person p) list.add(p);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Employer> getEmployers() {
+        List<Employer> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Employer e) list.add(e);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Banker> getBankers() {
+        List<Banker> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Banker b) list.add(b);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Brokerage> getBrokerages() {
+        List<Brokerage> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Brokerage b) list.add(b);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Credible> getCredibles() {
+        List<Credible> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Credible c) list.add(c);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Representable> getRepresentables() {
+        List<Representable> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Representable r) list.add(r);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Administrative> getAdministratives() {
+        List<Administrative> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Administrative ad) list.add(ad);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Sovereign> getSovereigns() {
+        List<Sovereign> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Sovereign s) list.add(s);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<BanknoteIssuer> getBanknoteIssuers() {
+        List<BanknoteIssuer> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof BanknoteIssuer bi) list.add(bi);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<CurrencyIssuer> getCurrencyIssuers() {
+        List<CurrencyIssuer> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof CurrencyIssuer ci) list.add(ci);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Institutional> getInstitutionals() {
+        List<Institutional> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Institutional i) list.add(i);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<InterestRateProvider> getInterestRateProviders() {
+        List<InterestRateProvider> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof InterestRateProvider i) list.add(i);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Judicial> getJudicials() {
+        List<Judicial> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Judicial j) list.add(j);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Legislative> getLegislatives() {
+        List<Legislative> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Legislative l) list.add(l);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<BillCreator> getBillCreators() {
+        List<BillCreator> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof BillCreator b) list.add(b);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Distiller> getDistillers() {
+        List<Distiller> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Distiller d) list.add(d);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Producer> getProducers() {
+        List<Producer> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Producer p) list.add(p);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Scientific> getScientifics() {
+        List<Scientific> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Scientific s) list.add(s);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Private> getPrivates() {
+        List<Private> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Private p) list.add(p);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Shared> getShareds() {
+        List<Shared> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Shared s) list.add(s);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Builder> getBuilders() {
+        List<Builder> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Builder b) list.add(b);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<CardAcceptor> getCardAccpetors() {
+        List<CardAcceptor> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof CardAcceptor c) list.add(c);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Faction> getFactions() {
+        List<Faction> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Faction f) list.add(f);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<House> getHouses() {
+        List<House> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof House h) list.add(h);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Legal> getLegals() {
+        List<Legal> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Legal l) list.add(l);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Protector> getProtectors() {
+        List<Protector> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Protector p) list.add(p);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<VaultKeeper> getVaultKeepers() {
+        List<VaultKeeper> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof VaultKeeper v) list.add(v);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Federal> getFederals() {
+        List<Federal> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Federal f) list.add(f);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<AuctionHost> getAuctionHosts() {
+        List<AuctionHost> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof AuctionHost ah) list.add(ah);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<MarketHost> getMarketHosts() {
+        List<MarketHost> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof MarketHost m) list.add(m);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Account> getAccounts() {
+        List<Account> accounts = new ArrayList<>();
+
+        for (Banker b : getBankers()) {
+            accounts.addAll(b.getAccounts());
+        }
+
+        return accounts;
+    }
+
+    @Override
+    public List<Table> getTables() {
+        List<Table> tables = new ArrayList<>();
+
+        for (House h : getHouses()) {
+            tables.addAll(h.getTables());
+        }
+
+        return tables;
+    }
+
+    @Override
+    public List<Guarantee> getGuarantees() {
+        List<Guarantee> guarantees = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Guarantor g) {
+                guarantees.addAll(g.getGuarantees());
+            }
+        }
+
+        return guarantees;
+    }
+
+    @Override
+    public List<Banknote> getBanknotes() {
+        List<Banknote> notes = new ArrayList<>();
+
+        for (BanknoteIssuer bi : getBanknoteIssuers()) {
+            notes.addAll(bi.getIssuedBanknotes());
+        }
+
+        return notes;
+    }
+
+    @Override
+    public List<Auctioneer> getAuctioneers() {
+        List<Auctioneer> auctioneers = new ArrayList<>();
+
+        for (AuctionHost ah : getAuctionHosts()) {
+            auctioneers.addAll(ah.getAuctions());
+        }
+
+        return auctioneers;
+    }
+
+    @Override
+    public List<Bid> getBids() {
+        List<Bid> bids = new ArrayList<>();
+
+        for (Auctioneer a : getAuctioneers()) {
+            bids.addAll(a.getBids());
+        }
+
+        return bids;
+    }
+
+    @Override
+    public List<Marketplace> getMarketplaces() {
+        List<Marketplace> markets = new ArrayList<>();
+
+        for (MarketHost h : getMarketHosts()) {
+            markets.addAll(h.getMarkets());
+        }
+
+        return markets;
+    }
+
+    @Override
+    public List<Order> getOrders() {
+        List<Order> orders = new ArrayList<>();
+
+        for (Marketplace m : getMarketplaces()) {
+            orders.addAll(m.getOrders());
+        }
+
+        return orders;
+    }
+
+    @Override
+    public List<PriceProvider> getPriceProviders() {
+        List<PriceProvider> providers = new ArrayList<>();
+
+        for (MarketHost h : getMarketHosts()) {
+            providers.addAll(h.getMarkets());
+        }
+
+        for (AuctionHost h : getAuctionHosts()) {
+            providers.addAll(h.getAuctions());
+        }
+
+        return providers;
+    }
+
+    @Override
+    public List<VaultBlock> getVaultBlocks() {
+        List<VaultBlock> vaults = new ArrayList<>();
+
+        for (VaultKeeper k : getVaultKeepers()) {
+            vaults.addAll(k.getVaults());
+        }
+
+        return vaults;
+    }
+
+    @Override
+    public List<Portfolio> getPortfolios() {
+        List<Portfolio> portfolios = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            portfolios.add(a.getAssets());
+        }
+
+        return portfolios;
+    }
+
+    @Override
+    public List<AssetStack> getAssets() {
+        List<AssetStack> stacks = new ArrayList<>();
+
+        for (Portfolio p : getPortfolios()) {
+            stacks.addAll(p.get());
+        }
+
+        return stacks;
+    }
 
     /**
      * Creates an empty state

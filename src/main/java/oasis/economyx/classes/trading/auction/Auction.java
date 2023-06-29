@@ -81,6 +81,7 @@ public abstract class Auction implements Auctioneer {
 
     @NotNull
     @Override
+    @JsonIgnore
     public AssetStack getAsset() {
         return asset.copy();
     }

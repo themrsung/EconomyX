@@ -1,4 +1,4 @@
-package oasis.economyx.classes.actor;
+package oasis.economyx.classes.actor.person;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
