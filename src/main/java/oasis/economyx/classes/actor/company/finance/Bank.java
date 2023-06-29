@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.ActorType;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Bank extends Company implements Banker {
+public final class Bank extends Company implements Banker, CardIssuer {
     /**
      * Creates a new bank
      * @param uniqueId Unique ID of this bank

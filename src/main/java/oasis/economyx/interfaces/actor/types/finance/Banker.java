@@ -20,7 +20,7 @@ import java.util.UUID;
  * Accounts can contain any asset
  * Multiple accounts can be created for each client
  */
-public interface Banker extends Corporation, InterestRateProvider, CardIssuer {
+public interface Banker extends Corporation, InterestRateProvider {
     /**
      * Gets every account held by this banker
      * @return Copied list of accounts
