@@ -7,18 +7,9 @@ import net.kyori.adventure.text.LinearComponents;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
-import oasis.economyx.asset.cash.Cash;
-import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.asset.contract.note.Note;
-import oasis.economyx.asset.contract.note.NoteStack;
-import oasis.economyx.asset.stock.Stock;
-import oasis.economyx.asset.stock.StockStack;
-import oasis.economyx.classes.actor.Company;
-import oasis.economyx.classes.actor.NaturalPerson;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.command.Command;
 import org.spongepowered.api.command.CommandResult;
@@ -31,12 +22,10 @@ import org.spongepowered.api.event.lifecycle.StoppingEngineEvent;
 import org.spongepowered.plugin.PluginContainer;
 import org.spongepowered.plugin.builtin.jvm.Plugin;
 
-import java.util.UUID;
-
 /**
  * The main class of your Sponge plugin.
  *
- * <p>All methods are optional -- some common event registrations are included as a jumping-off point.</p>
+ * <p>All methods are optional -- some manufacturing event registrations are included as a jumping-off point.</p>
  */
 @Plugin("economyx")
 public class EconomyX {
@@ -65,30 +54,30 @@ public class EconomyX {
     public void onServerStarting(final StartingEngineEvent<Server> event) {
         // Assuming game state has been saved and can be safely wiped.
         this.state = EconomyXState.load(this);
-
-        Company comp = new Company(UUID.randomUUID(), "Oasis Corporation", UUID.randomUUID(), 100L);
-        this.state.addActor(comp);
-
-        NaturalPerson np = new NaturalPerson(UUID.randomUUID(), "Parzival");
-        this.state.addActor(np);
-
-        UUID currency = UUID.randomUUID();
-
-        np.getAssets().add(new CashStack(new Cash(currency), 100L));
-        comp.getAssets().add(new StockStack(new Stock(comp.getStockId()), 100L));
-
-        Note note = new Note(
-                UUID.randomUUID(),
-                comp,
-                new CashStack(new Cash(currency), 1000L),
-                new DateTime().plusDays(10)
-        );
-
-        NoteStack ns = new NoteStack(note, 100);
-
-        np.getAssets().add(ns);
-
-        this.state.save();
+//
+//        Company comp = new Company(UUID.randomUUID(), "Oasis Corporation", UUID.randomUUID(), 100L);
+//        this.state.addActor(comp);
+//
+//        NaturalPerson np = new NaturalPerson(UUID.randomUUID(), "Parzival");
+//        this.state.addActor(np);
+//
+//        UUID currency = UUID.randomUUID();
+//
+//        np.getAssets().add(new CashStack(new Cash(currency), 100L));
+//        comp.getAssets().add(new StockStack(new Stock(comp.getStockId()), 100L));
+//
+//        Note note = new Note(
+//                UUID.randomUUID(),
+//                comp,
+//                new CashStack(new Cash(currency), 1000L),
+//                new DateTime().plusDays(10)
+//        );
+//
+//        NoteStack ns = new NoteStack(note, 100);
+//
+//        np.getAssets().add(ns);
+//
+//        this.state.save();
 
         this.logger.info("Plugin loaded.");
     }

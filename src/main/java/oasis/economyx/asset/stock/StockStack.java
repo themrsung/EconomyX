@@ -34,7 +34,7 @@ public final class StockStack implements AssetStack {
     @NonNull
     @JsonProperty
     private final Stock asset;
-    @NonNull
+    @NonNegative
     @JsonProperty
     private long quantity;
     @NonNull

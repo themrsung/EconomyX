@@ -2,12 +2,11 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.AssetStack;
 import oasis.economyx.asset.cash.Cash;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.trading.auction.Auctioneer;
-import oasis.economyx.trading.auction.Bid;
+import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.interfaces.trading.auction.Bid;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;

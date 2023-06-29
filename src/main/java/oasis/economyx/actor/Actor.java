@@ -1,10 +1,32 @@
 package oasis.economyx.actor;
 
 import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.classes.actor.Company;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.classes.actor.NaturalPerson;
-import oasis.economyx.classes.actor.Sovereignty;
-import oasis.economyx.classes.actor.Trust;
+import oasis.economyx.classes.actor.company.common.*;
+import oasis.economyx.classes.actor.company.finance.Bank;
+import oasis.economyx.classes.actor.company.finance.Guarantor;
+import oasis.economyx.classes.actor.company.finance.SecuritiesBroker;
+import oasis.economyx.classes.actor.company.special.HoldingsCompany;
+import oasis.economyx.classes.actor.company.special.LawFirm;
+import oasis.economyx.classes.actor.company.special.Mercenary;
+import oasis.economyx.classes.actor.company.trading.AuctionHouse;
+import oasis.economyx.classes.actor.company.trading.Exchange;
+import oasis.economyx.classes.actor.company.vaulting.Vault;
+import oasis.economyx.classes.actor.institution.monetary.CentralBank;
+import oasis.economyx.classes.actor.institution.monetary.Mint;
+import oasis.economyx.classes.actor.institution.tripartite.Administration;
+import oasis.economyx.classes.actor.institution.tripartite.Judiciary;
+import oasis.economyx.classes.actor.institution.tripartite.Legislature;
+import oasis.economyx.classes.actor.institution.warfare.Military;
+import oasis.economyx.classes.actor.institution.warfare.Researcher;
+import oasis.economyx.classes.actor.sovereignty.Sovereignty;
+import oasis.economyx.classes.actor.sovereignty.federal.Empire;
+import oasis.economyx.classes.actor.sovereignty.federal.Federation;
+import oasis.economyx.classes.actor.sovereignty.international.Alliance;
+import oasis.economyx.classes.actor.sovereignty.singular.Principality;
+import oasis.economyx.classes.actor.sovereignty.singular.Republic;
+import oasis.economyx.classes.actor.trust.Trust;
 import oasis.economyx.portfolio.Portfolio;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -20,9 +42,41 @@ import java.util.UUID;
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Company.class, name = "COMPANY"),
+        // Corporations
+        @JsonSubTypes.Type(value = Merchant.class, name = "MERCHANT"),
+        @JsonSubTypes.Type(value = Manufacturer.class, name = "MANUFACTURER"),
+        @JsonSubTypes.Type(value = PaperMill.class, name = "PAPER_MILL"),
+        @JsonSubTypes.Type(value = ConstructionCompany.class, name = "CONSTRUCTION_COMPANY"),
+        @JsonSubTypes.Type(value = Distillery.class, name = "DISTILLERY"),
+        @JsonSubTypes.Type(value = Casino.class, name = "CASINO"),
+        @JsonSubTypes.Type(value = Exchange.class, name = "EXCHANGE"),
+        @JsonSubTypes.Type(value = AuctionHouse.class, name = "AUCTION_HOUSE"),
+        @JsonSubTypes.Type(value = Bank.class, name = "BANK"),
+        @JsonSubTypes.Type(value = SecuritiesBroker.class, name = "SECURITIES_BROKER"),
+        @JsonSubTypes.Type(value = Guarantor.class, name = "GUARANTOR"),
+        @JsonSubTypes.Type(value = Vault.class, name = "VAULT"),
+        @JsonSubTypes.Type(value = Mercenary.class, name = "MERCENARY"),
+        @JsonSubTypes.Type(value = LawFirm.class, name = "LAW_FIRM"),
+        @JsonSubTypes.Type(value = HoldingsCompany.class, name = "HOLDINGS_COMPANY"),
+
+        // Persons
         @JsonSubTypes.Type(value = NaturalPerson.class, name = "NATURAL_PERSON"),
-        @JsonSubTypes.Type(value = Sovereignty.class, name = "SOVEREIGNTY"),
+
+        // Sovereignties
+        @JsonSubTypes.Type(value = Empire.class, name = "EMPIRE"),
+        @JsonSubTypes.Type(value = Federation.class, name = "FEDERATION"),
+        @JsonSubTypes.Type(value = Republic.class, name = "REPUBLIC"),
+        @JsonSubTypes.Type(value = Principality.class, name = "PRINCIPALITY"),
+        @JsonSubTypes.Type(value = Alliance.class, name = "ALLIANCE"),
+
+        // Institutions
+        @JsonSubTypes.Type(value = CentralBank.class, name = "CENTRAL_BANK"),
+        @JsonSubTypes.Type(value = Mint.class, name = "MINT"),
+        @JsonSubTypes.Type(value = Researcher.class, name = "RESEARCHER"),
+        @JsonSubTypes.Type(value = Military.class, name = "MILITARY"),
+        @JsonSubTypes.Type(value = Administration.class, name = "ADMINISTRATION"),
+        @JsonSubTypes.Type(value = Legislature.class, name = "LEGISLATURE"),
+        @JsonSubTypes.Type(value = Judiciary.class, name = "JUDICIARY"),
         @JsonSubTypes.Type(value = Trust.class, name = "TRUST"),
 })
 

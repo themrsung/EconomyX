@@ -103,6 +103,18 @@ public final class CommodityStack implements AssetStack {
     }
 
     /**
+     * Commodity stacks require metadata to be equal
+     * @param asset Commodity to compare to
+     * @return Whether two commodities are the same
+     * @throws IllegalArgumentException When a non-commodity stack is provided
+     */
+    @Override
+    @JsonIgnore
+    public boolean equals(AssetStack asset) throws IllegalArgumentException {
+        return AssetStack.super.equals(asset) && getMeta().equals(asset.getMeta());
+    }
+
+    /**
      * Used for IO
      */
     @ConstructorProperties({"asset", "quantity", "meta"})

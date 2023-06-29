@@ -1,7 +1,7 @@
 package oasis.economyx.actor.corporation;
 
-import oasis.economyx.actor.types.Employer;
-import oasis.economyx.actor.types.Shared;
+import oasis.economyx.actor.types.employment.Employer;
+import oasis.economyx.actor.types.ownership.Shared;
 
 /**
  * A corporation is capable of issuing shares

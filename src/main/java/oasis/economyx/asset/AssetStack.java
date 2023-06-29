@@ -1,16 +1,16 @@
 package oasis.economyx.asset;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.asset.cash.CashStack;
+import oasis.economyx.asset.chip.ChipStack;
 import oasis.economyx.asset.commodity.CommodityStack;
 import oasis.economyx.asset.contract.collateral.CollateralStack;
 import oasis.economyx.asset.contract.forward.ForwardStack;
 import oasis.economyx.asset.contract.note.NoteStack;
 import oasis.economyx.asset.contract.option.OptionStack;
 import oasis.economyx.asset.contract.swap.SwapStack;
+import oasis.economyx.asset.property.PropertyStack;
 import oasis.economyx.asset.stock.StockStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = CashStack.class, name = "CASH_"),
         @JsonSubTypes.Type(value = StockStack.class, name = "STOCK"),
         @JsonSubTypes.Type(value = CommodityStack.class, name = "COMMODITY"),
+        @JsonSubTypes.Type(value = PropertyStack.class, name = "PROPERTY"),
+        @JsonSubTypes.Type(value = ChipStack.class, name = "CHIP"),
         @JsonSubTypes.Type(value = CollateralStack.class, name = "COLLATERAL"),
         @JsonSubTypes.Type(value = ForwardStack.class, name = "FORWARD"),
         @JsonSubTypes.Type(value = NoteStack.class, name = "NOTE"),

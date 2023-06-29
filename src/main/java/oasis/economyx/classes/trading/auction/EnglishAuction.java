@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.actor.Actor;
 import oasis.economyx.asset.cash.CashStack;
-import oasis.economyx.trading.PriceProviderType;
-import oasis.economyx.trading.auction.Bid;
+import oasis.economyx.interfaces.trading.PriceProviderType;
+import oasis.economyx.interfaces.trading.auction.Bid;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -1,17 +1,19 @@
 package oasis.economyx.asset;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.asset.cash.Cash;
+import oasis.economyx.asset.chip.Chip;
 import oasis.economyx.asset.commodity.Commodity;
 import oasis.economyx.asset.contract.collateral.Collateral;
 import oasis.economyx.asset.contract.forward.Forward;
 import oasis.economyx.asset.contract.note.Note;
 import oasis.economyx.asset.contract.option.Option;
 import oasis.economyx.asset.contract.swap.Swap;
+import oasis.economyx.asset.property.Property;
 import oasis.economyx.asset.stock.Stock;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -27,6 +29,8 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Cash.class, name = "CASH"),
         @JsonSubTypes.Type(value = Commodity.class, name = "COMMODITY"),
         @JsonSubTypes.Type(value = Stock.class, name = "STOCK"),
+        @JsonSubTypes.Type(value = Property.class, name = "PROPERTY"),
+        @JsonSubTypes.Type(value = Chip.class, name = "CHIP"),
         @JsonSubTypes.Type(value = Collateral.class, name = "COLLATERAL"),
         @JsonSubTypes.Type(value = Forward.class, name = "FORWARD"),
         @JsonSubTypes.Type(value = Note.class, name = "NOTE"),

@@ -5,6 +5,12 @@ public enum AssetType {
     CASH,
     STOCK,
     COMMODITY,
+    PROPERTY,
+
+    /**
+     * Used in casinos
+     */
+    CHIP,
 
     // Contracts
     FORWARD,
