@@ -3,8 +3,8 @@ package oasis.economyx.interfaces.trading.market;
 import oasis.economyx.types.asset.cash.CashStack;
 
 /**
- * Represents a bid/ask tick in a trading
- * Used to structure trading data without exposing individual orders
+ * Represents a bid/ask tick in a trading.
+ * Used to structure trading data without exposing individual orders.
  */
 public final class MarketTick {
     public MarketTick(boolean buy, CashStack price, long quantity) {
