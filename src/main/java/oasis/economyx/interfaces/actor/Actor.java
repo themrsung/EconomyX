@@ -91,7 +91,6 @@ public interface Actor {
      * Gets the unique ID of this actor.
      * @return Unique ID
      */
-    @JsonProperty("uniqueId")
     UUID getUniqueId();
 
     /**
