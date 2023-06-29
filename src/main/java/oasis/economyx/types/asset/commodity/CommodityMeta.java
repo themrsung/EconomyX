@@ -3,10 +3,12 @@ package oasis.economyx.types.asset.commodity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.AssetMeta;
+import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.spongepowered.api.entity.attribute.AttributeModifier;
 
@@ -110,5 +112,16 @@ public final class CommodityMeta implements AssetMeta, Purchasable {
     @JsonIgnore
     public boolean equals(CommodityMeta meta) {
         return this.attributeModifiers.equals(meta.attributeModifiers);
+    }
+
+    @NonNull
+    @JsonProperty
+    private final AssetType type = AssetType.COMMODITY;
+
+    @NotNull
+    @Override
+    @JsonIgnore
+    public AssetType getType() {
+        return type;
     }
 }

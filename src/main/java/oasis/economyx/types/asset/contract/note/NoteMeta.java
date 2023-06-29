@@ -3,9 +3,12 @@ package oasis.economyx.types.asset.contract.note;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.AssetMeta;
+import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 
 public final class NoteMeta implements AssetMeta, Purchasable {
@@ -55,5 +58,16 @@ public final class NoteMeta implements AssetMeta, Purchasable {
     @JsonIgnore
     public void setPurchaseDate(@Nullable DateTime date) {
         this.purchaseDate = date;
+    }
+
+    @NonNull
+    @JsonProperty
+    private final AssetType type = AssetType.NOTE;
+
+    @NotNull
+    @Override
+    @JsonIgnore
+    public AssetType getType() {
+        return type;
     }
 }
