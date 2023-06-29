@@ -24,9 +24,8 @@ import oasis.economyx.interfaces.actor.types.services.*;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
-import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.gaming.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
@@ -36,6 +35,7 @@ import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.logging.log4j.Logger;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -43,6 +43,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The state of EconomyX.
+ * Every instance of every type can be accessed through this state.
+ * There are getters for every interface type.
+ */
 public interface EconomyState {
     /**
      * Gets the plugin instance.
@@ -93,21 +98,21 @@ public interface EconomyState {
      * Gets all corporations.
      * Final subtypes:
      * <ul>
-     *     Exchange,
-     *     HoldingsCompany,
-     *     ConstructionCompany,
-     *     Bank,
-     *     Casino,
-     *     Merchant,
-     *     SecuritiesBroker,
-     *     Manufacturer,
-     *     Mercenary,
-     *     AuctionHouse,
-     *     Distillery,
-     *     Guarantor,
-     *     PaperMill,
-     *     LawFirm,
-     *     VaultCompany
+     *     <li>Exchange</li>
+     *     <li>HoldingsCompany</li>
+     *     <li>ConstructionCompany</li>
+     *     <li>Bank</li>
+     *     <li>Casino</li>
+     *     <li>Merchant</li>
+     *     <li>SecuritiesBroker</li>
+     *     <li>Manufacturer</li>
+     *     <li>Mercenary</li>
+     *     <li>AuctionHouse</li>
+     *     <li>Distillery</li>
+     *     <li>Guarantor</li>
+     *     <li>PaperMill</li>
+     *     <li>LawFirm</li>
+     *     <li>VaultCompany</li>
      * </ul>
      *
      * @return Corporations
@@ -118,7 +123,7 @@ public interface EconomyState {
      * Gets all funds.
      * Final subtypes:
      * <ul>
-     *     Trust
+     *     <li>Trust</li>
      * </ul>
      * @return Funds
      */
@@ -128,9 +133,9 @@ public interface EconomyState {
      * Gets all organizations.
      * Final subtypes:
      * <ul>
-     *     Alliance,
-     *     Party,
-     *     Cartel
+     *     <li>Alliance</li>
+     *     <li>Party</li>
+     *     <li>Cartel</li>
      * </ul>
      *
      * @return Organizations
@@ -141,7 +146,7 @@ public interface EconomyState {
      * Gets all persons.
      * Final subtypes:
      * <ul>
-     *     NaturalPerson
+     *     <li>NaturalPerson</li>
      * </ul>
      *
      * @return Persons
@@ -152,10 +157,10 @@ public interface EconomyState {
      * Gets all sovereignties.
      * Final subtypes:
      * <ul>
-     *     Republic,
-     *     Principality,
-     *     Empire,
-     *     Federation
+     *     <li>Republic</li>
+     *     <li>Principality</li>
+     *     <li>Empire</li>
+     *     <li>Federation</li>
      * </ul>
      *
      * @return Sovereignties
@@ -166,27 +171,27 @@ public interface EconomyState {
      * Gets all employers.
      * Final subtypes:
      * <ul>
-     *     Exchange,
-     *     HoldingsCompany,
-     *     ConstructionCompany,
-     *     Bank,
-     *     Casino,
-     *     Merchant,
-     *     SecuritiesBroker,
-     *     Manufacturer,
-     *     Mercenary,
-     *     AuctionHouse,
-     *     Distillery,
-     *     Guarantor,
-     *     PaperMill,
-     *     LawFirm,
-     *     VaultCompany,
-     *     Legislature,
-     *     CentralBank,
-     *     ResearchCenter,
-     *     Mint,
-     *     Administration,
-     *     Judiciary
+     *     <li>Exchange</li>
+     *     <li>HoldingsCompany</li>
+     *     <li>ConstructionCompany</li>
+     *     <li>Bank</li>
+     *     <li>Casino</li>
+     *     <li>Merchant</li>
+     *     <li>SecuritiesBroker</li>
+     *     <li>Manufacturer</li>
+     *     <li>Mercenary</li>
+     *     <li>AuctionHouse</li>
+     *     <li>Distillery</li>
+     *     <li>Guarantor</li>
+     *     <li>PaperMill</li>
+     *     <li>LawFirm</li>
+     *     <li>VaultCompany</li>
+     *     <li>Legislature</li>
+     *     <li>CentralBank</li>
+     *     <li>ResearchCenter</li>
+     *     <li>Mint</li>
+     *     <li>Administration</li>
+     *     <li>Judiciary</li>
      * </ul>
      *
      * @return Employers
@@ -197,8 +202,8 @@ public interface EconomyState {
      * Gets all bankers.
      * Final subtypes:
      * <ul>
-     *     Bank,
-     *     SecuritiesBroker
+     *     <li>>Bank</li>
+     *     <li>SecuritiesBroker</li>
      * </ul>
      *
      * @return Bankers
@@ -209,7 +214,7 @@ public interface EconomyState {
      * Gets all brokerages.
      * Final subtypes:
      * <ul>
-     *     SecuritiesBroker
+     *     <li>SecuritiesBroker</li>
      * </ul>
      *
      * @return Brokerages
@@ -220,7 +225,7 @@ public interface EconomyState {
      * Gets all credibles.
      * Final subtypes:
      * <ul>
-     *     Guarantor
+     *     <li>Guarantor</li>
      * </ul>
      *
      * @return Credibles
@@ -231,40 +236,40 @@ public interface EconomyState {
      * Gets all representables.
      * Final subtypes:
      * <ul>
-     *     Exchange,
-     *     HoldingsCompany,
-     *     ConstructionCompany,
-     *     Bank,
-     *     Casino,
-     *     Merchant,
-     *     SecuritiesBroker,
-     *     Manufacturer,
-     *     Mercenary,
-     *     AuctionHouse,
-     *     Distillery,
-     *     Guarantor,
-     *     PaperMill,
-     *     LawFirm,
-     *     VaultCompany,
-     *     Legislature,
-     *     CentralBank,
-     *     ResearchCenter,
-     *     Administration,
-     *     Military,
-     *     Judiciary,
-     *     Mint,
-     *     Trust,
-     *     Legislature,
-     *     Republic,
-     *     Principality,
-     *     Empire,
-     *     Federation,
-     *     Alliance,
-     *     Party,
-     *     Cartel
+     *     <li>Exchange</li>
+     *     <li>HoldingsCompany</li>
+     *     <li>ConstructionCompany</li>
+     *     <li>Bank</li>
+     *     <li>Casino</li>
+     *     <li>Merchant</li>
+     *     <li>SecuritiesBroker</li>
+     *     <li>Manufacturer</li>
+     *     <li>Mercenary</li>
+     *     <li>AuctionHouse</li>
+     *     <li>Distillery</li>
+     *     <li>Guarantor</li>
+     *     <li>PaperMill</li>
+     *     <li>LawFirm</li>
+     *     <li>VaultCompany</li>
+     *     <li>Legislature</li>
+     *     <li>CentralBank</li>
+     *     <li>ResearchCenter</li>
+     *     <li>Administration</li>
+     *     <li>Military</li>
+     *     <li>Judiciary</li>
+     *     <li>Mint</li>
+     *     <li>Trust</li>
+     *     <li>Legislature</li>
+     *     <li>Republic</li>
+     *     <li>Principality</li>
+     *     <li>Empire</li>
+     *     <li>Federation</li>
+     *     <li>Alliance</li>
+     *     <li>Party</li>
+     *     <li>Cartel</li>
      * </ul>
      *
-     * @return Representable
+     * @return Representables
      */
     List<Representable> getRepresentables();
 
@@ -272,7 +277,7 @@ public interface EconomyState {
      * Gets all administratives.
      * Final subtypes:
      * <ul>
-     *     Administration
+     *     <li>Administration</li>
      * </ul>
      *
      * @return Administratives
@@ -283,7 +288,7 @@ public interface EconomyState {
      * Gets all banknote issuers.
      * Final subtypes:
      * <ul>
-     *     Mint
+     *     <li>Mint</li>
      * </ul>
      *
      * @return Banknote issuers
@@ -294,7 +299,7 @@ public interface EconomyState {
      * Gets all currency issuers.
      * Final subtypes:
      * <ul>
-     *     CentralBank
+     *     <li>CentralBank</li>
      * </ul>
      *
      * @return Currency issuers
@@ -305,13 +310,13 @@ public interface EconomyState {
      * Gets all institutionals.
      * Final subtypes:
      * <ul>
-     *     Legislature,
-     *     CentralBank,
-     *     ResearchCenter,
-     *     Administration,
-     *     Military,
-     *     Judiciary,
-     *     Mint
+     *     <li>Legislature</li>
+     *     <li>CentralBank</li>
+     *     <li>ResearchCenter</li>
+     *     <li>Administration</li>
+     *     <li>Military</li>
+     *     <li>Judiciary</li>
+     *     <li>Mint</li>
      * </ul>
      *
      * @return Institutionals
@@ -322,9 +327,9 @@ public interface EconomyState {
      * Gets all interest rate providers.
      * Final subtypes:
      * <ul>
-     *     Bank (always positive),
-     *     SecuritiesBroker (always returns 0%),
-     *     CentralBank
+     *     <li>Bank (always positive)</li>
+     *     <li>SecuritiesBroker (always returns 0%)</li>
+     *     <li>CentralBank</li>
      * </ul>
      *
      * @return Interest rate providers
@@ -335,7 +340,7 @@ public interface EconomyState {
      * Gets all judicials.
      * Final subtypes:
      * <ul>
-     *     Judiciary
+     *     <li>Judiciary</li>
      * </ul>
      *
      * @return Judicials
@@ -346,7 +351,7 @@ public interface EconomyState {
      * Gets all legislatives.
      * Final subtypes:
      * <ul>
-     *     Legislature
+     *     <li>Legislature</li>
      * </ul>
      *
      * @return Legislatives
@@ -357,7 +362,7 @@ public interface EconomyState {
      * Gets all bill creators.
      * Final subtypes:
      * <ul>
-     *     PaperMill
+     *     <li>PaperMill</li>
      * </ul>
      *
      * @return Bill creators
@@ -368,7 +373,7 @@ public interface EconomyState {
      * Gets all distillers.
      * Final subtypes:
      * <ul>
-     *     Distillery
+     *     <li>Distillery</li>
      * </ul>
      *
      * @return Distillers
@@ -379,7 +384,7 @@ public interface EconomyState {
      * Gets all producers.
      * Final subtypes:
      * <ul>
-     *     Manufacturer
+     *     <li>Manufacturer</li>
      * </ul>
      *
      * @return Producers
@@ -390,7 +395,7 @@ public interface EconomyState {
      * Gets all scientifics.
      * Final subtypes:
      * <ul>
-     *     ResearchCenter
+     *     <li>ResearchCenter</li>
      * </ul>
      *
      * @return Scientifics
@@ -401,7 +406,7 @@ public interface EconomyState {
      * Gets all privates.
      * Final subtypes:
      * <ul>
-     *
+     *     <li>None</li>
      * </ul>
      *
      * @return Privates
@@ -412,22 +417,22 @@ public interface EconomyState {
      * Gets all shareds.
      * Final subtypes:
      * <ul>
-     *     Exchange,
-     *     HoldingsCompany,
-     *     ConstructionCompany,
-     *     Bank,
-     *     Casino,
-     *     Merchent,
-     *     SecuritiesBroker,
-     *     Manufacturer,
-     *     Mercenary,
-     *     AuctionHouse,
-     *     Distillery,
-     *     Guarantor,
-     *     PaperMill,
-     *     LawFirm,
-     *     VaultCompany,
-     *     Trust
+     *     <li>Exchange</li>
+     *     <li>HoldingsCompany</li>
+     *     <li>ConstructionCompany</li>
+     *     <li>Bank</li>
+     *     <li>Casino</li>
+     *     <li>Merchent</li>
+     *     <li>SecuritiesBroker</li>
+     *     <li>Manufacturer</li>
+     *     <li>Mercenary</li>
+     *     <li>AuctionHouse</li>
+     *     <li>Distillery</li>
+     *     <li>Guarantor</li>
+     *     <li>PaperMill</li>
+     *     <li>LawFirm</li>
+     *     <li>VaultCompany</li>
+     *     <li>Trust</li>
      * </ul>
      *
      * @return Shareds
@@ -438,7 +443,7 @@ public interface EconomyState {
      * Gets all builders.
      * Final subtypes:
      * <ul>
-     *     ConstructionCompany
+     *     <li>ConstructionCompany</li>
      * </ul>
      *
      * @return Builders
@@ -449,7 +454,7 @@ public interface EconomyState {
      * Gets all card acceptors.
      * Final subtypes:
      * <ul>
-     *     Merchant
+     *     <li>Merchant</li>
      * </ul>
      *
      * @return Card acceptors
@@ -460,9 +465,9 @@ public interface EconomyState {
      * Gets all factions.
      * Final subtypes:
      * <ul>
-     *     Mercenary,
-     *     Alliance,
-     *     Military (Institution of Sovereign)
+     *     <li>Mercenary</li>
+     *     <li>Alliance</li>
+     *     <li>Military (Institution of Sovereign)</li>
      * </ul>
      *
      * @return Factions
@@ -473,7 +478,7 @@ public interface EconomyState {
      * Gets all houses.
      * Final subtypes:
      * <ul>
-     *     Casino
+     *     <li>Casino</li>
      * </ul>
      *
      * @return Houses
@@ -484,7 +489,7 @@ public interface EconomyState {
      * Gets all legals.
      * Final subtypes:
      * <ul>
-     *     LawFirm
+     *     <li>LawFirm</li>
      * </ul>
      *
      * @return Legals
@@ -495,11 +500,11 @@ public interface EconomyState {
      * Gets all protectors.
      * Final subtypes:
      * <ul>
-     *     Republic,
-     *     Principality,
-     *     Empire,
-     *     Federation,
-     *     Mercenary
+     *     <li>Republic</li>
+     *     <li>Principality</li>
+     *     <li>Empire</li>
+     *     <li>Federation</li>
+     *     <li>Mercenary</li>
      * </ul>
      * @return Protectors
      */
@@ -509,7 +514,7 @@ public interface EconomyState {
      * Gets all vault keepers.
      * Final subtypes:
      * <ul>
-     *     VaultCompany
+     *     <li>VaultCompany</li>
      * </ul>
      *
      * @return Vault keepers
@@ -519,8 +524,8 @@ public interface EconomyState {
     /**
      * Gets all federals.
      * <ul>
-     *     Empire,
-     *     Federation
+     *     <li>Empire</li>
+     *     <li>Federation</li>
      * </ul>
      *
      * @return Federals
@@ -530,7 +535,7 @@ public interface EconomyState {
     /**
      * Gets all auction hosts.
      * <ul>
-     *     AuctionHouse
+     *     <li>AuctionHouse</li>
      * </ul>
      *
      * @return Auction hosts
@@ -541,7 +546,7 @@ public interface EconomyState {
      * Gets all market hosts.
      * Final subtypes:
      * <ul>
-     *     Exchange
+     *     <li>Exchange</li>
      * </ul>
      *
      * @return Market hosts
@@ -552,7 +557,7 @@ public interface EconomyState {
      * Gets all card issuers.
      * Final subtypes:
      * <ul>
-     *     Bank
+     *     <li>Bank</li>
      * </ul>
      *
      * @return Card issuers
