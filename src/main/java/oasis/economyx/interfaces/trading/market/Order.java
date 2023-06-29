@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.trading.market;
 
 import oasis.economyx.actor.Actor;
+import oasis.economyx.actor.types.finance.Brokerage;
 import oasis.economyx.asset.cash.CashStack;
 import oasis.economyx.asset.contract.collateral.Collateral;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -17,13 +18,30 @@ import java.util.UUID;
 public interface Order {
     /**
      * Gets the unique ID of this order
+     * @return Unique ID
      */
     UUID getUniqueId();
 
     /**
+     * Gets the broker responsible for handling this order
+     * @return Broker
+     */
+    Brokerage getBroker();
+
+    /**
      * Gets the sender of the order
+     * @return Sender
      */
     Actor getSender();
+
+    /**
+     * Checks if this an order sent by the broker
+     * Agent trades have priority over proprietary orders
+     * @return Whether this order was sent by the broker themselves
+     */
+    default boolean isProprietaryOrder() {
+        return getBroker().equals(getSender());
+    }
 
     /**
      * Gets the type of this order
@@ -39,13 +57,15 @@ public interface Order {
 
     /**
      * Whether this is a buy order or not
+     * @return Whether this is a buy order
      */
     default boolean isBuy() {
         return getOrderType().isBuy();
     }
 
     /**
-     * Whether this is a trading order or not
+     * Whether this is a market order or not
+     * @return Whether this is a market order
      */
     default boolean isMarket() {
         return getOrderType().isMarket();
@@ -53,6 +73,7 @@ public interface Order {
 
     /**
      * Whether order is immediate or not
+     * @return Whether this is an immediate order
      */
     default boolean isImmediate() {
         return getOrderType().isImmediate();
@@ -60,6 +81,7 @@ public interface Order {
 
     /**
      * Whether order allows partial fulfillment
+     * @return Whether this is order allows partial fulfillment
      */
     default boolean allowsPartialFulfillment() {
         return getOrderType().allowsPartialFulfillment();
@@ -67,11 +89,13 @@ public interface Order {
 
     /**
      * Gets the time of order creation
+     * @return Order time
      */
     DateTime getTime();
 
     /**
      * Gets the bid/ask price of this order
+     * @return Price
      */
     @NonNull
     CashStack getPrice();
@@ -83,12 +107,14 @@ public interface Order {
 
     /**
      * Gets the quantity of this order
+     * @return Quantity
      */
     long getQuantity();
 
     /**
      * Gets the collateral used to submit this order
      * Set to null for collateral-less orders
+     * @return Collateral if there is one, null if not
      */
     @Nullable
     Collateral getCollateral();

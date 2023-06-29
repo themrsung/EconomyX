@@ -22,6 +22,7 @@ public interface Marketplace extends PriceProvider {
 
     /**
      * Gets all buy orders
+     * Sorted by fulfillment priority
      * @return List of buy orders
      */
     default List<Order> getBuyOrders() {
@@ -31,11 +32,26 @@ public interface Marketplace extends PriceProvider {
             if (o.isBuy()) buyOrders.add(o);
         }
 
+        // Time ascending
+        buyOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
+
+        // Agent orders / proprietary orders
+        buyOrders.sort((o1, o2) -> {
+            int b1 = o1.isProprietaryOrder() ? 1 : 0;
+            int b2 = o2.isProprietaryOrder() ? 1 : 0;
+
+            return Integer.compare(b1, b2);
+        });
+
+        // Price descending
+        buyOrders.sort((o1, o2) -> o2.getPrice().compare(o1.getPrice()));
+
         return buyOrders;
     }
 
     /**
      * Gets all sell orders
+     * Sorted by fulfillment priority
      * @return List of sell orders
      */
     default List<Order> getSellOrders() {
@@ -44,6 +60,20 @@ public interface Marketplace extends PriceProvider {
         for (Order o : getOrders()) {
             if (!o.isBuy()) sellOrders.add(o);
         }
+
+        // Time ascending
+        sellOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
+
+        // Agent orders / proprietary orders
+        sellOrders.sort((o1, o2) -> {
+            int b1 = o1.isProprietaryOrder() ? 1 : 0;
+            int b2 = o2.isProprietaryOrder() ? 1 : 0;
+
+            return Integer.compare(b1, b2);
+        });
+
+        // Price ascending
+        sellOrders.sort((o1, o2) -> o1.getPrice().compare(o2.getPrice()));
 
         return sellOrders;
     }
