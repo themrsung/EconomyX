@@ -11,6 +11,45 @@ import java.util.List;
  */
 public interface Deck {
     /**
+     * Gets an empty deck of cards.
+     * @return Empty deck
+     */
+    static Deck getEmptyDeck() {
+        return new PlayableDeck(new ArrayList<>());
+    }
+
+    /**
+     * Gets a standard deck of 52 cards.
+     * @return Deck
+     */
+    static Deck getDefaultDeck() {
+        List<PlayingCard> cards = new ArrayList<>();
+
+        for (PlayingCard.Number num : PlayingCard.Number.values()) {
+            for (PlayingCard.Shape shape : PlayingCard.Shape.values()) {
+                cards.add(PlayingCard.get(shape, num));
+            }
+        }
+
+        return new PlayableDeck(cards);
+    }
+
+    /**
+     * Gets a deck of multiple standard decks.
+     * @param num Number of decks to get
+     * @return
+     */
+    static Deck getExtendedDeck(int num) {
+        Deck deck = getEmptyDeck();
+
+        for (int i = 0; i < num; i++) {
+            deck.add(getDefaultDeck());
+        }
+
+        return deck;
+    }
+
+    /**
      * Gets every card in this deck.
      * @return A copied list of cards
      */
@@ -40,6 +79,13 @@ public interface Deck {
     void add(PlayingCard card) throws IllegalArgumentException;
 
     /**
+     * Adds a deck of cards to this deck.
+     * @param deck Deck to add
+     * @throws IllegalArgumentException When at least one of the cards is already in this deck
+     */
+    void add(Deck deck) throws IllegalArgumentException;
+
+    /**
      * Removes a card from this deck.
      * @param card Card to remove
      * @throws IllegalArgumentException When this deck does not contain the card
@@ -57,6 +103,7 @@ public interface Deck {
             return new ArrayList<>(cards);
         }
 
+        @Override
         public void shuffle() {
             Collections.shuffle(cards);
         }
@@ -78,6 +125,13 @@ public interface Deck {
             if (contains(card)) throw new IllegalArgumentException();
 
             cards.add(card);
+        }
+
+        @Override
+        public void add(Deck deck) throws IllegalArgumentException {
+            for (PlayingCard card : deck.getCards()) {
+                add(card);
+            }
         }
 
         @Override
