@@ -14,6 +14,7 @@ import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.listener.payment.PaymentListener;
@@ -209,6 +210,15 @@ public class EconomyX {
         }).interval(1, TimeUnit.SECONDS).delay(1, TimeUnit.SECONDS).build();
 
         Sponge.asyncScheduler().submit(auctionTickTask);
+
+        // Casino tables
+        Task casinoProgressTask = builder.execute(() -> {
+            for (Table t : getState().getTables()) {
+                t.progressGame();
+            }
+        }).interval(1, TimeUnit.SECONDS).delay(1, TimeUnit.SECONDS).build();
+
+        Sponge.asyncScheduler().submit(casinoProgressTask);
 
         // Auto save
 

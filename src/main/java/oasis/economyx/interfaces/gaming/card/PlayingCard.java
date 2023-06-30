@@ -75,6 +75,29 @@ public interface PlayingCard {
                 case KING -> 13;
             };
         }
+
+        /**
+         * Cheks if this number is 1 level higher than the given number.
+         * @param number Number to check
+         * @return Whether this number continues from the given number
+         */
+        public boolean continues(Number number) {
+            return switch (this) {
+                case ACE -> number == KING;
+                case KING -> number == QUEEN;
+                case QUEEN -> number == JACK;
+                case JACK -> number == TEN;
+                case TEN -> number == NINE;
+                case NINE -> number == EIGHT;
+                case EIGHT -> number == SEVEN;
+                case SEVEN -> number == SIX;
+                case SIX -> number == FIVE;
+                case FIVE -> number == FOUR;
+                case FOUR -> number == THREE;
+                case THREE -> number == DEUCE;
+                case DEUCE -> number == ACE;
+            };
+        }
     }
 
     enum Shape {

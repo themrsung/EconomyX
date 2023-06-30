@@ -15,13 +15,13 @@ import java.beans.ConstructorProperties;
  * A stack of chips
  */
 public final class ChipStack implements AssetStack {
-    public ChipStack(Cash asset, long quantity) {
+    public ChipStack(Chip asset, long quantity) {
         this.asset = asset;
         this.quantity = quantity;
         this.meta = new ChipMeta();
     }
 
-    public ChipStack(Cash asset, long quantity, ChipMeta meta) {
+    public ChipStack(Chip asset, long quantity, ChipMeta meta) {
         this.asset = asset;
         this.quantity = quantity;
         this.meta = meta;
@@ -34,7 +34,7 @@ public final class ChipStack implements AssetStack {
     }
 
     @JsonProperty
-    private final Cash asset;
+    private final Chip asset;
     @JsonProperty
     private long quantity;
     @JsonProperty
@@ -42,8 +42,8 @@ public final class ChipStack implements AssetStack {
 
     @Override
     @JsonIgnore
-    public @NonNull Cash getAsset() {
-        return new Cash(asset);
+    public @NonNull Chip getAsset() {
+        return new Chip(asset);
     }
 
     @Override
@@ -168,7 +168,7 @@ public final class ChipStack implements AssetStack {
      */
     @ConstructorProperties({"asset", "quantity", "meta"})
     private ChipStack() {
-        this.asset = new Cash();
+        this.asset = new Chip();
         this.quantity = 0L;
         this.meta = new ChipMeta();
     }

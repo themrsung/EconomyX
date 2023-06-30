@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.classes.gaming.table.*;
 import oasis.economyx.interfaces.actor.types.services.House;
+import oasis.economyx.types.asset.chip.ChipStack;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
@@ -29,13 +31,28 @@ public interface Table {
      * Gets the unique ID of this table
      * @return Unique ID
      */
+    @NonNull
     UUID getUniqueId();
 
     /**
      * Gets the house running this table
      * @return Casino
      */
+    @NonNull
     House getCasino();
+
+    /**
+     * Gets the dealer's chips on this table
+     * @return Dealer's chips
+     */
+    @NonNull
+    ChipStack getChips();
+
+    /**
+     * Called every second.
+     * Handles the progression of the table.
+     */
+    void progressGame();
 
     /**
      * Gets the type of this game

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.House;
 import oasis.economyx.interfaces.gaming.table.Table;
+import oasis.economyx.types.asset.chip.ChipStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -13,6 +14,14 @@ import java.util.UUID;
  * A baccarat table
  */
 public final class BaccaratTable implements Table {
+    /**
+     * The maximum number of players a table will allow.
+     * TODO
+     * 9 is recommended.
+     */
+    @JsonIgnore
+    public static final int MAX_PLAYERS = 9;
+
     public BaccaratTable() {
         this.uniqueId = UUID.randomUUID();
         this.casino = null;
@@ -37,6 +46,16 @@ public final class BaccaratTable implements Table {
     @NonNull
     public House getCasino() {
         return casino;
+    }
+
+    @Override
+    public @NonNull ChipStack getChips() {
+        return null;
+    }
+
+    @Override
+    public void progressGame() {
+
     }
 
     @JsonProperty
