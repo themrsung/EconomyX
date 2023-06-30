@@ -114,8 +114,10 @@ public interface Vote {
     /**
      * Gets the expiry of this vote.
      * Votes will automatically fail on expiry.
+     *
      * @return Expiry
      */
+    @NonNull
     DateTime getExpiry();
 
     /**
@@ -123,6 +125,7 @@ public interface Vote {
      * (e.g. 50% -> A candidate requires at least 50% of cast votes)
      * @return Required approval ratio
      */
+    @NonNegative
     float getRequiredApprovalRatio();
 
     /**
@@ -130,6 +133,7 @@ public interface Vote {
      * (e.f. 500 -> A candidate requires at least 500 votes to pass)
      * @return Required votes to pass
      */
+    @NonNegative
     long getRequiredVotesToPass();
 
     /**
@@ -221,6 +225,7 @@ public interface Vote {
         }
 
         @Override
+        @NonNull
         public DateTime getExpiry() {
             return expiry;
         }
