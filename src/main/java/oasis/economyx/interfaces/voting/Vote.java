@@ -265,7 +265,7 @@ public interface Vote {
         /**
          * Used for IO
          */
-        @ConstructorProperties({"candidates", "voters", "totalCastableVotes", "expiry", "requiredApprovalRatio", "requiredVotesToPass"})
+        @ConstructorProperties({"uniqueId", "name", "candidates", "voters", "totalCastableVotes", "expiry", "requiredApprovalRatio", "requiredVotesToPass"})
         private OpenVote() {
             this.uniqueId = null;
             this.name = null;
