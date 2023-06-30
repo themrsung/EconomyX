@@ -16,7 +16,7 @@ import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.market.Marketplace;
-import oasis.economyx.listener.PaymentListener;
+import oasis.economyx.listener.payment.PaymentListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import oasis.economyx.types.asset.AssetStack;
