@@ -117,6 +117,13 @@ public final class Trust extends EconomicActor implements Fund {
 
     @Override
     @JsonIgnore
+    public void reduceShareCount(@NonNegative long delta) throws IllegalArgumentException {
+        if (shareCount - delta < 1) throw new IllegalArgumentException();
+        this.shareCount -= delta;
+    }
+
+    @Override
+    @JsonIgnore
     public List<Actor> getShareholders(EconomyState state) {
         List<Actor> holders = new ArrayList<>();
 

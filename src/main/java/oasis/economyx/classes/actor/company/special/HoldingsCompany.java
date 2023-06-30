@@ -12,7 +12,7 @@ import java.util.UUID;
 
 /**
  * Holdings companies do not have any special abilities
- * They are empty vessels intended to be put on top of a corporate governance hierarchy
+ * They are empty vessels intended to be put on top of a corporate representable hierarchy
  */
 public final class HoldingsCompany extends Company {
     /**

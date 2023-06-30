@@ -147,6 +147,11 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * When a swap agreement is settled.
          */
-        SWAP_SETTLED;
+        SWAP_SETTLED,
+
+        /**
+         * When dividends are paid to shareholders.
+         */
+        DIVIDEND_PAYMENT;
     }
 }

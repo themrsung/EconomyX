@@ -2,13 +2,15 @@ package oasis.economyx;
 
 import oasis.economyx.classes.actor.company.common.Manufacturer;
 import oasis.economyx.classes.actor.person.NaturalPerson;
-import oasis.economyx.classes.voting.DummyAgenda;
+import oasis.economyx.classes.voting.common.DummyAgenda;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listener.dividend.DividendListener;
 import oasis.economyx.listener.payment.PaymentListener;
 import oasis.economyx.listener.player.PlayerJoinHandler;
+import oasis.economyx.listener.stock.StockSplitListener;
 import oasis.economyx.listener.vault.VaultOpenedListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
@@ -50,6 +52,12 @@ public final class EconomyX extends JavaPlugin {
         //
         // Listeners
         //
+
+        // Dividends
+        registerListener(new DividendListener(this));
+
+        // Stock
+        registerListener(new StockSplitListener(this));
 
         // Payments
         registerListener(new PaymentListener(this));
@@ -104,7 +112,7 @@ public final class EconomyX extends JavaPlugin {
                 UUID.randomUUID(),
                 "test",
                 voters,
-                new DummyAgenda(),
+                new DummyAgenda("23232"),
                 new DateTime().plusDays(1),
                 0.1f,
                 10);

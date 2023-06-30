@@ -2,7 +2,16 @@ package oasis.economyx.interfaces.voting;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import oasis.economyx.classes.voting.DummyAgenda;
+import oasis.economyx.classes.voting.common.ChangeNameAgenda;
+import oasis.economyx.classes.voting.common.DummyAgenda;
+import oasis.economyx.classes.voting.election.MakeMePresidentAgenda;
+import oasis.economyx.classes.voting.election.MakeMeSenatorAgenda;
+import oasis.economyx.classes.voting.representable.FireRepresentativeAgenda;
+import oasis.economyx.classes.voting.representable.HireRepresentativeAgenda;
+import oasis.economyx.classes.voting.stock.DividendAgenda;
+import oasis.economyx.classes.voting.stock.StockIssueAgenda;
+import oasis.economyx.classes.voting.stock.StockRetireAgenda;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An agenda is a potential action executable on its parent candidates' winning of a vote.
@@ -11,10 +20,25 @@ import oasis.economyx.classes.voting.DummyAgenda;
         use = JsonTypeInfo.Id.NAME,
         property = "type"
 )
-@JsonSubTypes(
-        @JsonSubTypes.Type(value = DummyAgenda.class, name = "DUMMY")
-)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DummyAgenda.class, name = "DUMMY"),
+        @JsonSubTypes.Type(value = ChangeNameAgenda.class, name = "CHANGE_NAME"),
+        @JsonSubTypes.Type(value = HireRepresentativeAgenda.class, name = "HIRE_REPRESENTATIVE"),
+        @JsonSubTypes.Type(value = FireRepresentativeAgenda.class, name = "FIRE_REPRESENTATIVE"),
+        @JsonSubTypes.Type(value = DividendAgenda.class, name = "DIVIDEND"),
+        @JsonSubTypes.Type(value = StockIssueAgenda.class, name = "STOCK_ISSUE"),
+        @JsonSubTypes.Type(value = StockRetireAgenda.class, name = "STOCK_RETIRE"),
+        @JsonSubTypes.Type(value = MakeMePresidentAgenda.class, name = "MAKE_ME_PRESIDENT"),
+        @JsonSubTypes.Type(value = MakeMeSenatorAgenda.class, name = "MAKE_ME_SENATOR")
+})
 public interface Agenda extends Runnable {
+    /**
+     * Gets the semantic description of this agenda.
+     * @return Description
+     */
+    @NonNull
+    String getDescription();
+
     /**
      * Gets the type of this agenda.
      * @return Type
@@ -42,14 +66,9 @@ public interface Agenda extends Runnable {
         FIRE_REPRESENTATIVE,
 
         /**
-         * An agenda that pays dividends in cash to a shared actor's shareholders
+         * An agenda that pays dividends to a shared actor's shareholders
          */
-        CASH_DIVIDEND,
-
-        /**
-         * An agenda that pays dividends in stock to a shard actor's shareholders
-         */
-        STOCK_DIVIDEND,
+        DIVIDEND,
 
         // LIQUIDATE, - TODO
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import oasis.economyx.classes.voting.DummyAgenda;
+import oasis.economyx.classes.voting.common.DummyAgenda;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
@@ -18,9 +18,9 @@ import java.util.UUID;
  * A vote has multiple candidates to be selected by voters.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
-@JsonSerialize(as = Vote.OpenVote.class)
-@JsonDeserialize(as = Vote.OpenVote.class)
-public interface Vote {
+@JsonSerialize(as = Vote.Ballot.class)
+@JsonDeserialize(as = Vote.Ballot.class)
+public interface Vote { // TODO Make a builder; Constructing votes is VERY tedious.
     /**
      * Gets a multiple selection vote.
      *
@@ -40,7 +40,7 @@ public interface Vote {
             votes += v.getVotes();
         }
 
-        return new OpenVote(uniqueId, name, candidates, voters, votes, expiry, requiredApprovalRatio, requiredVotesToPass);
+        return new Ballot(uniqueId, name, candidates, voters, votes, expiry, requiredApprovalRatio, requiredVotesToPass);
     }
 
     /**
@@ -49,13 +49,13 @@ public interface Vote {
      * @param uniqueId Unique ID of this vote
      * @param name Name of this vote
      * @param voters Voters of this vote
-     * @param onPassed Action to execute on passed
+     * @param agenda Action to execute on passed
      * @param expiry Expiry of this vote
      * @param requiredApprovalRatio Required approval ratio
      * @param requiredVotesToPass Required votes to pass
      * @return New vote instance
      */
-    static Vote getBooleanVote(UUID uniqueId, String name, @NonNull List<Voter> voters, @NonNull Agenda onPassed, @NonNull DateTime expiry, @NonNegative float requiredApprovalRatio, @NonNegative long requiredVotesToPass) {
+    static Vote getBooleanVote(UUID uniqueId, String name, @NonNull List<Voter> voters, @NonNull Agenda agenda, @NonNull DateTime expiry, @NonNegative float requiredApprovalRatio, @NonNegative long requiredVotesToPass) {
         long votes = 0L;
 
         for (Voter v : voters) {
@@ -63,10 +63,10 @@ public interface Vote {
         }
 
         List<Candidate> candidates = new ArrayList<>();
-        candidates.add(Candidate.get("Yes", onPassed));
-        candidates.add(Candidate.get("No", new DummyAgenda()));
+        candidates.add(Candidate.get("Yes", agenda));
+        candidates.add(Candidate.get("No", new DummyAgenda("Do nothing.")));
 
-        return new OpenVote(uniqueId, name, candidates, voters, votes, expiry, requiredApprovalRatio, requiredVotesToPass);
+        return new Ballot(uniqueId, name, candidates, voters, votes, expiry, requiredApprovalRatio, requiredVotesToPass);
     }
 
     /**
@@ -130,7 +130,7 @@ public interface Vote {
 
     /**
      * Gets the required amount of votes to pass.
-     * (e.f. 500 -> A candidate requires at least 500 votes to pass)
+     * (e.g. 500 -> A candidate requires at least 500 votes to pass)
      * @return Required votes to pass
      */
     @NonNegative
@@ -150,8 +150,11 @@ public interface Vote {
      */
     void processVotes();
 
-    class OpenVote implements Vote {
-        OpenVote(@NonNull UUID uniqueId, @NonNull String name, @NonNull List<Candidate> candidates, @NonNull List<Voter> voters, long totalCastableVotes, DateTime expiry, float requiredApprovalRatio, long requiredVotesToPass) {
+    // No, I don't do the Impl thing.
+    // You are free to modify this code, but do NOT call this class VoteImpl.
+    // I will put you on my blacklist and NEVER authorize a PR from you.
+    class Ballot implements Vote {
+        Ballot(@NonNull UUID uniqueId, @NonNull String name, @NonNull List<Candidate> candidates, @NonNull List<Voter> voters, long totalCastableVotes, DateTime expiry, float requiredApprovalRatio, long requiredVotesToPass) {
             this.uniqueId = uniqueId;
             this.name = name;
             this.candidates = candidates;
@@ -266,7 +269,7 @@ public interface Vote {
          * Used for IO
          */
         @ConstructorProperties({"uniqueId", "name", "candidates", "voters", "totalCastableVotes", "expiry", "requiredApprovalRatio", "requiredVotesToPass"})
-        private OpenVote() {
+        private Ballot() {
             this.uniqueId = null;
             this.name = null;
             this.candidates = new ArrayList<>();

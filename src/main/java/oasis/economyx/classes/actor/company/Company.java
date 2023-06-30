@@ -181,6 +181,12 @@ public abstract class Company extends EconomicActor implements Corporation {
         this.shareCount += delta;
     }
 
+    @Override
+    @JsonIgnore
+    public void reduceShareCount(@NonNegative long delta) throws IllegalArgumentException {
+        if (shareCount - delta < 1) throw new IllegalArgumentException();
+        this.shareCount -= delta;
+    }
 
     @NonNull
     @JsonProperty

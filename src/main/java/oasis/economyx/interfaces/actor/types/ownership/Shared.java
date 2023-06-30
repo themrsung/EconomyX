@@ -14,46 +14,54 @@ import java.util.UUID;
  */
 public interface Shared extends Representable {
     /**
-     * Gets the symbol of this actor's stock
+     * Gets the symbol of this actor's stock.
      * @return Stock's unique ID
      */
     @NonNull
     UUID getStockId();
 
     /**
-     * Gets the total issued share count
-     * This can differ from the actual number of shares in circulation
-     * The difference can come from shares being lost, counterfeiting shares, or non-backed short selling
+     * Gets the total issued share count.
+     * This can differ from the actual number of shares in circulation.
+     * The difference can come from shares being lost, counterfeiting shares, or non-backed short selling.
      * @return Total issued share count
      */
     @NonNegative
     long getShareCount();
 
     /**
-     * Sets the share count of this actor
+     * Sets the share count of this actor.
      * @param shares New share count
      */
     void setShareCount(@NonNegative long shares);
 
     /**
-     * Increases the share count of this actor
-     * Please note that this does not trigger the actual increase of number of shares in circulation
+     * Increases the share count of this actor.
+     * Please note that this does not trigger the actual increase of number of shares in circulation.
      * @param delta Amount of shares to add
      */
     void addShareCount(@NonNegative long delta);
 
     /**
-     * Gets a list of every shareholder
-     * List is sorted by share count descending
+     * Decreases the share count of this actor.
+     * Please note that this does not trigger the actual decrease of number of shares in circulation.
+     * @param delta Amount of shares to remove
+     * @throws IllegalArgumentException when the resulting share count is less than 1
+     */
+    void reduceShareCount(@NonNegative long delta) throws IllegalArgumentException;
+
+    /**
+     * Gets a list of every shareholder.
+     * List is sorted by share count descending.
      * @param state Current running state
      * @return List of shareholders
      */
     List<Actor> getShareholders(EconomyState state);
 
     /**
-     * Gets a list of majority shareholders
-     * While usually singular, there can be multiple shareholders with the same share count
-     * Self owned shares are not counted
+     * Gets a list of majority shareholders.
+     * While usually singular, there can be multiple shareholders with the same share count.
+     * Self owned shares are not counted.
      *
      * @param state Current running state
      * @return List of majority shareholders
