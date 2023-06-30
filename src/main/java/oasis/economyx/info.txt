@@ -10,7 +10,7 @@ Exception: When the instantiable class is nested inside the interface.
 For example: The interface Vote (in oasis.economyx.interfaces.voting)
 
 Vote is an interface using the obvious name, while the nested class Ballot is the actual instance.
-This is because the class Ballot is never references outside the Vote file.
+This is because the class Ballot is never referenced outside the Vote file.
 Instantiation happens via static getters in the interface Vote.
 
 For external users, Vote will seem to be instantiable.
