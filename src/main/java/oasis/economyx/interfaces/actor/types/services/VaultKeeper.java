@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * A vault keeper can host and manage vaults
  * <p>
- *     Vaults are a special in-game block which only permits the keeper and client to access it.
- *     This is intended to be used with a mod which creates this block for the plugin.
- *     Vault keepers will do nothing if no mod is provided.
+ * Vaults are a special in-game block which only permits the keeper and client to access it.
+ * This is intended to be used with a mod which creates this block for the plugin.
+ * Vault keepers will do nothing if no mod is provided.
  * </p>
- *
  */
 public interface VaultKeeper extends Actor {
     /**
      * Gets all vaults this keeper is managing
+     *
      * @return A copied list of vaults
      */
     @NonNull
@@ -37,6 +37,7 @@ public interface VaultKeeper extends Actor {
     /**
      * Unregisters a vault from this keeper
      * Note that this will not destroy the vault; It will simply unregister it from this keeper
+     *
      * @param vault Vault to remove
      */
     void removeVault(@NonNull VaultBlock vault);
@@ -44,6 +45,7 @@ public interface VaultKeeper extends Actor {
     /**
      * Gets the hourly maintenance fee of this vault keeper
      * Every vault pays this once every hour regardless of its contents
+     *
      * @return Hourly fee
      */
     @NonNull
@@ -51,6 +53,7 @@ public interface VaultKeeper extends Actor {
 
     /**
      * Sets the hourly maintenance fee of this vault keeper
+     *
      * @param fee Hourly fee
      */
     void setHourlyVaultFee(@NonNull CashStack fee);
@@ -58,7 +61,7 @@ public interface VaultKeeper extends Actor {
     /**
      * Collects fees from clients
      */
-     default void collectHourlyVaultFee() {
+    default void collectHourlyVaultFee() {
         for (VaultBlock v : getVaults()) {
             Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     v.getClient(),

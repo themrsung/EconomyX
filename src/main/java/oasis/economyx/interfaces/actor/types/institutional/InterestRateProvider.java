@@ -31,6 +31,7 @@ public interface InterestRateProvider extends Institutional {
 
     /**
      * Converts interest rate to hourly rate
+     *
      * @return Hourly interest rate
      */
     default float getHourlyInterestRate() {
@@ -40,6 +41,7 @@ public interface InterestRateProvider extends Institutional {
     /**
      * Sets the interest rate of this provider
      * Interest is only paid to deposits in cash with the same currency as this banker
+     *
      * @param rate Annual interest rate
      */
     void setInterestRate(float rate);

@@ -46,6 +46,7 @@ public interface Asset {
      * The unique identifier of this asset type
      * Multiple instances of the same asset can be created
      * This is used as a symbol to discern asset subtype (e.g. USD vs EUR)
+     *
      * @return The unique ID of this asset
      */
     @NonNull
@@ -53,12 +54,14 @@ public interface Asset {
 
     /**
      * The classification of this asset (e.g. Cash)
+     *
      * @return Classification
      */
     Asset.Type getType();
 
     /**
      * Copies this asset
+     *
      * @return An identical copy of this asset
      */
     @NonNull

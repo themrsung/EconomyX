@@ -16,8 +16,9 @@ import org.joda.time.DateTime;
 public final class FirstPriceSealedAuction extends Auction {
     /**
      * Creates a new first-price sealed auction
-     * @param asset Asset to sell
-     * @param deadline Deadline of this auction
+     *
+     * @param asset        Asset to sell
+     * @param deadline     Deadline of this auction
      * @param reservePrice Reserve price of this auction (Asset will sell for at least reserve price)
      */
     public FirstPriceSealedAuction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack reservePrice) {

@@ -24,18 +24,21 @@ import java.util.UUID;
 public interface Order {
     /**
      * Gets the unique ID of this order.
+     *
      * @return Unique ID
      */
     UUID getUniqueId();
 
     /**
      * Gets the broker responsible for handling this order.
+     *
      * @return Broker
      */
     Brokerage getBroker();
 
     /**
      * Gets the sender of the order
+     *
      * @return Sender
      */
     Actor getSender();
@@ -43,6 +46,7 @@ public interface Order {
     /**
      * Checks if this an order sent by the broker.
      * Agent trades have priority over proprietary orders.
+     *
      * @return Whether this order was sent by the broker themselves
      */
     default boolean isProprietaryOrder() {
@@ -56,6 +60,7 @@ public interface Order {
 
     /**
      * Changes the type of this order.
+     *
      * @param type New type
      * @throws IllegalArgumentException When order cannot be changed to the new type
      */
@@ -63,6 +68,7 @@ public interface Order {
 
     /**
      * Whether this is a buy order or not.
+     *
      * @return Whether this is a buy order
      */
     default boolean isBuy() {
@@ -71,6 +77,7 @@ public interface Order {
 
     /**
      * Whether this is a market order or not.
+     *
      * @return Whether this is a market order
      */
     default boolean isMarket() {
@@ -79,6 +86,7 @@ public interface Order {
 
     /**
      * Whether order is immediate or not.
+     *
      * @return Whether this is an immediate order
      */
     default boolean isImmediate() {
@@ -87,6 +95,7 @@ public interface Order {
 
     /**
      * Whether order allows partial fulfillment.
+     *
      * @return Whether this is order allows partial fulfillment
      */
     default boolean allowsPartialFulfillment() {
@@ -95,12 +104,14 @@ public interface Order {
 
     /**
      * Gets the time of order creation.
+     *
      * @return Order time
      */
     DateTime getTime();
 
     /**
      * Gets the bid/ask price of this order.
+     *
      * @return Price
      */
     @NonNull
@@ -113,6 +124,7 @@ public interface Order {
 
     /**
      * Gets the quantity of this order.
+     *
      * @return Quantity
      */
     @NonNegative
@@ -121,6 +133,7 @@ public interface Order {
     /**
      * Gets the collateral used to submit this order.
      * Set to null for collateral-less orders.
+     *
      * @return Collateral if there is one, null if not
      */
     @Nullable
@@ -129,6 +142,7 @@ public interface Order {
     /**
      * Called on order submission.
      * Handles contract registration by default.
+     *
      * @param exchange The actor running this market
      */
     void onSubmitted(MarketHost exchange);
@@ -136,8 +150,9 @@ public interface Order {
     /**
      * Called on order fulfillment.
      * Handles internal order processing.
+     *
      * @param exchange The actor running this market
-     * @param price Price of fulfillment
+     * @param price    Price of fulfillment
      * @param quantity Quantity of fulfillment
      */
     void onFulfilled(MarketHost exchange, @NonNull CashStack price, @NonNegative long quantity);
@@ -145,6 +160,7 @@ public interface Order {
     /**
      * Called on order cancellation.
      * Safely cancels the order.
+     *
      * @param exchange The actor running this market
      */
     void onCancelled(MarketHost exchange);

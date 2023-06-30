@@ -1,7 +1,9 @@
 package oasis.economyx.interfaces.actor;
 
-import com.fasterxml.jackson.annotation.*;
-import oasis.economyx.classes.actor.person.NaturalPerson;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.classes.actor.company.common.*;
 import oasis.economyx.classes.actor.company.finance.Bank;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
@@ -20,15 +22,16 @@ import oasis.economyx.classes.actor.institution.tripartite.Legislature;
 import oasis.economyx.classes.actor.institution.warfare.Military;
 import oasis.economyx.classes.actor.institution.warfare.ResearchCenter;
 import oasis.economyx.classes.actor.organization.corporate.Cartel;
+import oasis.economyx.classes.actor.organization.international.Alliance;
 import oasis.economyx.classes.actor.organization.personal.Party;
+import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.classes.actor.sovereignty.federal.Empire;
 import oasis.economyx.classes.actor.sovereignty.federal.Federation;
-import oasis.economyx.classes.actor.organization.international.Alliance;
 import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.classes.actor.sovereignty.singular.Republic;
 import oasis.economyx.classes.actor.trust.Trust;
-import oasis.economyx.types.portfolio.Portfolio;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.portfolio.Portfolio;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
@@ -89,6 +92,7 @@ import java.util.UUID;
 public interface Actor {
     /**
      * Gets the unique ID of this actor.
+     *
      * @return Unique ID
      */
     UUID getUniqueId();
@@ -96,6 +100,7 @@ public interface Actor {
     /**
      * Gets the semantic name of this actor.
      * Can be null and is not unique.
+     *
      * @return Name
      */
     @Nullable
@@ -103,18 +108,21 @@ public interface Actor {
 
     /**
      * Sets the semantic name of this actor.
+     *
      * @param name Can be null and does not require uniqueness
      */
     void setName(@Nullable String name);
 
     /**
      * Gets the gross holdings of this actor.
+     *
      * @return Assets
      */
     Portfolio getAssets();
 
     /**
      * Gets all outstanding collaterals of this actor.
+     *
      * @param state Current running state
      * @return Collaterals
      */
@@ -122,6 +130,7 @@ public interface Actor {
 
     /**
      * Gets all outstanding liabilities of this actor. (is inclusive of collaterals)
+     *
      * @param state Current running state
      * @return Liabilities
      */
@@ -130,6 +139,7 @@ public interface Actor {
     /**
      * Gets all payable assets. (Gross assets subtracted by collaterals)
      * This is used to determine whether the actor can fulfill a payment.
+     *
      * @param state Current running state
      * @return Payable assets.
      */
@@ -138,6 +148,7 @@ public interface Actor {
     /**
      * Gets the net assets of this actor. (Assets subtracted by liabilities)
      * This is used to check if the actor is insolvent.
+     *
      * @param state Current running state
      * @return Net assets
      */
@@ -145,6 +156,7 @@ public interface Actor {
 
     /**
      * Gets the type of this actor
+     *
      * @return Type
      */
     Type getType();

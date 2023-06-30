@@ -23,11 +23,12 @@ import java.util.UUID;
 public final class Bank extends Company implements Banker, CardIssuer {
     /**
      * Creates a new bank
-     * @param uniqueId Unique ID of this bank
-     * @param name Name of this bank (not unique)
-     * @param stockId ID of this bank's stock
+     *
+     * @param uniqueId   Unique ID of this bank
+     * @param name       Name of this bank (not unique)
+     * @param stockId    ID of this bank's stock
      * @param shareCount Initial share count
-     * @param currency Currency to use
+     * @param currency   Currency to use
      */
     public Bank(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);

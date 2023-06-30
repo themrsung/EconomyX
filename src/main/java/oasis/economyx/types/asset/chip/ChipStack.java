@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -74,6 +73,7 @@ public final class ChipStack implements AssetStack {
 
     /**
      * Adds two cash stacks
+     *
      * @param other Delta
      * @return The resulting cash stack
      * @throws IllegalArgumentException When a different denotation is given
@@ -90,6 +90,7 @@ public final class ChipStack implements AssetStack {
 
     /**
      * Subtracts cash stacks
+     *
      * @param other Delta
      * @return The resulting cash stack
      * @throws IllegalArgumentException When a different denotation is given, or the resulting cash stack has negative quantity
@@ -106,6 +107,7 @@ public final class ChipStack implements AssetStack {
 
     /**
      * Whether this stack is bigger than the other
+     *
      * @param other Stack to compare against
      * @return Whether this is bigger
      * @throws IllegalArgumentException When a different denotation is given
@@ -119,6 +121,7 @@ public final class ChipStack implements AssetStack {
 
     /**
      * Whether this stack is smaller than the other
+     *
      * @param other Stack to compare against
      * @return Whether this is bigger
      * @throws IllegalArgumentException When a different denotation is given

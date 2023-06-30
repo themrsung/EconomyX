@@ -28,6 +28,7 @@ public interface Banknote {
 
     /**
      * Gets the unique ID of this banknote
+     *
      * @return Unique ID
      */
     @NonNull
@@ -35,6 +36,7 @@ public interface Banknote {
 
     /**
      * Gets the amount of cash this banknote represents
+     *
      * @return Denotation
      */
     @NonNull

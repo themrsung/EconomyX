@@ -27,6 +27,7 @@ public abstract class EconomyEvent extends Event implements Cancellable {
     }
 
     private static final HandlerList handlers = new HandlerList();
+
     @NonNull
     public HandlerList getHandlers() {
         return handlers;

@@ -10,6 +10,7 @@ import org.checkerframework.checker.index.qual.NonNegative;
 public interface Brokerage extends Banker {
     /**
      * Gets the brokerage fee rate
+     *
      * @return Rate (e.g. 2.3% -> 0.023f)
      */
     @NonNegative
@@ -17,6 +18,7 @@ public interface Brokerage extends Banker {
 
     /**
      * Sets the brokerage fee rate
+     *
      * @param rate Rate (e.g. 2.3% -> 0.023f)
      */
     void setBrokerageFeeRate(@NonNegative float rate);

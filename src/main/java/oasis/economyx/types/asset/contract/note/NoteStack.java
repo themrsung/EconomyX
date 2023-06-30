@@ -89,6 +89,7 @@ public final class NoteStack implements AssetStack {
 
     @JsonProperty
     private final Asset.Type type = Asset.Type.NOTE;
+
     @Override
     @JsonIgnore
     public Asset.Type getType() {

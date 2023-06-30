@@ -34,6 +34,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface Agenda extends Runnable {
     /**
      * Gets the semantic description of this agenda.
+     *
      * @return Description
      */
     @NonNull
@@ -41,9 +42,11 @@ public interface Agenda extends Runnable {
 
     /**
      * Gets the type of this agenda.
+     *
      * @return Type
      */
     Type getType();
+
     enum Type {
         /**
          * An agenda that does nothing

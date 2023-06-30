@@ -2,10 +2,10 @@ package oasis.economyx.classes.actor.organization.corporate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.organization.AbstractOrganization;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.organization.AbstractOrganization;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,10 +18,11 @@ import java.util.UUID;
 public final class Cartel extends AbstractOrganization<Corporation> {
     /**
      * Creates a new cartel
+     *
      * @param uniqueId Unique ID of this cartel
-     * @param name Name of thie cartel (not unique)
+     * @param name     Name of thie cartel (not unique)
      * @param currency Currency used to pay the representative
-     * @param founder Founding corporation (cannot by null)
+     * @param founder  Founding corporation (cannot by null)
      */
     public Cartel(UUID uniqueId, @Nullable String name, @NonNull Cash currency, @NonNull Corporation founder) {
         super(uniqueId, name, currency);

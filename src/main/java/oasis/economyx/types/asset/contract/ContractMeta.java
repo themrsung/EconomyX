@@ -2,8 +2,8 @@ package oasis.economyx.types.asset.contract;
 
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.asset.meta.Purchasable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;

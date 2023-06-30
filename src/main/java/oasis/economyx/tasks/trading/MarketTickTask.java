@@ -2,7 +2,6 @@ package oasis.economyx.tasks.trading;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
-import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.tasks.EconomyTask;
 

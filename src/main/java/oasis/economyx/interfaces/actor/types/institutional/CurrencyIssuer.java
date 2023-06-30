@@ -11,6 +11,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface CurrencyIssuer extends Institutional {
     /**
      * Gets the currency this issuer has issued
+     *
      * @return Currency
      */
     @NonNull
@@ -27,6 +28,7 @@ public interface CurrencyIssuer extends Institutional {
 
     /**
      * Burns money from own account
+     *
      * @param amount Amount to burn
      * @throws IllegalArgumentException When a different denotation is provided
      */

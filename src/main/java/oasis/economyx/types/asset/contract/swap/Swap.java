@@ -93,6 +93,7 @@ public final class Swap implements Contract {
 
     /**
      * Gets the current value of this swap from the perspective of its holder
+     *
      * @return Expected delivery on expiry
      * @throws IllegalArgumentException When the delivery is negative (this is a liability)
      */
@@ -110,6 +111,7 @@ public final class Swap implements Contract {
 
     /**
      * Gets the current value of this swap from the perspective of its counterparty
+     *
      * @return Expected delivery on expiry negated
      * @throws IllegalArgumentException When the negated delivery is negative (this is an asset)
      */

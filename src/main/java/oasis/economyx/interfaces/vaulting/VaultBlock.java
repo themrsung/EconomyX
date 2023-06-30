@@ -24,6 +24,7 @@ public interface VaultBlock {
 
     /**
      * Gets the unique ID of this vault block.
+     *
      * @return Unique ID
      */
     @NonNull
@@ -42,6 +43,7 @@ public interface VaultBlock {
 
     /**
      * Gets the client of this vault block.
+     *
      * @return Client
      */
     @NonNull
@@ -49,6 +51,7 @@ public interface VaultBlock {
 
     /**
      * Gets all items in this vault.
+     *
      * @return copied list of items
      */
     @NonNull
@@ -56,18 +59,21 @@ public interface VaultBlock {
 
     /**
      * Adds an item to the vault.
+     *
      * @param item Item to add
      */
     void addItem(@NonNull CommodityStack item);
 
     /**
      * Removes an item from the vault.
+     *
      * @param item Item to remove
      */
     void removeItem(@NonNull CommodityStack item);
 
     /**
      * Checks if there is enough space for this item.
+     *
      * @param item Item to check for
      * @return Whether there is enough empty space
      */
@@ -75,6 +81,7 @@ public interface VaultBlock {
 
     /**
      * Checks if this vault contains the given item. (and its quantity)
+     *
      * @param item Item to check for
      * @return Whether this vault contains the item
      */
@@ -82,6 +89,7 @@ public interface VaultBlock {
 
     /**
      * Gets the maximum amount of stacks this vault allows.
+     *
      * @return Maximum size
      */
     @NonNegative
@@ -89,6 +97,7 @@ public interface VaultBlock {
 
     /**
      * Gets the maximum amount of items per stack this vault allows.
+     *
      * @return Maximum stack size
      */
     @NonNegative
@@ -96,6 +105,7 @@ public interface VaultBlock {
 
     /**
      * Gets the location this vault is located at.
+     *
      * @return Location
      */
     @NonNull

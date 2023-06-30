@@ -16,8 +16,9 @@ import org.joda.time.DateTime;
 public final class DutchAuction extends Auction {
     /**
      * Creates a new Dutch auction
-     * @param asset Asset to sell
-     * @param deadline Deadline of auction
+     *
+     * @param asset        Asset to sell
+     * @param deadline     Deadline of auction
      * @param maximumPrice Starting price of this auction (price will fall from maximum price)
      */
     public DutchAuction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack maximumPrice) {
@@ -58,7 +59,7 @@ public final class DutchAuction extends Auction {
 
     @JsonProperty
     private final Type type = Type.DUTCH_AUCTION;
-    
+
     @Override
     @JsonIgnore
     public PriceProvider.Type getType() {

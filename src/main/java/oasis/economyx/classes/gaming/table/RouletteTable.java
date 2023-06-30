@@ -21,10 +21,12 @@ public final class RouletteTable implements Table {
      */
     @JsonIgnore
     public static final int MAX_PLAYERS = 139193;
+
     public RouletteTable() {
         this.uniqueId = UUID.randomUUID();
         this.casino = null;
     }
+
     @NonNull
     @JsonProperty
     private final UUID uniqueId;

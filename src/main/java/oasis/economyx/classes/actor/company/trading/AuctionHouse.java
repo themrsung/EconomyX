@@ -18,11 +18,12 @@ import java.util.UUID;
 public final class AuctionHouse extends Company implements AuctionHost {
     /**
      * Creates a new auction house
-     * @param uniqueId Unique ID of this auction house
-     * @param name Name of this auction house (not unique)
-     * @param stockId ID of this auction house's stock
+     *
+     * @param uniqueId   Unique ID of this auction house
+     * @param name       Name of this auction house (not unique)
+     * @param stockId    ID of this auction house's stock
      * @param shareCount Initial share count
-     * @param currency Currency to host auctions in
+     * @param currency   Currency to host auctions in
      */
     public AuctionHouse(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);

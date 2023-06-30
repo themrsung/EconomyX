@@ -8,13 +8,14 @@ import java.util.List;
 /**
  * A credible actor can issue guarantees
  * <p>
- *     Guarantees function as a line of credit,
- *     but is applicable to any asset classification.
+ * Guarantees function as a line of credit,
+ * but is applicable to any asset classification.
  * </p>
  */
 public interface Credible {
     /**
      * Gets all guarantees issued by this credible
+     *
      * @return Copied list of guarantees
      */
     @NonNull
@@ -22,12 +23,14 @@ public interface Credible {
 
     /**
      * Adds a guarantee
+     *
      * @param guarantee Guarantee to add
      */
     void addGuarantee(@NonNull Guarantee guarantee);
 
     /**
      * Revokes a guarantee
+     *
      * @param guarantee Guarantee to revoke
      */
     void removeGuarantee(@NonNull Guarantee guarantee);

@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 public interface Contract extends Asset {
     /**
      * The asset to be delivered upon expiry
+     *
      * @return Asset to be delivered
      */
     @NonNull
@@ -21,6 +22,7 @@ public interface Contract extends Asset {
 
     /**
      * Counterparty of this contract
+     *
      * @return Counterparty
      */
     @NonNull
@@ -28,6 +30,7 @@ public interface Contract extends Asset {
 
     /**
      * Expiration date of this contract
+     *
      * @return Expiration
      */
     @Nullable
@@ -35,6 +38,7 @@ public interface Contract extends Asset {
 
     /**
      * Called when this contract has expired
+     *
      * @param holder Current holder of the contract
      */
     void onExpired(Actor holder);

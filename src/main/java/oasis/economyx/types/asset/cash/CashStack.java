@@ -73,6 +73,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Adds two cash stacks
+     *
      * @param other Delta
      * @return The resulting cash stack
      * @throws IllegalArgumentException When a different denotation is given
@@ -89,6 +90,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Subtracts cash stacks
+     *
      * @param other Delta
      * @return The resulting cash stack
      * @throws IllegalArgumentException When a different denotation is given, or the resulting cash stack has negative quantity
@@ -105,6 +107,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Multiplies two cash stacks
+     *
      * @param other Other stack
      * @return The resulting cash stack
      * @throws IllegalArgumentException When a different denotation is given
@@ -121,6 +124,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Multiplies this cash stack by a given modifier
+     *
      * @param modifier modifier
      * @return The resulting cash stack
      */
@@ -134,10 +138,11 @@ public final class CashStack implements AssetStack {
 
     /**
      * Divides this cash stack by another
+     *
      * @param other Other stack
      * @return The resulting stack
      * @throws IllegalArgumentException When a different denotation is given
-     * @throws ArithmeticException When the other stack has 0 as its quantity
+     * @throws ArithmeticException      When the other stack has 0 as its quantity
      */
     @JsonIgnore
     public CashStack divide(CashStack other) throws IllegalArgumentException, ArithmeticException {
@@ -154,6 +159,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Divides this cash stack by a given denominator
+     *
      * @param denominator denominator
      * @return The resulting cash stack
      */
@@ -171,6 +177,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Whether this stack is bigger than the other
+     *
      * @param other Stack to compare against
      * @return Whether this is bigger
      * @throws IllegalArgumentException When a different denotation is given
@@ -184,6 +191,7 @@ public final class CashStack implements AssetStack {
 
     /**
      * Whether this stack is smaller than the other
+     *
      * @param other Stack to compare against
      * @return Whether this is bigger
      * @throws IllegalArgumentException When a different denotation is given

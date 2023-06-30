@@ -1,9 +1,6 @@
 package oasis.economyx.tasks.server;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.interfaces.actor.types.employment.Employer;
-import oasis.economyx.interfaces.actor.types.finance.Banker;
-import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.tasks.EconomyTask;
 
 public final class AutoSaveTask extends EconomyTask {

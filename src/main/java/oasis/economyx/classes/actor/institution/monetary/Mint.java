@@ -2,14 +2,14 @@ package oasis.economyx.classes.actor.institution.monetary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.BanknoteIssuer;
 import oasis.economyx.interfaces.actor.types.institutional.CurrencyIssuer;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.physical.Banknote;
+import oasis.economyx.types.asset.cash.Cash;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,9 +26,10 @@ import java.util.UUID;
 public final class Mint extends Institution implements BanknoteIssuer {
     /**
      * Creates a new mint
-     * @param parent The sovereign founding this mint
+     *
+     * @param parent   The sovereign founding this mint
      * @param uniqueId Unique ID of this mint
-     * @param name Name of this mint (not unique)
+     * @param name     Name of this mint (not unique)
      * @param currency Currency of this mint
      */
     public Mint(@NonNull Sovereign parent, @NonNull UUID uniqueId, @Nullable String name, @NonNull Cash currency) {
@@ -60,7 +61,8 @@ public final class Mint extends Institution implements BanknoteIssuer {
         Sovereign parent = getParent();
         for (Institutional i : parent.getInstitutions()) {
             if (i instanceof CurrencyIssuer ci) {
-                if (!ci.getIssuedCurrency().equals(note.getDenotation().getAsset())) throw new IllegalArgumentException();
+                if (!ci.getIssuedCurrency().equals(note.getDenotation().getAsset()))
+                    throw new IllegalArgumentException();
 
                 ItemStack banknote = new ItemStack(Banknote.NOTE_ITEM);
 

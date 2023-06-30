@@ -26,11 +26,12 @@ import java.util.UUID;
 public final class Trust extends EconomicActor implements Fund {
     /**
      * Constructs a new trust
-     * @param uniqueId Unique ID of this trust
-     * @param name Name of this trust (not unique)
-     * @param stockId Unique ID of this trust's stock
+     *
+     * @param uniqueId   Unique ID of this trust
+     * @param name       Name of this trust (not unique)
+     * @param stockId    Unique ID of this trust's stock
      * @param shareCount Initial share count
-     * @param currency Currency to pay the trustee in
+     * @param currency   Currency to pay the trustee in
      */
     public Trust(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name);

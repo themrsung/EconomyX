@@ -23,12 +23,14 @@ import java.util.UUID;
 public interface Banker extends Corporation, InterestRateProvider {
     /**
      * Gets every account held by this banker
+     *
      * @return Copied list of accounts
      */
     List<Account> getAccounts();
 
     /**
      * Gets an account by unique ID
+     *
      * @param uniqueId Unique ID of the account
      * @return Account if found, null if not
      */
@@ -43,6 +45,7 @@ public interface Banker extends Corporation, InterestRateProvider {
 
     /**
      * Gets every account matching the given client
+     *
      * @param client Client to query for
      * @return List of found accounts
      */
@@ -58,12 +61,14 @@ public interface Banker extends Corporation, InterestRateProvider {
 
     /**
      * Adds an account to this banker
+     *
      * @param account Account to add
      */
     void addAccount(Account account);
 
     /**
      * Remvoes an account from this banker
+     *
      * @param account Account to remove
      */
     void removeAccount(Account account);
@@ -74,6 +79,7 @@ public interface Banker extends Corporation, InterestRateProvider {
 
     /**
      * Commercial banks cannot have negative interest rates
+     *
      * @param rate Annual interest rate
      * @throws IllegalArgumentException When given rate is negative
      */

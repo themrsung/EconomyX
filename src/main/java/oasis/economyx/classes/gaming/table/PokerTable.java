@@ -29,8 +29,9 @@ public final class PokerTable implements Table {
 
     /**
      * Creates a new poker table.
+     *
      * @param uniqueId Unique ID of this table
-     * @param casino Casino running this table
+     * @param casino   Casino running this table
      */
     public PokerTable(@NonNull UUID uniqueId, @NonNull House casino) {
         this.uniqueId = uniqueId;

@@ -1,9 +1,7 @@
 package oasis.economyx.tasks.gaming;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.gaming.table.Table;
-import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.tasks.EconomyTask;
 
 public final class CasinoProgressTask extends EconomyTask {

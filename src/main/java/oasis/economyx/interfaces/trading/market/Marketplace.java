@@ -16,12 +16,14 @@ import java.util.List;
 public interface Marketplace extends PriceProvider {
     /**
      * Gets all unfulfilled orders
+     *
      * @return A copied list or orders
      */
     List<Order> getOrders();
 
     /**
      * Gets all buy orders, sorted by fulfillment priority descending
+     *
      * @return List of buy orders
      */
     default List<Order> getBuyOrders() {
@@ -50,6 +52,7 @@ public interface Marketplace extends PriceProvider {
 
     /**
      * Gets all sell orders, sorted by fulfillment priority descending
+     *
      * @return List of sell orders
      */
     default List<Order> getSellOrders() {
@@ -78,14 +81,16 @@ public interface Marketplace extends PriceProvider {
 
     /**
      * Places a new order
-     * @param order Order to place
+     *
+     * @param order    Order to place
      * @param exchange The actor running this market
      */
     void placeOrder(@NonNull Order order, @NonNull MarketHost exchange);
 
     /**
      * Cancels an existing order
-     * @param order Order to place
+     *
+     * @param order    Order to place
      * @param exchange The actor running this market
      */
     void cancelOrder(@NonNull Order order, @NonNull MarketHost exchange);
@@ -93,6 +98,7 @@ public interface Marketplace extends PriceProvider {
     /**
      * Processes orders
      * Called every market tick
+     *
      * @param exchange The actor running this market
      */
     void processOrders(MarketHost exchange);

@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.institution.tripartite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Judicial;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,9 +18,10 @@ import java.util.UUID;
 public final class Judiciary extends Institution implements Judicial {
     /**
      * Creates a new judiciary
-     * @param parent Parent sovereign (cannot be null)
+     *
+     * @param parent   Parent sovereign (cannot be null)
      * @param uniqueId Unique ID of this judiciary
-     * @param name Name of this judiciary (cannot be null)
+     * @param name     Name of this judiciary (cannot be null)
      * @param currency Currency of this judiciary
      */
     public Judiciary(@NonNull Sovereign parent, UUID uniqueId, @Nullable String name, @NonNull Cash currency) {

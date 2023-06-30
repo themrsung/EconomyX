@@ -11,6 +11,7 @@ import java.util.List;
 public interface Democratic extends Representable {
     /**
      * Gets all open votes.
+     *
      * @return A copied list of votes
      */
     @NonNull
@@ -18,6 +19,7 @@ public interface Democratic extends Representable {
 
     /**
      * Opens a new vote.
+     *
      * @param vote Vote to open.
      */
     void openVote(@NonNull Vote vote);

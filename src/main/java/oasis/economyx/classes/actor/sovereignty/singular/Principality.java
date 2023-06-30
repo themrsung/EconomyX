@@ -3,12 +3,12 @@ package oasis.economyx.classes.actor.sovereignty.singular;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -19,10 +19,11 @@ import java.util.UUID;
 public final class Principality extends Sovereignty {
     /**
      * Creates a new principality
+     *
      * @param uniqueId Unique ID of this principality
-     * @param name Name of this principality (not unique)
+     * @param name     Name of this principality (not unique)
      * @param currency Currency used in this principality
-     * @param monarch Founding monarch (cannot be null)
+     * @param monarch  Founding monarch (cannot be null)
      */
     public Principality(UUID uniqueId, @Nullable String name, @NonNull Cash currency, @NonNull Person monarch) {
         super(uniqueId, name, currency);

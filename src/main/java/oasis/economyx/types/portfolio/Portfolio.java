@@ -19,12 +19,14 @@ import java.util.List;
 public interface Portfolio {
     /**
      * Gets every asset in this portfolio.
+     *
      * @return A copied list of every asset
      */
     List<AssetStack> get();
 
     /**
      * Gets an asset by index.
+     *
      * @param i Index
      * @return Asset if found, null if not found
      */
@@ -33,6 +35,7 @@ public interface Portfolio {
 
     /**
      * Gets an asset by its type.
+     *
      * @param asset Type
      * @return Asset if found, null if not found
      */
@@ -41,24 +44,28 @@ public interface Portfolio {
 
     /**
      * Gets the size of this portfolio.
+     *
      * @return How many assets there are
      */
     int size();
 
     /**
      * Adds an asset to this portfolio.
+     *
      * @param asset Asset to add
      */
     void add(@NonNull AssetStack asset);
 
     /**
      * Adds a portfolio to this portfolio.
+     *
      * @param portfolio Portfolio to add
      */
     void add(@NonNull Portfolio portfolio);
 
     /**
      * Removes an asset from this portfolio.
+     *
      * @param asset Asset to remove
      * @throws IllegalArgumentException When the resulting asset's quantity is negative
      */
@@ -66,6 +73,7 @@ public interface Portfolio {
 
     /**
      * Removes a portfolio from this portfolio.
+     *
      * @param portfolio Portfolio to remove
      * @throws IllegalArgumentException When the resulting portfolio has at least one negative quantity
      */
@@ -74,6 +82,7 @@ public interface Portfolio {
     /**
      * Checks whether this portfolio contains an asset.
      * Will check type and quantity
+     *
      * @param asset Asset to query
      * @return Whether this portfolio contains the asset
      */
@@ -82,6 +91,7 @@ public interface Portfolio {
     /**
      * Checks whether this portfolio has at least one of an asset.
      * Will only check type
+     *
      * @param asset Asset to query
      * @return Whether this portfolio has the asset
      */
@@ -89,7 +99,8 @@ public interface Portfolio {
 
     /**
      * Checks whether this portfolio has at least one of an asset.
-     * @param asset Asset to query
+     *
+     * @param asset     Asset to query
      * @param checkMeta Whether to check for matching metadata
      * @return Whether this portfolio has the asset
      */

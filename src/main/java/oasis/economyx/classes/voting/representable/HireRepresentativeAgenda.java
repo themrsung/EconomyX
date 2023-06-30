@@ -39,6 +39,7 @@ public final class HireRepresentativeAgenda implements Agenda {
     public Representable getRepresentable() {
         return representable;
     }
+
     @NonNull
     @JsonIgnore
     public Person getCandidate() {

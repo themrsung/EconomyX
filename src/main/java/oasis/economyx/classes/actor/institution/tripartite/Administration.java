@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.institution.tripartite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Administrative;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,9 +18,10 @@ import java.util.UUID;
 public final class Administration extends Institution implements Administrative {
     /**
      * Creates a new administration
-     * @param parent Parent sovereign (cannot be null)
+     *
+     * @param parent   Parent sovereign (cannot be null)
      * @param uniqueId Unique ID of this administration
-     * @param name Name of this administration (not unique)
+     * @param name     Name of this administration (not unique)
      * @param currency Currency of this administration
      */
     public Administration(@NonNull Sovereign parent, UUID uniqueId, @Nullable String name, @NonNull Cash currency) {

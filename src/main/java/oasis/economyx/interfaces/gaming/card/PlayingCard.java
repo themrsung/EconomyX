@@ -11,7 +11,8 @@ import java.util.UUID;
 public interface PlayingCard {
     /**
      * Gets one playing card by shape and number
-     * @param shape Shape of card
+     *
+     * @param shape  Shape of card
      * @param number Number of card
      * @return New instance
      */
@@ -22,18 +23,21 @@ public interface PlayingCard {
     /**
      * Gets the unique ID of this playing card.
      * Cards are unique for security reasons.
+     *
      * @return Unique ID
      */
     UUID uniqueId();
 
     /**
      * Gets the shape of this card.
+     *
      * @return Shape
      */
     Shape shape();
 
     /**
      * Gets the number denoted on this card.
+     *
      * @return Number
      */
     Number number();
@@ -56,6 +60,7 @@ public interface PlayingCard {
         /**
          * Gets the numeric value of this card.
          * Ace is considered to be highest.
+         *
          * @return Numeric value
          */
         public int getValue() {
@@ -78,6 +83,7 @@ public interface PlayingCard {
 
         /**
          * Cheks if this number is 1 level higher than the given number.
+         *
          * @param number Number to check
          * @return Whether this number continues from the given number
          */

@@ -14,6 +14,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 public interface Representable extends Actor {
     /**
      * Gets the person with authority to execute actions on this actor's behalf
+     *
      * @return Current representative
      */
     @Nullable
@@ -21,12 +22,14 @@ public interface Representable extends Actor {
 
     /**
      * Sets the representative of this actor
+     *
      * @param representative New representative
      */
     void setRepresentative(@Nullable Person representative);
 
     /**
      * Gets the hourly representative pay
+     *
      * @return Hourly pay
      */
     @NonNull
@@ -34,6 +37,7 @@ public interface Representable extends Actor {
 
     /**
      * Sets the hourly representative pay
+     *
      * @param pay Hourly pay
      */
     void setRepresentativePay(@NonNull CashStack pay);

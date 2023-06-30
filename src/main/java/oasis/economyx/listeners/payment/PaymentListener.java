@@ -13,6 +13,7 @@ public final class PaymentListener extends EconomyListener {
     public PaymentListener(@NonNull EconomyX EX) {
         super(EX);
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPayment(PaymentEvent event) {
         if (event.isCancelled()) return;

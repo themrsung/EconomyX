@@ -54,12 +54,14 @@ import java.util.UUID;
 public interface EconomyState {
     /**
      * Gets the plugin instance.
+     *
      * @return Plugin
      */
     EconomyX getEX();
 
     /**
      * Gets all actors currently present within this state.
+     *
      * @return Copied list of actors
      */
     List<Actor> getActors();
@@ -85,12 +87,14 @@ public interface EconomyState {
 
     /**
      * Adds an actor to this state.
+     *
      * @param actor Actor to add
      */
     void addActor(@NonNull Actor actor);
 
     /**
      * Removes an actor from this state.
+     *
      * @param actor Actor to remove
      */
     void removeActor(@NonNull Actor actor);
@@ -106,6 +110,7 @@ public interface EconomyState {
     /**
      * Gets a person by ID.
      * Check if person exists with isPerson(UUID) first.
+     *
      * @param uniqueId Unique ID of person
      * @return Person
      * @throws IllegalArgumentException When person cannot be found
@@ -146,6 +151,7 @@ public interface EconomyState {
      * <ul>
      *     <li>{@link oasis.economyx.classes.actor.trust.Trust}</li>
      * </ul>
+     *
      * @return Funds
      */
     List<Fund> getFunds();
@@ -527,6 +533,7 @@ public interface EconomyState {
      *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
      *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
      * </ul>
+     *
      * @return Protectors
      */
     List<Protector> getProtectors();
@@ -617,48 +624,56 @@ public interface EconomyState {
 
     /**
      * Gets all accounts.
+     *
      * @return Accounts
      */
     List<Account> getAccounts();
 
     /**
      * Gets all casino tables.
+     *
      * @return Tables
      */
     List<Table> getTables();
 
     /**
      * Gets all guarantees.
+     *
      * @return Guarantees
      */
     List<Guarantee> getGuarantees();
 
     /**
      * Gets all banknotes.
+     *
      * @return Banknotes
      */
     List<Banknote> getBanknotes();
 
     /**
      * Gets all open auctions.
+     *
      * @return Auctioneers
      */
     List<Auctioneer> getAuctioneers();
 
     /**
      * Gets all bids in auctions.
+     *
      * @return Bids
      */
     List<Bid> getBids();
 
     /**
      * Gets all open markets.
+     *
      * @return Marketplaces
      */
     List<Marketplace> getMarketplaces();
 
     /**
      * Gets all orders in markets.
+     *
      * @return Orders
      */
     List<Order> getOrders();
@@ -677,6 +692,7 @@ public interface EconomyState {
 
     /**
      * Gets all vault blocks.
+     *
      * @return Vaults
      */
     List<VaultBlock> getVaultBlocks();
@@ -684,6 +700,7 @@ public interface EconomyState {
     /**
      * Gets every portfolio of every actor.
      * This a DIRECT pointer, not a copy.
+     *
      * @return Portfolios
      */
     List<Portfolio> getPortfolios();
@@ -692,24 +709,28 @@ public interface EconomyState {
      * Gets every asset stack in every portfolio.
      * Only assets directly owned by an actor will be returns, as derivative assets are pointers to the original.
      * This is a DIRECT pointer, not a copy.
+     *
      * @return Assets
      */
     List<AssetStack> getAssets();
 
     /**
      * Gets every active card.
+     *
      * @return Cards
      */
     List<Card> getCards();
 
     /**
      * Gets all open votes.
+     *
      * @return Votes
      */
     List<Vote> getVotes();
 
     /**
      * Gets all candidates in all votes.
+     *
      * @return Candidates
      */
     List<Candidate> getCandidates();
@@ -717,6 +738,7 @@ public interface EconomyState {
     /**
      * Gets all voters in all votes.
      * Note that voters are not an instance of Actor.
+     *
      * @return Voters
      */
     List<Voter> getVoters();

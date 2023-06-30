@@ -12,7 +12,6 @@ import oasis.economyx.types.asset.contract.option.OptionMeta;
 import oasis.economyx.types.asset.contract.swap.SwapMeta;
 import oasis.economyx.types.asset.property.PropertyMeta;
 import oasis.economyx.types.asset.stock.StockMeta;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Metadata of an asset

@@ -17,8 +17,8 @@ import java.util.UUID;
  * An account is owned by an actor and held by a bank/broker
  * Accounts can hold any asset
  * <p>
- *     Assets held in an account are stored in the institution's asset portfolio.
- *     A collateral with the debtor as the institution is issued per account, and is updated evey deposit/withdrawal.
+ * Assets held in an account are stored in the institution's asset portfolio.
+ * A collateral with the debtor as the institution is issued per account, and is updated evey deposit/withdrawal.
  * </p>
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
@@ -27,6 +27,7 @@ import java.util.UUID;
 public interface Account {
     /**
      * Gets the unique ID of this account
+     *
      * @return Unique ID
      */
     @NonNull
@@ -34,6 +35,7 @@ public interface Account {
 
     /**
      * Gets the institution holding this account
+     *
      * @return Banker
      */
     @NonNull
@@ -42,6 +44,7 @@ public interface Account {
     /**
      * Gets the client of this account
      * The client holds the collateral which marks the ownership of this account
+     *
      * @return Client
      */
     @NonNull
@@ -49,6 +52,7 @@ public interface Account {
 
     /**
      * Gets the asset stored in this account
+     *
      * @return Asset stored in this account
      */
     @NonNull
@@ -56,6 +60,7 @@ public interface Account {
 
     /**
      * Gets the collateral which marks the ownership of this account
+     *
      * @return Collateral
      */
     @NonNull
@@ -82,6 +87,7 @@ public interface Account {
     /**
      * Called when account is opened
      * Registers collateral
+     *
      * @param institution Institution holding this account
      */
     void onOpened(@NonNull Banker institution);
@@ -89,6 +95,7 @@ public interface Account {
     /**
      * Called when account is closed
      * Withdraws content and unregisters collateral
+     *
      * @param institution Institution holding this account
      */
     void onClosed(@NonNull Banker institution);

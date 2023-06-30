@@ -3,10 +3,10 @@ package oasis.economyx.classes.actor.sovereignty.federal;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
-import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -18,9 +18,10 @@ import java.util.UUID;
 public final class Empire extends Sovereignty implements Federal {
     /**
      * Creates a new empire
-     * @param uniqueId Unique ID of this empire
-     * @param name Name of this empire
-     * @param currency Currency used to pay the emperor
+     *
+     * @param uniqueId      Unique ID of this empire
+     * @param name          Name of this empire
+     * @param currency      Currency used to pay the emperor
      * @param foundingState Founding state (cannot be null)
      */
     public Empire(UUID uniqueId, @Nullable String name, @NonNull Cash currency, @NonNull Sovereign foundingState) {

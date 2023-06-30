@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 
-public final class CollateralMeta implements AssetMeta{
+public final class CollateralMeta implements AssetMeta {
     public CollateralMeta() {
     }
 

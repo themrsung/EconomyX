@@ -20,6 +20,7 @@ public interface TablePlayer {
 
     /**
      * Gets the stack of chips this player has entered the game with.
+     *
      * @return Stack of chips
      */
     @NonNull

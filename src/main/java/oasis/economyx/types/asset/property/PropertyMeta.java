@@ -36,7 +36,7 @@ public final class PropertyMeta implements AssetMeta {
     public void setProtector(@Nullable Protector protector) {
         this.protector = protector;
     }
-    
+
     @JsonProperty
     private final Asset.Type type = Asset.Type.PROPERTY;
 

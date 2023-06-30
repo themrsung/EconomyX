@@ -79,6 +79,7 @@ public final class PropertyStack implements AssetStack {
     public void removeQuantity(@NonNegative long delta) {
         // Does nothing; properties cannot be plural
     }
+
     @NonNull
     @Override
     @JsonIgnore

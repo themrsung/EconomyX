@@ -12,12 +12,14 @@ import java.util.List;
 public interface BanknoteIssuer extends Institutional {
     /**
      * Gets a list of all issued banknotes
+     *
      * @return A copied list of banknotes
      */
     List<Banknote> getIssuedBanknotes();
 
     /**
      * Issues a new banknote
+     *
      * @param note Note to issue
      * @return The physical item that can be given to a player
      * @throws IllegalArgumentException When the issuer has insufficient cash, parent sovereign does not have a currency, or the denotation is different

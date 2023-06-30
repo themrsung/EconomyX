@@ -13,6 +13,7 @@ import java.util.List;
 public interface House extends Actor {
     /**
      * Gets all games currently open
+     *
      * @return Copied list of games
      */
     @NonNull
@@ -20,18 +21,21 @@ public interface House extends Actor {
 
     /**
      * Adds a new table to this house
-      * @param table Table to add
+     *
+     * @param table Table to add
      */
     void addTable(Table table);
 
     /**
      * Removes a table from this house
-      * @param table Table to remove
+     *
+     * @param table Table to remove
      */
     void removeTable(Table table);
 
     /**
      * Gets the type of chip used in this house
+     *
      * @return Chip
      */
     @NonNull

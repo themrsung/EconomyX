@@ -14,6 +14,7 @@ import java.util.List;
 public interface AuctionHost extends Actor {
     /**
      * Gets all open auctions
+     *
      * @return A copied list of auctions
      */
     @NonNull
@@ -21,18 +22,21 @@ public interface AuctionHost extends Actor {
 
     /**
      * Opens an auction
+     *
      * @param auction Auction to open
      */
     void openAuction(@NonNull Auctioneer auction);
 
     /**
      * Gets the fee rate of auctions
+     *
      * @return Rate (e.g. 2% -> 0.02f)
      */
     float getAuctionFeeRate();
 
     /**
      * Sets the fee rate of auctions
+     *
      * @param rate Rate (e.g. 2% -> 0.02f)
      */
     void setAuctionFeeRate(float rate);

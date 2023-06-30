@@ -23,6 +23,7 @@ public final class SlotMachine implements Table {
         this.uniqueId = UUID.randomUUID();
         this.casino = null;
     }
+
     @NonNull
     @JsonProperty
     private final UUID uniqueId;

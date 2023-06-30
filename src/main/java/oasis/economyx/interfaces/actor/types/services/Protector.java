@@ -12,6 +12,7 @@ public interface Protector extends Actor {
      * Protection fee is charged on a per-interaction basis.
      * Charged once per every cancelled interaction by an unauthorized player.
      * Will not protect properties of insolvent clients.
+     *
      * @return Protection fee per interaction.
      */
     @NonNull

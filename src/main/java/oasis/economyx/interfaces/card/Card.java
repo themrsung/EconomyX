@@ -40,6 +40,7 @@ public interface Card {
 
     /**
      * Gets the unique ID of this card.
+     *
      * @return Unique ID
      */
     @NonNull
@@ -47,6 +48,7 @@ public interface Card {
 
     /**
      * Gets the issuer of this card.
+     *
      * @return Issuer
      */
     @NonNull
@@ -54,6 +56,7 @@ public interface Card {
 
     /**
      * Gets the official holder of this card.
+     *
      * @return Holder
      */
     @NonNull
@@ -61,6 +64,7 @@ public interface Card {
 
     /**
      * Gets the payable balance (remaining limit) of this card.
+     *
      * @return Payable balance
      */
     @NonNull
@@ -69,6 +73,7 @@ public interface Card {
     /**
      * Gets the expiry of this card.
      * Set to null for a perpetual card.
+     *
      * @return Expiry
      */
     @Nullable
@@ -76,6 +81,7 @@ public interface Card {
 
     /**
      * Called when this card is used.
+     *
      * @param amount Amount used
      * @return The remaining balance post-transaction
      * @throws IllegalArgumentException When amount is greater than payable balance, or currencies are unequal
@@ -90,6 +96,7 @@ public interface Card {
 
     /**
      * Gets the card type
+     *
      * @return Card type
      */
     Card.Type getType();

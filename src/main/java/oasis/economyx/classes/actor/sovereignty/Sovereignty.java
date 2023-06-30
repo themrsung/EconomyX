@@ -3,11 +3,11 @@ package oasis.economyx.classes.actor.sovereignty;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.EconomicActor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.classes.actor.EconomicActor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -76,8 +76,6 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
     public void setRepresentativePay(@NonNull CashStack representativePay) {
         this.representativePay = representativePay;
     }
-
-
 
 
     @NonNull

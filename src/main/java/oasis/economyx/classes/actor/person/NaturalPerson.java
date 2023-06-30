@@ -2,8 +2,8 @@ package oasis.economyx.classes.actor.person;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.classes.actor.EconomicActor;
+import oasis.economyx.interfaces.actor.person.Person;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
@@ -14,8 +14,9 @@ import java.util.UUID;
 public final class NaturalPerson extends EconomicActor implements Person {
     /**
      * Constructs a new natural person
+     *
      * @param uniqueId Unique ID of this person
-     * @param name Name of this person (not unique)
+     * @param name     Name of this person (not unique)
      */
     public NaturalPerson(UUID uniqueId, @Nullable String name) {
         super(uniqueId, name);

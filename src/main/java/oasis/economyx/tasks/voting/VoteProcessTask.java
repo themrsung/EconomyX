@@ -2,8 +2,6 @@ package oasis.economyx.tasks.voting;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
-import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.tasks.EconomyTask;
 

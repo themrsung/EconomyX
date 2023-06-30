@@ -20,9 +20,10 @@ import java.util.UUID;
 public final class CentralBank extends Institution implements InterestRateProvider, CurrencyIssuer {
     /**
      * Creates a new central bank, and issues a new currency
-     * @param parent The sovereign founding this central bank
+     *
+     * @param parent   The sovereign founding this central bank
      * @param uniqueId Unique ID of this central bank
-     * @param name Mame of this central bank (not unique)
+     * @param name     Mame of this central bank (not unique)
      * @param currency Currency to issue (cannot be null)
      */
     public CentralBank(@NonNull Sovereign parent, @NonNull UUID uniqueId, @Nullable String name, @NonNull Cash currency) {

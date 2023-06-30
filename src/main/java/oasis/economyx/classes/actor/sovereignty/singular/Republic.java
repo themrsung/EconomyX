@@ -21,10 +21,11 @@ import java.util.UUID;
 public final class Republic extends Sovereignty implements Democratic {
     /**
      * Creates a new republic
+     *
      * @param uniqueId Unique ID of this republic
-     * @param name Name of this republic (not unique)
+     * @param name     Name of this republic (not unique)
      * @param currency Currency used in this republic
-     * @param founder Founding representative (cannot be null)
+     * @param founder  Founding representative (cannot be null)
      */
     public Republic(UUID uniqueId, @Nullable String name, @NonNull Cash currency, @NonNull Person founder) {
         super(uniqueId, name, currency);

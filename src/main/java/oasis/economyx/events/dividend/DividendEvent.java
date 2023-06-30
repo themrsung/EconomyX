@@ -8,7 +8,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class DividendEvent extends EconomyEvent {
     /**
      * Pays dividends to a shared actor's shareholders.
-     * @param payer Shared actor to pay dividends
+     *
+     * @param payer            Shared actor to pay dividends
      * @param dividendPerShare Dividend per share (can be any asset)
      */
     public DividendEvent(@NonNull Shared payer, @NonNull AssetStack dividendPerShare) {

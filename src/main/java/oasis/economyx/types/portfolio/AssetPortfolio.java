@@ -34,7 +34,7 @@ public class AssetPortfolio implements Portfolio {
 
     @Override
     @JsonIgnore
-    public @Nullable AssetStack get(int i){
+    public @Nullable AssetStack get(int i) {
         try {
             return assets.get(i);
         } catch (IndexOutOfBoundsException e) {

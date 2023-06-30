@@ -8,7 +8,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class StockSplitEvent extends EconomyEvent {
     /**
      * Splits a stock (does not trigger a transaction; simply multiplies the share count)
-     * @param issuer Issuer of the stock
+     *
+     * @param issuer         Issuer of the stock
      * @param sharesPerShare Shares to create per 1 existing share
      */
     public StockSplitEvent(@NonNull Shared issuer, @NonNegative long sharesPerShare) {

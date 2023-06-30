@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.company.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -18,11 +18,12 @@ import java.util.UUID;
 public final class SecuritiesBroker extends Company implements Brokerage {
     /**
      * Creates a new securities broker
-     * @param uniqueId Unique ID of this broker
-     * @param name Name of this broker (not unique)
-     * @param stockId ID of this broker's stock
+     *
+     * @param uniqueId   Unique ID of this broker
+     * @param name       Name of this broker (not unique)
+     * @param stockId    ID of this broker's stock
      * @param shareCount Initial share count
-     * @param currency Currency to use
+     * @param currency   Currency to use
      */
     public SecuritiesBroker(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);

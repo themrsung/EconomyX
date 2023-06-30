@@ -1,9 +1,11 @@
 package oasis.economyx.classes.actor;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.card.CreditCard;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import oasis.economyx.types.asset.contract.forward.ForwardStack;
@@ -12,7 +14,6 @@ import oasis.economyx.types.asset.contract.option.OptionStack;
 import oasis.economyx.types.asset.contract.swap.SwapStack;
 import oasis.economyx.types.portfolio.AssetPortfolio;
 import oasis.economyx.types.portfolio.Portfolio;
-import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
@@ -100,25 +101,25 @@ public abstract class EconomicActor implements Actor {
                         liabilities.add(cs);
                     }
 
-                // Undelivered forwards
+                    // Undelivered forwards
                 } else if (as instanceof ForwardStack fs) {
                     if (fs.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(fs);
                     }
 
-                // Undelivered notes
+                    // Undelivered notes
                 } else if (as instanceof NoteStack ns) {
                     if (ns.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(ns);
                     }
 
-                // Premature options (where this actor is the writer)
+                    // Premature options (where this actor is the writer)
                 } else if (as instanceof OptionStack os) {
                     if (os.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(os);
                     }
 
-                // Premature swaps (this can be an asset depending on the base and quote asset's prices)
+                    // Premature swaps (this can be an asset depending on the base and quote asset's prices)
                 } else if (as instanceof SwapStack ss) {
                     if (ss.getAsset().getCounterparty().equals(this)) {
                         liabilities.add(ss);

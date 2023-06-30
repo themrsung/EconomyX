@@ -16,15 +16,16 @@ import java.util.List;
  * It can either be democratic (Federation) or autocratic (Empire)
  *
  * <p>
- *     Federal sovereigns are coded to behave as a singular sovereign.
- *     However, there are certain limitations to this implementation.
- *     Please check the comments before assuming that a method will behave as you intend it to.
- *     Feel free to change the behavior to suit your needs!
+ * Federal sovereigns are coded to behave as a singular sovereign.
+ * However, there are certain limitations to this implementation.
+ * Please check the comments before assuming that a method will behave as you intend it to.
+ * Feel free to change the behavior to suit your needs!
  * </p>
  */
 public interface Federal extends Sovereign {
     /**
      * Gets all member states
+     *
      * @return A copied list of member states
      */
     @NonNull
@@ -32,18 +33,21 @@ public interface Federal extends Sovereign {
 
     /**
      * Adds a state to this federal
+     *
      * @param state State to add
      */
     void addMemberState(@NonNull Sovereign state);
 
     /**
      * Removes a state from this federal
+     *
      * @param state State to remove
      */
     void removeMemberState(@NonNull Sovereign state);
 
     /**
      * Gets the state representing this federal
+     *
      * @return State if found, null if not
      */
     @Nullable
@@ -51,6 +55,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets the personal representative of the representative state
+     *
      * @return Representative person if found, null if not
      */
     @Override
@@ -63,6 +68,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Sets the representative state
+     *
      * @param state State to set
      * @throws IllegalArgumentException When the state is not a member of this federal
      */
@@ -70,6 +76,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Sets the representative of the representative state
+     *
      * @param representative Representative
      */
     @Override
@@ -80,6 +87,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets all citizens of this federal
+     *
      * @return Copied list of citizens
      */
     @Override
@@ -96,6 +104,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Adds a citizen to the representative state
+     *
      * @param citizen Citizen to add
      */
     @Override
@@ -106,6 +115,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Removes a citizen from all member states
+     *
      * @param citizen Citizen to remove
      */
     @Override
@@ -117,6 +127,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets every corporation in this federal
+     *
      * @return Copied list of all corporations
      */
     @Override
@@ -133,6 +144,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Adds a corporation to the representative state
+     *
      * @param corporation Corporation to add
      */
     @Override
@@ -143,6 +155,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Removes a corporation from all member states
+     *
      * @param corporation Corporation to remove
      */
     @Override
@@ -154,6 +167,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets all institutions in this federal
+     *
      * @return Copied list of all institutions
      */
     @Override
@@ -170,6 +184,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Adds an institution to the representative state
+     *
      * @param institution Institution to add
      */
     @Override
@@ -180,6 +195,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Removes an institution from all member states
+     *
      * @param institution Institution to remove
      */
     @Override
@@ -191,6 +207,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets the representative pay of the representative state
+     *
      * @return Hourly pay
      */
     @Override
@@ -202,6 +219,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Sets the representative pay of the representative state
+     *
      * @param pay Hourly pay
      */
     @Override
@@ -212,6 +230,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Gets the protection fee of the representative state
+     *
      * @return Protection fee
      */
     @Override
@@ -223,6 +242,7 @@ public interface Federal extends Sovereign {
 
     /**
      * Sets the protection fee of the representative state
+     *
      * @param fee Protection fee
      */
     @Override

@@ -13,8 +13,9 @@ import java.util.UUID;
 public interface CardPlayer extends TablePlayer {
     /**
      * Gets a new card player.
+     *
      * @param person Person playing this game
-     * @param entry Initial buy-in
+     * @param entry  Initial buy-in
      * @return Card player instance
      */
     static CardPlayer get(@NonNull NaturalPerson person, @NonNull ChipStack entry) {
@@ -23,12 +24,14 @@ public interface CardPlayer extends TablePlayer {
 
     /**
      * Gets the hand of this player. (Cards player is holding)
+     *
      * @return Hand
      */
     @NonNull
     Deck getHand();
 
-    record SeatedCardPlayer(@NonNull UUID playerId, @NonNull ChipStack stack, @NonNull Deck hand) implements CardPlayer {
+    record SeatedCardPlayer(@NonNull UUID playerId, @NonNull ChipStack stack,
+                            @NonNull Deck hand) implements CardPlayer {
         @Override
         public @NonNull UUID getPlayerId() {
             return playerId;

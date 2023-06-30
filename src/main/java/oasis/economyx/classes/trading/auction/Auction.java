@@ -84,6 +84,7 @@ public abstract class Auction implements Auctioneer {
     public AssetStack getAsset() {
         return asset.copy();
     }
+
     @Override
     @JsonIgnore
     public @NonNull DateTime getDeadline() {

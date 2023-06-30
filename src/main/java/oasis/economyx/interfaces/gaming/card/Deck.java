@@ -13,6 +13,7 @@ import java.util.List;
 public interface Deck {
     /**
      * Gets an empty deck of cards.
+     *
      * @return Empty deck
      */
     static Deck getEmptyDeck() {
@@ -21,6 +22,7 @@ public interface Deck {
 
     /**
      * Gets a standard deck of 52 cards.
+     *
      * @return Deck
      */
     static Deck getDefaultDeck() {
@@ -37,6 +39,7 @@ public interface Deck {
 
     /**
      * Gets a deck of multiple standard decks.
+     *
      * @param num Number of decks to get
      * @return Extended deck
      */
@@ -52,6 +55,7 @@ public interface Deck {
 
     /**
      * Gets every card in this deck.
+     *
      * @return A copied list of cards
      */
     List<PlayingCard> getCards();
@@ -59,6 +63,7 @@ public interface Deck {
     /**
      * Gets whether this deck contains a certain card.
      * Unique ID must match to return true;
+     *
      * @param card Card to check
      * @return Whether this deck contains the card
      */
@@ -66,20 +71,23 @@ public interface Deck {
 
     /**
      * Sends a card to another deck.
+     *
      * @param destination Destination deck
-     * @param card Card to send
+     * @param card        Card to send
      * @throws IllegalArgumentException When this deck does not contain the card, or the destination deck already has the card
      */
     void send(Deck destination, PlayingCard card) throws IllegalArgumentException;
 
     /**
      * Sends the first card in this deck to another deck.
+     *
      * @param destination Destination deck
      */
     void sendFirst(Deck destination) throws RuntimeException;
 
     /**
      * Adds a card to this deck.
+     *
      * @param card Card to add
      * @throws IllegalArgumentException When this deck already contains the card
      */
@@ -87,6 +95,7 @@ public interface Deck {
 
     /**
      * Adds a deck of cards to this deck.
+     *
      * @param deck Deck to add
      * @throws IllegalArgumentException When at least one of the cards is already in this deck
      */
@@ -94,6 +103,7 @@ public interface Deck {
 
     /**
      * Removes a card from this deck.
+     *
      * @param card Card to remove
      * @throws IllegalArgumentException When this deck does not contain the card
      */
@@ -101,6 +111,7 @@ public interface Deck {
 
     /**
      * Gets the size of this deck. (How many cards there are)
+     *
      * @return Size
      */
     int size();
@@ -112,6 +123,7 @@ public interface Deck {
 
     /**
      * Gets an identical copy of this deck.
+     *
      * @return Copied deck
      */
     Deck copy();
@@ -121,6 +133,7 @@ public interface Deck {
     /**
      * Gets the highest card by value. (PlayingCard.Number)
      * Returns null when size of deck is 0.
+     *
      * @return Highest card
      */
     @Nullable
@@ -128,6 +141,7 @@ public interface Deck {
 
     /**
      * Gets the hand value of this deck in poker context.
+     *
      * @return Hand value
      */
     PokerHand getPokerValue();
@@ -224,9 +238,7 @@ public interface Deck {
                         if (c2.number().continues(c1.number())) {
                             straight++;
                             highestStraight = c2.number();
-                        }
-
-                        else {
+                        } else {
                             straight = 1;
                             highestStraight = null;
                         }

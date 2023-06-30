@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.institution.warfare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.manufacturing.Scientific;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,9 +18,10 @@ import java.util.UUID;
 public final class ResearchCenter extends Institution implements Scientific {
     /**
      * Creates a new research center
-     * @param parent Parent sovereign (cannot be null)
+     *
+     * @param parent   Parent sovereign (cannot be null)
      * @param uniqueId Unique ID of this research center
-     * @param name Name of this research center
+     * @param name     Name of this research center
      * @param currency Currency of this research center
      */
     public ResearchCenter(@NonNull Sovereign parent, UUID uniqueId, @Nullable String name, @NonNull Cash currency) {

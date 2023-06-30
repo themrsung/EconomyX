@@ -11,6 +11,7 @@ import oasis.economyx.types.asset.cash.Cash;
 public interface Corporation extends Employer, Shared, Democratic {
     /**
      * Gets the currency this corporation accepts
+     *
      * @return Currency
      */
     Cash getCurrency();

@@ -20,10 +20,11 @@ import java.util.UUID;
 public final class AssetAccount implements Account {
     /**
      * Creates a new asset account. Collateral is automatically handled
-     * @param uniqueId Unique ID of this account
+     *
+     * @param uniqueId    Unique ID of this account
      * @param institution Institution holding this account
-     * @param client Client of this account
-     * @param content Initial contents of this account
+     * @param client      Client of this account
+     * @param content     Initial contents of this account
      */
     public AssetAccount(@NonNull UUID uniqueId, @NonNull Banker institution, @NonNull Actor client, @NonNull AssetStack content) {
         this.uniqueId = uniqueId;

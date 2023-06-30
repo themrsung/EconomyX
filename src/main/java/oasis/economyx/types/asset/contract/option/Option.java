@@ -139,6 +139,7 @@ public final class Option implements Contract {
 
     /**
      * Checks if option is exercisable
+     *
      * @return Whether it is exercisable or not
      * @throws IllegalArgumentException When exercise price is in a different denotation than the trading price
      */
@@ -162,6 +163,7 @@ public final class Option implements Contract {
     /**
      * Called when this option is exercised.
      * Does NOT check is this option is exercisable.
+     *
      * @param holder Holder of this contract
      */
     @JsonIgnore

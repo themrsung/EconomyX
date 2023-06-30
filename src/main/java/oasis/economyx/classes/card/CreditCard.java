@@ -22,11 +22,12 @@ import java.util.UUID;
 public final class CreditCard implements Card {
     /**
      * Creates a new credit card
+     *
      * @param uniqueId Unique ID of this card
-     * @param issuer Issuer of this card
-     * @param holder Intended holder of this card
-     * @param limit Limit of this card
-     * @param expiry Expiry of this card (null for perpetual cards)
+     * @param issuer   Issuer of this card
+     * @param holder   Intended holder of this card
+     * @param limit    Limit of this card
+     * @param expiry   Expiry of this card (null for perpetual cards)
      */
     public CreditCard(@NonNull UUID uniqueId, @NonNull CardIssuer issuer, @NonNull Actor holder, @NonNull CashStack limit, @Nullable DateTime expiry) {
         this.uniqueId = uniqueId;

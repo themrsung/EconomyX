@@ -22,7 +22,8 @@ import java.util.List;
 public final class Market implements Marketplace {
     /**
      * Creates a new market
-     * @param asset Asset to be traded (quantity denotes contract size)
+     *
+     * @param asset    Asset to be traded (quantity denotes contract size)
      * @param currency Quote currency of this market
      */
     public Market(@NonNull AssetStack asset, @NonNull Cash currency) {

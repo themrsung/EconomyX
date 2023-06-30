@@ -2,12 +2,12 @@ package oasis.economyx.classes.actor.institution.tripartite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Legislative;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -21,9 +21,10 @@ import java.util.UUID;
 public final class Legislature extends Institution implements Legislative {
     /**
      * Creates a new legislature
-     * @param parent Parent sovereign (cannot be null)
+     *
+     * @param parent   Parent sovereign (cannot be null)
      * @param uniqueId Unique ID of this legislature
-     * @param name Name of this legislature (not unique)
+     * @param name     Name of this legislature (not unique)
      * @param currency Currency of this legislature
      */
     public Legislature(@NonNull Sovereign parent, UUID uniqueId, @Nullable String name, @NonNull Cash currency) {

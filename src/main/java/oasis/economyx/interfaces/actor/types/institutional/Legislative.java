@@ -11,6 +11,7 @@ import java.util.List;
 public interface Legislative extends Institutional, Democratic {
     /**
      * Gets all laws currently valid
+     *
      * @return Copied list of laws
      */
     @NonNull
@@ -18,12 +19,14 @@ public interface Legislative extends Institutional, Democratic {
 
     /**
      * Adds a law
+     *
      * @param law Law to add
      */
     void passLaw(@NonNull String law);
 
     /**
      * Removes a law
+     *
      * @param law law to remove
      */
     void repealLaw(@NonNull String law);

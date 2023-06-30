@@ -31,6 +31,7 @@ public final class Commodity implements Asset {
 
     /**
      * Gets the item type of this commodity
+     *
      * @return Type of item
      */
     @NonNull
@@ -41,6 +42,7 @@ public final class Commodity implements Asset {
 
     /**
      * Generates a consistent unique ID for every single in-game item
+     *
      * @return Unique ID
      */
     @Override

@@ -2,11 +2,11 @@ package oasis.economyx.classes.actor.company.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.House;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.gaming.table.Table;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.chip.Chip;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -22,11 +22,12 @@ import java.util.UUID;
 public final class Casino extends Company implements House {
     /**
      * Creates a new casino
-     * @param uniqueId Unique ID of this casino
-     * @param name Name of this casino (not unique)
-     * @param stockId ID of this casino's stock
-     * @param shareCount Initial share count of this casino
-     * @param currency The currency this casino should use
+     *
+     * @param uniqueId    Unique ID of this casino
+     * @param name        Name of this casino (not unique)
+     * @param stockId     ID of this casino's stock
+     * @param shareCount  Initial share count of this casino
+     * @param currency    The currency this casino should use
      * @param chipToIssue Chip of this casino (immutable)
      */
     public Casino(UUID uniqueId, @Nullable String name, @NonNull UUID stockId, @NonNegative long shareCount, @NonNull Cash currency, @NonNull Chip chipToIssue) {

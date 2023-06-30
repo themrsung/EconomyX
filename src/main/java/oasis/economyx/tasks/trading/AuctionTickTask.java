@@ -2,9 +2,7 @@ package oasis.economyx.tasks.trading;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
-import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.tasks.EconomyTask;
 
 public final class AuctionTickTask extends EconomyTask {

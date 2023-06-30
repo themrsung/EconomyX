@@ -12,10 +12,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class PaymentEvent extends EconomyEvent {
     /**
      * Creates a new payment event
-     * @param sender Actor to take asset from
+     *
+     * @param sender    Actor to take asset from
      * @param recipient Actor to give asset to
-     * @param asset Asset to transfer
-     * @param cause Cause of this payment: {@link Cause}
+     * @param asset     Asset to transfer
+     * @param cause     Cause of this payment: {@link Cause}
      */
     public PaymentEvent(@NonNull Actor sender, @NonNull Actor recipient, @NonNull AssetStack asset, @NonNull Cause cause) {
         super();
@@ -37,6 +38,7 @@ public final class PaymentEvent extends EconomyEvent {
 
     /**
      * Gets the actor sending this payment.
+     *
      * @return Sender
      */
     @NonNull
@@ -46,6 +48,7 @@ public final class PaymentEvent extends EconomyEvent {
 
     /**
      * Gets the actor receiving this payment.
+     *
      * @return Recipient
      */
     @NonNull
@@ -55,6 +58,7 @@ public final class PaymentEvent extends EconomyEvent {
 
     /**
      * Gets the asset being transferred.
+     *
      * @return Asset
      */
     @NonNull
@@ -64,6 +68,7 @@ public final class PaymentEvent extends EconomyEvent {
 
     /**
      * Gets the type of asset being transferred.
+     *
      * @return Asset type
      */
     public Asset.Type getAssetType() {
@@ -72,6 +77,7 @@ public final class PaymentEvent extends EconomyEvent {
 
     /**
      * Gets the cause of this event.
+     *
      * @return Cause
      */
     public Cause getCause() {

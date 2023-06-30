@@ -24,13 +24,13 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
     /**
      * Gets a multiple selection vote.
      *
-     * @param uniqueId Unique ID of this vote
-     * @param name Name of this vote
-     * @param candidates Candidates of this vote
-     * @param voters Voters of this vote
-     * @param expiry Expiry of this vote
+     * @param uniqueId              Unique ID of this vote
+     * @param name                  Name of this vote
+     * @param candidates            Candidates of this vote
+     * @param voters                Voters of this vote
+     * @param expiry                Expiry of this vote
      * @param requiredApprovalRatio Required approval ratio
-     * @param requiredVotesToPass Required votes to pass
+     * @param requiredVotesToPass   Required votes to pass
      * @return New vote instance
      */
     static Vote getMultipleSelectionVote(UUID uniqueId, String name, @NonNull List<Candidate> candidates, @NonNull List<Voter> voters, @NonNull DateTime expiry, @NonNegative float requiredApprovalRatio, @NonNegative long requiredVotesToPass) {
@@ -46,13 +46,13 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
     /**
      * Gets a boolean selection vote. (Yes or No)
      *
-     * @param uniqueId Unique ID of this vote
-     * @param name Name of this vote
-     * @param voters Voters of this vote
-     * @param agenda Action to execute on passed
-     * @param expiry Expiry of this vote
+     * @param uniqueId              Unique ID of this vote
+     * @param name                  Name of this vote
+     * @param voters                Voters of this vote
+     * @param agenda                Action to execute on passed
+     * @param expiry                Expiry of this vote
      * @param requiredApprovalRatio Required approval ratio
-     * @param requiredVotesToPass Required votes to pass
+     * @param requiredVotesToPass   Required votes to pass
      * @return New vote instance
      */
     static Vote getBooleanVote(UUID uniqueId, String name, @NonNull List<Voter> voters, @NonNull Agenda agenda, @NonNull DateTime expiry, @NonNegative float requiredApprovalRatio, @NonNegative long requiredVotesToPass) {
@@ -71,6 +71,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the unique ID of this vote.
+     *
      * @return Unique ID
      */
     @NonNull
@@ -78,6 +79,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the name of this vote.
+     *
      * @return Name
      */
     @NonNull
@@ -85,6 +87,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the candidates of this vote.
+     *
      * @return A copied list of candidates
      */
     @NonNull
@@ -92,6 +95,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the voter of this vote.
+     *
      * @return A copied list of voters
      */
     @NonNull
@@ -99,6 +103,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the total castable votes of this vote.
+     *
      * @return Total castable votes
      */
     @NonNegative
@@ -106,6 +111,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Gets the total cast votes so far.
+     *
      * @return Total cast votes
      */
     @NonNegative
@@ -123,6 +129,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
     /**
      * Gets the required approval ratio of this vote.
      * (e.g. 50% -> A candidate requires at least 50% of cast votes)
+     *
      * @return Required approval ratio
      */
     @NonNegative
@@ -131,6 +138,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
     /**
      * Gets the required amount of votes to pass.
      * (e.g. 500 -> A candidate requires at least 500 votes to pass)
+     *
      * @return Required votes to pass
      */
     @NonNegative
@@ -138,9 +146,10 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
     /**
      * Casts a vote.
-     * @param voter Voter casting the vote.
+     *
+     * @param voter     Voter casting the vote.
      * @param candidate Candidate this voter has chosen.
-     * @param votes Number of votes to cast.
+     * @param votes     Number of votes to cast.
      * @throws IllegalArgumentException When candidate is invalid, or voter has insufficient votes.
      */
     void vote(@NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) throws IllegalArgumentException;
@@ -168,12 +177,14 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
 
         @Override
         public void vote(@NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) throws IllegalArgumentException {
-            if (voter.getVotes() <= votes || !this.getCandidates().contains(candidate)) throw new IllegalArgumentException();
+            if (voter.getVotes() <= votes || !this.getCandidates().contains(candidate))
+                throw new IllegalArgumentException();
 
             castVotes += votes;
             candidate.onVotesAcquired(votes);
             voter.onVoted(votes);
         }
+
         @NonNull
         private final UUID uniqueId;
         @NonNull

@@ -24,10 +24,11 @@ import java.util.UUID;
 public final class DebitCard implements Card {
     /**
      * Creates a new debit card
+     *
      * @param uniqueId Unique ID of this card
-     * @param issuer Issuer of this card
-     * @param account Account linked to this card
-     * @param expiry Expiry of this card (set to null for a perpetual card)
+     * @param issuer   Issuer of this card
+     * @param account  Account linked to this card
+     * @param expiry   Expiry of this card (set to null for a perpetual card)
      * @throws IllegalArgumentException When the given account is not a cash account
      */
     public DebitCard(@NonNull UUID uniqueId, @NonNull CardIssuer issuer, @NonNull Account account, @Nullable DateTime expiry) throws IllegalArgumentException {
@@ -123,7 +124,7 @@ public final class DebitCard implements Card {
      * @param amount Amount paid
      * @return Remaining balance of the account after withdrawal
      * @throws IllegalArgumentException When balance if insufficient or currency is different
-     * @throws RuntimeException When the issuer is not a banker (payment will not be processed)
+     * @throws RuntimeException         When the issuer is not a banker (payment will not be processed)
      */
     @Override
     @JsonIgnore

@@ -38,6 +38,7 @@ public final class ChangeNameAgenda implements Agenda {
     public Actor getActor() {
         return actor;
     }
+
     @NonNull
     @JsonIgnore
     public String getNewName() {

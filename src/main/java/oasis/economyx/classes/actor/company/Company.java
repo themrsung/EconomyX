@@ -121,6 +121,7 @@ public abstract class Company extends EconomicActor implements Corporation {
     public @NonNegative long getShareCount() {
         return shareCount;
     }
+
     @Override
     @JsonIgnore
     public List<Person> getEmployees() {

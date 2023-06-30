@@ -71,6 +71,7 @@ public final class StockStack implements AssetStack {
 
         this.quantity -= delta;
     }
+
     @NonNull
     @Override
     @JsonIgnore

@@ -60,6 +60,7 @@ public final class Collateral implements Contract {
     public @NonNull UUID getUniqueId() {
         return uniqueId;
     }
+
     @JsonProperty
     private final Type type = Type.COMMODITY;
 

@@ -17,6 +17,7 @@ import java.util.List;
 public interface Employer extends Representable {
     /**
      * Gets the employees of this employer
+     *
      * @return Copied list of employees
      */
     @JsonIdentityReference
@@ -24,18 +25,21 @@ public interface Employer extends Representable {
 
     /**
      * Adds an employee
+     *
      * @param employee Employee to hire
      */
     void addEmployee(Person employee);
 
     /**
      * Removes an employee
+     *
      * @param employee Employee to fire
      */
     void removeEmployee(Person employee);
 
     /**
      * Gets the directors of this employer
+     *
      * @return Copied list of directors
      */
     @JsonIdentityReference
@@ -43,18 +47,21 @@ public interface Employer extends Representable {
 
     /**
      * Adds a director to the board
+     *
      * @param director Director to hire
      */
     void addDirector(Person director);
 
     /**
      * Removes a director from the board
+     *
      * @param director Director to fire
      */
     void removeDirector(Person director);
 
     /**
      * Gets the hourly pay of employees
+     *
      * @return Hourly pay
      */
     @NonNull
@@ -62,12 +69,14 @@ public interface Employer extends Representable {
 
     /**
      * Sets the hourly pay of employees
+     *
      * @param pay Hourly pay
      */
     void setEmployeePay(@NonNull CashStack pay);
 
     /**
      * Gets the hourly pay of directors
+     *
      * @return Hourly pay
      */
     @NonNull
@@ -75,12 +84,14 @@ public interface Employer extends Representable {
 
     /**
      * Sets the hourly pay of directors
+     *
      * @param pay Hourly pay
      */
     void setDirectorPay(@NonNull CashStack pay);
 
     /**
      * Gets every member os this employer
+     *
      * @return List of every member
      */
     default List<Person> getMembers() {

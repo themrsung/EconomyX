@@ -44,6 +44,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface AssetStack {
     /**
      * The asset being held by this stack
+     *
      * @return Asset being held
      */
     @NonNull
@@ -51,6 +52,7 @@ public interface AssetStack {
 
     /**
      * The quantity of this stack
+     *
      * @return Quantity
      */
     @NonNegative
@@ -58,18 +60,21 @@ public interface AssetStack {
 
     /**
      * Sets the quantity of this stack
+     *
      * @param quantity New quantity
      */
     void setQuantity(@NonNegative long quantity);
 
     /**
      * Adds quantity to this stack
+     *
      * @param delta How much to add
      */
     void addQuantity(@NonNegative long delta);
 
     /**
      * Remvoes quantity from this stack
+     *
      * @param delta How much to remove
      * @throws IllegalArgumentException When the resulting quantity is negative
      */
@@ -77,6 +82,7 @@ public interface AssetStack {
 
     /**
      * Gets the classification ot the asset being held
+     *
      * @return Classification
      */
     Asset.Type getType();
@@ -84,6 +90,7 @@ public interface AssetStack {
     /**
      * The metadata of this asset stack
      * Can be expanded to hold purchase price, contract details, etc.
+     *
      * @return Copy of metadata
      */
     @NonNull
@@ -91,6 +98,7 @@ public interface AssetStack {
 
     /**
      * Sets the metadata of this asset stack
+     *
      * @param meta New meta of this stack
      * @throws IllegalArgumentException When metadata is incompatible with asset classification
      */
@@ -112,6 +120,7 @@ public interface AssetStack {
 
     /**
      * Copies this asset stack
+     *
      * @return An identical copy
      */
     @NonNull

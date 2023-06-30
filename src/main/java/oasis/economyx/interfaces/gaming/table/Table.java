@@ -29,6 +29,7 @@ import java.util.UUID;
 public interface Table {
     /**
      * Gets the unique ID of this table
+     *
      * @return Unique ID
      */
     @NonNull
@@ -36,6 +37,7 @@ public interface Table {
 
     /**
      * Gets the house running this table
+     *
      * @return Casino
      */
     @NonNull
@@ -43,6 +45,7 @@ public interface Table {
 
     /**
      * Gets the dealer's chips on this table
+     *
      * @return Dealer's chips
      */
     @NonNull
@@ -56,6 +59,7 @@ public interface Table {
 
     /**
      * Gets the type of this game
+     *
      * @return Table type
      */
     Type getType();

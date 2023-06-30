@@ -26,5 +26,6 @@ public abstract class EconomyTask implements Runnable {
     }
 
     public abstract int getDelay();
+
     public abstract int getInterval();
 }

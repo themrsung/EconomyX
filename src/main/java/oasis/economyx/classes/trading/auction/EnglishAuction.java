@@ -17,8 +17,9 @@ import org.joda.time.DateTime;
 public final class EnglishAuction extends Auction {
     /**
      * Creates a new English auction
-     * @param asset Asset to sell
-     * @param deadline Deadline of this auction
+     *
+     * @param asset        Asset to sell
+     * @param deadline     Deadline of this auction
      * @param reservePrice Starting price of this auction (price will rise from reserve price)
      */
     public EnglishAuction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack reservePrice) {
@@ -37,8 +38,7 @@ public final class EnglishAuction extends Auction {
     @JsonIgnore
     public void processBids(AuctionHost auctioneer) {
         if (getBids().size() == 0L) {
-        }
-        else {
+        } else {
             // Highest bid is always the most recent bid in an English auction
             if (getBids().get(0).getTime().plusHours(1).isBeforeNow()) {
                 // Consider the highest bid successful

@@ -2,12 +2,12 @@ package oasis.economyx.classes.actor.company.trading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -19,11 +19,12 @@ import java.util.UUID;
 public final class Exchange extends Company implements MarketHost {
     /**
      * Creates a new exchange
-     * @param uniqueId Unique ID of this exchange
-     * @param name Name of this exchange (not unique)
-     * @param stockId ID of this exchange's stock
+     *
+     * @param uniqueId   Unique ID of this exchange
+     * @param name       Name of this exchange (not unique)
+     * @param stockId    ID of this exchange's stock
      * @param shareCount Initial share count
-     * @param currency Quote currency of in this exchange
+     * @param currency   Quote currency of in this exchange
      */
     public Exchange(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);

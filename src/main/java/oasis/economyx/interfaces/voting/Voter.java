@@ -17,6 +17,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface Voter {
     /**
      * Gets a voter instance.
+     *
      * @param actor Actor to cast the votes
      * @param votes Castable votes
      * @return Voter instance
@@ -27,12 +28,14 @@ public interface Voter {
 
     /**
      * Gets the actor capable of casting votes.
+     *
      * @return Voter
      */
     Actor getVoter();
 
     /**
      * Gets the remaining votes this voter can cast.
+     *
      * @return Remaining votes
      */
     long getVotes();
@@ -40,6 +43,7 @@ public interface Voter {
     /**
      * Called when this actor has voted.
      * Votes will be reduced by the amount cast.
+     *
      * @param votes Votes cast
      */
     void onVoted(long votes);

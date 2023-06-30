@@ -3,11 +3,11 @@ package oasis.economyx.classes.actor.sovereignty.federal;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
-import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -20,9 +20,10 @@ import java.util.UUID;
 public final class Federation extends Sovereignty implements Federal, Democratic {
     /**
      * Creates a new federation
-     * @param uniqueId Unique ID of this federation
-     * @param name Name of this federation
-     * @param currency Currency used to pay the foundation's representative
+     *
+     * @param uniqueId      Unique ID of this federation
+     * @param name          Name of this federation
+     * @param currency      Currency used to pay the foundation's representative
      * @param foundingState Founding state (cannot be null)
      */
     public Federation(UUID uniqueId, @Nullable String name, @NonNull Cash currency, @NonNull Sovereign foundingState) {
@@ -94,6 +95,7 @@ public final class Federation extends Sovereignty implements Federal, Democratic
 
         this.representativeState = state;
     }
+
     @NonNull
     @Override
     @JsonIgnore

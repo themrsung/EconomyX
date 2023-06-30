@@ -102,6 +102,7 @@ public final class CommodityStack implements AssetStack {
 
     /**
      * Commodity stacks require metadata to be equal
+     *
      * @param asset Commodity to compare to
      * @return Whether two commodities are the same
      * @throws IllegalArgumentException When a non-commodity stack is provided

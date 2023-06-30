@@ -23,12 +23,13 @@ import java.util.UUID;
 public final class AssetOrder implements Order {
     /**
      * Creates a new order
-     * @param uniqueId Unique ID of this order
-     * @param broker Brokerage handling this order
-     * @param sender Sender of this order
-     * @param type Type this order
-     * @param price Price of this order
-     * @param quantity Quantity of this order
+     *
+     * @param uniqueId   Unique ID of this order
+     * @param broker     Brokerage handling this order
+     * @param sender     Sender of this order
+     * @param type       Type this order
+     * @param price      Price of this order
+     * @param quantity   Quantity of this order
      * @param collateral Collateral of this order
      */
     public AssetOrder(UUID uniqueId, Brokerage broker, Actor sender, Type type, CashStack price, @NonNegative long quantity, CollateralStack collateral) {

@@ -12,12 +12,14 @@ import org.joda.time.DateTime;
 public interface Bid {
     /**
      * The bidder of this bid
+     *
      * @return Bidder
      */
     Actor getBidder();
 
     /**
      * When this bid was placed
+     *
      * @return Time of bid
      */
     DateTime getTime();
@@ -25,14 +27,16 @@ public interface Bid {
     /**
      * The price of this bid
      * Price of auction bids are not editable
+     *
      * @return Price
      */
     CashStack getPrice();
 
     /**
      * Called when the bid is successful
+     *
      * @param auctioneer The actor who runs the auction
-     * @param price Actual price the bidder must pay
+     * @param price      Actual price the bidder must pay
      */
     void onSucceeded(Actor auctioneer, CashStack price);
 }

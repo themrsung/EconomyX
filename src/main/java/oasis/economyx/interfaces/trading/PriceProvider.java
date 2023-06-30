@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.classes.trading.auction.DutchAuction;
 import oasis.economyx.classes.trading.auction.EnglishAuction;
 import oasis.economyx.classes.trading.auction.FirstPriceSealedAuction;
 import oasis.economyx.classes.trading.auction.SecondPriceSealedAuction;
 import oasis.economyx.classes.trading.market.Market;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -37,6 +37,7 @@ public interface PriceProvider {
     /**
      * The asset of which price is provided for
      * Contract size is determined by quantity of the unit asset
+     *
      * @return Unit asset
      */
     @NonNull
@@ -44,6 +45,7 @@ public interface PriceProvider {
 
     /**
      * Shortcut getter to contract size
+     *
      * @return Contract size
      */
     @NonNegative
@@ -53,6 +55,7 @@ public interface PriceProvider {
 
     /**
      * The current fair value of one unit asset
+     *
      * @return Price
      */
     @NonNull
@@ -60,6 +63,7 @@ public interface PriceProvider {
 
     /**
      * Shortcut getter for currency
+     *
      * @return Currency
      */
     default Cash getCurrency() {
@@ -68,6 +72,7 @@ public interface PriceProvider {
 
     /**
      * The cumulative trading volume of this trading day
+     *
      * @return Volume
      */
     @NonNegative

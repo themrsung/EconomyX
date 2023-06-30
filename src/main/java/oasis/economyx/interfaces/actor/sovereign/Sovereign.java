@@ -17,6 +17,7 @@ import java.util.List;
 public interface Sovereign extends Representable, Protector {
     /**
      * Gets all citizens of this sovereign
+     *
      * @return A copied list of citizens
      */
     @NonNull
@@ -24,18 +25,21 @@ public interface Sovereign extends Representable, Protector {
 
     /**
      * Adds a citizen to this sovereign
+     *
      * @param citizen Citizen to add
      */
     void addCitizen(@NonNull Person citizen);
 
     /**
      * Removes a citizen from this sovereign
+     *
      * @param citizen Citizen to remove
      */
     void removeCitizen(@NonNull Person citizen);
 
     /**
      * Gets all corporations in this sovereign
+     *
      * @return A copied list of corporations
      */
     @NonNull
@@ -43,18 +47,21 @@ public interface Sovereign extends Representable, Protector {
 
     /**
      * Adds a corporation to this sovereign
+     *
      * @param corporation Corporation to add
      */
     void addCorporation(@NonNull Corporation corporation);
 
     /**
      * Removes a corporation from this sovereign
+     *
      * @param corporation Corporation to remove
      */
     void removeCorporation(@NonNull Corporation corporation);
 
     /**
      * Gets all institutions of this sovereign
+     *
      * @return A copied list of institutions
      */
     @NonNull
@@ -62,18 +69,21 @@ public interface Sovereign extends Representable, Protector {
 
     /**
      * Adds an institution to this sovereign
+     *
      * @param institution Institution to add
      */
     void addInstitution(@NonNull Institutional institution);
 
     /**
      * Removes an institution from this sovereign
+     *
      * @param institution Institution to remove
      */
     void removeInstitution(@NonNull Institutional institution);
 
     /**
      * Gets all members of this sovereign
+     *
      * @return A list of all members
      */
     @NonNull

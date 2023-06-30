@@ -17,7 +17,8 @@ import java.beans.ConstructorProperties;
 public interface Candidate {
     /**
      * Gets a candidate instance.
-     * @param agenda Agenda of this candidate.
+     *
+     * @param agenda   Agenda of this candidate.
      * @param onChosen Action to execute when this candidate is chosen.
      * @return Instance
      */
@@ -27,6 +28,7 @@ public interface Candidate {
 
     /**
      * Gets the cumulative acquired votes of this candidate.
+     *
      * @return Acquired votes
      */
     @NonNegative
@@ -34,6 +36,7 @@ public interface Candidate {
 
     /**
      * Called when votes are acquired.
+     *
      * @param votes Number of votes acquired.
      */
     void onVotesAcquired(@NonNegative long votes);

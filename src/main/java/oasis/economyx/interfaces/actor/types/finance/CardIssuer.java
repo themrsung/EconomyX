@@ -10,6 +10,7 @@ import java.util.List;
 public interface CardIssuer extends Actor {
     /**
      * Gets every card this actor has issued.
+     *
      * @return Issued cards
      */
     @NonNull
@@ -17,6 +18,7 @@ public interface CardIssuer extends Actor {
 
     /**
      * Issues a new card, and returns the physical item to be given.
+     *
      * @param card Card to issue
      * @return Physical card that can be given out
      */
@@ -24,6 +26,7 @@ public interface CardIssuer extends Actor {
 
     /**
      * Invalidates a card. Does not remove the physical card from existence.
+     *
      * @param card Card to remove
      */
     void cancelCard(@NonNull Card card);

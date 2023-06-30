@@ -9,19 +9,20 @@ import org.joda.time.DateTime;
 /**
  * A guarantee is issued by a credible actor
  * <p>
- *     Guarantees have a limit and can have or not have an expiration.
- *     Properties cannot be changed after creation.
- *     A collateral is not registered for a guarantee; It is backed by the guarantor's credit.
+ * Guarantees have a limit and can have or not have an expiration.
+ * Properties cannot be changed after creation.
+ * A collateral is not registered for a guarantee; It is backed by the guarantor's credit.
  * </p>
  *
  * </p>
- *     The warrantee can only use a guarantee to prevent insolvency.
- *     Initiating payment using a guarantee is not supported.
+ * The warrantee can only use a guarantee to prevent insolvency.
+ * Initiating payment using a guarantee is not supported.
  * </p>
  */
 public interface Guarantee {
     /**
      * Gets the guarantor of this guarantee
+     *
      * @return Guarantor who issued this guarantee
      */
     @NonNull
@@ -29,6 +30,7 @@ public interface Guarantee {
 
     /**
      * The expiration date of this guarantee, if there is one
+     *
      * @return Expiry
      */
     @Nullable
@@ -37,6 +39,7 @@ public interface Guarantee {
     /**
      * The limit of this guarantee
      * This is also used to determine which asset to guarantee payment of: It cannot be null
+     *
      * @return Limit
      */
     @NonNull
