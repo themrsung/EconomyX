@@ -31,7 +31,7 @@ public class DividendListener extends EconomyListener {
                 long q = ss.getQuantity();
 
                 final AssetStack dividend = dps.copy();
-                dividend.setQuantity(q);
+                dividend.setQuantity(dividend.getQuantity() * q);
 
                 Bukkit.getPluginManager().callEvent(new PaymentEvent(
                         payer,

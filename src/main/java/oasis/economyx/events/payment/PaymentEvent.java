@@ -15,6 +15,7 @@ public final class PaymentEvent extends EconomyEvent {
      * @param sender Actor to take asset from
      * @param recipient Actor to give asset to
      * @param asset Asset to transfer
+     * @param cause Cause of this payment: {@link Cause}
      */
     public PaymentEvent(@NonNull Actor sender, @NonNull Actor recipient, @NonNull AssetStack asset, @NonNull Cause cause) {
         super();

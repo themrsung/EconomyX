@@ -1,6 +1,8 @@
 # EconomyX
 #### For Bukkit economy servers
-(Migrated from Sponge)
+_(Migrated from Sponge)_
+
+### Latest version: 1.0
 
 EconomyX provides a versatile backbone for any type of economy server.
 As there is no built-in front end, a custom UI is required for it to be a functional product.
@@ -38,7 +40,7 @@ Then some exchange lists this swap D.
 Now anyone can buy and sell D simply by placing an order!
 
 ### Actors
-Actors are the base class for anything possible of executing economic action.
+Actors are the base class for anything capable of executing economic action.
 The current type hierarchy is as follows. (i: interface, a: abstract class, **bold**: final)
 
 - Actor (i)
