@@ -39,10 +39,12 @@ public final class PropertyStack implements AssetStack {
      * Properties cannot be plural
      * This is required to be a constant variable due to IO
      * Do NOT inline this to getQuantity()
+     * TODO Check if IO works without this being a constant (unchecked)
      */
     @NonNegative
     @JsonProperty
     private final long quantity = 1L;
+
     @NonNull
     @JsonProperty
     private PropertyMeta meta;

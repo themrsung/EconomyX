@@ -2,7 +2,7 @@
 #### For Bukkit economy servers
 _(Migrated from Sponge)_
 
-### Latest version: 1.0
+### Latest version: 1.0 _(unfinished)_
 
 EconomyX provides a versatile backbone for any type of economy server.
 As there is no built-in front end, a custom UI is required for it to be a functional product.
