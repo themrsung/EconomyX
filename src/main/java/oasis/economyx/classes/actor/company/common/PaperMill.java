@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
+import oasis.economyx.interfaces.actor.types.manufacturing.Minter;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;
 
-public final class PaperMill extends Company implements BillCreator {
+public final class PaperMill extends Company implements Minter {
     /**
      * Creates a new paper mill
      *

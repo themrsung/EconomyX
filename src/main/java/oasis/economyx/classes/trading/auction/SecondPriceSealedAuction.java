@@ -2,7 +2,7 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.types.asset.AssetStack;
@@ -36,13 +36,13 @@ public final class SecondPriceSealedAuction extends Auction {
 
     @Override
     @JsonIgnore
-    public void processBids(AuctionHost auctioneer) {
+    public void processBids(AuctionHouse auctioneer) {
         // Do nothing
     }
 
     @Override
     @JsonIgnore
-    public void onDeadlineReached(AuctionHost auctioneer) {
+    public void onDeadlineReached(AuctionHouse auctioneer) {
         if (getBids().size() <= 1L) {
             setSold(false);
             setPrice(new CashStack(getCurrency(), 0L));

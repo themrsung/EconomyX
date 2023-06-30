@@ -11,7 +11,7 @@ import java.util.List;
  * An auction host must buy the asset at the reserve price if there is no bidder
  * Note that auctions cannot be closed prematurely
  */
-public interface AuctionHost extends Actor {
+public interface AuctionHouse extends Actor {
     /**
      * Gets all open auctions
      *

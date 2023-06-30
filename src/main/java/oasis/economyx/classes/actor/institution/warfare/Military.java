@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
-import oasis.economyx.interfaces.actor.types.services.Faction;
+import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

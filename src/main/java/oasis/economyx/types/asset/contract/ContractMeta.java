@@ -1,5 +1,7 @@
 package oasis.economyx.types.asset.contract;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -9,51 +11,56 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
 
 public abstract class ContractMeta implements AssetMeta, Purchasable {
-    public ContractMeta(@Nullable CashStack purchasePrice, @Nullable DateTime purchaseDate, @NonNull Actor counterparty) {
+    public ContractMeta() {
+        this.purchasePrice = null;
+        this.purchaseDate = null;
+    }
+
+    public ContractMeta(@Nullable CashStack purchasePrice, @Nullable DateTime purchaseDate) {
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
-        this.counterparty = counterparty;
     }
 
     public ContractMeta(ContractMeta other) {
         this.purchasePrice = other.purchasePrice;
         this.purchaseDate = other.purchaseDate;
-        this.counterparty = other.counterparty;
     }
 
     @Nullable
+    @JsonProperty
     private CashStack purchasePrice;
     @Nullable
+    @JsonProperty
     private DateTime purchaseDate;
-    @NonNull
-    private Actor counterparty;
 
     @Override
+    @JsonIgnore
     public @Nullable CashStack getPurchasePrice() {
         return purchasePrice;
     }
 
     @Override
+    @JsonIgnore
     public @Nullable DateTime getPurchaseDate() {
         return purchaseDate;
     }
 
-    @NonNull
-    public Actor getCounterparty() {
-        return counterparty;
-    }
-
     @Override
+    @JsonIgnore
     public void setPurchasePrice(@Nullable CashStack price) {
         this.purchasePrice = price;
     }
 
     @Override
+    @JsonIgnore
     public void setPurchaseDate(@Nullable DateTime date) {
         this.purchaseDate = date;
     }
 
-    public void setCounterparty(@NonNull Actor counterparty) {
-        this.counterparty = counterparty;
-    }
+    /**
+     * Gets whether the holder can forgive this contract.
+     * @return Whether this contract is forgivable
+     */
+    @JsonIgnore
+    public abstract boolean isForgivable();
 }

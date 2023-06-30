@@ -1,4 +1,4 @@
-package oasis.economyx.interfaces.actor.types.services;
+package oasis.economyx.interfaces.actor.types.warfare;
 
 import oasis.economyx.interfaces.actor.Actor;
 

@@ -12,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class StockSplitListener extends EconomyListener {
+public final class StockSplitListener extends EconomyListener {
     public StockSplitListener(@NonNull EconomyX EX) {
         super(EX);
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
@@ -130,20 +130,20 @@ public final class AssetOrder implements Order {
     }
 
     @Override
-    public void onSubmitted(MarketHost exchange) {
+    public void onSubmitted(Exchange exchange) {
         if (collateral == null) return;
         exchange.getAssets().add(collateral);
     }
 
     @Override
-    public void onFulfilled(MarketHost exchange, @NonNull CashStack price, @NonNegative long quantity) {
+    public void onFulfilled(Exchange exchange, @NonNull CashStack price, @NonNegative long quantity) {
         // transfer assets
         // brokerage fees
         // exchange fees (paid by brokerage to exchange)
     }
 
     @Override
-    public void onCancelled(MarketHost exchange) {
+    public void onCancelled(Exchange exchange) {
         // unregister collateral
         // remove order
         // TODO TODO TODO

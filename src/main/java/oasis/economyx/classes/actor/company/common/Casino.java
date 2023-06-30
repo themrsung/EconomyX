@@ -34,6 +34,7 @@ public final class Casino extends Company implements House {
         super(uniqueId, name, stockId, shareCount, currency);
 
         this.tables = new ArrayList<>();
+        this.issuedChip = chipToIssue;
     }
 
     public Casino() {

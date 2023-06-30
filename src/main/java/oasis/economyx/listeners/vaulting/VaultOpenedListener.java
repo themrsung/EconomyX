@@ -1,4 +1,4 @@
-package oasis.economyx.listeners.vault;
+package oasis.economyx.listeners.vaulting;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -16,7 +16,7 @@ public final class VaultOpenedListener extends EconomyListener {
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) throws IllegalArgumentException {
+    public void onVaultOpened(PlayerInteractEvent e) throws IllegalArgumentException {
         if (e.getClickedBlock() == null) return;
 
         final Block block = e.getClickedBlock();

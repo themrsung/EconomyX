@@ -11,8 +11,8 @@ import oasis.economyx.classes.actor.company.finance.SecuritiesBroker;
 import oasis.economyx.classes.actor.company.special.HoldingsCompany;
 import oasis.economyx.classes.actor.company.special.LawFirm;
 import oasis.economyx.classes.actor.company.special.Mercenary;
-import oasis.economyx.classes.actor.company.trading.AuctionHouse;
-import oasis.economyx.classes.actor.company.trading.Exchange;
+import oasis.economyx.classes.actor.company.trading.AuctionCompany;
+import oasis.economyx.classes.actor.company.trading.ExchangeCompany;
 import oasis.economyx.classes.actor.company.vaulting.VaultCompany;
 import oasis.economyx.classes.actor.institution.monetary.CentralBank;
 import oasis.economyx.classes.actor.institution.monetary.Mint;
@@ -52,8 +52,8 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = ConstructionCompany.class, name = "CONSTRUCTION_COMPANY"),
         @JsonSubTypes.Type(value = Distillery.class, name = "DISTILLERY"),
         @JsonSubTypes.Type(value = Casino.class, name = "CASINO"),
-        @JsonSubTypes.Type(value = Exchange.class, name = "EXCHANGE"),
-        @JsonSubTypes.Type(value = AuctionHouse.class, name = "AUCTION_HOUSE"),
+        @JsonSubTypes.Type(value = ExchangeCompany.class, name = "EXCHANGE_COMPANY"),
+        @JsonSubTypes.Type(value = AuctionCompany.class, name = "AUCTION_COMPANY"),
         @JsonSubTypes.Type(value = Bank.class, name = "BANK"),
         @JsonSubTypes.Type(value = SecuritiesBroker.class, name = "SECURITIES_BROKER"),
         @JsonSubTypes.Type(value = Guarantor.class, name = "GUARANTOR"),
@@ -200,12 +200,12 @@ public interface Actor {
         /**
          * Able to run markets
          */
-        EXCHANGE,
+        EXCHANGE_COMPANY,
 
         /**
          * Able to run auctions
          */
-        AUCTION_HOUSE,
+        AUCTION_COMPANY,
 
         /**
          * Able to handle deposits, withdrawals, transfers, and loans (via line of credit or collateralized loans)

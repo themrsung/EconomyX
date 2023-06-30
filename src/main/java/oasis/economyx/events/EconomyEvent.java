@@ -4,17 +4,38 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.joda.time.DateTime;
+
+import java.util.UUID;
 
 /**
  * A base class for EconomyX events.
- * All EconomyX events are cancellable.
+ * All EconomyX events are cancellable, have a unique ID, and time.
  */
 public abstract class EconomyEvent extends Event implements Cancellable {
     public EconomyEvent() {
+        this.uniqueId = UUID.randomUUID();
+        this.time = new DateTime();
         this.cancelled = false;
     }
 
+    @NonNull
+    private final UUID uniqueId;
+
+    @NonNull
+    private final DateTime time;
+
     private boolean cancelled;
+
+    @NonNull
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
+
+    @NonNull
+    public DateTime getTime() {
+        return time;
+    }
 
     @Override
     public boolean isCancelled() {

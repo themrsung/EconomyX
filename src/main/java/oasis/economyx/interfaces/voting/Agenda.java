@@ -73,8 +73,6 @@ public interface Agenda extends Runnable {
          */
         DIVIDEND,
 
-        // LIQUIDATE, - TODO
-
         /**
          * An agenda where a shared actor issues more of its stock
          */

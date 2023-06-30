@@ -1,7 +1,7 @@
 package oasis.economyx.tasks.trading;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.tasks.EconomyTask;
 
@@ -12,7 +12,7 @@ public final class AuctionTickTask extends EconomyTask {
 
     @Override
     public void run() {
-        for (AuctionHost h : getState().getAuctionHosts()) {
+        for (AuctionHouse h : getState().getAuctionHosts()) {
             for (Auctioneer a : h.getAuctions()) {
                 a.processBids(h);
 

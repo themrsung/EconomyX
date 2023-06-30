@@ -19,16 +19,16 @@ import oasis.economyx.interfaces.actor.types.finance.Credible;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.*;
-import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
-import oasis.economyx.interfaces.actor.types.manufacturing.Distiller;
+import oasis.economyx.interfaces.actor.types.manufacturing.Minter;
 import oasis.economyx.interfaces.actor.types.manufacturing.Producer;
 import oasis.economyx.interfaces.actor.types.manufacturing.Scientific;
 import oasis.economyx.interfaces.actor.types.ownership.Private;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.interfaces.actor.types.services.*;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
-import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
+import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.gaming.table.Table;
@@ -314,11 +314,11 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
-    public List<BillCreator> getBillCreators() {
-        List<BillCreator> list = new ArrayList<>();
+    public List<Minter> getBillCreators() {
+        List<Minter> list = new ArrayList<>();
 
         for (Actor a : getActors()) {
-            if (a instanceof BillCreator b) list.add(b);
+            if (a instanceof Minter b) list.add(b);
         }
 
         return list;
@@ -435,11 +435,11 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
-    public List<Protector> getProtectors() {
-        List<Protector> list = new ArrayList<>();
+    public List<PropertyProtector> getProtectors() {
+        List<PropertyProtector> list = new ArrayList<>();
 
         for (Actor a : getActors()) {
-            if (a instanceof Protector p) list.add(p);
+            if (a instanceof PropertyProtector p) list.add(p);
         }
 
         return list;
@@ -468,22 +468,22 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
-    public List<AuctionHost> getAuctionHosts() {
-        List<AuctionHost> list = new ArrayList<>();
+    public List<AuctionHouse> getAuctionHosts() {
+        List<AuctionHouse> list = new ArrayList<>();
 
         for (Actor a : getActors()) {
-            if (a instanceof AuctionHost ah) list.add(ah);
+            if (a instanceof AuctionHouse ah) list.add(ah);
         }
 
         return list;
     }
 
     @Override
-    public List<MarketHost> getMarketHosts() {
-        List<MarketHost> list = new ArrayList<>();
+    public List<Exchange> getMarketHosts() {
+        List<Exchange> list = new ArrayList<>();
 
         for (Actor a : getActors()) {
-            if (a instanceof MarketHost m) list.add(m);
+            if (a instanceof Exchange m) list.add(m);
         }
 
         return list;
@@ -561,7 +561,7 @@ public final class EconomyXState implements EconomyState {
     public List<Auctioneer> getAuctioneers() {
         List<Auctioneer> auctioneers = new ArrayList<>();
 
-        for (AuctionHost ah : getAuctionHosts()) {
+        for (AuctionHouse ah : getAuctionHosts()) {
             auctioneers.addAll(ah.getAuctions());
         }
 
@@ -583,7 +583,7 @@ public final class EconomyXState implements EconomyState {
     public List<Marketplace> getMarketplaces() {
         List<Marketplace> markets = new ArrayList<>();
 
-        for (MarketHost h : getMarketHosts()) {
+        for (Exchange h : getMarketHosts()) {
             markets.addAll(h.getMarkets());
         }
 
@@ -605,11 +605,11 @@ public final class EconomyXState implements EconomyState {
     public List<PriceProvider> getPriceProviders() {
         List<PriceProvider> providers = new ArrayList<>();
 
-        for (MarketHost h : getMarketHosts()) {
+        for (Exchange h : getMarketHosts()) {
             providers.addAll(h.getMarkets());
         }
 
-        for (AuctionHost h : getAuctionHosts()) {
+        for (AuctionHouse h : getAuctionHosts()) {
             providers.addAll(h.getAuctions());
         }
 

@@ -7,11 +7,26 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.listeners.actor.ActorNameChangedListener;
+import oasis.economyx.listeners.banking.BankDepositListener;
+import oasis.economyx.listeners.banking.BankWithdrawalListener;
+import oasis.economyx.listeners.actor.ActorCreationListener;
+import oasis.economyx.listeners.contract.ContractCreatedListener;
+import oasis.economyx.listeners.contract.ContractExpiredListener;
+import oasis.economyx.listeners.contract.ContractForgivenListener;
 import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.payment.PaymentListener;
 import oasis.economyx.listeners.player.PlayerJoinHandler;
 import oasis.economyx.listeners.stock.StockSplitListener;
-import oasis.economyx.listeners.vault.VaultOpenedListener;
+import oasis.economyx.listeners.trading.AssetDelistedListener;
+import oasis.economyx.listeners.trading.AssetListedListener;
+import oasis.economyx.listeners.trading.OrderCancelledListener;
+import oasis.economyx.listeners.trading.OrderPlacedListener;
+import oasis.economyx.listeners.vaulting.VaultCreatedListener;
+import oasis.economyx.listeners.vaulting.VaultDestroyedListener;
+import oasis.economyx.listeners.vaulting.VaultOpenedListener;
+import oasis.economyx.listeners.voting.VoteCastListener;
+import oasis.economyx.listeners.voting.VoteProposedListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import oasis.economyx.tasks.EconomyTask;
@@ -49,49 +64,10 @@ public final class EconomyX extends JavaPlugin {
 
         this.state = EconomyXState.load(this);
 
-        //
-        // Listeners
-        //
+        registerListeners();
 
-        // Dividends
-        registerListener(new DividendListener(this));
 
-        // Stock
-        registerListener(new StockSplitListener(this));
 
-        // Payments
-        registerListener(new PaymentListener(this));
-
-        // Player
-        registerListener(new PlayerJoinHandler(this));
-
-        // Vault
-        registerListener(new VaultOpenedListener(this));
-
-        //
-        // Tasks
-        //
-
-        // Expiry
-        registerTask(new CardExpiryTask(this));
-        registerTask(new ContractExpiryTask(this));
-
-        // Gaming
-        registerTask(new CasinoProgressTask(this));
-
-        // Payments
-        registerTask(new RegularPaymentTask(this));
-        registerTask(new CreditCardSettlementTask(this));
-
-        // Server
-        registerTask(new AutoSaveTask(this));
-
-        // Trading
-        registerTask(new AuctionTickTask(this));
-        registerTask(new MarketTickTask(this));
-
-        // Voting
-        registerTask(new VoteProcessTask(this));
 
         // DEBUG
 
@@ -134,6 +110,80 @@ public final class EconomyX extends JavaPlugin {
         getState().save();
 
         Bukkit.getLogger().info("EconomyX unloaded.");
+    }
+
+    private void registerTasks() {
+        //
+        // Tasks
+        //
+
+        // Expiry
+        registerTask(new CardExpiryTask(this));
+        registerTask(new ContractExpiryTask(this));
+
+        // Gaming
+        registerTask(new CasinoProgressTask(this));
+
+        // Payments
+        registerTask(new RegularPaymentTask(this));
+        registerTask(new CreditCardSettlementTask(this));
+
+        // Server
+        registerTask(new AutoSaveTask(this));
+
+        // Trading
+        registerTask(new AuctionTickTask(this));
+        registerTask(new MarketTickTask(this));
+
+        // Voting
+        registerTask(new VoteProcessTask(this));
+    }
+
+    private void registerListeners() {
+        //
+        // Listeners
+        //
+
+        // Actor
+        registerListener(new ActorCreationListener(this));
+        registerListener(new ActorNameChangedListener(this));
+
+        // Banking
+        registerListener(new BankDepositListener(this));
+        registerListener(new BankWithdrawalListener(this));
+
+        // Contract
+        registerListener(new ContractCreatedListener(this));
+        registerListener(new ContractExpiredListener(this));
+        registerListener(new ContractForgivenListener(this));
+
+        // Dividends
+        registerListener(new DividendListener(this));
+
+        // Payments
+        registerListener(new PaymentListener(this));
+
+        // Player
+        registerListener(new PlayerJoinHandler(this));
+
+        // Stock
+        registerListener(new StockSplitListener(this));
+
+        // Trading
+        registerListener(new AssetListedListener(this));
+        registerListener(new AssetDelistedListener(this));
+
+        registerListener(new OrderPlacedListener(this));
+        registerListener(new OrderCancelledListener(this));
+
+        // Vaulting
+        registerListener(new VaultCreatedListener(this));
+        registerListener(new VaultOpenedListener(this));
+        registerListener(new VaultDestroyedListener(this));
+
+        // Voting
+        registerListener(new VoteCastListener(this));
+        registerListener(new VoteProposedListener(this));
     }
 
     private void registerTask(EconomyTask task) {

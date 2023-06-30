@@ -13,7 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
-public class DividendListener extends EconomyListener {
+public final class DividendListener extends EconomyListener {
     public DividendListener(EconomyX EX) {
         super(EX);
     }

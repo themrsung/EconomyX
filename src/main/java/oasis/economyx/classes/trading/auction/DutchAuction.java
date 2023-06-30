@@ -2,7 +2,7 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.types.asset.AssetStack;
@@ -35,14 +35,14 @@ public final class DutchAuction extends Auction {
 
     @Override
     @JsonIgnore
-    public void processBids(AuctionHost auctioneer) {
+    public void processBids(AuctionHouse auctioneer) {
         if (getBids().size() == 0L) return;
         onDeadlineReached(auctioneer);
     }
 
     @Override
     @JsonIgnore
-    public void onDeadlineReached(AuctionHost auctioneer) {
+    public void onDeadlineReached(AuctionHouse auctioneer) {
         if (getBids().size() == 0L) {
             setSold(false);
             setPrice(new CashStack(getCurrency(), 0L));

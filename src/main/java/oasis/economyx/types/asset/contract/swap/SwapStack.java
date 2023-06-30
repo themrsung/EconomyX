@@ -4,79 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.contract.ContractStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
 
-public final class SwapStack implements AssetStack {
+public final class SwapStack extends ContractStack {
     public SwapStack(@NonNull Swap asset, @NonNegative long quantity) {
-        this.asset = asset;
-        this.quantity = quantity;
-        this.meta = new SwapMeta();
+        super(asset, quantity, new SwapMeta());
     }
 
     public SwapStack(@NonNull Swap asset, @NonNegative long quantity, @NonNull SwapMeta meta) {
-        this.asset = asset;
-        this.quantity = quantity;
-        this.meta = meta;
+        super(asset, quantity, meta);
     }
 
     public SwapStack(SwapStack other) {
-        this.asset = other.asset;
-        this.quantity = other.quantity;
-        this.meta = other.meta;
-    }
-
-    @NonNull
-    @JsonProperty
-    private final Swap asset;
-    @NonNegative
-    @JsonProperty
-    private long quantity;
-    @NonNull
-    @JsonProperty
-    private SwapMeta meta;
-
-    @NonNull
-    @Override
-    @JsonIgnore
-    public Swap getAsset() {
-        return asset;
-    }
-
-    @Override
-    @JsonIgnore
-    public long getQuantity() {
-        return quantity;
-    }
-
-    @Override
-    @JsonIgnore
-    public void setQuantity(@NonNegative long quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    @JsonIgnore
-    public void addQuantity(@NonNegative long delta) {
-        this.quantity += delta;
-    }
-
-    @Override
-    @JsonIgnore
-    public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
-        if (this.quantity - delta < 0L) throw new IllegalArgumentException();
-
-        this.quantity -= delta;
+        super(other);
     }
 
     @NonNull
     @Override
     @JsonProperty("meta")
     public SwapMeta getMeta() {
-        return meta;
+        return (SwapMeta) meta;
     }
 
     @Override
@@ -107,8 +58,6 @@ public final class SwapStack implements AssetStack {
      */
     @ConstructorProperties({"asset", "quantity", "meta"})
     public SwapStack() {
-        this.asset = new Swap();
-        this.quantity = 0L;
-        this.meta = new SwapMeta();
+        super();
     }
 }

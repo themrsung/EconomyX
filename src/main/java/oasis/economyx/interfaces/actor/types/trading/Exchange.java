@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A market host can open markets and handle orders
  */
-public interface MarketHost extends Actor {
+public interface Exchange extends Actor {
     /**
      * Gets all open markets
      *

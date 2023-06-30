@@ -1,7 +1,7 @@
 package oasis.economyx.tasks.trading;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.tasks.EconomyTask;
 
@@ -12,7 +12,7 @@ public final class MarketTickTask extends EconomyTask {
 
     @Override
     public void run() {
-        for (MarketHost h : getState().getMarketHosts()) {
+        for (Exchange h : getState().getMarketHosts()) {
             for (Marketplace m : h.getMarkets()) {
                 m.processOrders(h);
             }

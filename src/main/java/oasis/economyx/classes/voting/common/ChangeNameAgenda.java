@@ -3,8 +3,10 @@ package oasis.economyx.classes.voting.common;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.events.actor.ActorNameChangedEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.voting.Agenda;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
@@ -48,7 +50,10 @@ public final class ChangeNameAgenda implements Agenda {
     @Override
     @JsonIgnore
     public void run() {
-        actor.setName(newName);
+        Bukkit.getPluginManager().callEvent(new ActorNameChangedEvent(
+                actor,
+                newName
+        ));
     }
 
     @JsonProperty

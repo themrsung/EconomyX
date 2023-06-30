@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.types.services.Faction;
-import oasis.economyx.interfaces.actor.types.services.Protector;
+import oasis.economyx.interfaces.actor.types.warfare.Faction;
+import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * aka PMC
  */
-public final class Mercenary extends Company implements Faction, Protector {
+public final class Mercenary extends Company implements Faction, PropertyProtector {
     /**
      * Creates a new mercenary
      *

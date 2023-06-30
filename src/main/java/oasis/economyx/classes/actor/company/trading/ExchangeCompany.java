@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.types.asset.cash.Cash;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Exchange extends Company implements MarketHost {
+public final class ExchangeCompany extends Company implements Exchange {
     /**
      * Creates a new exchange
      *
@@ -26,21 +26,21 @@ public final class Exchange extends Company implements MarketHost {
      * @param shareCount Initial share count
      * @param currency   Quote currency of in this exchange
      */
-    public Exchange(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
+    public ExchangeCompany(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);
 
         this.markets = new ArrayList<>();
         this.marketFeeRate = 0f;
     }
 
-    public Exchange() {
+    public ExchangeCompany() {
         super();
 
         this.markets = new ArrayList<>();
         this.marketFeeRate = 0f;
     }
 
-    public Exchange(Exchange other) {
+    public ExchangeCompany(ExchangeCompany other) {
         super(other);
         this.markets = other.markets;
         this.marketFeeRate = other.marketFeeRate;
@@ -92,7 +92,7 @@ public final class Exchange extends Company implements MarketHost {
     }
 
     @JsonProperty
-    private final Type type = Type.EXCHANGE;
+    private final Type type = Type.EXCHANGE_COMPANY;
 
     @Override
     @JsonIgnore

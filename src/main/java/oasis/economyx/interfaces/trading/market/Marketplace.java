@@ -1,6 +1,6 @@
 package oasis.economyx.interfaces.trading.market;
 
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -85,7 +85,7 @@ public interface Marketplace extends PriceProvider {
      * @param order    Order to place
      * @param exchange The actor running this market
      */
-    void placeOrder(@NonNull Order order, @NonNull MarketHost exchange);
+    void placeOrder(@NonNull Order order, @NonNull Exchange exchange);
 
     /**
      * Cancels an existing order
@@ -93,7 +93,7 @@ public interface Marketplace extends PriceProvider {
      * @param order    Order to place
      * @param exchange The actor running this market
      */
-    void cancelOrder(@NonNull Order order, @NonNull MarketHost exchange);
+    void cancelOrder(@NonNull Order order, @NonNull Exchange exchange);
 
     /**
      * Processes orders
@@ -101,7 +101,7 @@ public interface Marketplace extends PriceProvider {
      *
      * @param exchange The actor running this market
      */
-    void processOrders(MarketHost exchange);
+    void processOrders(Exchange exchange);
 
     /**
      * Gets structured buy tick data sorted by price descending

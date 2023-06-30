@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
+import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class AuctionHouse extends Company implements AuctionHost {
+public final class AuctionCompany extends Company implements AuctionHouse {
     /**
      * Creates a new auction house
      *
@@ -25,19 +25,19 @@ public final class AuctionHouse extends Company implements AuctionHost {
      * @param shareCount Initial share count
      * @param currency   Currency to host auctions in
      */
-    public AuctionHouse(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
+    public AuctionCompany(UUID uniqueId, @Nullable String name, UUID stockId, long shareCount, Cash currency) {
         super(uniqueId, name, stockId, shareCount, currency);
 
         this.auctions = new ArrayList<>();
         this.auctionFeeRate = 0f;
     }
 
-    public AuctionHouse() {
+    public AuctionCompany() {
         this.auctions = new ArrayList<>();
         this.auctionFeeRate = 0f;
     }
 
-    public AuctionHouse(AuctionHouse other) {
+    public AuctionCompany(AuctionCompany other) {
         super(other);
         this.auctions = other.auctions;
         this.auctionFeeRate = other.auctionFeeRate;
@@ -77,7 +77,7 @@ public final class AuctionHouse extends Company implements AuctionHost {
     }
 
     @JsonProperty
-    private final Type type = Type.AUCTION_HOUSE;
+    private final Type type = Type.AUCTION_COMPANY;
 
     @Override
     @JsonIgnore

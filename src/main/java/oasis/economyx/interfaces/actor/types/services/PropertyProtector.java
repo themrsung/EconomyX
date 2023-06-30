@@ -7,7 +7,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * A protector is capable of providing protection to properties
  */
-public interface Protector extends Actor {
+public interface PropertyProtector extends Actor {
     /**
      * Protection fee is charged on a per-interaction basis.
      * Charged once per every cancelled interaction by an unauthorized player.

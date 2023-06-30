@@ -2,7 +2,7 @@ package oasis.economyx.classes.trading.market;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.market.MarketTick;
 import oasis.economyx.interfaces.trading.market.Marketplace;
@@ -87,14 +87,14 @@ public final class Market implements Marketplace {
 
     @Override
     @JsonIgnore
-    public void placeOrder(@NonNull Order order, @NonNull MarketHost exchange) {
+    public void placeOrder(@NonNull Order order, @NonNull Exchange exchange) {
         orders.add(order);
         order.onSubmitted(exchange);
     }
 
     @Override
     @JsonIgnore
-    public void cancelOrder(@NonNull Order order, @NonNull MarketHost exchange) {
+    public void cancelOrder(@NonNull Order order, @NonNull Exchange exchange) {
         if (orders.remove(order)) {
             order.onCancelled(exchange);
         }
@@ -102,7 +102,7 @@ public final class Market implements Marketplace {
 
     @Override
     @JsonIgnore
-    public void processOrders(MarketHost exchange) {
+    public void processOrders(Exchange exchange) {
         enforceTickSize(exchange);
 
         cancelFulfilledOrders(exchange);
@@ -135,7 +135,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void enforceTickSize(MarketHost exchange) {
+    private void enforceTickSize(Exchange exchange) {
         for (Order o : getOrders()) {
             double price = o.getPrice().getQuantity();
 
@@ -146,7 +146,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void cancelFulfilledOrders(MarketHost exchange) {
+    private void cancelFulfilledOrders(Exchange exchange) {
         for (Order o : getOrders()) {
             if (o.getQuantity() <= 0L) {
                 cancelOrder(o, exchange);
@@ -177,7 +177,7 @@ public final class Market implements Marketplace {
     }
 
     @JsonIgnore
-    private void killImmediateOrders(MarketHost exchange) {
+    private void killImmediateOrders(Exchange exchange) {
         for (Order o : getOrders()) {
             if (o.isImmediate()) {
                 if (o.getTime().plusSeconds(1).isBeforeNow()) {

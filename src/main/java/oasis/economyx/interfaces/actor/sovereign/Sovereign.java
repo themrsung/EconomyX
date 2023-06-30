@@ -5,7 +5,7 @@ import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
-import oasis.economyx.interfaces.actor.types.services.Protector;
+import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A sovereign actor must be represented by a person, but is not owned by any other actor.
  */
-public interface Sovereign extends Representable, Protector {
+public interface Sovereign extends Representable, PropertyProtector {
     /**
      * Gets all citizens of this sovereign
      *

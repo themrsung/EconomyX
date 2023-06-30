@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.classes.trading.market.AssetOrder;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
-import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -145,7 +145,7 @@ public interface Order {
      *
      * @param exchange The actor running this market
      */
-    void onSubmitted(MarketHost exchange);
+    void onSubmitted(Exchange exchange);
 
     /**
      * Called on order fulfillment.
@@ -155,7 +155,7 @@ public interface Order {
      * @param price    Price of fulfillment
      * @param quantity Quantity of fulfillment
      */
-    void onFulfilled(MarketHost exchange, @NonNull CashStack price, @NonNegative long quantity);
+    void onFulfilled(Exchange exchange, @NonNull CashStack price, @NonNegative long quantity);
 
     /**
      * Called on order cancellation.
@@ -163,7 +163,7 @@ public interface Order {
      *
      * @param exchange The actor running this market
      */
-    void onCancelled(MarketHost exchange);
+    void onCancelled(Exchange exchange);
 
     enum Type {
         /**
