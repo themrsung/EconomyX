@@ -2,7 +2,7 @@ package oasis.economyx;
 
 import oasis.economyx.classes.actor.company.common.Manufacturer;
 import oasis.economyx.classes.actor.person.NaturalPerson;
-import oasis.economyx.classes.voting.MessageConsoleAgenda;
+import oasis.economyx.classes.voting.DummyAgenda;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
@@ -104,7 +104,7 @@ public final class EconomyX extends JavaPlugin {
                 UUID.randomUUID(),
                 "test",
                 voters,
-                new MessageConsoleAgenda(),
+                new DummyAgenda(),
                 new DateTime().plusDays(1),
                 0.1f,
                 10);

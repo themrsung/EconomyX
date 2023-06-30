@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import oasis.economyx.classes.voting.MessageConsoleAgenda;
+import oasis.economyx.classes.voting.DummyAgenda;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
@@ -64,7 +64,7 @@ public interface Vote {
 
         List<Candidate> candidates = new ArrayList<>();
         candidates.add(Candidate.get("Yes", onPassed));
-        candidates.add(Candidate.get("No", new MessageConsoleAgenda()));
+        candidates.add(Candidate.get("No", new DummyAgenda()));
 
         return new OpenVote(uniqueId, name, candidates, voters, votes, expiry, requiredApprovalRatio, requiredVotesToPass);
     }

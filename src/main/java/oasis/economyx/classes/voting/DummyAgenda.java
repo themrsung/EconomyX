@@ -3,16 +3,18 @@ package oasis.economyx.classes.voting;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.voting.Agenda;
-import org.bukkit.Bukkit;
 
-public class MessageConsoleAgenda implements Agenda {
+/**
+ * An agenda that does nothing. Used for pro status quo votes.
+ */
+public final class DummyAgenda implements Agenda {
     @Override
     public void run() {
-        Bukkit.getLogger().info("yes");
+        // Do nothing
     }
 
     @JsonProperty
-    private final Agenda.Type type = Type.MESSAGE_CONSOLE;
+    private final Agenda.Type type = Type.DUMMY;
 
     @Override
     @JsonIgnore
