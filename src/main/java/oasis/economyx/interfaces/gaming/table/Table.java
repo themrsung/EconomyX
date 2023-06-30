@@ -1,10 +1,10 @@
-package oasis.economyx.interfaces.gaming;
+package oasis.economyx.interfaces.gaming.table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import oasis.economyx.classes.gaming.*;
+import oasis.economyx.classes.gaming.table.*;
 import oasis.economyx.interfaces.actor.types.services.House;
 
 import java.util.UUID;

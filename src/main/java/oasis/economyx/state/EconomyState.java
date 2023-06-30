@@ -26,7 +26,7 @@ import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.interfaces.gaming.Table;
+import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
 import oasis.economyx.interfaces.trading.PriceProvider;

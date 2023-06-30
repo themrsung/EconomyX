@@ -1,9 +1,11 @@
 package oasis.economyx.interfaces.vaulting;
 
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.types.asset.commodity.CommodityStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Cause;
 import org.spongepowered.api.world.server.ServerLocation;
@@ -22,6 +24,17 @@ public interface VaultBlock {
      */
     @NonNull
     UUID getUniqueId();
+
+    /**
+     * Gets the vault keeper responsible for handling this vault.
+     * When vault keeper is null, it means that this vault is not being managed.
+     * Original design is to not allow deposits into unmanaged vaults, but still allow withdrawals.
+     * However, you can change this to suit your needs. See VaultOpenedListener.
+     *
+     * @return Vault keeper
+     */
+    @Nullable
+    VaultKeeper getKeeper();
 
     /**
      * Gets the client of this vault block.
@@ -86,9 +99,11 @@ public interface VaultBlock {
 
     /**
      * Handles vault opening.
+     * It is assumed that the vault block is a container block by default.
+     *
      * @param player Player who opened the vault
      */
-    void onOpened(Player player);
+    void onOpenAttempted(Player player);
 
     /**
      * Handles vault destruction.

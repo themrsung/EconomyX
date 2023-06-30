@@ -1,15 +1,19 @@
-package oasis.economyx.classes.gaming;
+package oasis.economyx.classes.gaming.table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.House;
-import oasis.economyx.interfaces.gaming.Table;
+import oasis.economyx.interfaces.gaming.table.Table;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
-public final class SlotMachine implements Table {
-    public SlotMachine() {
+/**
+ * A game of Texas Hold'em
+ */
+public final class PokerTable implements Table {
+    public PokerTable() {
         this.uniqueId = UUID.randomUUID();
         this.casino = null;
     }
@@ -33,9 +37,12 @@ public final class SlotMachine implements Table {
     public House getCasino() {
         return casino;
     }
-    private final Type type = Type.SLOT_MACHINE;
+
+    @JsonProperty
+    private final Type type = Type.POKER;
 
     @Override
+    @JsonIgnore
     public Type getType() {
         return type;
     }

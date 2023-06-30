@@ -17,6 +17,7 @@ import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.listener.payment.PaymentListener;
+import oasis.economyx.listener.vault.VaultOpenedListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import oasis.economyx.types.asset.AssetStack;
@@ -68,6 +69,7 @@ public class EconomyX {
         this.logger.info("Loading EconomyX.");
 
         Sponge.eventManager().registerListeners(container, new PaymentListener(this));
+        Sponge.eventManager().registerListeners(container, new VaultOpenedListener(this));
 
         registerTasks();
 

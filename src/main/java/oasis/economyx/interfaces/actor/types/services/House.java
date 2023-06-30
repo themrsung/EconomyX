@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.actor.types.services;
 
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.gaming.Table;
+import oasis.economyx.interfaces.gaming.table.Table;
 
 import java.util.List;
 

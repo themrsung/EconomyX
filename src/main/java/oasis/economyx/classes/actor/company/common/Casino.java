@@ -6,8 +6,7 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.House;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
-import oasis.economyx.interfaces.gaming.Table;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import oasis.economyx.interfaces.gaming.table.Table;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;

@@ -1,66 +1,103 @@
 package oasis.economyx.interfaces.gaming.card;
 
-public class PlayingCard {
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-    public enum PlayingCardType {
-        ACE_SPADES,
-        DEUCE_SPACES,
-        THREE_SPADES,
-        FOUR_SPADES,
-        FIVE_SPACES,
-        SIX_SPACES,
-        SEVEN_SPADES,
-        EIGHT_SPADES,
-        NINE_SPADES,
-        TEN_SPADES,
-        JACK_SPADES,
-        QUEEN_SPADES,
-        KING_SPADES,
+import java.util.UUID;
 
-        ACE_CLOVER,
-        DEUCE_CLOVER,
-        THREE_CLOVER,
-        FOUR_CLOVER,
-        FIVE_CLOVER,
-        SIX_CLOVER,
-        SEVEN_CLOVER,
-        EIGHT_CLOVER,
-        NINE_CLOVER,
-        TEN_CLOVER,
-        JACK_CLOVER,
-        QUEEN_CLOVER,
-        KING_CLOVER,
+/**
+ * A playing card is an immutable and unique object.
+ * Playing cards are not designed to be copied.
+ */
+public interface PlayingCard {
+    /**
+     * Gets one playing card by shape and number
+     * @param shape Shape of card
+     * @param number Number of card
+     * @return New instance
+     */
+    static PlayingCard get(Shape shape, Number number) {
+        return new PlayableCard(UUID.randomUUID(), shape, number);
+    }
 
-        ACE_DIAMONDS,
-        DEUCE_DIAMONDS,
-        THREE_DIAMONDS,
-        FOUR_DIAMONDS,
-        FIVE_DIAMONDS,
-        SIX_DIAMONDS,
-        SEVEN_DIAMONDS,
-        EIGHT_DIAMONDS,
-        NINE_DIAMONDS,
-        TEN_DIAMONDS,
-        JACK_DIAMONDS,
-        QUEEN_DIAMONDS,
-        KING_DIAMONDS,
+    /**
+     * Gets the unique ID of this playing card.
+     * Cards are unique for security reasons.
+     * @return Unique ID
+     */
+    UUID uniqueId();
 
-        ACE_HEARTS,
-        DEUCE_HEARTS,
-        THREE_HEARTS,
-        FOUR_HEARTS,
-        FIVE_HEARTS,
-        SIX_HEARTS,
-        SEVEN_HEARTS,
-        EIGHT_HEARTS,
-        NINE_HEARTS,
-        TEN_HEARTS,
-        JACK_HEARTS,
-        QUEEN_HEARTS,
-        KING_HEARTS;
+    /**
+     * Gets the shape of this card.
+     * @return Shape
+     */
+    Shape shape();
 
-        public PlayingCard get() {
-            return null;
+    /**
+     * Gets the number denoted on this card.
+     * @return Number
+     */
+    Number number();
+
+    enum Number {
+        ACE,
+        DEUCE,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        JACK,
+        QUEEN,
+        KING;
+
+        /**
+         * Gets the numeric value of this card.
+         * Ace is considered to be highest.
+         * @return Numeric value
+         */
+        public int getValue() {
+            return switch (this) {
+                case ACE -> 14;
+                case DEUCE -> 2;
+                case THREE -> 3;
+                case FOUR -> 4;
+                case FIVE -> 5;
+                case SIX -> 6;
+                case SEVEN -> 7;
+                case EIGHT -> 8;
+                case NINE -> 9;
+                case TEN -> 10;
+                case JACK -> 11;
+                case QUEEN -> 12;
+                case KING -> 13;
+            };
+        }
+    }
+
+    enum Shape {
+        SPADES,
+        DIAMONDS,
+        CLOVER,
+        HEARTS;
+
+        public boolean isRed() {
+            return switch (this) {
+                case DIAMONDS, HEARTS -> true;
+                default -> false;
+            };
+        }
+    }
+
+    record PlayableCard(@NonNull UUID uniqueId, Shape shape, Number number) implements PlayingCard {
+        public Shape getShape() {
+            return shape;
+        }
+
+        public Number getNnumber() {
+            return number;
         }
     }
 }

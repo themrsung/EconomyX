@@ -31,7 +31,7 @@ import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.interfaces.banking.Account;
-import oasis.economyx.interfaces.gaming.Table;
+import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
 import oasis.economyx.interfaces.trading.PriceProvider;
