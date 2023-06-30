@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.organization.international;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.services.Faction;
 import oasis.economyx.types.asset.cash.Cash;
@@ -40,11 +40,11 @@ public final class Alliance extends AbstractOrganization<Sovereign> implements F
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.ALLIANCE;
+    private final Type type = Type.ALLIANCE;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

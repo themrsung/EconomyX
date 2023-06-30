@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.special;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.Legal;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -33,11 +33,11 @@ public final class LawFirm extends Company implements Legal {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.LAW_FIRM;
+    private final Type type = Type.LAW_FIRM;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

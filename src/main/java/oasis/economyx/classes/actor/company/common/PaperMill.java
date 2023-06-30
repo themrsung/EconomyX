@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -33,11 +33,11 @@ public final class PaperMill extends Company implements BillCreator {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.PAPER_MILL;
+    private final Type type = Type.PAPER_MILL;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

@@ -3,7 +3,7 @@ package oasis.economyx.classes.actor.sovereignty.singular;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
@@ -122,11 +122,11 @@ public final class Principality extends Sovereignty {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.PRINCIPALITY;
+    private final Type type = Type.PRINCIPALITY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

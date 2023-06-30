@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -60,11 +60,11 @@ public final class Guarantor extends Company implements Credible {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.GUARANTOR;
+    private final Type type = Type.GUARANTOR;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

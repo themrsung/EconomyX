@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.special;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.Faction;
 import oasis.economyx.interfaces.actor.types.services.Protector;
 import oasis.economyx.types.asset.cash.Cash;
@@ -56,11 +56,11 @@ public final class Mercenary extends Company implements Faction, Protector {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.MERCENARY;
+    private final Type type = Type.MERCENARY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

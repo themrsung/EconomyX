@@ -81,6 +81,6 @@ public interface Asset {
         NOTE,
         OPTION,
         SWAP,
-        COLLATERAL;
+        COLLATERAL
     }
 }

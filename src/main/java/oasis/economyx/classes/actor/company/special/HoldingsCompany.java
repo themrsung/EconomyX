@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.special;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -36,11 +36,11 @@ public final class HoldingsCompany extends Company {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.HOLDINGS_COMPANY;
+    private final Type type = Type.HOLDINGS_COMPANY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

@@ -3,7 +3,7 @@ package oasis.economyx.classes.actor.sovereignty.federal;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.classes.actor.sovereignty.Sovereignty;
@@ -84,11 +84,11 @@ public final class Federation extends Sovereignty implements Federal {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.FEDERATION;
+    private final Type type = Type.FEDERATION;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

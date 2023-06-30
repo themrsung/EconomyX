@@ -37,7 +37,8 @@ public final class EnglishAuction extends Auction {
     @Override
     @JsonIgnore
     public void processBids(AuctionHost auctioneer) {
-        if (getBids().size() == 0L) return;
+        if (getBids().size() == 0L) {
+        }
         else {
             // Highest bid is always the most recent bid in an English auction
             if (getBids().get(0).getTime().plusHours(1).isBeforeNow()) {

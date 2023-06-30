@@ -101,6 +101,6 @@ public interface PriceProvider {
         /**
          * A sealed auction where the highest bidder pays the price os the second-highest bidder
          */
-        SECOND_PRICE_AUCTION;
+        SECOND_PRICE_AUCTION
     }
 }

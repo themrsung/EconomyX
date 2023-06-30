@@ -97,6 +97,6 @@ public interface Card {
 
     enum Type {
         CREDIT_CARD,
-        DEBIT_CARD;
+        DEBIT_CARD
     }
 }

@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.trading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -91,11 +91,11 @@ public final class Exchange extends Company implements MarketHost {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.EXCHANGE;
+    private final Type type = Type.EXCHANGE;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

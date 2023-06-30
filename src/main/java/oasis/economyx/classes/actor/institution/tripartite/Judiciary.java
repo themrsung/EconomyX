@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.institution.tripartite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Judicial;
 import oasis.economyx.types.asset.cash.Cash;
@@ -35,11 +35,11 @@ public final class Judiciary extends Institution implements Judicial {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.JUDICIARY;
+    private final Type type = Type.JUDICIARY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

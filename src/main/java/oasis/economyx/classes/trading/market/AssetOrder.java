@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
-public class AssetOrder implements Order {
+public final class AssetOrder implements Order {
     /**
      * Creates a new order
      * @param uniqueId Unique ID of this order
@@ -74,7 +74,7 @@ public class AssetOrder implements Order {
     private final DateTime time;
     private CashStack price;
     @NonNegative
-    private long quantity;
+    private final long quantity;
     private final CollateralStack collateral;
 
     @Override

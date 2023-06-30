@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.institution.monetary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.CurrencyIssuer;
 import oasis.economyx.interfaces.actor.types.institutional.InterestRateProvider;
@@ -82,11 +82,11 @@ public final class CentralBank extends Institution implements InterestRateProvid
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.CENTRAL_BANK;
+    private final Type type = Type.CENTRAL_BANK;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

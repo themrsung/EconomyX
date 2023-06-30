@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
 import oasis.economyx.interfaces.trading.PriceProvider;
-import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.interfaces.trading.market.MarketTick;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -204,11 +204,9 @@ public final class Market implements Marketplace {
         }
     }
 
-    @NonNull
     @JsonProperty
     private final PriceProvider.Type type = Type.MARKET;
 
-    @NonNull
     @JsonIgnore
     public PriceProvider.Type getType() {
         return type;

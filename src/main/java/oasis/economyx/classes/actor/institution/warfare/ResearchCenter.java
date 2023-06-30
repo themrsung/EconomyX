@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.institution.warfare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.manufacturing.Scientific;
 import oasis.economyx.types.asset.cash.Cash;
@@ -36,11 +36,11 @@ public final class ResearchCenter extends Institution implements Scientific {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.RESEARCH_CENTER;
+    private final Type type = Type.RESEARCH_CENTER;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

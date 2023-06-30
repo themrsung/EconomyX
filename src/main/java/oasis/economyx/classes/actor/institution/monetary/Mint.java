@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.institution.monetary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.BanknoteIssuer;
 import oasis.economyx.interfaces.actor.types.institutional.CurrencyIssuer;
@@ -72,11 +72,11 @@ public final class Mint extends Institution implements BanknoteIssuer {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.MINT;
+    private final Type type = Type.MINT;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

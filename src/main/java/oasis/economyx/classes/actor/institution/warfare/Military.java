@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.institution.warfare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.services.Faction;
 import oasis.economyx.types.asset.cash.Cash;
@@ -36,11 +36,11 @@ public final class Military extends Institution implements Faction {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.MILITARY;
+    private final Type type = Type.MILITARY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

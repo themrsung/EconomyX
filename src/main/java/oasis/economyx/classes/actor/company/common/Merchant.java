@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.company.Company;
@@ -33,11 +33,11 @@ public final class Merchant extends Company implements CardAcceptor {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.MERCHANT;
+    private final Type type = Type.MERCHANT;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }

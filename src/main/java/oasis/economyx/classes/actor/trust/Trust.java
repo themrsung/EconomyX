@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.ActorType;
 import oasis.economyx.interfaces.actor.fund.Fund;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.types.asset.cash.Cash;
@@ -171,10 +170,11 @@ public final class Trust extends EconomicActor implements Fund {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.TRUST;
+    private final Type type = Type.TRUST;
+
     @Override
     @JsonIgnore
-    public ActorType getType() {
+    public Type getType() {
         return type;
     }
 }

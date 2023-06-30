@@ -67,6 +67,6 @@ public interface Table {
         /**
          * Slot machine
          */
-        SLOT_MACHINE;
+        SLOT_MACHINE
     }
 }

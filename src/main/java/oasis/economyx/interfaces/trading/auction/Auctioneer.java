@@ -21,7 +21,6 @@ public interface Auctioneer extends PriceProvider {
      * Which type of auction this is
      * @return Auction type
      */
-    @NonNull
     PriceProvider.Type getType();
 
     /**

@@ -2,7 +2,7 @@ package oasis.economyx.classes.actor.company.vaulting;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.ActorType;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -86,11 +86,11 @@ public final class VaultCompany extends Company implements VaultKeeper {
     }
 
     @JsonProperty
-    private final ActorType type = ActorType.VAULT_COMPANY;
+    private final Type type = Type.VAULT_COMPANY;
 
     @Override
     @JsonIgnore
-    public @NonNull ActorType getType() {
+    public Actor.Type getType() {
         return type;
     }
 }
