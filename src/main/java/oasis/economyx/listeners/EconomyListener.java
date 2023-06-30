@@ -1,4 +1,4 @@
-package oasis.economyx.listener;
+package oasis.economyx.listeners;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.state.EconomyState;

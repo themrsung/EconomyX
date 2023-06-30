@@ -1,9 +1,9 @@
-package oasis.economyx.listener.player;
+package oasis.economyx.listeners.player;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.interfaces.actor.person.Person;
-import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listeners.EconomyListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 

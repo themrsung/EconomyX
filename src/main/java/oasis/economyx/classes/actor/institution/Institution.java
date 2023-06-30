@@ -3,7 +3,7 @@ package oasis.economyx.classes.actor.institution;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.classes.EconomicActor;
+import oasis.economyx.classes.actor.EconomicActor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;

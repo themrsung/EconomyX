@@ -1,9 +1,9 @@
-package oasis.economyx.listener.payment;
+package oasis.economyx.listeners.payment;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.types.asset.AssetStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

@@ -119,21 +119,21 @@ public interface EconomyState {
      * Gets all corporations.
      * Final subtypes:
      * <ul>
-     *     <li>Exchange</li>
-     *     <li>HoldingsCompany</li>
-     *     <li>ConstructionCompany</li>
-     *     <li>Bank</li>
-     *     <li>Casino</li>
-     *     <li>Merchant</li>
-     *     <li>SecuritiesBroker</li>
-     *     <li>Manufacturer</li>
-     *     <li>Mercenary</li>
-     *     <li>AuctionHouse</li>
-     *     <li>Distillery</li>
-     *     <li>Guarantor</li>
-     *     <li>PaperMill</li>
-     *     <li>LawFirm</li>
-     *     <li>VaultCompany</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.HoldingsCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
      * </ul>
      *
      * @return Corporations
@@ -144,7 +144,7 @@ public interface EconomyState {
      * Gets all funds.
      * Final subtypes:
      * <ul>
-     *     <li>Trust</li>
+     *     <li>{@link oasis.economyx.classes.actor.trust.Trust}</li>
      * </ul>
      * @return Funds
      */
@@ -154,9 +154,9 @@ public interface EconomyState {
      * Gets all organizations.
      * Final subtypes:
      * <ul>
-     *     <li>Alliance</li>
-     *     <li>Party</li>
-     *     <li>Cartel</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.international.Alliance}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.personal.Party}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.corporate.Cartel}</li>
      * </ul>
      *
      * @return Organizations
@@ -167,7 +167,7 @@ public interface EconomyState {
      * Gets all persons.
      * Final subtypes:
      * <ul>
-     *     <li>NaturalPerson</li>
+     *     <li>{@link oasis.economyx.classes.actor.person.NaturalPerson}</li>
      * </ul>
      *
      * @return Persons
@@ -178,10 +178,10 @@ public interface EconomyState {
      * Gets all sovereignties.
      * Final subtypes:
      * <ul>
-     *     <li>Republic</li>
-     *     <li>Principality</li>
-     *     <li>Empire</li>
-     *     <li>Federation</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Republic}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Principality}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Empire}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
      * </ul>
      *
      * @return Sovereignties
@@ -192,27 +192,27 @@ public interface EconomyState {
      * Gets all employers.
      * Final subtypes:
      * <ul>
-     *     <li>Exchange</li>
-     *     <li>HoldingsCompany</li>
-     *     <li>ConstructionCompany</li>
-     *     <li>Bank</li>
-     *     <li>Casino</li>
-     *     <li>Merchant</li>
-     *     <li>SecuritiesBroker</li>
-     *     <li>Manufacturer</li>
-     *     <li>Mercenary</li>
-     *     <li>AuctionHouse</li>
-     *     <li>Distillery</li>
-     *     <li>Guarantor</li>
-     *     <li>PaperMill</li>
-     *     <li>LawFirm</li>
-     *     <li>VaultCompany</li>
-     *     <li>Legislature</li>
-     *     <li>CentralBank</li>
-     *     <li>ResearchCenter</li>
-     *     <li>Mint</li>
-     *     <li>Administration</li>
-     *     <li>Judiciary</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.HoldingsCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.CentralBank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.ResearchCenter}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.Mint}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Administration}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Judiciary}</li>
      * </ul>
      *
      * @return Employers
@@ -223,8 +223,8 @@ public interface EconomyState {
      * Gets all bankers.
      * Final subtypes:
      * <ul>
-     *     <li>>Bank</li>
-     *     <li>SecuritiesBroker</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
      * </ul>
      *
      * @return Bankers
@@ -235,7 +235,7 @@ public interface EconomyState {
      * Gets all brokerages.
      * Final subtypes:
      * <ul>
-     *     <li>SecuritiesBroker</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
      * </ul>
      *
      * @return Brokerages
@@ -246,7 +246,7 @@ public interface EconomyState {
      * Gets all credibles.
      * Final subtypes:
      * <ul>
-     *     <li>Guarantor</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
      * </ul>
      *
      * @return Credibles
@@ -257,37 +257,37 @@ public interface EconomyState {
      * Gets all representables.
      * Final subtypes:
      * <ul>
-     *     <li>Exchange</li>
-     *     <li>HoldingsCompany</li>
-     *     <li>ConstructionCompany</li>
-     *     <li>Bank</li>
-     *     <li>Casino</li>
-     *     <li>Merchant</li>
-     *     <li>SecuritiesBroker</li>
-     *     <li>Manufacturer</li>
-     *     <li>Mercenary</li>
-     *     <li>AuctionHouse</li>
-     *     <li>Distillery</li>
-     *     <li>Guarantor</li>
-     *     <li>PaperMill</li>
-     *     <li>LawFirm</li>
-     *     <li>VaultCompany</li>
-     *     <li>Legislature</li>
-     *     <li>CentralBank</li>
-     *     <li>ResearchCenter</li>
-     *     <li>Administration</li>
-     *     <li>Military</li>
-     *     <li>Judiciary</li>
-     *     <li>Mint</li>
-     *     <li>Trust</li>
-     *     <li>Legislature</li>
-     *     <li>Republic</li>
-     *     <li>Principality</li>
-     *     <li>Empire</li>
-     *     <li>Federation</li>
-     *     <li>Alliance</li>
-     *     <li>Party</li>
-     *     <li>Cartel</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.HoldingsCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.CentralBank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.ResearchCenter}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Administration}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.Military}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Judiciary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.Mint}</li>
+     *     <li>{@link oasis.economyx.classes.actor.trust.Trust}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Republic}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Principality}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Empire}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.international.Alliance}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.personal.Party}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.corporate.Cartel}</li>
      * </ul>
      *
      * @return Representables
@@ -298,7 +298,7 @@ public interface EconomyState {
      * Gets all administratives.
      * Final subtypes:
      * <ul>
-     *     <li>Administration</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Administration}</li>
      * </ul>
      *
      * @return Administratives
@@ -309,7 +309,7 @@ public interface EconomyState {
      * Gets all banknote issuers.
      * Final subtypes:
      * <ul>
-     *     <li>Mint</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.Mint}</li>
      * </ul>
      *
      * @return Banknote issuers
@@ -320,7 +320,7 @@ public interface EconomyState {
      * Gets all currency issuers.
      * Final subtypes:
      * <ul>
-     *     <li>CentralBank</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.CentralBank}</li>
      * </ul>
      *
      * @return Currency issuers
@@ -331,13 +331,13 @@ public interface EconomyState {
      * Gets all institutionals.
      * Final subtypes:
      * <ul>
-     *     <li>Legislature</li>
-     *     <li>CentralBank</li>
-     *     <li>ResearchCenter</li>
-     *     <li>Administration</li>
-     *     <li>Military</li>
-     *     <li>Judiciary</li>
-     *     <li>Mint</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.CentralBank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.ResearchCenter}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Administration}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.Military}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Judiciary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.Mint}</li>
      * </ul>
      *
      * @return Institutionals
@@ -348,9 +348,9 @@ public interface EconomyState {
      * Gets all interest rate providers.
      * Final subtypes:
      * <ul>
-     *     <li>Bank (always positive)</li>
-     *     <li>SecuritiesBroker (always returns 0%)</li>
-     *     <li>CentralBank</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank} (always positive)</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker} (always returns 0%)</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.monetary.CentralBank}</li>
      * </ul>
      *
      * @return Interest rate providers
@@ -361,7 +361,7 @@ public interface EconomyState {
      * Gets all judicials.
      * Final subtypes:
      * <ul>
-     *     <li>Judiciary</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Judiciary}</li>
      * </ul>
      *
      * @return Judicials
@@ -372,7 +372,7 @@ public interface EconomyState {
      * Gets all legislatives.
      * Final subtypes:
      * <ul>
-     *     <li>Legislature</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
      * </ul>
      *
      * @return Legislatives
@@ -383,7 +383,7 @@ public interface EconomyState {
      * Gets all bill creators.
      * Final subtypes:
      * <ul>
-     *     <li>PaperMill</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
      * </ul>
      *
      * @return Bill creators
@@ -394,7 +394,7 @@ public interface EconomyState {
      * Gets all distillers.
      * Final subtypes:
      * <ul>
-     *     <li>Distillery</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
      * </ul>
      *
      * @return Distillers
@@ -405,7 +405,7 @@ public interface EconomyState {
      * Gets all producers.
      * Final subtypes:
      * <ul>
-     *     <li>Manufacturer</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
      * </ul>
      *
      * @return Producers
@@ -416,7 +416,7 @@ public interface EconomyState {
      * Gets all scientifics.
      * Final subtypes:
      * <ul>
-     *     <li>ResearchCenter</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.ResearchCenter}</li>
      * </ul>
      *
      * @return Scientifics
@@ -438,22 +438,22 @@ public interface EconomyState {
      * Gets all shareds.
      * Final subtypes:
      * <ul>
-     *     <li>Exchange</li>
-     *     <li>HoldingsCompany</li>
-     *     <li>ConstructionCompany</li>
-     *     <li>Bank</li>
-     *     <li>Casino</li>
-     *     <li>Merchent</li>
-     *     <li>SecuritiesBroker</li>
-     *     <li>Manufacturer</li>
-     *     <li>Mercenary</li>
-     *     <li>AuctionHouse</li>
-     *     <li>Distillery</li>
-     *     <li>Guarantor</li>
-     *     <li>PaperMill</li>
-     *     <li>LawFirm</li>
-     *     <li>VaultCompany</li>
-     *     <li>Trust</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.HoldingsCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.trust.Trust}</li>
      * </ul>
      *
      * @return Shareds
@@ -464,7 +464,7 @@ public interface EconomyState {
      * Gets all builders.
      * Final subtypes:
      * <ul>
-     *     <li>ConstructionCompany</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
      * </ul>
      *
      * @return Builders
@@ -475,7 +475,7 @@ public interface EconomyState {
      * Gets all card acceptors.
      * Final subtypes:
      * <ul>
-     *     <li>Merchant</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
      * </ul>
      *
      * @return Card acceptors
@@ -486,9 +486,9 @@ public interface EconomyState {
      * Gets all factions.
      * Final subtypes:
      * <ul>
-     *     <li>Mercenary</li>
-     *     <li>Alliance</li>
-     *     <li>Military (Institution of Sovereign)</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.organization.international.Alliance}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.warfare.Military}</li>
      * </ul>
      *
      * @return Factions
@@ -499,7 +499,7 @@ public interface EconomyState {
      * Gets all houses.
      * Final subtypes:
      * <ul>
-     *     <li>Casino</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
      * </ul>
      *
      * @return Houses
@@ -510,7 +510,7 @@ public interface EconomyState {
      * Gets all legals.
      * Final subtypes:
      * <ul>
-     *     <li>LawFirm</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
      * </ul>
      *
      * @return Legals
@@ -521,11 +521,11 @@ public interface EconomyState {
      * Gets all protectors.
      * Final subtypes:
      * <ul>
-     *     <li>Republic</li>
-     *     <li>Principality</li>
-     *     <li>Empire</li>
-     *     <li>Federation</li>
-     *     <li>Mercenary</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Republic}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Principality}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Empire}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
      * </ul>
      * @return Protectors
      */
@@ -535,7 +535,7 @@ public interface EconomyState {
      * Gets all vault keepers.
      * Final subtypes:
      * <ul>
-     *     <li>VaultCompany</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
      * </ul>
      *
      * @return Vault keepers
@@ -545,8 +545,8 @@ public interface EconomyState {
     /**
      * Gets all federals.
      * <ul>
-     *     <li>Empire</li>
-     *     <li>Federation</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Empire}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
      * </ul>
      *
      * @return Federals
@@ -556,7 +556,7 @@ public interface EconomyState {
     /**
      * Gets all auction hosts.
      * <ul>
-     *     <li>AuctionHouse</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
      * </ul>
      *
      * @return Auction hosts
@@ -567,7 +567,7 @@ public interface EconomyState {
      * Gets all market hosts.
      * Final subtypes:
      * <ul>
-     *     <li>Exchange</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
      * </ul>
      *
      * @return Market hosts
@@ -578,7 +578,7 @@ public interface EconomyState {
      * Gets all card issuers.
      * Final subtypes:
      * <ul>
-     *     <li>Bank</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
      * </ul>
      *
      * @return Card issuers
@@ -589,24 +589,24 @@ public interface EconomyState {
      * Gets all democratics.
      * Final subtypes:
      * <ul>
-     *     <li>Republic</li>
-     *     <li>Exchange</li>
-     *     <li>HoldingsCompany</li>
-     *     <li>ConstructionCompany</li>
-     *     <li>Bank</li>
-     *     <li>Casino</li>
-     *     <li>Merchant</li>
-     *     <li>SecuritiesBroker</li>
-     *     <li>Manufacturer</li>
-     *     <li>Mercenary</li>
-     *     <li>AuctionHouse</li>
-     *     <li>Distillery</li>
-     *     <li>Guarantor</li>
-     *     <li>PaperMill</li>
-     *     <li>LawFirm</li>
-     *     <li>VaultCompany</li>
-     *     <li>Legislature</li>
-     *     <li>Federation</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.singular.Republic}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.Exchange}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.HoldingsCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.ConstructionCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Bank}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Casino}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Merchant}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.SecuritiesBroker}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Manufacturer}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.Mercenary}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.trading.AuctionHouse}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.Distillery}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.finance.Guarantor}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.common.PaperMill}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.special.LawFirm}</li>
+     *     <li>{@link oasis.economyx.classes.actor.company.vaulting.VaultCompany}</li>
+     *     <li>{@link oasis.economyx.classes.actor.institution.tripartite.Legislature}</li>
+     *     <li>{@link oasis.economyx.classes.actor.sovereignty.federal.Federation}</li>
      * </ul>
      *
      * @return Democratics
@@ -665,13 +665,10 @@ public interface EconomyState {
 
     /**
      * Gets all price providers.
-     * Final subtypes:
+     * Subinterfaces:
      * <ul>
-     *     Market,
-     *     EnglishAuction,
-     *     DutchAuction,
-     *     SecondPriceSealedAuction,
-     *     FirstPriceSealedAuction
+     *     <li>{@link Marketplace}</li>
+     *     <li>{@link Auctioneer}</li>
      * </ul>
      *
      * @return Prodivers

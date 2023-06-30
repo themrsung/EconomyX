@@ -7,7 +7,7 @@ import oasis.economyx.interfaces.actor.organization.Organization;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.classes.EconomicActor;
+import oasis.economyx.classes.actor.EconomicActor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 

@@ -1,10 +1,10 @@
-package oasis.economyx.listener.stock;
+package oasis.economyx.listeners.stock;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.stock.StockSplitEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
-import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;

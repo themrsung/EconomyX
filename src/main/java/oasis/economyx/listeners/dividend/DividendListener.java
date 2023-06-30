@@ -1,11 +1,11 @@
-package oasis.economyx.listener.dividend;
+package oasis.economyx.listeners.dividend;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.dividend.DividendEvent;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
-import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;

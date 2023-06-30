@@ -3,7 +3,7 @@ package oasis.economyx.classes.actor.person;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.person.Person;
-import oasis.economyx.classes.EconomicActor;
+import oasis.economyx.classes.actor.EconomicActor;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.UUID;

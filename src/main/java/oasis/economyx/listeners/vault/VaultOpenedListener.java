@@ -1,9 +1,9 @@
-package oasis.economyx.listener.vault;
+package oasis.economyx.listeners.vault;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
-import oasis.economyx.listener.EconomyListener;
+import oasis.economyx.listeners.EconomyListener;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

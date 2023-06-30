@@ -1,4 +1,4 @@
-package oasis.economyx.classes;
+package oasis.economyx.classes.actor;
 
 import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.classes.card.CreditCard;
