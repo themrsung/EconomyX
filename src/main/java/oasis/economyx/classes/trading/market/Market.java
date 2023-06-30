@@ -3,14 +3,13 @@ package oasis.economyx.classes.trading.market;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
+import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.interfaces.trading.PriceProviderType;
 import oasis.economyx.interfaces.trading.market.MarketTick;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
-import oasis.economyx.interfaces.trading.market.OrderType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -158,10 +157,10 @@ public final class Market implements Marketplace {
     @JsonIgnore
     private void triggerStopLoss() {
         for (Order o : getOrders()) {
-            if (o.getOrderType() == OrderType.STOP_LOSS_SELL) {
-                if (!getPrice().isGreaterThan(o.getPrice())) o.setOrderType(OrderType.MARKET_SELL);
-            } else if (o.getOrderType() == OrderType.STOP_LOSS_BUY) {
-                if (!getPrice().isSmallerThan(o.getPrice())) o.setOrderType(OrderType.MARKET_BUY);
+            if (o.getType() == Order.Type.STOP_LOSS_SELL) {
+                if (!getPrice().isGreaterThan(o.getPrice())) o.setType(Order.Type.MARKET_SELL);
+            } else if (o.getType() == Order.Type.STOP_LOSS_BUY) {
+                if (!getPrice().isSmallerThan(o.getPrice())) o.setType(Order.Type.MARKET_BUY);
             }
         }
     }
@@ -169,10 +168,10 @@ public final class Market implements Marketplace {
     @JsonIgnore
     private void triggerStopLimit() {
         for (Order o : getOrders()) {
-            if (o.getOrderType() == OrderType.STOP_LIMIT_SELL) {
-                if (!getPrice().isGreaterThan(o.getPrice())) o.setOrderType(OrderType.LIMIT_SELL);
-            } else if (o.getOrderType() == OrderType.STOP_LIMIT_BUY) {
-                if (!getPrice().isSmallerThan(o.getPrice())) o.setOrderType(OrderType.LIMIT_BUY);
+            if (o.getType() == Order.Type.STOP_LIMIT_SELL) {
+                if (!getPrice().isGreaterThan(o.getPrice())) o.setType(Order.Type.LIMIT_SELL);
+            } else if (o.getType() == Order.Type.STOP_LIMIT_BUY) {
+                if (!getPrice().isSmallerThan(o.getPrice())) o.setType(Order.Type.LIMIT_BUY);
             }
         }
     }
@@ -207,11 +206,11 @@ public final class Market implements Marketplace {
 
     @NonNull
     @JsonProperty
-    private final PriceProviderType type = PriceProviderType.MARKET;
+    private final PriceProvider.Type type = Type.MARKET;
 
     @NonNull
     @JsonIgnore
-    public PriceProviderType getType() {
+    public PriceProvider.Type getType() {
         return type;
     }
 }

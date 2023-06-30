@@ -10,7 +10,6 @@ import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.interfaces.card.CardType;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -133,25 +132,24 @@ public final class DebitCard implements Card {
 
         if (!(issuer instanceof Banker)) throw new RuntimeException();
 
-        account.withdraw((Banker) issuer, amount);
+        account.withdraw(amount);
 
         Sponge.eventManager().post(new PaymentEvent(
                 getHolder(),
                 seller,
                 amount,
-                null, // TODO
-                false
+                null // TODO
         ));
 
         return getPayable();
     }
 
-    private final CardType type = CardType.DEBIT_CARD;
+    @JsonProperty
+    private final Type type = Type.DEBIT_CARD;
 
-    @NonNull
     @Override
     @JsonIgnore
-    public CardType getType() {
+    public Card.Type getType() {
         return type;
     }
 

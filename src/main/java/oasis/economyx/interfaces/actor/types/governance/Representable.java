@@ -48,8 +48,7 @@ public interface Representable extends Actor {
                 this,
                 getRepresentative(),
                 getRepresentativePay(),
-                null,
-                true
+                null
         ));
     }
 }

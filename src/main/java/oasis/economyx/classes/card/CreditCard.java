@@ -8,11 +8,9 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.interfaces.card.CardType;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.spongepowered.api.Sponge;
 
@@ -128,22 +126,19 @@ public final class CreditCard implements Card {
                 issuer,
                 seller,
                 amount,
-                null, // TODO
-                false
+                null // TODO
         ));
 
         this.balance = balance.add(amount);
         return getPayable();
     }
 
-    @NonNull
     @JsonProperty
-    private final CardType type = CardType.CREDIT_CARD;
+    private final Card.Type type = Type.CREDIT_CARD;
 
-    @NotNull
     @Override
     @JsonIgnore
-    public CardType getType() {
+    public Card.Type getType() {
         return type;
     }
 
@@ -153,8 +148,7 @@ public final class CreditCard implements Card {
                 holder,
                 issuer,
                 balance,
-                null, // TODO
-                false
+                null // TODO
         ));
 
         this.balance.setQuantity(0L);

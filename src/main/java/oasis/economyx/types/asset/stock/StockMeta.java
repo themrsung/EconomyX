@@ -2,8 +2,8 @@ package oasis.economyx.types.asset.stock;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.AssetType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
@@ -34,14 +34,13 @@ public final class StockMeta implements AssetMeta {
         this.voter = voter;
     }
 
-    @NonNull
     @JsonProperty
-    private final AssetType type = AssetType.STOCK;
+    private final Asset.Type type = Asset.Type.STOCK;
 
     @NotNull
     @Override
     @JsonProperty
-    public AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 }

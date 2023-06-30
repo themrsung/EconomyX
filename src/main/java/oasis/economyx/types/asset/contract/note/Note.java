@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.contract.Contract;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -64,11 +64,11 @@ public final class Note implements Contract {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.NOTE;
+    private final Type type = Type.NOTE;
 
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 
@@ -105,8 +105,7 @@ public final class Note implements Contract {
                 counterparty,
                 holder,
                 getDelivery(),
-                null, // TODO
-                false
+                null // TODO
         ));
     }
 }

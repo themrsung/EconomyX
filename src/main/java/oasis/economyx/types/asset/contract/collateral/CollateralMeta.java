@@ -2,10 +2,8 @@ package oasis.economyx.types.asset.contract.collateral;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.AssetType;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 public final class CollateralMeta implements AssetMeta{
     public CollateralMeta() {
@@ -14,14 +12,12 @@ public final class CollateralMeta implements AssetMeta{
     public CollateralMeta(CollateralMeta other) {
     }
 
-    @NonNull
     @JsonProperty
-    private final AssetType type = AssetType.COLLATERAL;
+    private final Asset.Type type = Asset.Type.COLLATERAL;
 
-    @NotNull
     @Override
     @JsonIgnore
-    public AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 }

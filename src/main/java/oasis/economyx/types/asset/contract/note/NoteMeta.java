@@ -2,13 +2,11 @@ package oasis.economyx.types.asset.contract.note;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.AssetType;
-import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import oasis.economyx.types.asset.meta.Purchasable;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 
 public final class NoteMeta implements AssetMeta, Purchasable {
@@ -60,14 +58,12 @@ public final class NoteMeta implements AssetMeta, Purchasable {
         this.purchaseDate = date;
     }
 
-    @NonNull
     @JsonProperty
-    private final AssetType type = AssetType.NOTE;
+    private final Asset.Type type = Asset.Type.NOTE;
 
-    @NotNull
     @Override
     @JsonIgnore
-    public AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 }

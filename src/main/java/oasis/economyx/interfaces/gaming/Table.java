@@ -41,5 +41,32 @@ public interface Table {
      * Gets the type of this game
      * @return Table type
      */
-    TableType getType();
+    Type getType();
+
+    enum Type {
+        /**
+         * Texas holdem
+         */
+        POKER,
+
+        /**
+         * Blackjack
+         */
+        BLACKJACK,
+
+        /**
+         * Baccarat
+         */
+        BACCARAT,
+
+        /**
+         * Roulette
+         */
+        ROULETTE,
+
+        /**
+         * Slot machine
+         */
+        SLOT_MACHINE;
+    }
 }

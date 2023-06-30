@@ -1,9 +1,7 @@
 package oasis.economyx.interfaces.trading.auction;
 
-import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.trading.PriceProvider;
-import oasis.economyx.interfaces.trading.PriceProviderType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
@@ -24,7 +22,7 @@ public interface Auctioneer extends PriceProvider {
      * @return Auction type
      */
     @NonNull
-    PriceProviderType getType();
+    PriceProvider.Type getType();
 
     /**
      * The expiration of this auction

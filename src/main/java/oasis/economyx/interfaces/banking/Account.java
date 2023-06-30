@@ -2,6 +2,9 @@ package oasis.economyx.interfaces.banking;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import oasis.economyx.classes.banking.AssetAccount;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.types.asset.AssetStack;
@@ -19,6 +22,8 @@ import java.util.UUID;
  * </p>
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
+@JsonSerialize(as = AssetAccount.class)
+@JsonDeserialize(as = AssetAccount.class)
 public interface Account {
     /**
      * Gets the unique ID of this account
@@ -26,6 +31,13 @@ public interface Account {
      */
     @NonNull
     UUID getUniqueId();
+
+    /**
+     * Gets the institution holding this account
+     * @return Banker
+     */
+    @NonNull
+    Banker getInstitution();
 
     /**
      * Gets the client of this account
@@ -53,21 +65,19 @@ public interface Account {
      * Handles deposits to this account
      * Also updates collateral
      *
-     * @param institution Institution holding this account
      * @param asset Asset to be added to this account
      * @throws IllegalArgumentException When an incompatible is given
      */
-    void deposit(@NonNull Banker institution, @NonNull AssetStack asset) throws IllegalArgumentException;
+    void deposit(@NonNull AssetStack asset) throws IllegalArgumentException;
 
     /**
      * Handles withdrawals to this account
      * Also updates collateral
      *
-     * @param institution Institution holding this account
      * @param asset Asset to be removed from this account
      * @throws IllegalArgumentException When the account does not hold the asset
      */
-    void withdraw(@NonNull Banker institution, @NonNull AssetStack asset) throws IllegalArgumentException;
+    void withdraw(@NonNull AssetStack asset) throws IllegalArgumentException;
 
     /**
      * Called when account is opened

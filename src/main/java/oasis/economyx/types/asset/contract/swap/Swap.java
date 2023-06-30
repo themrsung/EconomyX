@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.types.asset.AssetType;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.types.asset.cash.CashMeta;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.Contract;
 import oasis.economyx.interfaces.trading.PriceProvider;
@@ -84,11 +83,11 @@ public final class Swap implements Contract {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.SWAP;
+    private final Type type = Type.SWAP;
 
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 
@@ -172,8 +171,7 @@ public final class Swap implements Contract {
                     counterparty,
                     holder,
                     delivery,
-                    null, // TODO
-                    false
+                    null // TODO
             ));
         } catch (IllegalArgumentException e) {
             CashStack negated = getNegatedDelivery();
@@ -181,8 +179,7 @@ public final class Swap implements Contract {
                     holder,
                     counterparty,
                     negated,
-                    null, // TODO
-                    false
+                    null // TODO
             ));
         }
     }

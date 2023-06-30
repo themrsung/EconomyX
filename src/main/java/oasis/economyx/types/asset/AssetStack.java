@@ -28,7 +28,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 
-@JsonSubTypes({ // Uses AssetType to designate stack types
+@JsonSubTypes({ // Uses Type to designate stack types
         @JsonSubTypes.Type(value = CashStack.class, name = "CASH"),
         @JsonSubTypes.Type(value = StockStack.class, name = "STOCK"),
         @JsonSubTypes.Type(value = CommodityStack.class, name = "COMMODITY"),
@@ -79,8 +79,7 @@ public interface AssetStack {
      * Gets the classification ot the asset being held
      * @return Classification
      */
-    @NonNull
-    AssetType getType();
+    Asset.Type getType();
 
     /**
      * The metadata of this asset stack

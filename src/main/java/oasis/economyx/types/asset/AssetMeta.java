@@ -37,6 +37,5 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 })
 
 public interface AssetMeta {
-    @NonNull
-    AssetType getType();
+    Asset.Type getType();
 }

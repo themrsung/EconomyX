@@ -64,8 +64,7 @@ public interface VaultKeeper extends Actor {
                     v.getClient(),
                     this,
                     getHourlyVaultFee(),
-                    null,
-                    true
+                    null
             ));
         }
     }

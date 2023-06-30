@@ -2,9 +2,9 @@ package oasis.economyx.types.asset.chip;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -149,11 +149,11 @@ public final class ChipStack implements AssetStack {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.CASH;
+    private final Asset.Type type = Asset.Type.CASH;
 
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 

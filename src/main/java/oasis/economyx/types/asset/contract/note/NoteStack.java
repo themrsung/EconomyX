@@ -2,9 +2,9 @@ package oasis.economyx.types.asset.contract.note;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.AssetType;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -89,10 +89,10 @@ public final class NoteStack implements AssetStack {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.NOTE;
+    private final Asset.Type type = Asset.Type.NOTE;
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 

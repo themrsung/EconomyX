@@ -2,8 +2,8 @@ package oasis.economyx.types.asset.contract.swap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -60,14 +60,13 @@ public final class SwapMeta implements AssetMeta, Purchasable {
         this.purchaseDate = date;
     }
 
-    @NonNull
     @JsonProperty
-    private final AssetType type = AssetType.SWAP;
+    private final Asset.Type type = Asset.Type.SWAP;
 
     @NotNull
     @Override
     @JsonIgnore
-    public AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 }

@@ -55,8 +55,7 @@ public interface Asset {
      * The classification of this asset (e.g. Cash)
      * @return Classification
      */
-    @NonNull
-    AssetType getType();
+    Asset.Type getType();
 
     /**
      * Copies this asset
@@ -64,4 +63,24 @@ public interface Asset {
      */
     @NonNull
     Asset copy();
+
+    enum Type {
+        // Basic assets
+        CASH,
+        STOCK,
+        COMMODITY,
+        PROPERTY,
+
+        /**
+         * Used in casinos
+         */
+        CHIP,
+
+        // Contracts
+        FORWARD,
+        NOTE,
+        OPTION,
+        SWAP,
+        COLLATERAL;
+    }
 }

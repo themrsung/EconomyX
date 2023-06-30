@@ -207,5 +207,13 @@ public class EconomyX {
         }).interval(1, TimeUnit.SECONDS).delay(1, TimeUnit.SECONDS).build();
 
         Sponge.asyncScheduler().submit(auctionTickTask);
+
+        // Auto save
+
+        Task autoSaveTask = builder.execute(() -> {
+            getState().save();
+        }).interval(1, TimeUnit.MINUTES).delay(1, TimeUnit.MINUTES).build();
+
+        Sponge.asyncScheduler().submit(autoSaveTask);
     }
 }

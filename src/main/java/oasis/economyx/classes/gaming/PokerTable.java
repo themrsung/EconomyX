@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.House;
 import oasis.economyx.interfaces.gaming.Table;
-import oasis.economyx.interfaces.gaming.TableType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -40,11 +39,11 @@ public final class PokerTable implements Table {
     }
 
     @JsonProperty
-    private final TableType type = TableType.POKER;
+    private final Type type = Type.POKER;
 
     @Override
     @JsonIgnore
-    public TableType getType() {
+    public Type getType() {
         return type;
     }
 }

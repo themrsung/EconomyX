@@ -18,7 +18,7 @@ public class PaymentListener extends EconomyListener<PaymentEvent>{
         final Actor recipient = event.getRecipient();
         final AssetStack asset = event.getAsset();
 
-        if (!sender.getPayableAssets(getState()).contains(asset) && event.checkSolvency()) return;
+        if (!sender.getPayableAssets(getState()).contains(asset)) return;
 
         sender.getAssets().remove(asset);
         recipient.getAssets().add(asset);

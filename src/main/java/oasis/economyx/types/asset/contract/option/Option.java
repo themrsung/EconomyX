@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.AssetType;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.Contract;
 import oasis.economyx.interfaces.trading.PriceProvider;
@@ -88,11 +88,11 @@ public final class Option implements Contract {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.OPTION;
+    private final Type type = Type.OPTION;
 
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 
@@ -172,16 +172,14 @@ public final class Option implements Contract {
                 holder,
                 counterparty,
                 getExercisePrice(),
-                null, // TODO
-                false
+                null // TODO
         ));
 
         Sponge.eventManager().post(new PaymentEvent(
                 counterparty,
                 holder,
                 getDelivery(),
-                null, // TODO
-                false
+                null // TODO
         ));
     }
 

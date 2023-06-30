@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.House;
 import oasis.economyx.interfaces.gaming.Table;
-import oasis.economyx.interfaces.gaming.TableType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -34,10 +33,10 @@ public final class SlotMachine implements Table {
     public House getCasino() {
         return casino;
     }
-    private final TableType type = TableType.SLOT_MACHINE;
+    private final Type type = Type.SLOT_MACHINE;
 
     @Override
-    public TableType getType() {
+    public Type getType() {
         return type;
     }
 }

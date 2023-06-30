@@ -1,8 +1,9 @@
 package oasis.economyx.events.payment;
 
-import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.events.EconomyEvent;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.types.asset.Asset;
+import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.event.Cause;
 
@@ -16,15 +17,13 @@ public final class PaymentEvent extends EconomyEvent {
      * @param recipient Actor to give asset to
      * @param asset Asset to transfer
      * @param cause Cause of this payment
-     * @param checkSolvency Whether to check if the sender is capable of fulfilling this payment
      */
-    public PaymentEvent(@NonNull Actor sender, @NonNull Actor recipient, @NonNull AssetStack asset, Cause cause, boolean checkSolvency) {
+    public PaymentEvent(@NonNull Actor sender, @NonNull Actor recipient, @NonNull AssetStack asset, Cause cause) {
         super(cause);
 
         this.sender = sender;
         this.recipient = recipient;
         this.asset = asset;
-        this.checkSolvency = checkSolvency;
     }
 
     @NonNull
@@ -33,24 +32,39 @@ public final class PaymentEvent extends EconomyEvent {
     private final Actor recipient;
     @NonNull
     private final AssetStack asset;
-    private final boolean checkSolvency;
 
+    /**
+     * Gets the actor sending this payment.
+     * @return Sender
+     */
     @NonNull
     public Actor getSender() {
         return sender;
     }
 
+    /**
+     * Gets the actor receiving this payment.
+     * @return Recipient
+     */
     @NonNull
     public Actor getRecipient() {
         return recipient;
     }
 
+    /**
+     * Gets the asset being transferred.
+     * @return Asset
+     */
     @NonNull
     public AssetStack getAsset() {
         return asset;
     }
 
-    public boolean checkSolvency() {
-        return checkSolvency;
+    /**
+     * Gets the type of asset being transferred.
+     * @return Asset type
+     */
+    public Asset.Type getAssetType() {
+        return getAsset().getType();
     }
 }

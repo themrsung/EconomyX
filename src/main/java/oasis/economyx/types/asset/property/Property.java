@@ -3,7 +3,6 @@ package oasis.economyx.types.asset.property;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
-import oasis.economyx.types.asset.AssetType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -36,12 +35,11 @@ public final class Property implements Asset {
 
 
     @JsonProperty
-    private final AssetType type = AssetType.PROPERTY;
+    private final Type type = Type.PROPERTY;
 
     @Override
-    @NonNull
     @JsonIgnore
-    public AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 

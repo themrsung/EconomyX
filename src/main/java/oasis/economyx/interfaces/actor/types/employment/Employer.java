@@ -106,8 +106,7 @@ public interface Employer extends Representable {
                     this,
                     e,
                     getEmployeePay(),
-                    null,
-                    true
+                    null
             ));
         }
 
@@ -116,8 +115,7 @@ public interface Employer extends Representable {
                     this,
                     d,
                     getDirectorPay(),
-                    null,
-                    true
+                    null
             ));
         }
     }

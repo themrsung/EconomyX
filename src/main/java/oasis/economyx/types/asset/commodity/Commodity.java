@@ -3,7 +3,6 @@ package oasis.economyx.types.asset.commodity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
-import oasis.economyx.types.asset.AssetType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
@@ -53,11 +52,11 @@ public final class Commodity implements Asset {
     }
 
     @JsonProperty
-    private final AssetType type = AssetType.COMMODITY;
+    private final Type type = Type.COMMODITY;
 
     @Override
     @JsonIgnore
-    public @NonNull AssetType getType() {
+    public Asset.Type getType() {
         return type;
     }
 

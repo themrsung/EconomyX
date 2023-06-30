@@ -93,6 +93,10 @@ public interface Card {
      * Gets the card type
      * @return Card type
      */
-    @NonNull
-    CardType getType();
+    Card.Type getType();
+
+    enum Type {
+        CREDIT_CARD,
+        DEBIT_CARD;
+    }
 }
