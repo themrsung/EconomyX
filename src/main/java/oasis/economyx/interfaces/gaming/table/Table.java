@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.classes.gaming.table.*;
-import oasis.economyx.interfaces.actor.types.services.House;
+import oasis.economyx.interfaces.actor.types.gaming.House;
 import oasis.economyx.types.asset.chip.ChipStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

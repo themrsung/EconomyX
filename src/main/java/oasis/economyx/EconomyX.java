@@ -11,10 +11,15 @@ import oasis.economyx.listeners.actor.ActorNameChangedListener;
 import oasis.economyx.listeners.banking.BankDepositListener;
 import oasis.economyx.listeners.banking.BankWithdrawalListener;
 import oasis.economyx.listeners.actor.ActorCreationListener;
+import oasis.economyx.listeners.card.CardActivatedListener;
+import oasis.economyx.listeners.card.CardIssuedListener;
+import oasis.economyx.listeners.card.CardUsedListener;
 import oasis.economyx.listeners.contract.ContractCreatedListener;
 import oasis.economyx.listeners.contract.ContractExpiredListener;
 import oasis.economyx.listeners.contract.ContractForgivenListener;
 import oasis.economyx.listeners.dividend.DividendListener;
+import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
+import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
 import oasis.economyx.listeners.payment.PaymentListener;
 import oasis.economyx.listeners.player.PlayerJoinHandler;
 import oasis.economyx.listeners.stock.StockSplitListener;
@@ -152,13 +157,22 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new BankDepositListener(this));
         registerListener(new BankWithdrawalListener(this));
 
+        // Card
+        registerListener(new CardActivatedListener(this));
+        registerListener(new CardIssuedListener(this));
+        registerListener(new CardUsedListener(this));
+
         // Contract
         registerListener(new ContractCreatedListener(this));
         registerListener(new ContractExpiredListener(this));
         registerListener(new ContractForgivenListener(this));
 
-        // Dividends
+        // Dividend
         registerListener(new DividendListener(this));
+
+        // Guarantee
+        registerListener(new GuaranteeIssuedListener(this));
+        registerListener(new GuaranteeRevokedListener(this));
 
         // Payments
         registerListener(new PaymentListener(this));

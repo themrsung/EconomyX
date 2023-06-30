@@ -80,6 +80,19 @@ public interface Card {
     DateTime getExpiry();
 
     /**
+     * Gets whether this card has been activated by its holder.
+     *
+     * @return Active
+     */
+    boolean isActive();
+
+    /**
+     * Sets the activation state of this card.
+     * @param active Active
+     */
+    void setActive(boolean active);
+
+    /**
      * Called when this card is used.
      *
      * @param amount Amount used

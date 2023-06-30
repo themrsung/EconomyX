@@ -26,6 +26,6 @@ public final class MarketTickTask extends EconomyTask {
 
     @Override
     public int getInterval() {
-        return 2;
+        return 1;
     }
 }

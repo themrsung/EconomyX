@@ -1,4 +1,4 @@
-package oasis.economyx.interfaces.actor.types.services;
+package oasis.economyx.interfaces.actor.types.gaming;
 
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.gaming.table.Table;

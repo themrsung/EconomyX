@@ -36,6 +36,7 @@ public final class CreditCard implements Card {
         this.limit = limit;
         this.balance = new CashStack(limit.getAsset(), 0L);
         this.expiry = expiry;
+        this.active = false;
     }
 
     public CreditCard() {
@@ -45,6 +46,7 @@ public final class CreditCard implements Card {
         this.limit = null;
         this.balance = null;
         this.expiry = null;
+        this.active = false;
     }
 
     public CreditCard(CreditCard other) {
@@ -54,6 +56,7 @@ public final class CreditCard implements Card {
         this.limit = other.limit;
         this.balance = other.balance;
         this.expiry = other.expiry;
+        this.active = other.active;
     }
 
     @NonNull
@@ -81,6 +84,9 @@ public final class CreditCard implements Card {
     @Nullable
     @JsonProperty
     private final DateTime expiry;
+
+    @JsonProperty
+    private boolean active;
 
     @Override
     @JsonIgnore
@@ -116,6 +122,18 @@ public final class CreditCard implements Card {
     @JsonIgnore
     public @Nullable DateTime getExpiry() {
         return expiry;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

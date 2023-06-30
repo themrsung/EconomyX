@@ -38,6 +38,7 @@ public final class DebitCard implements Card {
         this.issuer = issuer;
         this.account = account;
         this.expiry = expiry;
+        this.active = false;
     }
 
     public DebitCard() {
@@ -45,6 +46,7 @@ public final class DebitCard implements Card {
         this.issuer = null;
         this.account = null;
         this.expiry = null;
+        this.active = false;
     }
 
     public DebitCard(DebitCard other) {
@@ -52,6 +54,7 @@ public final class DebitCard implements Card {
         this.issuer = other.issuer;
         this.account = other.account;
         this.expiry = other.expiry;
+        this.active = other.active;
     }
 
     @NonNull
@@ -70,6 +73,9 @@ public final class DebitCard implements Card {
     @Nullable
     @JsonProperty
     private final DateTime expiry;
+
+    @JsonProperty
+    private boolean active;
 
     @NonNull
     @Override
@@ -113,6 +119,18 @@ public final class DebitCard implements Card {
     @JsonIgnore
     public DateTime getExpiry() {
         return expiry;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     /**

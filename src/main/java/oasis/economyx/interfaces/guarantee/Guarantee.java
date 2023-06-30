@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.guarantee;
 
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -27,6 +28,14 @@ public interface Guarantee {
      */
     @NonNull
     Credible getGuarantor();
+
+    /**
+     * Gets the warrantee of this guarantee
+     *
+     * @return Warrantee who received this guarantee
+     */
+    @NonNull
+    Actor getWarrantee();
 
     /**
      * The expiration date of this guarantee, if there is one

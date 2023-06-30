@@ -17,7 +17,7 @@ public final class ContractExpiredListener extends EconomyListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onContractCreated(ContractExpiredEvent e) {
+    public void onContractExpired(ContractExpiredEvent e) {
         if (e.isCancelled()) return;
 
         Actor holder = e.getHolder();

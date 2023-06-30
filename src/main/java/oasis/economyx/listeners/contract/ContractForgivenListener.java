@@ -16,7 +16,7 @@ public final class ContractForgivenListener extends EconomyListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onContractCreated(ContractForgivenEvent e) {
+    public void onContractForgiven(ContractForgivenEvent e) {
         if (e.isCancelled()) return;
 
         ContractStack contract = e.getContract();
