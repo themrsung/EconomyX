@@ -1,5 +1,11 @@
 package oasis.economyx;
 
+import oasis.economyx.classes.actor.company.common.Manufacturer;
+import oasis.economyx.classes.actor.person.NaturalPerson;
+import oasis.economyx.classes.voting.MessageConsoleAgenda;
+import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listener.EconomyListener;
 import oasis.economyx.listener.payment.PaymentListener;
 import oasis.economyx.listener.player.PlayerJoinHandler;
@@ -15,8 +21,15 @@ import oasis.economyx.tasks.payment.RegularPaymentTask;
 import oasis.economyx.tasks.server.AutoSaveTask;
 import oasis.economyx.tasks.trading.AuctionTickTask;
 import oasis.economyx.tasks.trading.MarketTickTask;
+import oasis.economyx.tasks.voting.VoteProcessTask;
+import oasis.economyx.types.asset.cash.Cash;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Main class of EconomyX
@@ -31,6 +44,8 @@ public final class EconomyX extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getLogger().info("Loading EconomyX.");
+
+        this.state = EconomyXState.load(this);
 
         //
         // Listeners
@@ -67,7 +82,41 @@ public final class EconomyX extends JavaPlugin {
         registerTask(new AuctionTickTask(this));
         registerTask(new MarketTickTask(this));
 
-        this.state = new EconomyXState(this);
+        // Voting
+        registerTask(new VoteProcessTask(this));
+
+        // DEBUG
+
+        Cash currency = new Cash(UUID.randomUUID());
+        Manufacturer m = new Manufacturer(UUID.randomUUID(), "Mfc", UUID.randomUUID(), 100, currency);
+
+        Person p = new NaturalPerson(UUID.randomUUID(), "Parzival");
+
+        getState().addActor(m);
+        getState().addActor(p);
+
+        List<Voter> voters = new ArrayList<>();
+        voters.add(Voter.get(m, 1));
+        Voter mv = Voter.get(p, 100);
+        voters.add(mv);
+
+        Vote v = Vote.getBooleanVote(
+                UUID.randomUUID(),
+                "test",
+                voters,
+                new MessageConsoleAgenda(),
+                new DateTime().plusDays(1),
+                0.1f,
+                10);
+
+
+        m.openVote(v);
+
+        v.vote(mv, v.getCandidates().get(0), 50);
+
+
+        // DEBUG
+
 
         Bukkit.getLogger().info("EconomyX loaded.");
     }

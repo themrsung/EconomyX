@@ -7,7 +7,9 @@ import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
+import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Republic extends Sovereignty {
+public final class Republic extends Sovereignty implements Democratic {
     /**
      * Creates a new republic
      * @param uniqueId Unique ID of this republic
@@ -32,6 +34,8 @@ public final class Republic extends Sovereignty {
 
         this.corporations = new ArrayList<>();
         this.institutions = new ArrayList<>();
+
+        this.openVotes = new ArrayList<>();
     }
 
     public Republic() {
@@ -40,13 +44,18 @@ public final class Republic extends Sovereignty {
         this.citizens = new ArrayList<>();
         this.corporations = new ArrayList<>();
         this.institutions = new ArrayList<>();
+
+        this.openVotes = new ArrayList<>();
     }
 
     public Republic(Republic other) {
         super(other);
+
         this.citizens = other.citizens;
         this.corporations = other.corporations;
         this.institutions = other.institutions;
+
+        this.openVotes = other.openVotes;
     }
 
     @NonNull
@@ -63,6 +72,10 @@ public final class Republic extends Sovereignty {
     @JsonProperty
     @JsonIdentityReference
     private final List<Institutional> institutions;
+
+    @NonNull
+    @JsonProperty
+    private final List<Vote> openVotes;
 
     @NonNull
     @Override
@@ -121,6 +134,25 @@ public final class Republic extends Sovereignty {
         institutions.remove(institution);
     }
 
+    @NonNull
+    @Override
+    @JsonIgnore
+    public List<Vote> getOpenVotes() {
+        return new ArrayList<>(openVotes);
+    }
+
+    @Override
+    @JsonIgnore
+    public void openVote(@NonNull Vote vote) {
+        this.openVotes.add(vote);
+    }
+
+    @Override
+    @JsonIgnore
+    public void cleanVotes() {
+        openVotes.removeIf(v -> v.getExpiry().isBeforeNow());
+        openVotes.removeIf(v -> v.getCandidates().size() == 0);
+    }
 
     @JsonProperty
     private final Type type = Type.REPUBLIC;

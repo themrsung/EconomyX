@@ -16,6 +16,7 @@ import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.*;
 import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
@@ -39,6 +40,9 @@ import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.interfaces.voting.Candidate;
+import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.commons.io.FileUtils;
@@ -497,6 +501,17 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    public List<Democratic> getDemocratics() {
+        List<Democratic> list = new ArrayList<>();
+
+        for (Actor a : getActors()) {
+            if (a instanceof Democratic d) list.add(d);
+        }
+
+        return list;
+    }
+
+    @Override
     public List<Account> getAccounts() {
         List<Account> accounts = new ArrayList<>();
 
@@ -646,6 +661,39 @@ public final class EconomyXState implements EconomyState {
         }
 
         return cards;
+    }
+
+    @Override
+    public List<Vote> getVotes() {
+        List<Vote> votes = new ArrayList<>();
+
+        for (Democratic d : getDemocratics()) {
+            votes.addAll(d.getOpenVotes());
+        }
+
+        return votes;
+    }
+
+    @Override
+    public List<Candidate> getCandidates() {
+        List<Candidate> candidates = new ArrayList<>();
+
+        for (Vote v : getVotes()) {
+            candidates.addAll(v.getCandidates());
+        }
+
+        return candidates;
+    }
+
+    @Override
+    public List<Voter> getVoters() {
+        List<Voter> voters = new ArrayList<>();
+
+        for (Vote v : getVotes()) {
+            voters.addAll(v.getVoters());
+        }
+
+        return voters;
     }
 
     /**

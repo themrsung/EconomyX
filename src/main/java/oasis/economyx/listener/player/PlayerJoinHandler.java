@@ -4,6 +4,7 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listener.EconomyListener;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public final class PlayerJoinHandler extends EconomyListener {
@@ -11,6 +12,7 @@ public final class PlayerJoinHandler extends EconomyListener {
         super(EX);
     }
 
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         try {
             Person person = getState().getPerson(e.getPlayer().getUniqueId());

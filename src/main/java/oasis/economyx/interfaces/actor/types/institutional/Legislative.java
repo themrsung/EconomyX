@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * A legislative actor can exercise legislative rights within its sovereignty
  */
-public interface Legislative extends Institutional {
+public interface Legislative extends Institutional, Democratic {
     /**
      * Gets all laws currently valid
      * @return Copied list of laws

@@ -12,6 +12,7 @@ import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.*;
 import oasis.economyx.interfaces.actor.types.manufacturing.BillCreator;
@@ -35,6 +36,9 @@ import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.interfaces.voting.Candidate;
+import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -581,6 +585,34 @@ public interface EconomyState {
      */
     List<CardIssuer> getCardIssuers();
 
+    /**
+     * Gets all democratics.
+     * Final subtypes:
+     * <ul>
+     *     <li>Republic</li>
+     *     <li>Exchange</li>
+     *     <li>HoldingsCompany</li>
+     *     <li>ConstructionCompany</li>
+     *     <li>Bank</li>
+     *     <li>Casino</li>
+     *     <li>Merchant</li>
+     *     <li>SecuritiesBroker</li>
+     *     <li>Manufacturer</li>
+     *     <li>Mercenary</li>
+     *     <li>AuctionHouse</li>
+     *     <li>Distillery</li>
+     *     <li>Guarantor</li>
+     *     <li>PaperMill</li>
+     *     <li>LawFirm</li>
+     *     <li>VaultCompany</li>
+     *     <li>Legislature</li>
+     *     <li>Federation</li>
+     * </ul>
+     *
+     * @return Democratics
+     */
+    List<Democratic> getDemocratics();
+
     // Other interface getters
 
     /**
@@ -672,6 +704,25 @@ public interface EconomyState {
      * @return Cards
      */
     List<Card> getCards();
+
+    /**
+     * Gets all open votes.
+     * @return Votes
+     */
+    List<Vote> getVotes();
+
+    /**
+     * Gets all candidates in all votes.
+     * @return Candidates
+     */
+    List<Candidate> getCandidates();
+
+    /**
+     * Gets all voters in all votes.
+     * Note that voters are not an instance of Actor.
+     * @return Voters
+     */
+    List<Voter> getVoters();
 
     /**
      * Attempts to save

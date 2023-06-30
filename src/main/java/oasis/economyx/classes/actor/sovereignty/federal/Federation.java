@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.classes.actor.sovereignty.Sovereignty;
+import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Federation extends Sovereignty implements Federal {
+public final class Federation extends Sovereignty implements Federal, Democratic {
     /**
      * Creates a new federation
      * @param uniqueId Unique ID of this federation
@@ -28,17 +30,23 @@ public final class Federation extends Sovereignty implements Federal {
 
         this.memberStates = List.of(foundingState);
         this.representativeState = foundingState;
+        this.openVotes = new ArrayList<>();
     }
 
     public Federation() {
+        super();
+
         this.memberStates = new ArrayList<>();
         this.representativeState = null;
+        this.openVotes = new ArrayList<>();
     }
 
     public Federation(Federation other) {
         super(other);
+
         this.memberStates = other.memberStates;
         this.representativeState = other.representativeState;
+        this.openVotes = other.openVotes;
     }
 
     @NonNull
@@ -50,6 +58,10 @@ public final class Federation extends Sovereignty implements Federal {
     @JsonProperty
     @JsonIdentityReference
     private Sovereign representativeState;
+
+    @NonNull
+    @JsonProperty
+    private final List<Vote> openVotes;
 
     @Override
     @JsonIgnore
@@ -81,6 +93,25 @@ public final class Federation extends Sovereignty implements Federal {
         if (!getMemberStates().contains(state)) throw new IllegalArgumentException();
 
         this.representativeState = state;
+    }
+    @NonNull
+    @Override
+    @JsonIgnore
+    public List<Vote> getOpenVotes() {
+        return new ArrayList<>(openVotes);
+    }
+
+    @Override
+    @JsonIgnore
+    public void openVote(@NonNull Vote vote) {
+        this.openVotes.add(vote);
+    }
+
+    @Override
+    @JsonIgnore
+    public void cleanVotes() {
+        openVotes.removeIf(v -> v.getExpiry().isBeforeNow());
+        openVotes.removeIf(v -> v.getCandidates().size() == 0);
     }
 
     @JsonProperty

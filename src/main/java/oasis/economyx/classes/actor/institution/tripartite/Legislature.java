@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Legislative;
+import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -29,35 +30,68 @@ public final class Legislature extends Institution implements Legislative {
         super(parent, uniqueId, name, currency);
 
         this.laws = new ArrayList<>();
+        this.openVotes = new ArrayList<>();
     }
 
     public Legislature() {
         super();
 
         this.laws = new ArrayList<>();
+        this.openVotes = new ArrayList<>();
     }
 
     public Legislature(Legislature other) {
         super(other);
+
         this.laws = other.laws;
+        this.openVotes = other.openVotes;
     }
 
+    @NonNull
+    @JsonProperty
     private final List<String> laws;
 
     @NonNull
+    @JsonProperty
+    private final List<Vote> openVotes;
+
+    @NonNull
     @Override
+    @JsonIgnore
     public List<String> getLaws() {
         return new ArrayList<>(laws);
     }
 
     @Override
+    @JsonIgnore
     public void passLaw(@NonNull String law) {
         laws.add(law);
     }
 
     @Override
+    @JsonIgnore
     public void repealLaw(@NonNull String law) {
         laws.remove(law);
+    }
+
+    @NonNull
+    @Override
+    @JsonIgnore
+    public List<Vote> getOpenVotes() {
+        return new ArrayList<>(openVotes);
+    }
+
+    @Override
+    @JsonIgnore
+    public void openVote(@NonNull Vote vote) {
+        this.openVotes.add(vote);
+    }
+
+    @Override
+    @JsonIgnore
+    public void cleanVotes() {
+        openVotes.removeIf(v -> v.getExpiry().isBeforeNow());
+        openVotes.removeIf(v -> v.getCandidates().size() == 0);
     }
 
     @JsonProperty

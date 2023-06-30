@@ -7,6 +7,7 @@ import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -38,6 +39,8 @@ public abstract class Company extends EconomicActor implements Corporation {
         this.employeePay = new CashStack(currency, 0L);
         this.directorPay = new CashStack(currency, 0L);
         this.ceoPay = new CashStack(currency, 0L);
+
+        this.openVotes = new ArrayList<>();
     }
 
     public Company() {
@@ -54,6 +57,8 @@ public abstract class Company extends EconomicActor implements Corporation {
         this.employeePay = null;
         this.directorPay = null;
         this.ceoPay = null;
+
+        this.openVotes = new ArrayList<>();
     }
 
     public Company(Company other) {
@@ -69,6 +74,8 @@ public abstract class Company extends EconomicActor implements Corporation {
         this.employeePay = other.employeePay;
         this.directorPay = other.directorPay;
         this.ceoPay = other.ceoPay;
+
+        this.openVotes = other.openVotes;
     }
 
     @JsonProperty
@@ -92,6 +99,10 @@ public abstract class Company extends EconomicActor implements Corporation {
     @JsonProperty
     @JsonIdentityReference
     private Person ceo;
+
+    @NonNull
+    @JsonProperty
+    private final List<Vote> openVotes;
 
     @Override
     @JsonIgnore
@@ -219,6 +230,25 @@ public abstract class Company extends EconomicActor implements Corporation {
     @JsonIgnore
     public void setEmployeePay(@NonNull CashStack employeePay) {
         this.employeePay = employeePay;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull List<Vote> getOpenVotes() {
+        return new ArrayList<>(openVotes);
+    }
+
+    @Override
+    @JsonIgnore
+    public void openVote(@NonNull Vote vote) {
+        this.openVotes.add(vote);
+    }
+
+    @Override
+    @JsonIgnore
+    public void cleanVotes() {
+        openVotes.removeIf(v -> v.getExpiry().isBeforeNow());
+        openVotes.removeIf(v -> v.getCandidates().size() == 0);
     }
 
     @Override
