@@ -9,7 +9,6 @@ import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public final class Legislature extends Institution implements Legislative {
 
     private final List<String> laws;
 
-    @NotNull
+    @NonNull
     @Override
     public List<String> getLaws() {
         return new ArrayList<>(laws);

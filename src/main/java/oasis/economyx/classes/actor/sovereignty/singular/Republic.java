@@ -3,15 +3,14 @@ package oasis.economyx.classes.actor.sovereignty.singular;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,7 @@ public final class Republic extends Sovereignty {
     @JsonIdentityReference
     private final List<Institutional> institutions;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public List<Person> getCitizens() {
@@ -84,7 +83,7 @@ public final class Republic extends Sovereignty {
         citizens.remove(citizen);
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public List<Corporation> getCorporations() {
@@ -103,7 +102,7 @@ public final class Republic extends Sovereignty {
         corporations.remove(corporation);
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public List<Institutional> getInstitutions() {

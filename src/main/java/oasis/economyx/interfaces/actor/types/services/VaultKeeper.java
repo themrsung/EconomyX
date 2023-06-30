@@ -1,11 +1,11 @@
 package oasis.economyx.interfaces.actor.types.services;
 
-import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.events.payment.PaymentEvent;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.Sponge;
 
 import java.util.List;
 
@@ -60,11 +60,11 @@ public interface VaultKeeper extends Actor {
      */
      default void collectHourlyVaultFee() {
         for (VaultBlock v : getVaults()) {
-            Sponge.eventManager().post(new PaymentEvent(
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     v.getClient(),
                     this,
                     getHourlyVaultFee(),
-                    null
+                    PaymentEvent.Cause.VAULT_MAINTENANCE_FEE
             ));
         }
     }

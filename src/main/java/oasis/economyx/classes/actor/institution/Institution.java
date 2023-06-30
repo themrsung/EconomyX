@@ -3,15 +3,14 @@ package oasis.economyx.classes.actor.institution;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.classes.EconomicActor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +120,7 @@ public abstract class Institution extends EconomicActor implements Institutional
         return new ArrayList<>(directors);
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CashStack getDirectorPay() {

@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.meta.Purchasable;
 import oasis.economyx.types.asset.cash.CashStack;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import oasis.economyx.types.asset.meta.Purchasable;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 
 public final class SwapMeta implements AssetMeta, Purchasable {
@@ -63,7 +61,6 @@ public final class SwapMeta implements AssetMeta, Purchasable {
     @JsonProperty
     private final Asset.Type type = Asset.Type.SWAP;
 
-    @NotNull
     @Override
     @JsonIgnore
     public Asset.Type getType() {

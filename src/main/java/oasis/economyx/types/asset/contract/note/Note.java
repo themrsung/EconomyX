@@ -8,10 +8,10 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.Contract;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -101,11 +101,11 @@ public final class Note implements Contract {
 
     @Override
     public void onExpired(Actor holder) {
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 counterparty,
                 holder,
                 getDelivery(),
-                null // TODO
+                PaymentEvent.Cause.NOTE_EXPIRED
         ));
     }
 }

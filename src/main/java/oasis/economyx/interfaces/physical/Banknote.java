@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.classes.physical.BanknoteItem;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.api.item.ItemTypes;
 
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ public interface Banknote {
     /**
      * Do not change this after deployment
      */
-    ItemType NOTE_ITEM = ItemTypes.PAPER.get();
+    Material NOTE_ITEM = Material.PAPER;
 
     /**
      * Gets the unique ID of this banknote

@@ -1,16 +1,14 @@
 package oasis.economyx.listener;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.state.EconomyState;
+import org.bukkit.event.Listener;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.event.Event;
-import org.spongepowered.api.event.EventListener;
 
 /**
  * A base class for EconomyX listeners
  */
-public abstract class EconomyListener<E extends Event> implements EventListener<E> {
+public abstract class EconomyListener implements Listener {
     public EconomyListener(@NonNull EconomyX EX) {
         this.EX = EX;
     }

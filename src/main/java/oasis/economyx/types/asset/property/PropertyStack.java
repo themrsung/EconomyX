@@ -7,7 +7,6 @@ import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.beans.ConstructorProperties;
 
@@ -15,12 +14,12 @@ import java.beans.ConstructorProperties;
  * A property (cannot be plural)
  */
 public final class PropertyStack implements AssetStack {
-    public PropertyStack(@NotNull Property asset) {
+    public PropertyStack(@NonNull Property asset) {
         this.asset = asset;
         this.meta = new PropertyMeta();
     }
 
-    public PropertyStack(@NotNull Property asset,@NotNull PropertyMeta meta) {
+    public PropertyStack(@NonNull Property asset, @NonNull PropertyMeta meta) {
         this.asset = asset;
         this.meta = meta;
     }
@@ -48,7 +47,7 @@ public final class PropertyStack implements AssetStack {
     @JsonProperty
     private PropertyMeta meta;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public Property getAsset() {
@@ -78,7 +77,7 @@ public final class PropertyStack implements AssetStack {
     public void removeQuantity(@NonNegative long delta) {
         // Does nothing; properties cannot be plural
     }
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public PropertyMeta getMeta() {

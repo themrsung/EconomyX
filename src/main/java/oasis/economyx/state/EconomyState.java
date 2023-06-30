@@ -37,7 +37,6 @@ import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.portfolio.Portfolio;
-import org.apache.logging.log4j.Logger;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -54,14 +53,6 @@ public interface EconomyState {
      * @return Plugin
      */
     EconomyX getEX();
-
-    /**
-     * Shortcut getter for logger.
-     * @return Logger
-     */
-    default Logger getLogger() {
-        return getEX().getLogger();
-    }
 
     /**
      * Gets all actors currently present within this state.
@@ -99,6 +90,24 @@ public interface EconomyState {
      * @param actor Actor to remove
      */
     void removeActor(@NonNull Actor actor);
+
+    /**
+     * Checks if person exists.
+     *
+     * @param uniqueId Unique ID of person
+     * @return Whether person exists
+     */
+    boolean isPerson(UUID uniqueId);
+
+    /**
+     * Gets a person by ID.
+     * Check if person exists with isPerson(UUID) first.
+     * @param uniqueId Unique ID of person
+     * @return Person
+     * @throws IllegalArgumentException When person cannot be found
+     */
+    @NonNull
+    Person getPerson(UUID uniqueId) throws IllegalArgumentException;
 
     // Actor type interface getters
 

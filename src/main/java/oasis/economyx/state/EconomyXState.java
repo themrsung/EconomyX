@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import oasis.economyx.EconomyX;
+import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.fund.Fund;
@@ -27,10 +28,8 @@ import oasis.economyx.interfaces.actor.types.services.*;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
 import oasis.economyx.interfaces.actor.types.trading.MarketHost;
-import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
@@ -40,10 +39,10 @@ import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.portfolio.Portfolio;
+import org.apache.commons.io.FileUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.codehaus.plexus.util.FileUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,6 +103,23 @@ public final class EconomyXState implements EconomyState {
     @Override
     public void removeActor(@NonNull Actor actor) {
         actors.remove(actor);
+    }
+
+    @Override
+    public boolean isPerson(UUID uniqueId) {
+        try {
+            return getActor(uniqueId) instanceof Person;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public @NonNull Person getPerson(UUID uniqueId) throws IllegalArgumentException {
+        Actor a = getActor(uniqueId);
+
+        if (!(a instanceof Person)) throw new IllegalArgumentException();
+        return (Person) a;
     }
 
     @Override
@@ -635,12 +651,12 @@ public final class EconomyXState implements EconomyState {
     /**
      * Creates an empty state
      */
-    public EconomyXState(@NotNull EconomyX EX) {
+    public EconomyXState(@NonNull EconomyX EX) {
         this.EX = EX;
         this.actors = new ArrayList<>();
     }
 
-    private EconomyXState(@NotNull EconomyX EX, List<Actor> actors) {
+    private EconomyXState(@NonNull EconomyX EX, List<Actor> actors) {
         this.EX = EX;
         this.actors = actors;
     }

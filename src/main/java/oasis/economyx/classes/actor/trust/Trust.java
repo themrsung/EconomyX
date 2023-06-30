@@ -3,18 +3,17 @@ package oasis.economyx.classes.actor.trust;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.fund.Fund;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.stock.Stock;
-import oasis.economyx.classes.EconomicActor;
-import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +93,7 @@ public final class Trust extends EconomicActor implements Fund {
 
     @Override
     @JsonIgnore
-    public @NotNull UUID getStockId() {
+    public @NonNull UUID getStockId() {
         return stockId;
     }
 

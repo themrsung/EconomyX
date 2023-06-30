@@ -3,18 +3,17 @@ package oasis.economyx.classes.actor.company;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.EconomicActor;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.stock.Stock;
-import oasis.economyx.classes.EconomicActor;
-import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +101,7 @@ public abstract class Company extends EconomicActor implements Corporation {
 
     @Override
     @JsonIgnore
-    public @NotNull UUID getStockId() {
+    public @NonNull UUID getStockId() {
         return stockId;
     }
 
@@ -192,7 +191,7 @@ public abstract class Company extends EconomicActor implements Corporation {
     @JsonProperty
     private CashStack directorPay;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CashStack getDirectorPay() {
@@ -209,7 +208,7 @@ public abstract class Company extends EconomicActor implements Corporation {
     @JsonProperty
     private CashStack employeePay;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CashStack getEmployeePay() {

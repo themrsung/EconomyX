@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
 import oasis.economyx.interfaces.physical.Banknote;
-import org.spongepowered.api.item.inventory.ItemStack;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 

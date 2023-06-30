@@ -1,0 +1,4 @@
+name: EconomyX
+version: '${version}'
+main: oasis.economyx.EconomyX
+api-version: '1.20'

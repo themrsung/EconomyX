@@ -1,15 +1,15 @@
 package oasis.economyx.interfaces.actor.types.finance;
 
+import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.types.institutional.InterestRateProvider;
+import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.events.payment.PaymentEvent;
-import oasis.economyx.interfaces.banking.Account;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.Sponge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +89,11 @@ public interface Banker extends Corporation, InterestRateProvider {
             AssetStack content = a.getContent();
             if (content instanceof CashStack c) try {
                 CashStack i = c.multiply(getDailyInterestRate());
-                Sponge.eventManager().post(new PaymentEvent(
+                Bukkit.getPluginManager().callEvent(new PaymentEvent(
                         this,
                         a.getClient(),
                         i,
-                        null // TODO
+                        PaymentEvent.Cause.INTEREST_PAYMENT
                 ));
 
             } catch (IllegalArgumentException e) {

@@ -1,18 +1,20 @@
 package oasis.economyx.listener.payment;
 
 import oasis.economyx.EconomyX;
+import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.listener.EconomyListener;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.events.payment.PaymentEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class PaymentListener extends EconomyListener<PaymentEvent> {
+public final class PaymentListener extends EconomyListener {
     public PaymentListener(@NonNull EconomyX EX) {
         super(EX);
     }
-    @Override
-    public void handle(PaymentEvent event) {
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPayment(PaymentEvent event) {
         if (event.isCancelled()) return;
 
         final Actor sender = event.getSender();

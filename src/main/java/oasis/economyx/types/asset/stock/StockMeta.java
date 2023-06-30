@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 public final class StockMeta implements AssetMeta {
     public StockMeta() {
@@ -37,7 +35,6 @@ public final class StockMeta implements AssetMeta {
     @JsonProperty
     private final Asset.Type type = Asset.Type.STOCK;
 
-    @NotNull
     @Override
     @JsonProperty
     public Asset.Type getType() {

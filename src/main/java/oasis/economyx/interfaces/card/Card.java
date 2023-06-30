@@ -10,11 +10,10 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.api.item.ItemTypes;
 
 import java.util.UUID;
 
@@ -37,7 +36,7 @@ public interface Card {
     /**
      * Do not change this after deployment
      */
-    ItemType CARD_ITEM = ItemTypes.BOOK.get();
+    Material CARD_ITEM = Material.BOOK;
 
     /**
      * Gets the unique ID of this card.

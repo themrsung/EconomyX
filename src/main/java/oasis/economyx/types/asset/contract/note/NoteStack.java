@@ -7,7 +7,6 @@ import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.beans.ConstructorProperties;
 
@@ -40,7 +39,7 @@ public final class NoteStack implements AssetStack {
     @JsonProperty
     private NoteMeta meta;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public Note getAsset() {
@@ -73,7 +72,7 @@ public final class NoteStack implements AssetStack {
         this.quantity -= delta;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public NoteMeta getMeta() {

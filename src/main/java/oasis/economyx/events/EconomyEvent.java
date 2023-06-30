@@ -1,25 +1,22 @@
 package oasis.economyx.events;
 
-import org.spongepowered.api.event.Cancellable;
-import org.spongepowered.api.event.Cause;
-import org.spongepowered.api.event.filter.IsCancelled;
-import org.spongepowered.api.event.impl.AbstractEvent;
-import org.spongepowered.api.util.Tristate;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A base class for EconomyX events.
  * All EconomyX events are cancellable.
  */
-public abstract class EconomyEvent extends AbstractEvent implements Cancellable {
-    public EconomyEvent(Cause cause) {
-        this.cause = cause;
+public abstract class EconomyEvent extends Event implements Cancellable {
+    public EconomyEvent() {
         this.cancelled = false;
     }
 
     private boolean cancelled;
 
     @Override
-    @IsCancelled(Tristate.UNDEFINED)
     public boolean isCancelled() {
         return cancelled;
     }
@@ -29,10 +26,13 @@ public abstract class EconomyEvent extends AbstractEvent implements Cancellable 
         this.cancelled = cancel;
     }
 
-    private final Cause cause;
+    private static final HandlerList handlers = new HandlerList();
+    @NonNull
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-    @Override
-    public Cause cause() {
-        return cause;
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

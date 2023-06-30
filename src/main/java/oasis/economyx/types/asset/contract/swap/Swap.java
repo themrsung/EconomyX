@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.Contract;
-import oasis.economyx.interfaces.trading.PriceProvider;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -167,19 +167,20 @@ public final class Swap implements Contract {
     public void onExpired(Actor holder) {
         try {
             CashStack delivery = getDelivery();
-            Sponge.eventManager().post(new PaymentEvent(
+
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     counterparty,
                     holder,
                     delivery,
-                    null // TODO
+                    PaymentEvent.Cause.SWAP_SETTLED
             ));
         } catch (IllegalArgumentException e) {
             CashStack negated = getNegatedDelivery();
-            Sponge.eventManager().post(new PaymentEvent(
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     holder,
                     counterparty,
                     negated,
-                    null // TODO
+                    PaymentEvent.Cause.SWAP_SETTLED
             ));
         }
     }

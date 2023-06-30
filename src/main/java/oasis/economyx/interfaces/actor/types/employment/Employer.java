@@ -5,8 +5,8 @@ import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.Sponge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,20 +102,20 @@ public interface Employer extends Representable {
      */
     default void paySalaries() {
         for (Person e : getEmployees()) {
-            Sponge.eventManager().post(new PaymentEvent(
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     this,
                     e,
                     getEmployeePay(),
-                    null
+                    PaymentEvent.Cause.SALARY_PAYMENT
             ));
         }
 
         for (Person d : getDirectors()) {
-            Sponge.eventManager().post(new PaymentEvent(
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
                     this,
                     d,
                     getDirectorPay(),
-                    null
+                    PaymentEvent.Cause.SALARY_PAYMENT
             ));
         }
     }

@@ -12,7 +12,6 @@ import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public final class Market implements Marketplace {
     @JsonIgnore
     private transient long volume;
 
-    @NotNull
+    @NonNull
     @Override
     public AssetStack getAsset() {
         return asset.copy();

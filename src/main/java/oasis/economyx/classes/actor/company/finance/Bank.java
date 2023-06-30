@@ -2,17 +2,19 @@ package oasis.economyx.classes.actor.company.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
+import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
-import oasis.economyx.interfaces.banking.Account;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,9 +107,20 @@ public final class Bank extends Company implements Banker, CardIssuer {
     public ItemStack issueCard(@NonNull Card card) {
         issuedCards.add(card);
 
-        ItemStack physicalCard = ItemStack.builder().itemType(Card.CARD_ITEM).build();
+        ItemStack physicalCard = new ItemStack(Card.CARD_ITEM, 1);
 
-        // TODO add enchantments
+        ItemMeta meta = physicalCard.getItemMeta();
+        if (meta == null) throw new RuntimeException();
+
+        meta.setDisplayName("Credit Card");
+
+        List<String> lore = new ArrayList<>();
+        lore.add(card.getUniqueId().toString());
+        meta.setLore(lore);
+
+        meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+
+        physicalCard.setItemMeta(meta);
 
         return physicalCard;
     }

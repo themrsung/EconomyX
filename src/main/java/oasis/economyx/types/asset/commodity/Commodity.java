@@ -3,9 +3,8 @@ package oasis.economyx.types.asset.commodity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
+import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.api.item.ItemTypes;
 
 import java.util.UUID;
 
@@ -15,10 +14,10 @@ import java.util.UUID;
  */
 public final class Commodity implements Asset {
     public Commodity() {
-        this.itemType = ItemTypes.AIR.get();
+        this.itemType = Material.AIR;
     }
 
-    public Commodity(@NonNull ItemType itemType) {
+    public Commodity(@NonNull Material itemType) {
         this.itemType = itemType;
     }
 
@@ -28,7 +27,7 @@ public final class Commodity implements Asset {
 
     @NonNull
     @JsonProperty
-    private final ItemType itemType;
+    private final Material itemType;
 
     /**
      * Gets the item type of this commodity
@@ -36,7 +35,7 @@ public final class Commodity implements Asset {
      */
     @NonNull
     @JsonIgnore
-    public ItemType getItemType() {
+    public Material getItemType() {
         return itemType;
     }
 

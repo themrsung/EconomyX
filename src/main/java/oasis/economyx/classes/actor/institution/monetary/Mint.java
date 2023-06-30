@@ -10,9 +10,11 @@ import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.physical.Banknote;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +62,21 @@ public final class Mint extends Institution implements BanknoteIssuer {
             if (i instanceof CurrencyIssuer ci) {
                 if (!ci.getIssuedCurrency().equals(note.getDenotation().getAsset())) throw new IllegalArgumentException();
 
-                ItemStack banknote = ItemStack.builder().itemType(Banknote.NOTE_ITEM).build();
+                ItemStack banknote = new ItemStack(Banknote.NOTE_ITEM);
 
-                // TODO add enchantments
+                ItemMeta meta = banknote.getItemMeta();
+                if (meta == null) throw new RuntimeException();
+
+                meta.setDisplayName("Banknote");
+
+                List<String> lore = new ArrayList<>();
+                lore.add(note.getUniqueId().toString());
+
+                meta.setLore(lore);
+
+                meta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 1, true);
+
+                banknote.setItemMeta(meta);
 
                 return banknote;
             }

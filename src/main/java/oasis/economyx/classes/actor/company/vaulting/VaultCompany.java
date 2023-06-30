@@ -2,15 +2,14 @@ package oasis.economyx.classes.actor.company.vaulting;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
+import oasis.economyx.interfaces.vaulting.VaultBlock;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.classes.actor.company.Company;
-import oasis.economyx.interfaces.vaulting.VaultBlock;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public final class VaultCompany extends Company implements VaultKeeper {
     @JsonProperty
     private CashStack hourlyVaultFee;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public List<VaultBlock> getVaults() {
@@ -72,7 +71,7 @@ public final class VaultCompany extends Company implements VaultKeeper {
         vaults.remove(vault);
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CashStack getHourlyVaultFee() {

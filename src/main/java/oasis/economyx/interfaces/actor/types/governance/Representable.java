@@ -4,9 +4,9 @@ import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.Sponge;
 
 /**
  * A representable actor requires a person to execute economic actions
@@ -44,11 +44,11 @@ public interface Representable extends Actor {
     default void payRepresentative() {
         if (getRepresentative() == null) return;
 
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 this,
                 getRepresentative(),
                 getRepresentativePay(),
-                null
+                PaymentEvent.Cause.REPRESENTATIVE_PAYMENT
         ));
     }
 }

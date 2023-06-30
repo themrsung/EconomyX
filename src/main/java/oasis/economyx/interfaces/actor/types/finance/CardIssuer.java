@@ -2,8 +2,8 @@ package oasis.economyx.interfaces.actor.types.finance;
 
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.card.Card;
+import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.util.List;
 

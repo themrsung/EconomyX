@@ -11,10 +11,10 @@ import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -134,11 +134,11 @@ public final class DebitCard implements Card {
 
         account.withdraw(amount);
 
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 getHolder(),
                 seller,
                 amount,
-                null // TODO
+                PaymentEvent.Cause.DEBIT_CARD_PAYMENT
         ));
 
         return getPayable();

@@ -2,15 +2,14 @@ package oasis.economyx.classes.actor.company.trading;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHost;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public final class AuctionHouse extends Company implements AuctionHost {
     @NonNegative
     private float auctionFeeRate;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public List<Auctioneer> getAuctions() {

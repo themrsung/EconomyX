@@ -2,14 +2,13 @@ package oasis.economyx.classes.actor.company.finance;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
-import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.guarantee.Guarantee;
+import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public final class Guarantor extends Company implements Credible {
 
     private final List<Guarantee> guarantees;
 
-    @NotNull
+    @NonNull
     @Override
     public List<Guarantee> getGuarantees() {
         return new ArrayList<>(guarantees);

@@ -7,7 +7,6 @@ import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.beans.ConstructorProperties;
 
@@ -18,7 +17,7 @@ public final class CommodityStack implements AssetStack {
         this.meta = new CommodityMeta();
     }
 
-    public CommodityStack(@NotNull Commodity asset, @NonNegative long quantity, @NonNull CommodityMeta meta) {
+    public CommodityStack(@NonNull Commodity asset, @NonNegative long quantity, @NonNull CommodityMeta meta) {
         this.asset = asset;
         this.quantity = quantity;
         this.meta = meta;

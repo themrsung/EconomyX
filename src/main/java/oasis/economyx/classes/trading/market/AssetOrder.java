@@ -10,8 +10,7 @@ import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
 
 import java.util.UUID;
@@ -107,7 +106,7 @@ public final class AssetOrder implements Order {
         return time;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public CashStack getPrice() {
         return new CashStack(price);

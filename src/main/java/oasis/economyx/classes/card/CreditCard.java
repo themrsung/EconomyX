@@ -9,10 +9,10 @@ import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -122,11 +122,11 @@ public final class CreditCard implements Card {
     public @NonNull CashStack onUsed(@NonNull CardAcceptor seller, @NonNull CashStack amount) throws IllegalArgumentException {
         if (getPayable().isSmallerThan(amount)) throw new IllegalArgumentException();
 
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 issuer,
                 seller,
                 amount,
-                null // TODO
+                PaymentEvent.Cause.CREDIT_CARD_PAYMENT
         ));
 
         this.balance = balance.add(amount);
@@ -144,11 +144,11 @@ public final class CreditCard implements Card {
 
     @JsonIgnore
     public void onSettled() {
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 holder,
                 issuer,
                 balance,
-                null // TODO
+                PaymentEvent.Cause.CREDIT_CARD_SETTLEMENT
         ));
 
         this.balance.setQuantity(0L);

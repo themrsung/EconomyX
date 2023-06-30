@@ -3,12 +3,11 @@ package oasis.economyx.interfaces.vaulting;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.types.asset.commodity.CommodityStack;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.event.Cause;
-import org.spongepowered.api.world.server.ServerLocation;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +17,11 @@ import java.util.UUID;
  * There is no default implementation for vaults.
  */
 public interface VaultBlock {
+    /**
+     * Do not change this after deployment.
+     */
+    Material VAULT_ITEM = Material.BARREL;
+
     /**
      * Gets the unique ID of this vault block.
      * @return Unique ID
@@ -95,19 +99,11 @@ public interface VaultBlock {
      * @return Location
      */
     @NonNull
-    ServerLocation getLocation();
-
-    /**
-     * Handles vault opening.
-     * It is assumed that the vault block is a container block by default.
-     *
-     * @param player Player who opened the vault
-     */
-    void onOpenAttempted(Player player);
+    Location getLocation();
 
     /**
      * Handles vault destruction.
      * Called when the physical block is destroyed.
      */
-    void onDestroyed(@NonNull Cause cause);
+    void onDestroyed();
 }

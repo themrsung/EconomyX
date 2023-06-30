@@ -2,13 +2,12 @@ package oasis.economyx.classes.trading.auction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.interfaces.trading.auction.Bid;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.interfaces.trading.auction.Auctioneer;
-import oasis.economyx.interfaces.trading.auction.Bid;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public abstract class Auction implements Auctioneer {
     private final List<Bid> bids;
 
     @JsonProperty
-    @NotNull
+    @NonNull
     private CashStack price;
 
     @JsonProperty
@@ -79,7 +78,7 @@ public abstract class Auction implements Auctioneer {
         this.sold = sold;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public AssetStack getAsset() {
@@ -87,11 +86,11 @@ public abstract class Auction implements Auctioneer {
     }
     @Override
     @JsonIgnore
-    public @NotNull DateTime getDeadline() {
+    public @NonNull DateTime getDeadline() {
         return deadline;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CashStack getPrice() {
@@ -105,7 +104,7 @@ public abstract class Auction implements Auctioneer {
 
     @Override
     @JsonIgnore
-    public @NotNull List<Bid> getBids() {
+    public @NonNull List<Bid> getBids() {
         List<Bid> bids = new ArrayList<>(this.bids);
         bids.sort((b1, b2) -> b2.getPrice().compare(b1.getPrice()));
         return bids;

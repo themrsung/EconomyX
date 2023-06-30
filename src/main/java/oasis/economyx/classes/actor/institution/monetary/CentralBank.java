@@ -2,16 +2,15 @@ package oasis.economyx.classes.actor.institution.monetary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.CurrencyIssuer;
 import oasis.economyx.interfaces.actor.types.institutional.InterestRateProvider;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.classes.actor.institution.Institution;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -51,7 +50,7 @@ public final class CentralBank extends Institution implements InterestRateProvid
 
     private float interestRate;
 
-    @NotNull
+    @NonNull
     @Override
     public Cash getIssuedCurrency() {
         return new Cash(issuedCurrency);

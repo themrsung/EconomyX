@@ -9,9 +9,8 @@ import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.collateral.Collateral;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -75,35 +74,35 @@ public final class AssetAccount implements Account {
     @JsonProperty
     private final CollateralStack collateral;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public Banker getInstitution() {
         return institution;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public Actor getClient() {
         return client;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public AssetStack getContent() {
         return content;
     }
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public CollateralStack getCollateral() {
@@ -112,12 +111,12 @@ public final class AssetAccount implements Account {
 
     @Override
     public void deposit(@NonNull AssetStack asset) throws IllegalArgumentException {
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 client,
                 institution,
                 asset,
-                null // TODO
-        )); // IAE will be thrown here if client is insolvent
+                PaymentEvent.Cause.BANK_DEPOSIT
+        ));
 
         content.addQuantity(asset.getQuantity());
         collateral.addQuantity(asset.getQuantity());
@@ -125,11 +124,11 @@ public final class AssetAccount implements Account {
 
     @Override
     public void withdraw(@NonNull AssetStack asset) throws IllegalArgumentException {
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 institution,
                 client,
                 asset,
-                null // TODO
+                PaymentEvent.Cause.BANK_WITHDRAWAL
         )); // IAE will be thrown here if banker is insolvent
 
         content.removeQuantity(asset.getQuantity());

@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.Contract;
-import oasis.economyx.interfaces.trading.PriceProvider;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
-import org.spongepowered.api.Sponge;
 
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ public final class Option implements Contract {
         this.exercisePrice = null;
     }
 
-    public Option(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull AssetStack delivery, @NonNull DateTime expiry, @NonNull PriceProvider market, @NonNull OptionType optionType, @NonNull CashStack exercisePrice) {
+    public Option(@NonNull UUID uniqueId, @NonNull Actor counterparty, @NonNull AssetStack delivery, @NonNull DateTime expiry, @NonNull PriceProvider market, Option.Type optionType, @NonNull CashStack exercisePrice) {
         this.uniqueId = uniqueId;
         this.counterparty = counterparty;
         this.delivery = delivery;
@@ -72,9 +72,8 @@ public final class Option implements Contract {
     @JsonIdentityReference
     private final PriceProvider market;
 
-    @NonNull
     @JsonProperty
-    private final OptionType optionType;
+    private final Option.Type optionType;
 
     @NonNull
     @JsonProperty
@@ -88,7 +87,7 @@ public final class Option implements Contract {
     }
 
     @JsonProperty
-    private final Type type = Type.OPTION;
+    private final Asset.Type type = Asset.Type.OPTION;
 
     @Override
     @JsonIgnore
@@ -117,9 +116,8 @@ public final class Option implements Contract {
         return counterparty;
     }
 
-    @NonNull
     @JsonIgnore
-    public OptionType getOptionType() {
+    public Option.Type getOptionType() {
         return optionType;
     }
 
@@ -168,18 +166,18 @@ public final class Option implements Contract {
      */
     @JsonIgnore
     public void onExercised(Actor holder) {
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 holder,
                 counterparty,
                 getExercisePrice(),
-                null // TODO
+                PaymentEvent.Cause.OPTION_EXERCISED
         ));
 
-        Sponge.eventManager().post(new PaymentEvent(
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
                 counterparty,
                 holder,
                 getDelivery(),
-                null // TODO
+                PaymentEvent.Cause.OPTION_EXERCISED
         ));
     }
 
@@ -187,5 +185,42 @@ public final class Option implements Contract {
     @JsonIgnore
     public void onExpired(Actor holder) {
         if (isExercisable()) onExercised(holder);
+    }
+
+    public enum Type {
+        /**
+         * A call option that can be exercised prematurely
+         */
+        AMERICAN_CALL,
+
+        /**
+         * A put option that can be exercised prematurely
+         */
+        AMERICAN_PUT,
+
+        /**
+         * A call option that can only be exercised on expiry
+         */
+        EUROPEAN_CALL,
+
+        /**
+         * A put option that can only be exercised on expiry
+         */
+        EUROPEAN_PUT;
+
+        public boolean isCall() {
+            return switch (this) {
+                case AMERICAN_CALL, EUROPEAN_CALL -> true;
+                default -> false;
+            };
+        }
+
+        public boolean isAmerican() {
+            return switch (this) {
+                case AMERICAN_CALL, AMERICAN_PUT -> true;
+                default -> false;
+            };
+
+        }
     }
 }

@@ -7,18 +7,17 @@ import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.beans.ConstructorProperties;
 
 public final class StockStack implements AssetStack {
-    public StockStack(@NotNull Stock asset, long quantity) {
+    public StockStack(@NonNull Stock asset, long quantity) {
         this.asset = asset;
         this.quantity = quantity;
         this.meta = new StockMeta();
     }
 
-    public StockStack(@NotNull Stock asset, long quantity, @NotNull StockMeta meta) {
+    public StockStack(@NonNull Stock asset, long quantity, @NonNull StockMeta meta) {
         this.asset = asset;
         this.quantity = quantity;
         this.meta = meta;
@@ -40,7 +39,7 @@ public final class StockStack implements AssetStack {
     @JsonProperty
     private StockMeta meta;
 
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public Stock getAsset() {
@@ -72,7 +71,7 @@ public final class StockStack implements AssetStack {
 
         this.quantity -= delta;
     }
-    @NotNull
+    @NonNull
     @Override
     @JsonIgnore
     public StockMeta getMeta() {
