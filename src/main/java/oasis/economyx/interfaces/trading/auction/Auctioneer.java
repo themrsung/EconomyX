@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * An auction provides price by buyers' bids
  * <p>
- *     Both the seller and bidders do not place collateral; Auctions are backed by their parties' credit
- *     Price provided by an auctioneer is less reliable than a marketplace
- *     An ongoing auction's price will return the reserve price (starting price for Dutch auctions)
+ *     Both the seller and bidders do not place collateral; Auctions are backed by their parties' credit.
+ *     Price provided by an auctioneer is less reliable than a marketplace.
+ *     An ongoing auction's price will return the reserve price. (starting price for Dutch auctions)
  * </p>
  */
 public interface Auctioneer extends PriceProvider {
