@@ -147,7 +147,7 @@ public interface Vote {
     void processVotes();
 
     class OpenVote implements Vote {
-        OpenVote(UUID uniqueId, String name, List<Candidate> candidates, List<Voter> voters, long totalCastableVotes, DateTime expiry, float requiredApprovalRatio, long requiredVotesToPass) {
+        OpenVote(@NonNull UUID uniqueId, @NonNull String name, @NonNull List<Candidate> candidates, @NonNull List<Voter> voters, long totalCastableVotes, DateTime expiry, float requiredApprovalRatio, long requiredVotesToPass) {
             this.uniqueId = uniqueId;
             this.name = name;
             this.candidates = candidates;
@@ -167,16 +167,25 @@ public interface Vote {
             candidate.onVotesAcquired(votes);
             voter.onVoted(votes);
         }
+        @NonNull
         private final UUID uniqueId;
+        @NonNull
         private final String name;
 
+        @NonNull
         private final List<Candidate> candidates;
+        @NonNull
         private final List<Voter> voters;
+        @NonNegative
         private final long totalCastableVotes;
+        @NonNegative
         private long castVotes;
 
+        @NonNull
         private final DateTime expiry;
+        @NonNegative
         private final float requiredApprovalRatio;
+        @NonNegative
         private final long requiredVotesToPass;
 
         @NonNull
