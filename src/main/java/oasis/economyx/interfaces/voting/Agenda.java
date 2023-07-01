@@ -9,6 +9,7 @@ import oasis.economyx.classes.voting.representable.HireRepresentativeAgenda;
 import oasis.economyx.classes.voting.stock.DividendAgenda;
 import oasis.economyx.classes.voting.stock.StockIssueAgenda;
 import oasis.economyx.classes.voting.stock.StockRetireAgenda;
+import oasis.economyx.classes.voting.stock.StockSplitAgenda;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -25,7 +26,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = FireRepresentativeAgenda.class, name = "FIRE_REPRESENTATIVE"),
         @JsonSubTypes.Type(value = DividendAgenda.class, name = "DIVIDEND"),
         @JsonSubTypes.Type(value = StockIssueAgenda.class, name = "STOCK_ISSUE"),
-        @JsonSubTypes.Type(value = StockRetireAgenda.class, name = "STOCK_RETIRE")
+        @JsonSubTypes.Type(value = StockRetireAgenda.class, name = "STOCK_RETIRE"),
+        @JsonSubTypes.Type(value = StockSplitAgenda.class, name = "STOCK_SPLIT")
 })
 public interface Agenda extends Runnable {
     /**
