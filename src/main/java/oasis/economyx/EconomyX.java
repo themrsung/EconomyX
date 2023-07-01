@@ -42,6 +42,7 @@ import oasis.economyx.listeners.vaulting.VaultDestroyedListener;
 import oasis.economyx.listeners.vaulting.VaultOpenedListener;
 import oasis.economyx.listeners.voting.VoteCastListener;
 import oasis.economyx.listeners.voting.VoteProposedListener;
+import oasis.economyx.listeners.warfare.HostilityStateChangedListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.state.EconomyXState;
 import oasis.economyx.tasks.EconomyTask;
@@ -189,6 +190,9 @@ public final class EconomyX extends JavaPlugin {
         // Voting
         registerListener(new VoteCastListener(this));
         registerListener(new VoteProposedListener(this));
+
+        // Warfare
+        registerListener(new HostilityStateChangedListener(this));
     }
 
     private void registerTask(EconomyTask task) {
