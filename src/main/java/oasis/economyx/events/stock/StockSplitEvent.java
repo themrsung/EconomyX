@@ -5,7 +5,7 @@ import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class StockSplitEvent extends EconomyEvent {
+public final class StockSplitEvent extends StockEvent {
     /**
      * Splits a stock (does not trigger a transaction; simply multiplies the share count)
      *
@@ -13,20 +13,11 @@ public final class StockSplitEvent extends EconomyEvent {
      * @param sharesPerShare Shares to create per 1 existing share
      */
     public StockSplitEvent(@NonNull Shared issuer, @NonNegative long sharesPerShare) {
-        this.issuer = issuer;
+        super(issuer);
         this.sharesPerShare = sharesPerShare;
     }
-
-    @NonNull
-    private final Shared issuer;
-
     @NonNegative
     private final long sharesPerShare;
-
-    @NonNull
-    public Shared getIssuer() {
-        return issuer;
-    }
 
     @NonNegative
     public long getSharesPerShare() {

@@ -21,7 +21,7 @@ public final class StockSplitListener extends EconomyListener {
     public void onStockSplit(StockSplitEvent e) {
         if (e.isCancelled()) return;
 
-        final Shared issuer = e.getIssuer();
+        final Shared issuer = e.getStockIssuer();
         final long shares = e.getSharesPerShare();
 
         for (Actor a : issuer.getShareholders(getState())) {

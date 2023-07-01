@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.classes.voting.common.ChangeNameAgenda;
 import oasis.economyx.classes.voting.common.DummyAgenda;
-import oasis.economyx.classes.voting.election.MakeMePresidentAgenda;
-import oasis.economyx.classes.voting.election.MakeMeSenatorAgenda;
 import oasis.economyx.classes.voting.representable.FireRepresentativeAgenda;
 import oasis.economyx.classes.voting.representable.HireRepresentativeAgenda;
 import oasis.economyx.classes.voting.stock.DividendAgenda;
@@ -27,9 +25,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = FireRepresentativeAgenda.class, name = "FIRE_REPRESENTATIVE"),
         @JsonSubTypes.Type(value = DividendAgenda.class, name = "DIVIDEND"),
         @JsonSubTypes.Type(value = StockIssueAgenda.class, name = "STOCK_ISSUE"),
-        @JsonSubTypes.Type(value = StockRetireAgenda.class, name = "STOCK_RETIRE"),
-        @JsonSubTypes.Type(value = MakeMePresidentAgenda.class, name = "MAKE_ME_PRESIDENT"),
-        @JsonSubTypes.Type(value = MakeMeSenatorAgenda.class, name = "MAKE_ME_SENATOR")
+        @JsonSubTypes.Type(value = StockRetireAgenda.class, name = "STOCK_RETIRE")
 })
 public interface Agenda extends Runnable {
     /**
@@ -86,16 +82,6 @@ public interface Agenda extends Runnable {
         /**
          * An agenda where a shared actor splits its stock
          */
-        STOCK_SPLIT,
-
-        /**
-         * Agenda for a presidential candidate
-         */
-        MAKE_ME_PRESIDENT,
-
-        /**
-         * Agenda for a general election
-         */
-        MAKE_ME_SENATOR,
+        STOCK_SPLIT;
     }
 }

@@ -21,7 +21,11 @@ import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
 import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
 import oasis.economyx.listeners.payment.PaymentListener;
+import oasis.economyx.listeners.personal.EmploymentListener;
+import oasis.economyx.listeners.personal.RepresentableEventListener;
 import oasis.economyx.listeners.player.PlayerJoinHandler;
+import oasis.economyx.listeners.stock.StockIssuedListener;
+import oasis.economyx.listeners.stock.StockRetiredListener;
 import oasis.economyx.listeners.stock.StockSplitListener;
 import oasis.economyx.listeners.trading.AssetDelistedListener;
 import oasis.economyx.listeners.trading.AssetListedListener;
@@ -177,11 +181,17 @@ public final class EconomyX extends JavaPlugin {
         // Payments
         registerListener(new PaymentListener(this));
 
+        // Personal
+        registerListener(new EmploymentListener(this));
+        registerListener(new RepresentableEventListener(this));
+
         // Player
         registerListener(new PlayerJoinHandler(this));
 
         // Stock
+        registerListener(new StockIssuedListener(this));
         registerListener(new StockSplitListener(this));
+        registerListener(new StockRetiredListener(this));
 
         // Trading
         registerListener(new AssetListedListener(this));

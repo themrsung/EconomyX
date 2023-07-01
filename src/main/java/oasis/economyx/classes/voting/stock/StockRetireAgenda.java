@@ -3,10 +3,12 @@ package oasis.economyx.classes.voting.stock;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.events.stock.StockRetiredEvent;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.interfaces.voting.Agenda;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -51,16 +53,10 @@ public final class StockRetireAgenda implements Agenda {
     @Override
     @JsonIgnore
     public void run() {
-        try {
-            shared.getAssets().remove(new StockStack(
-                    new Stock(shared.getStockId()),
-                    shares
-            ));
-        } catch (IllegalArgumentException e) {
-            // Insufficient self-owned shares
-        }
-
-        shared.reduceShareCount(shares);
+        Bukkit.getPluginManager().callEvent(new StockRetiredEvent(
+                shared,
+                shares
+        ));
     }
 
     @JsonProperty

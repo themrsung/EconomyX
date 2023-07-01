@@ -3,9 +3,11 @@ package oasis.economyx.classes.voting.representable;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.events.personal.representable.RepresentativeHiredEvent;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.voting.Agenda;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
@@ -49,7 +51,10 @@ public final class HireRepresentativeAgenda implements Agenda {
     @Override
     @JsonIgnore
     public void run() {
-        representable.setRepresentative(candidate);
+        Bukkit.getPluginManager().callEvent(new RepresentativeHiredEvent(
+                getCandidate(),
+                getRepresentable()
+        ));
     }
 
     @JsonProperty
