@@ -291,6 +291,6 @@ public interface Deck {
         FULL_HOUSE,
         FOUR_OF_A_KIND,
         STRAIGHT_FLUSH,
-        ROYAL_STRAIGHT_FLUSH;
+        ROYAL_STRAIGHT_FLUSH
     }
 }

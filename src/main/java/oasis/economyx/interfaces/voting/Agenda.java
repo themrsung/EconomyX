@@ -84,6 +84,6 @@ public interface Agenda extends Runnable {
         /**
          * An agenda where a shared actor splits its stock
          */
-        STOCK_SPLIT;
+        STOCK_SPLIT
     }
 }

@@ -159,6 +159,6 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * When dividends are paid to shareholders.
          */
-        DIVIDEND_PAYMENT;
+        DIVIDEND_PAYMENT
     }
 }

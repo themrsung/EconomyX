@@ -18,10 +18,10 @@ public final class DividendEvent extends EconomyEvent {
     }
 
     @NonNull
-    private Shared payer;
+    private final Shared payer;
 
     @NonNull
-    private AssetStack dividendPerShare;
+    private final AssetStack dividendPerShare;
 
     @NonNull
     public Shared getPayer() {

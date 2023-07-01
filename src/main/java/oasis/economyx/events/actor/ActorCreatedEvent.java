@@ -42,6 +42,6 @@ public final class ActorCreatedEvent extends ActorEvent {
         /**
          * When the server creates an actor
          */
-        CREATED_BY_SERVER;
+        CREATED_BY_SERVER
     }
 }
