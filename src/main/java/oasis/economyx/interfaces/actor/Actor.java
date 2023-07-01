@@ -31,6 +31,7 @@ import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.classes.actor.sovereignty.singular.Republic;
 import oasis.economyx.classes.actor.trust.Trust;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.address.Address;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -153,6 +154,19 @@ public interface Actor {
      * @return Net assets
      */
     Portfolio getNetAssets(EconomyState state);
+
+    /**
+     * Gets the home address of this actor.
+     * @return Address
+     */
+    @Nullable
+    Address getAddress();
+
+    /**
+     * Sets the home address of this actor.
+     * @param address New address
+     */
+    void setAddress(@Nullable Address address);
 
     /**
      * Gets the type of this actor

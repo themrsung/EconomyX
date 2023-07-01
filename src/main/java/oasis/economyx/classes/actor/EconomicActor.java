@@ -6,6 +6,7 @@ import oasis.economyx.classes.card.CreditCard;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import oasis.economyx.types.asset.contract.forward.ForwardStack;
@@ -26,18 +27,21 @@ public abstract class EconomicActor implements Actor {
         this.uniqueId = uniqueId;
         this.name = name;
         this.portfolio = new AssetPortfolio();
+        this.address = null;
     }
 
     public EconomicActor() {
         this.uniqueId = UUID.randomUUID();
         this.name = null;
         this.portfolio = new AssetPortfolio();
+        this.address = null;
     }
 
     public EconomicActor(EconomicActor other) {
         this.uniqueId = other.uniqueId;
         this.name = other.name;
         this.portfolio = other.portfolio;
+        this.address = other.address;
     }
 
     @JsonProperty
@@ -47,6 +51,10 @@ public abstract class EconomicActor implements Actor {
     private String name;
     @JsonProperty
     private final Portfolio portfolio;
+
+    @Nullable
+    @JsonProperty
+    private Address address;
 
     @Override
     public UUID getUniqueId() {
@@ -158,5 +166,18 @@ public abstract class EconomicActor implements Actor {
         assets.remove(getLiabilities(state));
 
         return assets;
+    }
+
+    @Nullable
+    @Override
+    @JsonIgnore
+    public Address getAddress() {
+        return address;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setAddress(@Nullable Address address) {
+        this.address = address;
     }
 }

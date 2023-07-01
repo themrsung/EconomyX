@@ -7,6 +7,7 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.listeners.actor.ActorAddressChangedListener;
 import oasis.economyx.listeners.actor.ActorNameChangedListener;
 import oasis.economyx.listeners.banking.BankDepositListener;
 import oasis.economyx.listeners.banking.BankWithdrawalListener;
@@ -157,6 +158,7 @@ public final class EconomyX extends JavaPlugin {
         //
 
         // Actor
+        registerListener(new ActorAddressChangedListener(this));
         registerListener(new ActorCreationListener(this));
         registerListener(new ActorNameChangedListener(this));
 
