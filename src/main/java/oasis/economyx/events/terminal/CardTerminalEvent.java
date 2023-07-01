@@ -5,8 +5,7 @@ import oasis.economyx.interfaces.terminal.CardTerminal;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * Handles the administrative events of a card terminal.
- * For the payment event, see {@link oasis.economyx.events.card.CardUsedEvent}
+ * Handles the events of a card terminal.
  */
 public abstract class CardTerminalEvent extends EconomyEvent {
     public CardTerminalEvent(@NonNull CardTerminal terminal) {

@@ -36,6 +36,7 @@ import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
+import oasis.economyx.interfaces.terminal.CardTerminal;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.auction.Bid;
@@ -500,6 +501,17 @@ public final class EconomyXState implements EconomyState {
         }
 
         return list;
+    }
+
+    @Override
+    public List<CardTerminal> getCardTerminals() {
+        List<CardTerminal> terminals = new ArrayList<>();
+
+        for (CardAcceptor ca : getCardAccpetors()) {
+            terminals.addAll(ca.getCardTerminals());
+        }
+
+        return terminals;
     }
 
     @Override

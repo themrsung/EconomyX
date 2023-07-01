@@ -34,6 +34,7 @@ import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
+import oasis.economyx.interfaces.terminal.CardTerminal;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.auction.Bid;
@@ -595,6 +596,12 @@ public interface EconomyState {
      * @return Card issuers
      */
     List<CardIssuer> getCardIssuers();
+
+    /**
+     * Gets all card terminals.
+     * @return Card terminals
+     */
+    List<CardTerminal> getCardTerminals();
 
     /**
      * Gets all democratics.
