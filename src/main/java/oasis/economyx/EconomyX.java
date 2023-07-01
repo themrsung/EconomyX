@@ -74,7 +74,7 @@ public final class EconomyX extends JavaPlugin {
         this.state = EconomyXState.load(this);
 
         registerListeners();
-
+        registerTasks();
 
 
 
