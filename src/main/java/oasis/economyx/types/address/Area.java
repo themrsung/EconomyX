@@ -55,6 +55,7 @@ public record Area(
     /**
      * Checks if this area contains a certain address.
      * Ignores the Y value. Rewrite this function to change its behavior.
+     * If you have a better implementation, please send a PR. Credit yourself as well.
      *
      * @param address Address to check
      * @return Whether address is within the bounds of this area
@@ -62,6 +63,8 @@ public record Area(
      */
     @JsonIgnore
     public boolean contains(@NonNull Address address) throws RuntimeException {
+        if (!Objects.equals(pointA.world(), address.world()) || !Objects.equals(pointB.world(), address.world())) throw new RuntimeException();
+
         double x = address.x();
         double z = address.z();
 
