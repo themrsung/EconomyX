@@ -20,6 +20,9 @@ import oasis.economyx.listeners.contract.ContractForgivenListener;
 import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
 import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
+import oasis.economyx.listeners.organization.AllianceMemberChangedListener;
+import oasis.economyx.listeners.organization.CartelMemberChangedListener;
+import oasis.economyx.listeners.organization.PartyMemberChangedListener;
 import oasis.economyx.listeners.payment.PaymentListener;
 import oasis.economyx.listeners.personal.EmploymentListener;
 import oasis.economyx.listeners.personal.RepresentableEventListener;
@@ -177,6 +180,11 @@ public final class EconomyX extends JavaPlugin {
         // Guarantee
         registerListener(new GuaranteeIssuedListener(this));
         registerListener(new GuaranteeRevokedListener(this));
+
+        // Organization
+        registerListener(new AllianceMemberChangedListener(this));
+        registerListener(new CartelMemberChangedListener(this));
+        registerListener(new PartyMemberChangedListener(this));
 
         // Payments
         registerListener(new PaymentListener(this));
