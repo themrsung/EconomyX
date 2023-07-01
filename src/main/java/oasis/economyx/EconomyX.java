@@ -82,41 +82,6 @@ public final class EconomyX extends JavaPlugin {
         registerListeners();
         registerTasks();
 
-
-
-        // DEBUG
-
-        Cash currency = new Cash(UUID.randomUUID());
-        Manufacturer m = new Manufacturer(UUID.randomUUID(), "Mfc", UUID.randomUUID(), 100, currency);
-
-        Person p = new NaturalPerson(UUID.randomUUID(), "Parzival");
-
-        getState().addActor(m);
-        getState().addActor(p);
-
-        List<Voter> voters = new ArrayList<>();
-        voters.add(Voter.get(m, 1));
-        Voter mv = Voter.get(p, 100);
-        voters.add(mv);
-
-        Vote v = Vote.getBooleanVote(
-                UUID.randomUUID(),
-                "test",
-                voters,
-                new DummyAgenda("23232"),
-                new DateTime().plusDays(1),
-                0.1f,
-                10);
-
-
-        m.openVote(v);
-
-        v.vote(mv, v.getCandidates().get(0), 50);
-
-
-        // DEBUG
-
-
         Bukkit.getLogger().info("EconomyX loaded.");
     }
 
