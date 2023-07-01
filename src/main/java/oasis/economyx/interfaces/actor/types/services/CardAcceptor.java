@@ -1,7 +1,7 @@
 package oasis.economyx.interfaces.actor.types.services;
 
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.card.CardTerminal;
+import oasis.economyx.interfaces.terminal.CardTerminal;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;

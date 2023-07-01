@@ -31,6 +31,8 @@ import oasis.economyx.listeners.player.PlayerJoinHandler;
 import oasis.economyx.listeners.stock.StockIssuedListener;
 import oasis.economyx.listeners.stock.StockRetiredListener;
 import oasis.economyx.listeners.stock.StockSplitListener;
+import oasis.economyx.listeners.terminal.CardTerminalCreatedListener;
+import oasis.economyx.listeners.terminal.CardTerminalDestroyedListener;
 import oasis.economyx.listeners.trading.AssetDelistedListener;
 import oasis.economyx.listeners.trading.AssetListedListener;
 import oasis.economyx.listeners.trading.OrderCancelledListener;
@@ -202,6 +204,10 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new StockIssuedListener(this));
         registerListener(new StockSplitListener(this));
         registerListener(new StockRetiredListener(this));
+
+        // Terminal
+        registerListener(new CardTerminalCreatedListener(this));
+        registerListener(new CardTerminalDestroyedListener(this));
 
         // Trading
         registerListener(new AssetListedListener(this));

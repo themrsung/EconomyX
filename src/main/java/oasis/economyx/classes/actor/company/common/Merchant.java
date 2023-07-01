@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
-import oasis.economyx.interfaces.card.CardTerminal;
+import oasis.economyx.interfaces.terminal.CardTerminal;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
