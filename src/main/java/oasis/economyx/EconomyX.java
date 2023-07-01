@@ -28,6 +28,8 @@ import oasis.economyx.listeners.payment.PaymentListener;
 import oasis.economyx.listeners.personal.EmploymentListener;
 import oasis.economyx.listeners.personal.RepresentableEventListener;
 import oasis.economyx.listeners.player.PlayerJoinHandler;
+import oasis.economyx.listeners.property.PropertyClaimHandler;
+import oasis.economyx.listeners.property.PropertyProtectionHandler;
 import oasis.economyx.listeners.stock.StockIssuedListener;
 import oasis.economyx.listeners.stock.StockRetiredListener;
 import oasis.economyx.listeners.stock.StockSplitListener;
@@ -165,6 +167,10 @@ public final class EconomyX extends JavaPlugin {
 
         // Player
         registerListener(new PlayerJoinHandler(this));
+
+        // Property
+        registerListener(new PropertyClaimHandler(this));
+        registerListener(new PropertyProtectionHandler(this));
 
         // Stock
         registerListener(new StockIssuedListener(this));
