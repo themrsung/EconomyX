@@ -3,11 +3,13 @@ package oasis.economyx.tasks.voting;
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class VoteProcessTask extends EconomyTask {
-    public VoteProcessTask(EconomyX EX) {
-        super(EX);
+    public VoteProcessTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

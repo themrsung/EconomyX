@@ -8,12 +8,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * A base class for EconomyX tasks. (Runnables that require game state access)
  */
 public abstract class EconomyTask implements Runnable {
-    public EconomyTask(@NonNull EconomyX EX) {
+    public EconomyTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
         this.EX = EX;
+        this.state = state;
     }
 
     @NonNull
     private final EconomyX EX;
+
+    @NonNull
+    private final EconomyState state;
 
     @NonNull
     protected EconomyX getEX() {
@@ -22,7 +26,7 @@ public abstract class EconomyTask implements Runnable {
 
     @NonNull
     protected EconomyState getState() {
-        return getEX().getState();
+        return state;
     }
 
     public abstract int getDelay();

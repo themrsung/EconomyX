@@ -5,6 +5,7 @@ import oasis.economyx.events.stock.StockSplitEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;
@@ -13,8 +14,8 @@ import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class StockSplitListener extends EconomyListener {
-    public StockSplitListener(@NonNull EconomyX EX) {
-        super(EX);
+    public StockSplitListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

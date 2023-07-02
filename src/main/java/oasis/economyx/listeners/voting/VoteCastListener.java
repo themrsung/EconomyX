@@ -6,13 +6,14 @@ import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class VoteCastListener extends EconomyListener {
-    public VoteCastListener(@NonNull EconomyX EX) {
-        super(EX);
+    public VoteCastListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

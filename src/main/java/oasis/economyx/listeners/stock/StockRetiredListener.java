@@ -4,6 +4,7 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.events.stock.StockRetiredEvent;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;
 import org.bukkit.event.EventHandler;
@@ -11,8 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class StockRetiredListener extends EconomyListener {
-    public StockRetiredListener(@NonNull EconomyX EX) {
-        super(EX);
+    public StockRetiredListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

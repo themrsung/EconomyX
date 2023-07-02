@@ -6,16 +6,18 @@ import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class DividendListener extends EconomyListener {
-    public DividendListener(EconomyX EX) {
-        super(EX);
+    public DividendListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

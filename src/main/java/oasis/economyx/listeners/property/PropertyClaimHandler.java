@@ -5,15 +5,15 @@ import oasis.economyx.events.property.PropertyAbandonedEvent;
 import oasis.economyx.events.property.PropertyClaimedEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.listeners.EconomyListener;
-import oasis.economyx.types.asset.property.Property;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.property.PropertyStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class PropertyClaimHandler extends EconomyListener {
-    public PropertyClaimHandler(@NonNull EconomyX EX) {
-        super(EX);
+    public PropertyClaimHandler(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

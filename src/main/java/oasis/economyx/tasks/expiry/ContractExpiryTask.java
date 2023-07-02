@@ -3,15 +3,16 @@ package oasis.economyx.tasks.expiry;
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.contract.ContractExpiredEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.contract.Contract;
 import oasis.economyx.types.asset.contract.ContractStack;
 import org.bukkit.Bukkit;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class ContractExpiryTask extends EconomyTask {
-    public ContractExpiryTask(EconomyX EX) {
-        super(EX);
+    public ContractExpiryTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

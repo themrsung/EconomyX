@@ -4,13 +4,14 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.events.trading.order.OrderCancelledEvent;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class OrderCancelledListener extends EconomyListener {
-    public OrderCancelledListener(@NonNull EconomyX EX) {
-        super(EX);
+    public OrderCancelledListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

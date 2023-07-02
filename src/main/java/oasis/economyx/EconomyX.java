@@ -1,17 +1,12 @@
 package oasis.economyx;
 
-import oasis.economyx.classes.actor.company.common.Manufacturer;
-import oasis.economyx.classes.actor.person.NaturalPerson;
-import oasis.economyx.classes.voting.common.DummyAgenda;
 import oasis.economyx.interfaces.actor.person.Person;
-import oasis.economyx.interfaces.voting.Vote;
-import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.listeners.actor.ActorAddressChangedListener;
+import oasis.economyx.listeners.actor.ActorCreationListener;
 import oasis.economyx.listeners.actor.ActorNameChangedListener;
 import oasis.economyx.listeners.banking.BankDepositListener;
 import oasis.economyx.listeners.banking.BankWithdrawalListener;
-import oasis.economyx.listeners.actor.ActorCreationListener;
 import oasis.economyx.listeners.card.CardActivatedListener;
 import oasis.economyx.listeners.card.CardIssuedListener;
 import oasis.economyx.listeners.card.CardUsedListener;
@@ -57,27 +52,42 @@ import oasis.economyx.tasks.server.AutoSaveTask;
 import oasis.economyx.tasks.trading.AuctionTickTask;
 import oasis.economyx.tasks.trading.MarketTickTask;
 import oasis.economyx.tasks.voting.VoteProcessTask;
-import oasis.economyx.types.asset.cash.Cash;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * Main class of EconomyX
+ * Main class of EconomyX.
+ *
+ * <p>
+ *     EconomyX uses events to receive input from clients.
+ *     Direct state access is impossible.
+ *     States are given out as deep copies to server implementations.
+ *     They are censored for clients. (see {@link EconomyX#getCensoredState(Person)}}
+ * </p>
  */
 public final class EconomyX extends JavaPlugin {
     private EconomyState state;
 
     /**
-     * This is a major security hole. Will be removed.
+     * Gets a deep copy of the state.
+     * Do NOT give this to clients.
+     *
+     * @return Deep copy
      */
-    @Deprecated
-    public EconomyState getState() {
-        return state;
+    @NonNull
+    EconomyState getCopiedState() {
+        return state.copy();
+    }
+
+    /**
+     * Gets a censored deep copy of the state.
+     * @param viewer View to censor the state as
+     * @return Censored deep copy
+     */
+    @NonNull
+    EconomyState getCensoredState(@NonNull Person viewer) {
+        return state.censor(viewer);
     }
 
     @Override
@@ -94,7 +104,7 @@ public final class EconomyX extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getState().save();
+        state.save();
 
         Bukkit.getLogger().info("EconomyX unloaded.");
     }
@@ -105,25 +115,25 @@ public final class EconomyX extends JavaPlugin {
         //
 
         // Expiry
-        registerTask(new CardExpiryTask(this));
-        registerTask(new ContractExpiryTask(this));
+        registerTask(new CardExpiryTask(this, state));
+        registerTask(new ContractExpiryTask(this, state));
 
         // Gaming
-        registerTask(new CasinoProgressTask(this));
+        registerTask(new CasinoProgressTask(this, state));
 
         // Payments
-        registerTask(new RegularPaymentTask(this));
-        registerTask(new CreditCardSettlementTask(this));
+        registerTask(new RegularPaymentTask(this, state));
+        registerTask(new CreditCardSettlementTask(this, state));
 
         // Server
-        registerTask(new AutoSaveTask(this));
+        registerTask(new AutoSaveTask(this, state));
 
         // Trading
-        registerTask(new AuctionTickTask(this));
-        registerTask(new MarketTickTask(this));
+        registerTask(new AuctionTickTask(this, state));
+        registerTask(new MarketTickTask(this, state));
 
         // Voting
-        registerTask(new VoteProcessTask(this));
+        registerTask(new VoteProcessTask(this, state));
     }
 
     private void registerListeners() {
@@ -132,77 +142,77 @@ public final class EconomyX extends JavaPlugin {
         //
 
         // Actor
-        registerListener(new ActorAddressChangedListener(this));
-        registerListener(new ActorCreationListener(this));
-        registerListener(new ActorNameChangedListener(this));
+        registerListener(new ActorAddressChangedListener(this, state));
+        registerListener(new ActorCreationListener(this, state));
+        registerListener(new ActorNameChangedListener(this, state));
 
         // Banking
-        registerListener(new BankDepositListener(this));
-        registerListener(new BankWithdrawalListener(this));
+        registerListener(new BankDepositListener(this, state));
+        registerListener(new BankWithdrawalListener(this, state));
 
         // Card
-        registerListener(new CardActivatedListener(this));
-        registerListener(new CardIssuedListener(this));
-        registerListener(new CardUsedListener(this));
+        registerListener(new CardActivatedListener(this, state));
+        registerListener(new CardIssuedListener(this, state));
+        registerListener(new CardUsedListener(this, state));
 
         // Contract
-        registerListener(new ContractCreatedListener(this));
-        registerListener(new ContractExpiredListener(this));
-        registerListener(new ContractForgivenListener(this));
+        registerListener(new ContractCreatedListener(this, state));
+        registerListener(new ContractExpiredListener(this, state));
+        registerListener(new ContractForgivenListener(this, state));
 
         // Dividend
-        registerListener(new DividendListener(this));
+        registerListener(new DividendListener(this, state));
 
         // Guarantee
-        registerListener(new GuaranteeIssuedListener(this));
-        registerListener(new GuaranteeRevokedListener(this));
+        registerListener(new GuaranteeIssuedListener(this, state));
+        registerListener(new GuaranteeRevokedListener(this, state));
 
         // Organization
-        registerListener(new AllianceMemberChangedListener(this));
-        registerListener(new CartelMemberChangedListener(this));
-        registerListener(new PartyMemberChangedListener(this));
+        registerListener(new AllianceMemberChangedListener(this, state));
+        registerListener(new CartelMemberChangedListener(this, state));
+        registerListener(new PartyMemberChangedListener(this, state));
 
         // Payments
-        registerListener(new PaymentListener(this));
+        registerListener(new PaymentListener(this, state));
 
         // Personal
-        registerListener(new EmploymentListener(this));
-        registerListener(new RepresentableEventListener(this));
+        registerListener(new EmploymentListener(this, state));
+        registerListener(new RepresentableEventListener(this, state));
 
         // Player
-        registerListener(new PlayerJoinHandler(this));
+        registerListener(new PlayerJoinHandler(this, state));
 
         // Property
-        registerListener(new PropertyClaimHandler(this));
-        registerListener(new PropertyProtectionHandler(this));
+        registerListener(new PropertyClaimHandler(this, state));
+        registerListener(new PropertyProtectionHandler(this, state));
 
         // Stock
-        registerListener(new StockIssuedListener(this));
-        registerListener(new StockSplitListener(this));
-        registerListener(new StockRetiredListener(this));
+        registerListener(new StockIssuedListener(this, state));
+        registerListener(new StockSplitListener(this, state));
+        registerListener(new StockRetiredListener(this, state));
 
         // Terminal
-        registerListener(new CardTerminalCreatedListener(this));
-        registerListener(new CardTerminalDestroyedListener(this));
+        registerListener(new CardTerminalCreatedListener(this, state));
+        registerListener(new CardTerminalDestroyedListener(this, state));
 
         // Trading
-        registerListener(new AssetListedListener(this));
-        registerListener(new AssetDelistedListener(this));
+        registerListener(new AssetListedListener(this, state));
+        registerListener(new AssetDelistedListener(this, state));
 
-        registerListener(new OrderPlacedListener(this));
-        registerListener(new OrderCancelledListener(this));
+        registerListener(new OrderPlacedListener(this, state));
+        registerListener(new OrderCancelledListener(this, state));
 
         // Vaulting
-        registerListener(new VaultCreatedListener(this));
-        registerListener(new VaultOpenedListener(this));
-        registerListener(new VaultDestroyedListener(this));
+        registerListener(new VaultCreatedListener(this, state));
+        registerListener(new VaultOpenedListener(this, state));
+        registerListener(new VaultDestroyedListener(this, state));
 
         // Voting
-        registerListener(new VoteCastListener(this));
-        registerListener(new VoteProposedListener(this));
+        registerListener(new VoteCastListener(this, state));
+        registerListener(new VoteProposedListener(this, state));
 
         // Warfare
-        registerListener(new HostilityStateChangedListener(this));
+        registerListener(new HostilityStateChangedListener(this, state));
     }
 
     private void registerTask(EconomyTask task) {

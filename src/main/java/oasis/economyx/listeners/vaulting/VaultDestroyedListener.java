@@ -4,6 +4,7 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.commodity.CommodityStack;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -15,8 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class VaultDestroyedListener extends EconomyListener {
-    public VaultDestroyedListener(@NonNull EconomyX EX) {
-        super(EX);
+    public VaultDestroyedListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

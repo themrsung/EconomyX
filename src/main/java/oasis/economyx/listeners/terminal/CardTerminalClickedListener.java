@@ -5,6 +5,7 @@ import oasis.economyx.events.card.CardUsedEvent;
 import oasis.economyx.interfaces.card.Card;
 import oasis.economyx.interfaces.terminal.CardTerminal;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -20,8 +21,8 @@ import java.util.UUID;
  * Listens for clicks on card terminals by players.
  */
 public final class CardTerminalClickedListener extends EconomyListener {
-    public CardTerminalClickedListener(@NonNull EconomyX EX) {
-        super(EX);
+    public CardTerminalClickedListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     /**

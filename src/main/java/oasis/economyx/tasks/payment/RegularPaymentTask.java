@@ -4,11 +4,13 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class RegularPaymentTask extends EconomyTask {
-    public RegularPaymentTask(EconomyX EX) {
-        super(EX);
+    public RegularPaymentTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

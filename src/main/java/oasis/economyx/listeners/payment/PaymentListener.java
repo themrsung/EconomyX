@@ -4,14 +4,15 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class PaymentListener extends EconomyListener {
-    public PaymentListener(@NonNull EconomyX EX) {
-        super(EX);
+    public PaymentListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

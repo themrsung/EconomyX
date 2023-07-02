@@ -5,13 +5,15 @@ import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.events.actor.ActorCreatedEvent;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class PlayerJoinHandler extends EconomyListener {
-    public PlayerJoinHandler(EconomyX EX) {
-        super(EX);
+    public PlayerJoinHandler(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler

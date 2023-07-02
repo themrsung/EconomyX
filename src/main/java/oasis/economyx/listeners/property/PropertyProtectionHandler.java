@@ -9,6 +9,7 @@ import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -33,8 +34,8 @@ import java.util.List;
 import java.util.Objects;
 
 public final class PropertyProtectionHandler extends EconomyListener {
-    public PropertyProtectionHandler(@NonNull EconomyX EX) {
-        super(EX);
+    public PropertyProtectionHandler(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

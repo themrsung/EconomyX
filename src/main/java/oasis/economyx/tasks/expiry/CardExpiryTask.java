@@ -2,11 +2,13 @@ package oasis.economyx.tasks.expiry;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class CardExpiryTask extends EconomyTask {
-    public CardExpiryTask(EconomyX EX) {
-        super(EX);
+    public CardExpiryTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

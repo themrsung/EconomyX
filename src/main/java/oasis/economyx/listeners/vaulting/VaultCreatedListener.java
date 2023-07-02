@@ -5,13 +5,14 @@ import oasis.economyx.events.vaulting.VaultCreatedEvent;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class VaultCreatedListener extends EconomyListener {
-    public VaultCreatedListener(@NonNull EconomyX EX) {
-        super(EX);
+    public VaultCreatedListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

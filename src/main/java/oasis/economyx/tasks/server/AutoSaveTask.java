@@ -1,11 +1,13 @@
 package oasis.economyx.tasks.server;
 
 import oasis.economyx.EconomyX;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class AutoSaveTask extends EconomyTask {
-    public AutoSaveTask(EconomyX EX) {
-        super(EX);
+    public AutoSaveTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

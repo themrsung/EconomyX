@@ -3,11 +3,13 @@ package oasis.economyx.tasks.trading;
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class AuctionTickTask extends EconomyTask {
-    public AuctionTickTask(EconomyX EX) {
-        super(EX);
+    public AuctionTickTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

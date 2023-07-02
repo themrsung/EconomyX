@@ -6,13 +6,14 @@ import oasis.economyx.events.organization.alliance.AllianceMemberAddedEvent;
 import oasis.economyx.events.organization.alliance.AllianceMemberRemovedEvent;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class AllianceMemberChangedListener extends EconomyListener {
-    public AllianceMemberChangedListener(@NonNull EconomyX EX) {
-        super(EX);
+    public AllianceMemberChangedListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

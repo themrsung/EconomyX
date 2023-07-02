@@ -3,11 +3,13 @@ package oasis.economyx.tasks.payment;
 import oasis.economyx.EconomyX;
 import oasis.economyx.classes.card.CreditCard;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.tasks.EconomyTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class CreditCardSettlementTask extends EconomyTask {
-    public CreditCardSettlementTask(EconomyX EX) {
-        super(EX);
+    public CreditCardSettlementTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @Override

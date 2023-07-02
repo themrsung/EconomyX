@@ -6,13 +6,14 @@ import oasis.economyx.events.personal.employment.DirectorHiredEvent;
 import oasis.economyx.events.personal.employment.EmployeeFiredEvent;
 import oasis.economyx.events.personal.employment.EmployeeHiredEvent;
 import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class EmploymentListener extends EconomyListener {
-    public EmploymentListener(@NonNull EconomyX EX) {
-        super(EX);
+    public EmploymentListener(@NonNull EconomyX EX, @NonNull EconomyState state) {
+        super(EX, state);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
