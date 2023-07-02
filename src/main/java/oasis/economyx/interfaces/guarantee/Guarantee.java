@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
  */
 public interface Guarantee {
     /**
-     * Gets the guarantor of this guarantee
+     * Gets the guarantor of this guarantee.
      *
      * @return Guarantor who issued this guarantee
      */
@@ -30,7 +30,7 @@ public interface Guarantee {
     Credible getGuarantor();
 
     /**
-     * Gets the warrantee of this guarantee
+     * Gets the warrantee of this guarantee.
      *
      * @return Warrantee who received this guarantee
      */
@@ -38,7 +38,7 @@ public interface Guarantee {
     Actor getWarrantee();
 
     /**
-     * The expiration date of this guarantee, if there is one
+     * The expiration date of this guarantee, if there is one.
      *
      * @return Expiry
      */
@@ -46,11 +46,18 @@ public interface Guarantee {
     DateTime getExpiry();
 
     /**
-     * The limit of this guarantee
-     * This is also used to determine which asset to guarantee payment of: It cannot be null
+     * The limit of this guarantee.
+     * This is also used to determine which asset to guarantee payment of: It cannot be null.
      *
      * @return Limit
      */
     @NonNull
     AssetStack getLimit();
+
+    /**
+     * Uses this guarantee.
+     * @param amount Amount used
+     * @throws IllegalArgumentException When amount is over limit
+     */
+    void onUsed(@NonNull AssetStack amount) throws IllegalArgumentException;
 }

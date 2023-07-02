@@ -3,6 +3,7 @@ package oasis.economyx.listeners.payment;
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
@@ -23,7 +24,27 @@ public final class PaymentListener extends EconomyListener {
         final Actor recipient = event.getRecipient();
         final AssetStack asset = event.getAsset();
 
-        if (!sender.getPayableAssets(getState()).contains(asset)) return;
+        if (!sender.getPayableAssets(getState()).contains(asset)){
+            // Sender is illiquid. Search for guarantees.
+
+            boolean guaranteed = false;
+
+            for (Guarantee guarantee : getState().getGuarantees()) {
+                if (guarantee.getWarrantee().equals(sender)) {
+                    // Guarantee found. Check for limit and asset type.
+                    guaranteed = guarantee.getLimit().getAsset().equals(asset.getAsset()) && guarantee.getLimit().getQuantity() >= asset.getQuantity();
+                    if (guaranteed) {
+                        guarantee.onUsed(asset);
+                        break;
+                    }
+                }
+            }
+
+            if (!guaranteed) {
+                event.setCancelled(true);
+                return;
+            }
+        }
 
         sender.getAssets().remove(asset);
         recipient.getAssets().add(asset);
