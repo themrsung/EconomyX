@@ -8,7 +8,7 @@ EconomyX provides a versatile backbone for any type of economy server.
 As there is no built-in front end, a custom UI is required for it to be a functional product.
 This can be a big time saver for server developers who want to focus on the front-end part of their server.
 
-~~Currently, a basic UI is being developed as a separate project. It will be available soon.~~
+**An example implementation: https://github.com/themrsung/OasisServer**
 
 UI will be closed source for security reasons. Create your own front-end to use this platform.
 
