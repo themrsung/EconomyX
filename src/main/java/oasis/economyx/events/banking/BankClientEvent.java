@@ -10,10 +10,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Represents an event between a bank and a client.
  */
 public abstract class BankClientEvent extends EconomyEvent {
-    public BankClientEvent(@NonNull Banker bank, @NonNull Account account, @NonNull AssetStack asset) {
+    public BankClientEvent(@NonNull Banker bank, @NonNull Account account) {
         this.bank = bank;
         this.account = account;
-        this.asset = asset;
     }
 
     @NonNull
@@ -23,9 +22,6 @@ public abstract class BankClientEvent extends EconomyEvent {
     private final Account account;
 
     @NonNull
-    private final AssetStack asset;
-
-    @NonNull
     public Banker getBank() {
         return bank;
     }
@@ -33,10 +29,5 @@ public abstract class BankClientEvent extends EconomyEvent {
     @NonNull
     public Account getAccount() {
         return account;
-    }
-
-    @NonNull
-    public AssetStack getAsset() {
-        return asset;
     }
 }

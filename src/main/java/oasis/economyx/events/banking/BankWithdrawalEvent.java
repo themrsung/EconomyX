@@ -10,6 +10,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public final class BankWithdrawalEvent extends BankClientEvent {
     public BankWithdrawalEvent(@NonNull Banker bank, @NonNull Account account, @NonNull AssetStack asset) {
-        super(bank, account, asset);
+        super(bank, account);
+
+        this.asset = asset;
+    }
+
+    @NonNull
+    private final AssetStack asset;
+
+    @NonNull
+    public AssetStack getAsset() {
+        return asset;
     }
 }

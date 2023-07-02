@@ -136,6 +136,8 @@ public class EconomyX extends JavaPlugin {
         // Banking
         registerListener(new BankDepositListener(this, state));
         registerListener(new BankWithdrawalListener(this, state));
+        registerListener(new BankAccountOpenedListener(this, state));
+        registerListener(new BankAccountClosedListener(this, state));
 
         // Card
         registerListener(new CardActivatedListener(this, state));
