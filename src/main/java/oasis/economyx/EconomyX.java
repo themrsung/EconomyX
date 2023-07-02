@@ -41,7 +41,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * They are censored for clients. (see {@link EconomyX#getCensoredState(Person)}}
  * </p>
  */
-public final class EconomyX extends JavaPlugin {
+public class EconomyX extends JavaPlugin {
     private EconomyState state;
 
     /**
@@ -130,6 +130,7 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new CardActivatedListener(this, state));
         registerListener(new CardIssuedListener(this, state));
         registerListener(new CardUsedListener(this, state));
+        registerListener(new CardRevokedListener(this, state));
 
         // Contract
         registerListener(new ContractCreatedListener(this, state));
