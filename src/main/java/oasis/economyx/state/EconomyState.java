@@ -795,7 +795,18 @@ public interface EconomyState {
         for (Actor a : copy.getActors()) {
             if (!Objects.equals(a, viewer)) {
                 if (a instanceof Sensitive s) {
-                    s.nuke();
+                    boolean hasAccess = false;
+
+                    if (a instanceof Employer e) {
+                        hasAccess = hasAccess || e.getEmployees().contains(viewer);
+                        hasAccess = hasAccess || e.getDirectors().contains(viewer);
+                    }
+
+                    if (a instanceof Representable r) {
+                        hasAccess = hasAccess || Objects.equals(r.getRepresentative(), viewer);
+                    }
+
+                    if (!hasAccess) s.nuke();
                 }
             }
         }
