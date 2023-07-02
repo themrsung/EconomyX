@@ -104,6 +104,7 @@ public final class PokerTable implements Table {
     private transient Stage stage;
 
     @Override
+    @JsonIgnore
     public void progressGame() {
         // Clear outed players
         players.removeIf(p -> p.getStack().getQuantity() == 0L);
@@ -197,29 +198,45 @@ public final class PokerTable implements Table {
     }
 
     @Override
+    @JsonIgnore
+    public void nuke() {
+        dealer.nuke();
+        burnt.nuke();
+
+        for (CardPlayer cp : getPlayers()) {
+            cp.getHand().nuke();
+        }
+    }
+
+    @Override
     @NonNull
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
     @Override
     @NonNull
+    @JsonIgnore
     public House getCasino() {
         return casino;
     }
 
     @Override
     @NonNull
+    @JsonIgnore
     public ChipStack getChips() {
         return chips;
     }
 
     @NonNull
+    @JsonIgnore
     public Deck getBoard() {
         return board;
     }
 
     @NonNull
+    @JsonIgnore
     public List<CardPlayer> getPlayers() {
         return new ArrayList<>(players);
     }
@@ -231,11 +248,13 @@ public final class PokerTable implements Table {
      *
      * @param player Player to add
      */
+    @JsonIgnore
     void addPlayer(CardPlayer player) {
         players.add(player);
     }
 
     @NonNull
+    @JsonIgnore
     public Stage getStage() {
         return stage;
     }

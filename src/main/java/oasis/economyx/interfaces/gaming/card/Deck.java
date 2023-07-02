@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.gaming.card;
 
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * A deck is a collection of cards with added functionality.
  */
-public interface Deck {
+public interface Deck extends Sensitive {
     /**
      * Gets an empty deck of cards.
      *
@@ -127,6 +128,9 @@ public interface Deck {
      * @return Copied deck
      */
     Deck copy();
+
+    @Override
+    void nuke();
 
     // Poker
 
@@ -276,6 +280,11 @@ public interface Deck {
             if (numbers >= 2) return PokerHand.PAIR;
 
             return PokerHand.HIGH_CARD;
+        }
+
+        @Override
+        public void nuke() {
+            this.cards.clear();
         }
     }
 

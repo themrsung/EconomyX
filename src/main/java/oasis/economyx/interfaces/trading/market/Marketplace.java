@@ -185,4 +185,11 @@ public interface Marketplace extends PriceProvider {
     default double getTickSize() {
         return getAsset().getQuantity();
     }
+
+    @Override
+    default void nuke() {
+        for (Order o : getOrders()) {
+            o.nuke();
+        }
+    }
 }

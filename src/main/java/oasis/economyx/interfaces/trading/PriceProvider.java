@@ -12,6 +12,7 @@ import oasis.economyx.classes.trading.market.Market;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -33,7 +34,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = FirstPriceSealedAuction.class, name = "FIRST_PRICE_AUCTION"),
         @JsonSubTypes.Type(value = SecondPriceSealedAuction.class, name = "SECOND_PRICE_AUCTION"),
 })
-public interface PriceProvider {
+public interface PriceProvider extends Sensitive {
     /**
      * The asset of which price is provided for
      * Contract size is determined by quantity of the unit asset

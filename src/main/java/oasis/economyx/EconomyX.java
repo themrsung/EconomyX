@@ -72,6 +72,10 @@ import java.util.UUID;
 public final class EconomyX extends JavaPlugin {
     private EconomyState state;
 
+    /**
+     * This is a major security hole. Will be removed.
+     */
+    @Deprecated
     public EconomyState getState() {
         return state;
     }

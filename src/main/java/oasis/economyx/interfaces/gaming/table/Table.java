@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.classes.gaming.table.*;
 import oasis.economyx.interfaces.actor.types.gaming.House;
 import oasis.economyx.types.asset.chip.ChipStack;
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
@@ -26,7 +27,7 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = RouletteTable.class, name = "ROULETTE"),
         @JsonSubTypes.Type(value = SlotMachine.class, name = "SLOT_MACHINE"),
 })
-public interface Table {
+public interface Table extends Sensitive {
     /**
      * Gets the unique ID of this table
      *
@@ -56,6 +57,9 @@ public interface Table {
      * Handles the progression of the table.
      */
     void progressGame();
+
+    @Override
+    void nuke();
 
     /**
      * Gets the type of this game

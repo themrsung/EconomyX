@@ -2,6 +2,7 @@ package oasis.economyx.interfaces.trading.auction;
 
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.security.Sensitive;
 import org.joda.time.DateTime;
 
 /**
@@ -9,7 +10,7 @@ import org.joda.time.DateTime;
  * Unlike orders, there is no collateral backing the bid
  * A bid is not cancellable
  */
-public interface Bid {
+public interface Bid extends Sensitive {
     /**
      * The bidder of this bid
      *

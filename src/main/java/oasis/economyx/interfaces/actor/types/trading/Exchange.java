@@ -3,6 +3,7 @@ package oasis.economyx.interfaces.actor.types.trading;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.types.asset.Asset;
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * A market host can open markets and handle orders
  */
-public interface Exchange extends Actor {
+public interface Exchange extends Actor, Sensitive {
     /**
      * Gets all open markets
      *
@@ -65,4 +66,11 @@ public interface Exchange extends Actor {
      * @param rate Fee rate (e.g. 1.2% -> 0.012f)
      */
     void setMarketFeeRate(@NonNegative float rate);
+
+    @Override
+    default void nuke() {
+        for (Marketplace m : getMarkets()) {
+            m.nuke();
+        }
+    }
 }

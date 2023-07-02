@@ -1,7 +1,6 @@
 package oasis.economyx.classes.trading.market;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
@@ -67,75 +66,98 @@ public final class AssetOrder implements Order {
         this.collateral = other.collateral;
     }
 
+    @JsonProperty
     private final UUID uniqueId;
+    @JsonProperty
+    @JsonIdentityReference
     private final Brokerage broker;
+    @JsonProperty
+    @JsonIdentityReference
     private final Actor sender;
+    @JsonProperty
     private Type type;
-    private final DateTime time;
+    @JsonProperty
+    private DateTime time;
+    @JsonProperty
     private CashStack price;
     @NonNegative
+    @JsonProperty
     private final long quantity;
+    @JsonProperty
+    @JsonIdentityReference
     private final CollateralStack collateral;
 
     @Override
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
     @Override
+    @JsonIgnore
     public Brokerage getBroker() {
         return broker;
     }
 
     @Override
+    @JsonIgnore
     public Actor getSender() {
         return sender;
     }
 
     @Override
+    @JsonIgnore
     public Type getType() {
         return type;
     }
 
     @Override
+    @JsonIgnore
     public void setType(Type type) {
         this.type = type;
     }
 
     @Override
+    @JsonIgnore
     public DateTime getTime() {
         return time;
     }
 
     @NonNull
     @Override
+    @JsonIgnore
     public CashStack getPrice() {
         return new CashStack(price);
     }
 
     @Override
+    @JsonIgnore
     public void setPrice(@NonNull CashStack price) {
         this.price = price;
     }
 
     @Override
+    @JsonIgnore
     public long getQuantity() {
         return quantity;
     }
 
     @Nullable
     @Override
+    @JsonIgnore
     public CollateralStack getCollateral() {
         return collateral;
     }
 
     @Override
+    @JsonIgnore
     public void onSubmitted(Exchange exchange) {
         if (collateral == null) return;
         exchange.getAssets().add(collateral);
     }
 
     @Override
+    @JsonIgnore
     public void onFulfilled(Exchange exchange, @NonNull CashStack price, @NonNegative long quantity) {
         // transfer assets
         // brokerage fees
@@ -143,9 +165,18 @@ public final class AssetOrder implements Order {
     }
 
     @Override
+    @JsonIgnore
     public void onCancelled(Exchange exchange) {
         // unregister collateral
         // remove order
         // TODO TODO TODO
+    }
+
+    @Override
+    @JsonIgnore
+    public void nuke() {
+        type = null;
+        price = null;
+        time = null;
     }
 }

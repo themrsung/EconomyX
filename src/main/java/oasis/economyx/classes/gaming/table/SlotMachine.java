@@ -35,23 +35,33 @@ public final class SlotMachine implements Table {
 
     @Override
     @NonNull
+    @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
     }
 
     @Override
     @NonNull
+    @JsonIgnore
     public House getCasino() {
         return casino;
     }
 
     @Override
+    @JsonIgnore
     public @NonNull ChipStack getChips() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public void progressGame() {
+
+    }
+
+    @Override
+    @JsonIgnore
+    public void nuke() {
 
     }
 

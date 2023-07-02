@@ -3,6 +3,7 @@ package oasis.economyx.interfaces.actor.types.gaming;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.types.asset.chip.Chip;
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * A house can host games
  */
-public interface House extends Actor {
+public interface House extends Actor, Sensitive {
     /**
      * Gets all games currently open
      *
@@ -40,4 +41,11 @@ public interface House extends Actor {
      */
     @NonNull
     Chip getIssuedChip();
+
+    @Override
+    default void nuke() {
+        for (Table t : getTables()) {
+            t.nuke();
+        }
+    }
 }

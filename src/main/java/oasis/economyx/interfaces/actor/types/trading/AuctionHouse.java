@@ -2,6 +2,7 @@ package oasis.economyx.interfaces.actor.types.trading;
 
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
+import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * An auction host must buy the asset at the reserve price if there is no bidder
  * Note that auctions cannot be closed prematurely
  */
-public interface AuctionHouse extends Actor {
+public interface AuctionHouse extends Actor, Sensitive {
     /**
      * Gets all open auctions
      *
@@ -40,4 +41,11 @@ public interface AuctionHouse extends Actor {
      * @param rate Rate (e.g. 2% -> 0.02f)
      */
     void setAuctionFeeRate(float rate);
+
+    @Override
+    default void nuke() {
+        for (Auctioneer a : getAuctions()) {
+            a.nuke();
+        }
+    }
 }
