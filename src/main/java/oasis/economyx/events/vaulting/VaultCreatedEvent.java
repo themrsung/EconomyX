@@ -11,8 +11,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class VaultCreatedEvent extends EconomyEvent {
     /**
      * Creates a new vault created event.
+     *
      * @param keeper Keeper of this vault
-     * @param vault Physical block of this vault
+     * @param vault  Physical block of this vault
      */
     public VaultCreatedEvent(@NonNull VaultKeeper keeper, @NonNull VaultBlock vault) {
         this.keeper = keeper;

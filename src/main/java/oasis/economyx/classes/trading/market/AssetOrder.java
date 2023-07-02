@@ -1,12 +1,16 @@
 package oasis.economyx.classes.trading.market;
 
 import com.fasterxml.jackson.annotation.*;
+import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
+import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -24,6 +28,7 @@ public final class AssetOrder implements Order {
      * Creates a new order
      *
      * @param uniqueId   Unique ID of this order
+     * @param market     Market this order was sent to
      * @param broker     Brokerage handling this order
      * @param sender     Sender of this order
      * @param type       Type this order
@@ -31,8 +36,9 @@ public final class AssetOrder implements Order {
      * @param quantity   Quantity of this order
      * @param collateral Collateral of this order
      */
-    public AssetOrder(UUID uniqueId, Brokerage broker, Actor sender, Type type, CashStack price, @NonNegative long quantity, CollateralStack collateral) {
+    public AssetOrder(UUID uniqueId, @NonNull Marketplace market, Brokerage broker, Actor sender, Type type, CashStack price, @NonNegative long quantity, CollateralStack collateral) {
         this.uniqueId = uniqueId;
+        this.market = market;
         this.broker = broker;
         this.sender = sender;
         this.type = type;
@@ -45,6 +51,7 @@ public final class AssetOrder implements Order {
 
     public AssetOrder() {
         this.uniqueId = UUID.randomUUID();
+        this.market = null;
         this.broker = null;
         this.sender = null;
         this.type = null;
@@ -57,6 +64,7 @@ public final class AssetOrder implements Order {
 
     public AssetOrder(AssetOrder other) {
         this.uniqueId = other.uniqueId;
+        this.market = other.market;
         this.broker = other.broker;
         this.sender = other.sender;
         this.type = other.type;
@@ -68,6 +76,9 @@ public final class AssetOrder implements Order {
 
     @JsonProperty
     private final UUID uniqueId;
+    @JsonProperty
+    @JsonIdentityReference
+    private final Marketplace market;
     @JsonProperty
     @JsonIdentityReference
     private final Brokerage broker;
@@ -82,7 +93,7 @@ public final class AssetOrder implements Order {
     private CashStack price;
     @NonNegative
     @JsonProperty
-    private final long quantity;
+    private long quantity;
     @JsonProperty
     @JsonIdentityReference
     private final CollateralStack collateral;
@@ -91,6 +102,12 @@ public final class AssetOrder implements Order {
     @JsonIgnore
     public UUID getUniqueId() {
         return uniqueId;
+    }
+
+    @Override
+    @JsonIgnore
+    public Marketplace getMarket() {
+        return market;
     }
 
     @Override
@@ -151,22 +168,75 @@ public final class AssetOrder implements Order {
 
     @Override
     @JsonIgnore
-    public void onSubmitted(Exchange exchange) {
+    public void onSubmitted(@NonNull Exchange exchange) {
         if (collateral == null) return;
         exchange.getAssets().add(collateral);
     }
 
     @Override
     @JsonIgnore
-    public void onFulfilled(Exchange exchange, @NonNull CashStack price, @NonNegative long quantity) {
-        // transfer assets
-        // brokerage fees
-        // exchange fees (paid by brokerage to exchange)
+    public void onFulfilled(@NonNull Exchange exchange, @NonNull CashStack price, @NonNegative long quantity) {
+        // Settle cash
+        CashStack cash = price.multiply(quantity);
+
+        if (isBuy()) {
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                    sender,
+                    exchange,
+                    cash,
+                    PaymentEvent.Cause.ORDER_SETTLEMENT
+            ));
+        } else {
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                    exchange,
+                    sender,
+                    cash,
+                    PaymentEvent.Cause.ORDER_SETTLEMENT
+            ));
+        }
+
+        // Settle asset
+        AssetStack settlement = market.getAsset();
+        settlement.setQuantity(settlement.getQuantity() * quantity);
+
+        if (isBuy()) {
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                    exchange,
+                    sender,
+                    settlement,
+                    PaymentEvent.Cause.ORDER_SETTLEMENT
+            ));
+        } else {
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                    sender,
+                    exchange,
+                    settlement,
+                    PaymentEvent.Cause.ORDER_SETTLEMENT
+            ));
+        }
+
+        // Settle fees
+        CashStack brokerageFee = cash.multiply(broker.getBrokerageFeeRate());
+        CashStack marketFee = cash.multiply(exchange.getMarketFeeRate());
+
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                sender,
+                broker,
+                brokerageFee,
+                PaymentEvent.Cause.BROKERAGE_FEE
+        ));
+
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                broker,
+                exchange,
+                marketFee,
+                PaymentEvent.Cause.MARKET_FEE
+        ));
     }
 
     @Override
     @JsonIgnore
-    public void onCancelled(Exchange exchange) {
+    public void onCancelled(@NonNull Exchange exchange) {
         // unregister collateral
         // remove order
         // TODO TODO TODO
@@ -177,6 +247,7 @@ public final class AssetOrder implements Order {
     public void nuke() {
         type = null;
         price = null;
+        quantity = 0L;
         time = null;
     }
 }

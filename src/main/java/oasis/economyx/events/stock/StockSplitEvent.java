@@ -1,6 +1,5 @@
 package oasis.economyx.events.stock;
 
-import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,6 +15,7 @@ public final class StockSplitEvent extends StockEvent {
         super(issuer);
         this.sharesPerShare = sharesPerShare;
     }
+
     @NonNegative
     private final long sharesPerShare;
 

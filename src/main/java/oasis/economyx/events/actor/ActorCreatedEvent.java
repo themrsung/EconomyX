@@ -1,6 +1,5 @@
 package oasis.economyx.events.actor;
 
-import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;

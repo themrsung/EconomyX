@@ -27,6 +27,7 @@ public final class CardTerminalClickedListener extends EconomyListener {
 
     /**
      * Calls {@link CardUsedEvent} if the interact event is a valid card use.
+     *
      * @param e Event
      */
     @EventHandler(priority = EventPriority.MONITOR)

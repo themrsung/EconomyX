@@ -10,9 +10,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class ContractForgivenEvent extends ContractEvent {
     /**
      * Creates a new contract forgiven event.
+     *
      * @param contract Contract to forgive
-     * @param holder Holder forgiving the contract
-     * @param force Whether to force the forgiving of unforgivable contracts
+     * @param holder   Holder forgiving the contract
+     * @param force    Whether to force the forgiving of unforgivable contracts
      */
     public ContractForgivenEvent(@NonNull ContractStack contract, @NonNull Actor holder, boolean force) {
         super(contract, holder);

@@ -12,6 +12,7 @@ import java.util.List;
 public interface CardAcceptor extends Actor {
     /**
      * Gets every terminal this seller has installed.
+     *
      * @return A copied list of terminals
      */
     @NonNull
@@ -19,12 +20,14 @@ public interface CardAcceptor extends Actor {
 
     /**
      * Associates a terminal with this seller.
+     *
      * @param terminal Terminal to add
      */
     void addCardTerminal(@NonNull CardTerminal terminal);
 
     /**
      * Disassociates a terminal from this seller.
+     *
      * @param terminal Terminal to remove
      */
     void removeCardTerminal(@NonNull CardTerminal terminal);

@@ -2,11 +2,9 @@ package oasis.economyx.types.asset.contract;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.meta.Purchasable;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.DateTime;
 
@@ -59,6 +57,7 @@ public abstract class ContractMeta implements AssetMeta, Purchasable {
 
     /**
      * Gets whether the holder can forgive this contract.
+     *
      * @return Whether this contract is forgivable
      */
     @JsonIgnore

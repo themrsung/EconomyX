@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Represents an area of land.
+ *
  * @param pointA Point A
  * @param pointB Point B
  */
@@ -17,6 +18,7 @@ public record Area(
 ) {
     /**
      * Gets the area of this land.
+     *
      * @return Area
      * @throws RuntimeException When either of the points are invalid, or the world is different
      */
@@ -63,7 +65,8 @@ public record Area(
      */
     @JsonIgnore
     public boolean contains(@NonNull Address address) throws RuntimeException {
-        if (!Objects.equals(pointA.world(), address.world()) || !Objects.equals(pointB.world(), address.world())) throw new RuntimeException();
+        if (!Objects.equals(pointA.world(), address.world()) || !Objects.equals(pointB.world(), address.world()))
+            throw new RuntimeException();
 
         double x = address.x();
         double z = address.z();

@@ -31,6 +31,13 @@ public interface Order extends Sensitive {
     UUID getUniqueId();
 
     /**
+     * Gets the market this order was sent to.
+     *
+     * @return Market
+     */
+    Marketplace getMarket();
+
+    /**
      * Gets the broker responsible for handling this order.
      *
      * @return Broker

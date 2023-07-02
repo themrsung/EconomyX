@@ -70,7 +70,8 @@ public final class PropertyProtectionHandler extends EconomyListener {
 
     /**
      * Process property protection.
-     * @param player Player
+     *
+     * @param player   Player
      * @param location Location
      * @return Whether player has access to location
      */

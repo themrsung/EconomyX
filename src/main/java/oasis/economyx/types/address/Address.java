@@ -8,11 +8,12 @@ import org.bukkit.World;
 
 /**
  * Represents an in-game location
+ *
  * @param world World of this address
- * @param x X coordinate
- * @param y Y coordinate (height)
- * @param z Z coordinate
- * @param yaw Yaw (horizontal scalar)
+ * @param x     X coordinate
+ * @param y     Y coordinate (height)
+ * @param z     Z coordinate
+ * @param yaw   Yaw (horizontal scalar)
  * @param pitch Pitch (vertical scalar)
  */
 public record Address(
@@ -25,6 +26,7 @@ public record Address(
 ) {
     /**
      * Converts this address into a location that Bukkit can understand.
+     *
      * @return Location
      * @throws RuntimeException When the world is invalid
      */
@@ -38,6 +40,7 @@ public record Address(
 
     /**
      * Converts a Bukkit location to an EconomyX address.
+     *
      * @param location Bukkit location
      * @return Address
      * @throws IllegalArgumentException When the given location's world is invalid

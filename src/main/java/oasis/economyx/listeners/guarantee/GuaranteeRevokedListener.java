@@ -18,7 +18,7 @@ public final class GuaranteeRevokedListener extends EconomyListener {
     public void onGuaranteeRevoked(GuaranteeIssuedEvent e) {
         if (e.isCancelled()) return;
 
-        Credible guarantor =  e.getGuarantor();
+        Credible guarantor = e.getGuarantor();
         guarantor.removeGuarantee(e.getGuarantee());
     }
 }

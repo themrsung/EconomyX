@@ -18,6 +18,7 @@ public final class PropertyProtectedEvent extends PropertyEvent {
 
     /**
      * Gets the owner of this property.
+     *
      * @return Owner
      */
     @NonNull

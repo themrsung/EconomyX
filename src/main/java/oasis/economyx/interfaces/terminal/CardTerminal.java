@@ -15,6 +15,7 @@ public interface CardTerminal {
 
     /**
      * Gets the location of this terminal.
+     *
      * @return Address
      */
     @NonNull
@@ -22,6 +23,7 @@ public interface CardTerminal {
 
     /**
      * Gets the seller who gets paid from this terminal.
+     *
      * @return Seller
      */
     @NonNull
@@ -29,6 +31,7 @@ public interface CardTerminal {
 
     /**
      * Gets the price-per-click of this terminal.
+     *
      * @return Price
      */
     @NonNull

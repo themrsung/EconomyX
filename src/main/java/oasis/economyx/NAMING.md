@@ -13,7 +13,8 @@ For example: The interface Vote ([Vote.java](interfaces%2Fvoting%2FVote.java))
 
 **Basically, the type that will be used the most within the code takes the semantic name.**
 
-Vote is an interface using the obvious name, while the nested class Ballot(in the same file as Vote) is the actual instance.
+Vote is an interface using the obvious name, while the nested class Ballot(in the same file as Vote) is the actual
+instance.
 This is because the class Ballot is never referenced outside the Vote file.
 Instantiation happens via static getters in the interface Vote.
 

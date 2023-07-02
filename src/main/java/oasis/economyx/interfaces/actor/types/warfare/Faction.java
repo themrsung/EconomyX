@@ -13,6 +13,7 @@ import java.util.List;
 public interface Faction extends Actor {
     /**
      * Gets all factions this faction is hostile to.
+     *
      * @return Hostile factions
      */
     @NonNull
@@ -20,18 +21,21 @@ public interface Faction extends Actor {
 
     /**
      * Declares hostility against given faction.
+     *
      * @param faction Faction to declare hostility on
      */
     void addHostility(@NonNull Faction faction);
 
     /**
      * Revokes hostility against given faction.
+     *
      * @param faction Faction to remove hostility from
      */
     void removeHostility(@NonNull Faction faction);
 
     /**
      * Gets all enemies. (Outbound and inbound hostilities.
+     *
      * @return Enemies
      */
     default List<Faction> getEnemies(@NonNull EconomyState state) {

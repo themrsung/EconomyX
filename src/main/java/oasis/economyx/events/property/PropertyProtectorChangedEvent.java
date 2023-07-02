@@ -18,6 +18,7 @@ public final class PropertyProtectorChangedEvent extends PropertyEvent {
 
     /**
      * Gets the new protector after this event is processed.
+     *
      * @return New protector
      */
     @NonNull

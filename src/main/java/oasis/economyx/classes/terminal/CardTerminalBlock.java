@@ -16,9 +16,10 @@ import java.beans.ConstructorProperties;
 public final class CardTerminalBlock implements CardTerminal {
     /**
      * Creates a new card terminal block.
+     *
      * @param address Address of this block
-     * @param seller Seller who receives payments from this terminal
-     * @param price Price-per-click of this terminal
+     * @param seller  Seller who receives payments from this terminal
+     * @param price   Price-per-click of this terminal
      */
     public CardTerminalBlock(@NonNull Address address, @NonNull CardAcceptor seller, @NonNull CashStack price) {
         this.address = address;

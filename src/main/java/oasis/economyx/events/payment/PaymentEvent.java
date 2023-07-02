@@ -159,6 +159,21 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * When dividends are paid to shareholders.
          */
-        DIVIDEND_PAYMENT
+        DIVIDEND_PAYMENT,
+
+        /**
+         * The settlement of a fulfilled order.
+         */
+        ORDER_SETTLEMENT,
+
+        /**
+         * The fee paid to brokerages by order senders.
+         */
+        BROKERAGE_FEE,
+
+        /**
+         * The fee paid to exchanges by brokerages.
+         */
+        MARKET_FEE;
     }
 }

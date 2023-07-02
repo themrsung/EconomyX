@@ -88,6 +88,7 @@ public interface Card {
 
     /**
      * Sets the activation state of this card.
+     *
      * @param active Active
      */
     void setActive(boolean active);

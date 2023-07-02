@@ -157,6 +157,7 @@ public interface Actor {
 
     /**
      * Gets the home address of this actor.
+     *
      * @return Address
      */
     @Nullable
@@ -164,6 +165,7 @@ public interface Actor {
 
     /**
      * Sets the home address of this actor.
+     *
      * @param address New address
      */
     void setAddress(@Nullable Address address);

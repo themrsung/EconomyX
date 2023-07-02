@@ -13,9 +13,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class VoteCastEvent extends EconomyEvent {
     /**
      * Creates a new vote cast event.
-     * @param vote Ongoing vote
+     *
+     * @param vote      Ongoing vote
      * @param candidate Candidate to vote in
-     * @param votes How many votes to exercise
+     * @param votes     How many votes to exercise
      */
     public VoteCastEvent(@NonNull Vote vote, @NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) {
         this.vote = vote;

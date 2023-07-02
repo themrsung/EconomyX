@@ -8,6 +8,7 @@ public abstract class OrganizationEvent<O extends Organization<?>> extends Econo
     public OrganizationEvent(@NonNull O organization) {
         this.organization = organization;
     }
+
     @NonNull
     private final O organization;
 

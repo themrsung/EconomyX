@@ -60,10 +60,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * Main class of EconomyX.
  *
  * <p>
- *     EconomyX uses events to receive input from clients.
- *     Direct state access is impossible.
- *     States are given out as deep copies to server implementations.
- *     They are censored for clients. (see {@link EconomyX#getCensoredState(Person)}}
+ * EconomyX uses events to receive input from clients.
+ * Direct state access is impossible.
+ * States are given out as deep copies to server implementations.
+ * They are censored for clients. (see {@link EconomyX#getCensoredState(Person)}}
  * </p>
  */
 public final class EconomyX extends JavaPlugin {
@@ -82,6 +82,7 @@ public final class EconomyX extends JavaPlugin {
 
     /**
      * Gets a censored deep copy of the state.
+     *
      * @param viewer Viewer to censor the state as
      * @return Censored deep copy
      */

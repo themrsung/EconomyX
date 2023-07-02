@@ -10,8 +10,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class AssetDelistedEvent extends ListingEvent {
     /**
      * Creates a new asset delisted event.
+     *
      * @param exchange ExchangeCompany to delist the asset from
-     * @param listing Listing to delist
+     * @param listing  Listing to delist
      */
     public AssetDelistedEvent(@NonNull Exchange exchange, @NonNull Marketplace listing) {
         super(exchange, listing);

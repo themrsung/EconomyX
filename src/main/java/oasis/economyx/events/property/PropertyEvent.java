@@ -1,7 +1,6 @@
 package oasis.economyx.events.property;
 
 import oasis.economyx.events.EconomyEvent;
-import oasis.economyx.types.asset.property.Property;
 import oasis.economyx.types.asset.property.PropertyStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

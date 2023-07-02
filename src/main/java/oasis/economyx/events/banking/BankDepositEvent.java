@@ -8,7 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * Represents a bank deposit.
  */
-public final class BankDepositEvent extends BankClientEvent{
+public final class BankDepositEvent extends BankClientEvent {
     public BankDepositEvent(@NonNull Banker bank, @NonNull Account account, @NonNull AssetStack asset) {
         super(bank, account, asset);
     }

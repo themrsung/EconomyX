@@ -7,8 +7,6 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.classes.actor.company.trading.AuctionCompany;
 import oasis.economyx.classes.actor.company.trading.ExchangeCompany;
-import oasis.economyx.classes.trading.auction.FirstPriceSealedAuction;
-import oasis.economyx.classes.trading.auction.SecondPriceSealedAuction;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.fund.Fund;
@@ -610,6 +608,7 @@ public interface EconomyState {
 
     /**
      * Gets all card terminals.
+     *
      * @return Card terminals
      */
     List<CardTerminal> getCardTerminals();
@@ -775,6 +774,7 @@ public interface EconomyState {
     /**
      * Gets a safe-to-tinker-with copy of this state.
      * This is a deep copy within the bounds of this application.
+     *
      * @return Deep copy
      */
     default EconomyState copy() {
@@ -807,6 +807,7 @@ public interface EconomyState {
     class ReadOnly implements EconomyState {
         /**
          * Makes a deep copy.
+         *
          * @param state State to copy
          */
         private ReadOnly(@NonNull EconomyState state) {
@@ -831,6 +832,7 @@ public interface EconomyState {
 
         /**
          * Always returns null
+         *
          * @return Null
          */
         @Override
@@ -847,7 +849,7 @@ public interface EconomyState {
         @Override
         public boolean isActor(UUID uniqueId) {
             for (Actor a : getActors()) {
-                if (a.getUniqueId().equals(uniqueId)){
+                if (a.getUniqueId().equals(uniqueId)) {
                     return true;
                 }
             }
@@ -866,6 +868,7 @@ public interface EconomyState {
 
         /**
          * This will only affect the copied instance
+         *
          * @param actor Actor to add
          */
         @Override
@@ -875,6 +878,7 @@ public interface EconomyState {
 
         /**
          * This will only affect the copied instance
+         *
          * @param actor Actor to remove
          */
         @Override

@@ -18,7 +18,7 @@ public final class GuaranteeIssuedListener extends EconomyListener {
     public void onGuaranteeIssued(GuaranteeIssuedEvent e) {
         if (e.isCancelled()) return;
 
-        Credible guarantor =  e.getGuarantor();
+        Credible guarantor = e.getGuarantor();
         guarantor.addGuarantee(e.getGuarantee());
     }
 }

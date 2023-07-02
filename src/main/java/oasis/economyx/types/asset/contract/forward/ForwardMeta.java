@@ -3,7 +3,6 @@ package oasis.economyx.types.asset.contract.forward;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.types.asset.Asset;
-import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.ContractMeta;
 import oasis.economyx.types.asset.meta.Purchasable;
