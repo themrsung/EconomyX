@@ -45,6 +45,17 @@ public class EconomyX extends JavaPlugin {
     private EconomyState state;
 
     /**
+     * Gets the raw state.
+     * Do NOT give this to anyone.
+     *
+     * @return Direct pointer to state
+     */
+    @NonNull
+    protected EconomyState getRawState() {
+        return state;
+    }
+
+    /**
      * Gets a deep copy of the state.
      * Do NOT give this to clients.
      *
