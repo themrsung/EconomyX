@@ -785,10 +785,12 @@ public interface EconomyState {
      * Gets a state from the perspective of a viewer.
      * This is safe to give to clients.
      * Nonnull fields in censored states are not guaranteed to be nonnull.
+     * {@link Sensitive#nuke()} should ONLY be called from this method.
      *
      * @param viewer ORIGINAL instance of viewer; UUID does not guarantee access
      * @return Censored state
      */
+    @SuppressWarnings("DoNotCall")
     default EconomyState censor(@NonNull Person viewer) {
         EconomyState copy = copy();
 
@@ -806,7 +808,9 @@ public interface EconomyState {
                         hasAccess = hasAccess || Objects.equals(r.getRepresentative(), viewer);
                     }
 
-                    if (!hasAccess) s.nuke();
+                    if (!hasAccess) {
+                        s.nuke();
+                    }
                 }
             }
         }
