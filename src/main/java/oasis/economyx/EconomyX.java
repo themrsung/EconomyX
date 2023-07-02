@@ -82,7 +82,7 @@ public final class EconomyX extends JavaPlugin {
 
     /**
      * Gets a censored deep copy of the state.
-     * @param viewer View to censor the state as
+     * @param viewer Viewer to censor the state as
      * @return Censored deep copy
      */
     @NonNull
