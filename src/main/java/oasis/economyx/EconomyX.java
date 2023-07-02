@@ -51,7 +51,7 @@ public class EconomyX extends JavaPlugin {
      * @return Direct pointer to state
      */
     @NonNull
-    protected EconomyState getRawState() {
+    protected final EconomyState getRawState() {
         return state;
     }
 
@@ -62,7 +62,7 @@ public class EconomyX extends JavaPlugin {
      * @return Deep copy
      */
     @NonNull
-    EconomyState getCopiedState() {
+    public final EconomyState getCopiedState() {
         return state.copy();
     }
 
@@ -73,7 +73,7 @@ public class EconomyX extends JavaPlugin {
      * @return Censored deep copy
      */
     @NonNull
-    EconomyState getCensoredState(@NonNull Person viewer) {
+    public final EconomyState getCensoredState(@NonNull Person viewer) {
         return state.censor(viewer);
     }
 
