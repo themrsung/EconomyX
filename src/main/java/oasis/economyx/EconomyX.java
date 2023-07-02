@@ -149,6 +149,7 @@ public class EconomyX extends JavaPlugin {
         registerListener(new ContractCreatedListener(this, state));
         registerListener(new ContractExpiredListener(this, state));
         registerListener(new ContractForgivenListener(this, state));
+        registerListener(new OptionExercisedListener(this, state));
 
         // Dividend
         registerListener(new DividendListener(this, state));
