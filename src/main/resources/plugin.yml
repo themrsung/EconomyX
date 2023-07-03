@@ -27,3 +27,7 @@ commands:
     description: 메시지를 발신합니다.
     usage: /message 수신인 내용
     aliases: [w, dm, msg, t, tell, 디엠, 메시지]
+  reply:
+    description: 수신한 메시지에 답변을 보냅니다.
+    usage: /reply [수신인] 내용
+    aliases: [r, 답변, 답장]

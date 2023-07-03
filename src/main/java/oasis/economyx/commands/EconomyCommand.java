@@ -85,6 +85,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         SET_ADDRESS,
         PAY,
         MESSAGE,
+        REPLY,
 
         // Allows recursive sudo by default
         SUDO;
@@ -94,6 +95,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_SET_ADDRESS = Arrays.asList("sethome", "setaddress", "집설정", "주소설정", "주소지설정");
         private static final List<String> K_PAY = Arrays.asList("pay", "송금");
         private static final List<String> K_MESSAGE = Arrays.asList("dm", "msg", "message", "디엠", "메시지");
+        private static final List<String> K_REPLY = Arrays.asList("r", "reply", "답변", "답장");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -104,6 +106,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_SET_ADDRESS.contains(input.toLowerCase())) return SET_ADDRESS;
             if (K_PAY.contains(input.toLowerCase())) return PAY;
             if (K_MESSAGE.contains(input.toLowerCase())) return MESSAGE;
+            if (K_REPLY.contains(input.toLowerCase())) return REPLY;
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
             return null;
@@ -115,6 +118,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case BALANCE -> K_BALANCE;
                 case SET_ADDRESS -> K_SET_ADDRESS;
                 case PAY -> K_PAY;
+                case REPLY -> K_REPLY;
                 case MESSAGE -> K_MESSAGE;
                 default -> new ArrayList<>();
             };
@@ -156,6 +160,8 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static String INSTITUTION_CREATED = ChatColor.GREEN + "기관이 설립되었습니다.";
         public static String SOVEREIGNTY_CREATED = ChatColor.GREEN + "국가가 설립되었습니다.";
         public static String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
+
+        public static String NO_MESSAGES_RECEIVED = ChatColor.RED + "수신한 메시지가 없습니다.";
 
         public static String CASH_BALANCE(@NonNull CashStack cash) {
             return "[현금] " + NumberFormat.getIntegerInstance().format(cash.getQuantity()) + " " + cash.getAsset().getName();

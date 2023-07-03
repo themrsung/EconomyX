@@ -87,8 +87,10 @@ public final class PaymentListener extends EconomyListener {
             return;
         }
 
-        sender.getAssets().remove(asset);
-        recipient.getAssets().add(asset);
+        final AssetStack copy = asset.copy();
+
+        sender.getAssets().remove(copy);
+        recipient.getAssets().add(copy);
 
         Bukkit.getPluginManager().callEvent(new MessageSentEvent(new Message(
                 null,

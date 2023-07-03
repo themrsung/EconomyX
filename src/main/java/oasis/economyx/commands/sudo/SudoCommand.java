@@ -6,6 +6,7 @@ import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.message.MessageCommand;
+import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.pay.PayCommand;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -26,6 +27,11 @@ public final class SudoCommand extends EconomyCommand {
 
     @Override
     public void onEconomyCommand(@NonNull Player player, @NonNull Person caller, @NonNull Actor actor, @NonNull String[] params, @NonNull AccessLevel permission) {
+        if (!permission.isAtLeast(AccessLevel.DE_FACTO_SELF)) {
+            player.sendRawMessage(Messages.INSUFFICIENT_PERMISSIONS);
+            return;
+        }
+
         if (params.length < 2) {
             player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
             return;
@@ -59,7 +65,7 @@ public final class SudoCommand extends EconomyCommand {
         }
 
         final Keyword action = Keyword.fromInput(params[1]);
-        final String[] argsToPass = params.length > 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[] {};
+        final String[] argsToPass = params.length >= 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[] {};
 
         if (action == null) {
             player.sendRawMessage(Messages.INVALID_KEYWORD);
@@ -86,6 +92,10 @@ public final class SudoCommand extends EconomyCommand {
             case MESSAGE -> {
                 MessageCommand message = new MessageCommand(getEX(), getState());
                 message.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case REPLY -> {
+                ReplyCommand reply = new ReplyCommand(getEX(), getState());
+                reply.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
@@ -131,6 +141,10 @@ public final class SudoCommand extends EconomyCommand {
                 case MESSAGE -> {
                     MessageCommand message = new MessageCommand(getEX(), getState());
                     message.onEconomyComplete(list, argsToPass);
+                }
+                case REPLY -> {
+                    ReplyCommand reply = new ReplyCommand(getEX(), getState());
+                    reply.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

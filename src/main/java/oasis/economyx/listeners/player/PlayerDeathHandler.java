@@ -20,8 +20,9 @@ public final class PlayerDeathHandler extends EconomyListener {
         Person person = getState().getPerson(e.getEntity().getUniqueId());
 
         for (AssetStack as : person.getAssets().get()) {
-            person.getAssets().remove(as);
-            getState().getBurntAssets().add(as);
+            final AssetStack copy = as.copy();
+            person.getAssets().remove(copy);
+            getState().getBurntAssets().add(copy);
         }
     }
 }

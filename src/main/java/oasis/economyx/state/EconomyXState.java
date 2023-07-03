@@ -189,6 +189,8 @@ public final class EconomyXState implements EconomyState {
     public @NonNull List<Message> getMessagesByRecipient(@NonNull Actor recipient) {
         List<Message> messages = getMessages();
         messages.removeIf(m -> !Objects.equals(m.getRecipient(), recipient));
+        messages.sort((m1, m2) -> m1.getTime().compareTo(m2.getTime()));
+
         return messages;
     }
 
@@ -196,6 +198,8 @@ public final class EconomyXState implements EconomyState {
     public @NonNull List<Message> getMessagesBySender(@NonNull Actor sender) {
         List<Message> messages = getMessages();
         messages.removeIf(m -> !Objects.equals(m.getSender(), sender));
+        messages.sort((m1, m2) -> m1.getTime().compareTo(m2.getTime()));
+
         return messages;
     }
 

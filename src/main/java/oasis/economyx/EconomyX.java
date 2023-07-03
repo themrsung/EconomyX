@@ -14,6 +14,7 @@ import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.message.MessageCommand;
+import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.pay.PayCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -254,6 +255,7 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("pay", new PayCommand(this, state));
 
         registerCommand("message", new MessageCommand(this, state));
+        registerCommand("reply", new ReplyCommand(this, state));
 
         registerCommand("setaddress", new SetAddressCommand(this, state));
     }
