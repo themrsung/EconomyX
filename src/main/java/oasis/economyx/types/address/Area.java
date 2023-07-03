@@ -140,4 +140,12 @@ public record Area(
         if (!Objects.equals(pointA.world(), pointB.world())) throw new RuntimeException();
         return pointA.world();
     }
+
+    @JsonIgnore
+    public String format() {
+        return "[지역: " +
+                "A지점: [" + pointA.format() +
+                "] B지점: [" + pointB.format()
+                + "]]";
+    }
 }

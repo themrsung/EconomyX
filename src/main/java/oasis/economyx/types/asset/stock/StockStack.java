@@ -2,6 +2,8 @@ package oasis.economyx.types.asset.stock;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.interfaces.actor.types.ownership.Shared;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
@@ -9,6 +11,7 @@ import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
+import java.text.NumberFormat;
 
 public final class StockStack implements AssetStack {
     public StockStack(@NonNull Stock asset, long quantity) {
@@ -100,6 +103,18 @@ public final class StockStack implements AssetStack {
     @JsonIgnore
     public @NonNull StockStack copy() {
         return new StockStack(this);
+    }
+
+    @Override
+    public @NonNull String format(@NonNull EconomyState state) {
+        for (Shared s : state.getShareds()) {
+            if (s.getStockId().equals(getAsset().getUniqueId())) {
+                String name = s.getName() != null ? s.getName() : "알 수 없음";
+                return s.getName() + " " + NumberFormat.getIntegerInstance().format(getQuantity()) + "주";
+            }
+        }
+
+        return "오류";
     }
 
     /**

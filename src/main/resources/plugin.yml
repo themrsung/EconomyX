@@ -3,6 +3,10 @@ version: '${version}'
 main: oasis.economyx.EconomyX
 api-version: '1.20'
 commands:
+  create:
+    description: 생성 명령어입니다.
+    usage: /create
+    aliases: [new, 신규, 생성, 추가]
   balance:
     description: 내 잔고를 조회합니다.
     usage: /balance [통화]
@@ -15,3 +19,11 @@ commands:
     description: 주소지를 설정합니다.
     usage: /setaddress
     aliases: [sa, sh, sethome, setaddress, 주소지설정, 주소설정, 홈설정]
+  pay:
+    description: 송금 명령어입니다.
+    usage: /pay 수신인 통화 금액
+    aliases: [p, 송금]
+  message:
+    description: 메시지를 발신합니다.
+    usage: /message 수신인 내용
+    aliases: [w, dm, msg, t, tell, 디엠, 메시지]

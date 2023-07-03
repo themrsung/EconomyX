@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.types.asset.cash.Cash;
-import oasis.economyx.types.asset.chip.Chip;
 import oasis.economyx.types.asset.commodity.Commodity;
 import oasis.economyx.types.asset.contract.collateral.Collateral;
 import oasis.economyx.types.asset.contract.forward.Forward;
@@ -34,7 +33,6 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = Commodity.class, name = "COMMODITY"),
         @JsonSubTypes.Type(value = Stock.class, name = "STOCK"),
         @JsonSubTypes.Type(value = Property.class, name = "PROPERTY"),
-        @JsonSubTypes.Type(value = Chip.class, name = "CHIP"),
         @JsonSubTypes.Type(value = Collateral.class, name = "COLLATERAL"),
         @JsonSubTypes.Type(value = Forward.class, name = "FORWARD"),
         @JsonSubTypes.Type(value = Note.class, name = "NOTE"),
@@ -95,11 +93,6 @@ public interface Asset {
         STOCK,
         COMMODITY,
         PROPERTY,
-
-        /**
-         * Used in casinos
-         */
-        CHIP,
 
         // Contracts
         FORWARD,

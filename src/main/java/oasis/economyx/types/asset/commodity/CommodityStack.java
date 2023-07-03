@@ -2,6 +2,7 @@ package oasis.economyx.types.asset.commodity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
@@ -9,6 +10,7 @@ import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
+import java.text.NumberFormat;
 
 public final class CommodityStack implements AssetStack {
     public CommodityStack(@NonNull Commodity asset, @NonNegative long quantity) {
@@ -98,6 +100,11 @@ public final class CommodityStack implements AssetStack {
     @JsonIgnore
     public @NonNull CommodityStack copy() {
         return new CommodityStack(this);
+    }
+
+    @Override
+    public @NonNull String format(@NonNull EconomyState state) {
+        return getAsset().getItemType().toString() + " " + NumberFormat.getIntegerInstance().format(getQuantity()) + "개";
     }
 
     /**

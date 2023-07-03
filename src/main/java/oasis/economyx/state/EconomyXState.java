@@ -50,6 +50,7 @@ import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.message.Message;
 import oasis.economyx.types.portfolio.AssetPortfolio;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.commons.io.FileUtils;
@@ -59,6 +60,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class EconomyXState implements EconomyState {
@@ -171,6 +173,40 @@ public final class EconomyXState implements EconomyState {
         }
 
         return list;
+    }
+
+    @NonNull
+    private final List<Message> messages;
+
+    @NonNull
+    @Override
+    public List<Message> getMessages() {
+        messages.sort((m1, m2) -> m1.getTime().compareTo(m2.getTime()));
+        return new ArrayList<>(messages);
+    }
+
+    @Override
+    public @NonNull List<Message> getMessagesByRecipient(@NonNull Actor recipient) {
+        List<Message> messages = getMessages();
+        messages.removeIf(m -> !Objects.equals(m.getRecipient(), recipient));
+        return messages;
+    }
+
+    @Override
+    public @NonNull List<Message> getMessagesBySender(@NonNull Actor sender) {
+        List<Message> messages = getMessages();
+        messages.removeIf(m -> !Objects.equals(m.getSender(), sender));
+        return messages;
+    }
+
+    @Override
+    public void addMessage(@NonNull Message message) {
+        messages.add(message);
+    }
+
+    @Override
+    public void removeMessage(@NonNull Message message) {
+        messages.remove(message);
     }
 
     @Override
@@ -741,14 +777,16 @@ public final class EconomyXState implements EconomyState {
         this.actors = new ArrayList<>();
         this.physicalizedAssets = new ArrayList<>();
         this.burntAssets = new AssetPortfolio();
+        this.messages = new ArrayList<>();
     }
 
-    private EconomyXState(@NonNull EconomyX EX, @NonNull List<Actor> actors, @NonNull List<PhysicalAsset> physicalizedAssets, @NonNull Portfolio burntAssets) {
+    private EconomyXState(@NonNull EconomyX EX, @NonNull List<Actor> actors, @NonNull List<PhysicalAsset> physicalizedAssets, @NonNull Portfolio burntAssets, @NonNull List<Message> messages) {
         this.EX = EX;
 
         this.actors = actors;
         this.physicalizedAssets = physicalizedAssets;
         this.burntAssets = burntAssets;
+        this.messages = messages;
 
         for (Actor a : this.actors) {
             if (a instanceof References r) {
@@ -763,6 +801,10 @@ public final class EconomyXState implements EconomyState {
         }
 
         this.burntAssets.initialize(this);
+
+        for (Message msg : messages) {
+            msg.initialize(this);
+        }
     }
 
     public static final String PATH = "oasis/economy";
@@ -789,6 +831,9 @@ public final class EconomyXState implements EconomyState {
         }
 
         List<Actor> actors = new ArrayList<>();
+        List<PhysicalAsset> physicalizedAssets = new ArrayList<>();
+        Portfolio burntAssets = new AssetPortfolio();
+        List<Message> messages = new ArrayList<>();
 
         for (File f : actorFiles) {
             try {
@@ -798,30 +843,23 @@ public final class EconomyXState implements EconomyState {
             }
         }
 
-        List<PhysicalAsset> physicalizedAssets = new ArrayList<>();
-
         File physicalizedAssetsFolder = new File(PATH + "/physicalized-assets");
         if (!physicalizedAssetsFolder.exists()) {
-            EX.getLogger().info("Physicalized asset data not found.");
-            EX.getLogger().info("Physicalized assets will not be convertible back to normal assets.");
-            return new EconomyXState(EX, actors, new ArrayList<>(), new AssetPortfolio());
+            EX.getLogger().info("Physicalized asset data not found. Ignoring data.");
         }
 
         File[] physicalizedAssetsFiles = physicalizedAssetsFolder.listFiles();
         if (physicalizedAssetsFiles == null) {
             EX.getLogger().info("No physicalized assets found. Ignoring data.");
-            return new EconomyXState(EX, actors, new ArrayList<>(), new AssetPortfolio());
-        }
-
-        for (File f : physicalizedAssetsFiles) {
-            try {
-                physicalizedAssets.add(mapper.readValue(f, PhysicalAsset.class));
-            } catch (IOException e) {
-                EX.getLogger().info("Error loading physicalized asset: " + e.getMessage());
+        } else {
+            for (File f : physicalizedAssetsFiles) {
+                try {
+                    physicalizedAssets.add(mapper.readValue(f, PhysicalAsset.class));
+                } catch (IOException e) {
+                    EX.getLogger().info("Error loading physicalized asset: " + e.getMessage());
+                }
             }
         }
-
-        Portfolio burntAssets;
 
         try {
             File f = new File(PATH + "/burnt-assets.yml");
@@ -831,7 +869,25 @@ public final class EconomyXState implements EconomyState {
             EX.getLogger().info("Burnt asset data not found. Contract expiry may cause issues.");
         }
 
-        return new EconomyXState(EX, actors, physicalizedAssets, burntAssets);
+        File messagesFolder = new File(PATH + "/messages");
+        if (!messagesFolder.exists()) {
+            EX.getLogger().info("Messages folder not found. Ignoring data.");
+        }
+
+        File[] messageFiles = messagesFolder.listFiles();
+        if (messageFiles == null) {
+            EX.getLogger().info("No messages found. Ignoring data.");
+        } else {
+            for (File f : messageFiles) {
+                try {
+                    messages.add(mapper.readValue(f, Message.class));
+                } catch (IOException e) {
+                    EX.getLogger().info("Error loading message: " + e.getMessage());
+                }
+            }
+        }
+
+        return new EconomyXState(EX, actors, physicalizedAssets, burntAssets, messages);
     }
 
     @Override
@@ -870,7 +926,7 @@ public final class EconomyXState implements EconomyState {
         File physicalizedAssetsFolder = new File(PATH + "/physicalized-assets");
         if (!physicalizedAssetsFolder.exists() && !physicalizedAssetsFolder.mkdirs()) {
             getEX().getLogger().info("Failed to initialize physicalized assets directory.");
-            getEX().getLogger().info("Save is continuing, but data if faulty.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
         }
 
         try {
@@ -886,7 +942,7 @@ public final class EconomyXState implements EconomyState {
                 mapper.writeValue(f, a);
             } catch (IOException e) {
                 getEX().getLogger().info("Error saving physical asset " + a.getUniqueId().toString().substring(0, 10) + " (" + e.getMessage() + ")");
-                getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue is you have not edited the base code.");
+                getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue if you have not edited the base code.");
             }
         }
 
@@ -896,6 +952,24 @@ public final class EconomyXState implements EconomyState {
         } catch (IOException e) {
             getEX().getLogger().info("Error saving burnt assets.");
             getEX().getLogger().info("Save is continuing, but data is faulty.");
+        }
+
+        File messagesFolder = new File(PATH + "/messages");
+        if (!messagesFolder.exists() && !messagesFolder.mkdirs()) {
+            getEX().getLogger().info("Failed to initialize messages directory.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
+        }
+
+        // Do not clean messages directory. Messages are write-only.
+
+        for (Message m : getMessages()) {
+            try {
+                File f = new File(PATH + "/messages/" + m.getUniqueId().toString() + ".yml");
+                mapper.writeValue(f, m);
+            } catch (IOException e) {
+                getEX().getLogger().info("Error saving message " + m.getUniqueId().toString().substring(0, 10) + "(" + e.getMessage() + ")");
+                getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue if you have not edited the base code.");
+            }
         }
     }
 }

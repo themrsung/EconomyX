@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.text.NumberFormat;
+
 /**
  * Represents an in-game location
  *
@@ -60,4 +62,12 @@ public record Address(
         );
     }
 
+    @JsonIgnore
+    public String format() {
+        return "[주소] " +
+                "월드: " + world +
+                "x: " + NumberFormat.getIntegerInstance().format(x) +
+                "y: " + NumberFormat.getIntegerInstance().format(y) +
+                "z: " + NumberFormat.getIntegerInstance().format(z);
+    }
 }

@@ -34,6 +34,11 @@ public final class BalanceCommand extends EconomyCommand {
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
         if (params.length < 2) {
             list.addAll(Lists.CURRENCY_NAMES(getState()));
+            if (!params[0].equals("")) {
+                list.removeIf(s -> !s.toLowerCase().startsWith(params[0].toLowerCase()));
+            }
+        } else {
+            list.add(Messages.ALL_DONE);
         }
     }
 }

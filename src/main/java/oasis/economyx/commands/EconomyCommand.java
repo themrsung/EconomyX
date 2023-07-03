@@ -54,9 +54,18 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
+        // EconomyX does not support console commands.
         return false;
     }
 
+    /**
+     * Called when command is executed. (either by oneself or by sudo executor)
+     * @param player Actual player who typed in the command
+     * @param caller Actual person who called the command
+     * @param actor Actor to execute the command as
+     * @param params Command parameters
+     * @param permission Permission level of the caller (see {@link AccessLevel})
+     */
     public abstract void onEconomyCommand(@NonNull Player player, @NonNull Person caller, @NonNull Actor actor, @NonNull String[] params, @NonNull AccessLevel permission);
 
     @Override
@@ -73,47 +82,80 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
     protected enum Keyword {
         CREATE,
         BALANCE,
-        SET_ADDRESS;
+        SET_ADDRESS,
+        PAY,
+        MESSAGE,
+
+        // Allows recursive sudo by default
+        SUDO;
 
         private static final List<String> K_CREATE = Arrays.asList("create", "new", "추가", "신규", "생성");
         private static final List<String> K_BALANCE = Arrays.asList("bal", "balance", "잔고");
         private static final List<String> K_SET_ADDRESS = Arrays.asList("sethome", "setaddress", "집설정", "주소설정", "주소지설정");
+        private static final List<String> K_PAY = Arrays.asList("pay", "송금");
+        private static final List<String> K_MESSAGE = Arrays.asList("dm", "msg", "message", "디엠", "메시지");
+
+        private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
         @Nullable
         public static Keyword fromInput(@NonNull String input) {
             if (K_CREATE.contains(input.toLowerCase())) return CREATE;
             if (K_BALANCE.contains(input.toLowerCase())) return BALANCE;
             if (K_SET_ADDRESS.contains(input.toLowerCase())) return SET_ADDRESS;
+            if (K_PAY.contains(input.toLowerCase())) return PAY;
+            if (K_MESSAGE.contains(input.toLowerCase())) return MESSAGE;
+            if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
             return null;
         }
 
         public List<String> toInput() {
-            List<String> results = new ArrayList<>();
-
-            switch (this) {
-                case CREATE -> {
-                    results.addAll(K_CREATE);
-                }
-                case BALANCE -> {
-                    results.addAll(K_BALANCE);
-                }
-                case SET_ADDRESS -> {
-                    results.addAll(K_SET_ADDRESS);
-                }
-            }
-
-            return results;
+            return switch (this) {
+                case CREATE -> K_CREATE;
+                case BALANCE -> K_BALANCE;
+                case SET_ADDRESS -> K_SET_ADDRESS;
+                case PAY -> K_PAY;
+                case MESSAGE -> K_MESSAGE;
+                default -> new ArrayList<>();
+            };
         }
     }
 
     protected abstract static class Messages {
+        public static String UNKNOWN_ERROR = ChatColor.RED + "알 수 없는 오류가 발생했습니다. 관리자에게 제보 부탁드립니다.";
+        public static String INVALID_TYPE = ChatColor.RED + "유효하지 않은 유형입니다.";
         public static String INVALID_NUMBER = ChatColor.RED + "유효하지 않은 숫자입니다.";
+        public static String INVALID_CURRENCY = ChatColor.RED + "유효하지 않은 통화입니다.";
         public static String INVALID_KEYWORD = ChatColor.RED + "유효하지 않은 키워드입니다.";
 
+        public static String INSERT_NUMBER = "숫자를 입력하세요.";
+        public static String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
+        public static String INSERT_SHARE_COUNT = "발행할 주식수를 입력하세요. (정수)";
+        public static String INSERT_CAPITAL = "자본금을 입력하세요. (정수)";
+        public static String INSERT_MESSAGE = "메시지를 입력하세요.";
+        public static String ALL_DONE = "필요한 항목을 전부 입력했습니다.";
+        public static String INSERT_CURRENCY_TO_ISSUE = "발행할 통화의 이름을 입력하세요. (영문 3글자 이하, 중복 불가)";
+
+        public static String NAME_TOO_LONG(int maxLength) {
+            return ChatColor.RED + "이름은 " + NumberFormat.getIntegerInstance().format(maxLength) + "글자를 초과할 수 없습니다.";
+        }
+        public static String ACTOR_ONLY_CREATABLE_BY_SOVEREIGNS = ChatColor.RED + "국가만 설립 가능합니다.";
+        public static String ACTOR_ONLY_CREATABLE_BY_CORPORATIONS = ChatColor.RED + "기업만 설립 가능합니다.";
+        public static String ACTOR_ONLY_CREATABLE_BY_PERSONS = ChatColor.RED + "플레이어만 설립 가능합니다.";
+
+        public static String NAME_TAKEN = ChatColor.RED + "이름이 이미 사용 중입니다.";
+
+        public static String INSUFFICIENT_CASH = ChatColor.RED + "잔고가 부족합니다.";
+        public static String INSUFFICIENT_ASSETS = ChatColor.RED + "자산이 부족합니다.";
         public static String INSUFFICIENT_PERMISSIONS = ChatColor.RED + "권한이 부족합니다.";
         public static String INSUFFICIENT_ARGS = ChatColor.RED + "입력이 부족합니다.";
         public static String ACTOR_NOT_FOUND = ChatColor.RED + "대상을 찾을 수 없습니다.";
+
+        public static String CORPORATION_CREATED = ChatColor.GREEN + "기업이 설립되었습니다.";
+        public static String FUND_CREATED = ChatColor.GREEN + "펀드가 설립되었습니다.";
+        public static String INSTITUTION_CREATED = ChatColor.GREEN + "기관이 설립되었습니다.";
+        public static String SOVEREIGNTY_CREATED = ChatColor.GREEN + "국가가 설립되었습니다.";
+        public static String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
 
         public static String CASH_BALANCE(@NonNull CashStack cash) {
             return "[현금] " + NumberFormat.getIntegerInstance().format(cash.getQuantity()) + " " + cash.getAsset().getName();
@@ -182,6 +224,29 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             return null;
         }
+
+        @Nullable
+        public static Cash searchCurrency(@NonNull String input, @NonNull EconomyState state) {
+            for (Cash currency : state.getCurrencies()) {
+                if (currency.getName().equalsIgnoreCase(input)) {
+                    return currency;
+                }
+            }
+
+            for (Cash currency : state.getCurrencies()) {
+                if (currency.getName().toLowerCase().contains(input.toLowerCase())) {
+                    return currency;
+                }
+            }
+
+            for (Cash currency : state.getCurrencies()) {
+                if (currency.getUniqueId().toString().contains(input)) {
+                    return currency;
+                }
+            }
+
+            return null;
+        }
     }
 
     protected abstract static class Lists {
@@ -206,10 +271,28 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    /**
+     * When multiple access levels are detected, the highest one will be set.
+     */
     protected enum AccessLevel {
+        /**
+         * Oneself
+         */
         SELF,
+
+        /**
+         * When the caller is the representative of the actor
+         */
         DE_FACTO_SELF,
+
+        /**
+         * When the caller is a director of the actor
+         */
         DIRECTOR,
+
+        /**
+         * When the caller is an employee of the actor
+         */
         EMPLOYEE;
 
         public boolean isAtLeast(@NonNull AccessLevel other) {

@@ -4,6 +4,9 @@ import oasis.economyx.EconomyX;
 import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
+import oasis.economyx.commands.create.CreateCommand;
+import oasis.economyx.commands.message.MessageCommand;
+import oasis.economyx.commands.pay.PayCommand;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
@@ -56,7 +59,7 @@ public final class SudoCommand extends EconomyCommand {
         }
 
         final Keyword action = Keyword.fromInput(params[1]);
-        final String[] argsToPass = params.length > 2 ? Arrays.copyOfRange(params, 1, params.length) : new String[] {};
+        final String[] argsToPass = params.length > 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[] {};
 
         if (action == null) {
             player.sendRawMessage(Messages.INVALID_KEYWORD);
@@ -64,20 +67,34 @@ public final class SudoCommand extends EconomyCommand {
         }
 
         switch (action) {
+            case CREATE -> {
+                CreateCommand create = new CreateCommand(getEX(), getState());
+                create.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
             case BALANCE -> {
                 BalanceCommand balance = new BalanceCommand(getEX(), getState());
                 balance.onEconomyCommand(player, caller, executor, argsToPass, level);
-                return;
             }
             case SET_ADDRESS -> {
                 SetAddressCommand setAddress = new SetAddressCommand(getEX(), getState());
                 setAddress.onEconomyCommand(player, caller, executor, argsToPass, level);
-                return;
+            }
+            case PAY -> {
+                PayCommand pay = new PayCommand(getEX(), getState());
+                pay.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case MESSAGE -> {
+                MessageCommand message = new MessageCommand(getEX(), getState());
+                message.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case SUDO -> {
+                SudoCommand sudo = new SudoCommand(getEX(), getState());
+                sudo.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            default -> {
+                player.sendRawMessage(Messages.INVALID_KEYWORD);
             }
         }
-
-        player.sendRawMessage(Messages.INVALID_KEYWORD);
-        return;
     }
 
     @Override
@@ -89,12 +106,16 @@ public final class SudoCommand extends EconomyCommand {
                 list.addAll(k.toInput());
             }
         } else {
-            final String[] argsToPass = params.length > 3 ? Arrays.copyOfRange(params, 3, params.length) : new String[] {};
-            final Keyword action = Keyword.fromInput(params[2]);
+            final String[] argsToPass = Arrays.copyOfRange(params, 2, params.length);
+            final Keyword action = Keyword.fromInput(params[1]);
 
             if (action == null) return;
 
             switch (action) {
+                case CREATE -> {
+                    CreateCommand create = new CreateCommand(getEX(), getState());
+                    create.onEconomyComplete(list, argsToPass);
+                }
                 case BALANCE -> {
                     BalanceCommand balance = new BalanceCommand(getEX(), getState());
                     balance.onEconomyComplete(list, argsToPass);
@@ -102,6 +123,18 @@ public final class SudoCommand extends EconomyCommand {
                 case SET_ADDRESS -> {
                     SetAddressCommand setAddress = new SetAddressCommand(getEX(), getState());
                     setAddress.onEconomyComplete(list, argsToPass);
+                }
+                case PAY -> {
+                    PayCommand pay = new PayCommand(getEX(), getState());
+                    pay.onEconomyComplete(list, argsToPass);
+                }
+                case MESSAGE -> {
+                    MessageCommand message = new MessageCommand(getEX(), getState());
+                    message.onEconomyComplete(list, argsToPass);
+                }
+                case SUDO -> {
+                    SudoCommand sudo = new SudoCommand(getEX(), getState());
+                    sudo.onEconomyComplete(list, argsToPass);
                 }
             }
         }

@@ -12,6 +12,9 @@ import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
+import oasis.economyx.commands.create.CreateCommand;
+import oasis.economyx.commands.message.MessageCommand;
+import oasis.economyx.commands.pay.PayCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
@@ -36,6 +39,7 @@ import oasis.economyx.listeners.contract.OptionExercisedListener;
 import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
 import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
+import oasis.economyx.listeners.message.MessageSentListener;
 import oasis.economyx.listeners.organization.AllianceMemberChangedListener;
 import oasis.economyx.listeners.organization.CartelMemberChangedListener;
 import oasis.economyx.listeners.organization.PartyMemberChangedListener;
@@ -66,6 +70,8 @@ import oasis.economyx.state.EconomyXState;
 import oasis.economyx.tasks.EconomyTask;
 import oasis.economyx.tasks.expiry.CardExpiryTask;
 import oasis.economyx.tasks.expiry.ContractExpiryTask;
+import oasis.economyx.tasks.message.MessageHistoryCleanerTask;
+import oasis.economyx.tasks.message.MessengerTask;
 import oasis.economyx.tasks.payment.CreditCardSettlementTask;
 import oasis.economyx.tasks.payment.RegularPaymentTask;
 import oasis.economyx.tasks.server.AutoSaveTask;
@@ -127,6 +133,10 @@ public final class EconomyX extends JavaPlugin {
         registerTask(new CardExpiryTask(this, state));
         registerTask(new ContractExpiryTask(this, state));
 
+        // Message
+        registerTask(new MessengerTask(this, state));
+        registerTask(new MessageHistoryCleanerTask(this, state));
+
         // Payments
         registerTask(new RegularPaymentTask(this, state));
         registerTask(new CreditCardSettlementTask(this, state));
@@ -184,6 +194,9 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new GuaranteeIssuedListener(this, state));
         registerListener(new GuaranteeRevokedListener(this, state));
 
+        // Message
+        registerListener(new MessageSentListener(this, state));
+
         // Organization
         registerListener(new AllianceMemberChangedListener(this, state));
         registerListener(new CartelMemberChangedListener(this, state));
@@ -237,6 +250,11 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("balance", new BalanceCommand(this, state));
         registerCommand("sudo", new SudoCommand(this, state));
 
+        registerCommand("create", new CreateCommand(this, state));
+        registerCommand("pay", new PayCommand(this, state));
+
+        registerCommand("message", new MessageCommand(this, state));
+
         registerCommand("setaddress", new SetAddressCommand(this, state));
     }
 
@@ -279,6 +297,8 @@ public final class EconomyX extends JavaPlugin {
 
         halliday.getAssets().add(new StockStack(oasisStock, 10000L));
         oasis.getAssets().add(new CashStack(SERVER_CURRENCY, 1000000000000000000L));
+        oasis.setRepresentative(halliday);
+        oasis.setRepresentativePay(new CashStack(SERVER_CURRENCY, 1000000L));
 
         state.addActor(oasis);
 
@@ -292,6 +312,7 @@ public final class EconomyX extends JavaPlugin {
 
         JB_PRINCIPALITY.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
         JB_PRINCIPALITY.addCorporation(oasis);
+        JB_PRINCIPALITY.setRepresentative(halliday);
 
         state.addActor(JB_PRINCIPALITY);
 
@@ -304,6 +325,7 @@ public final class EconomyX extends JavaPlugin {
         );
 
         JBE.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
+        JBE.setRepresentative(halliday);
 
         state.addActor(JBE);
 
@@ -361,6 +383,7 @@ public final class EconomyX extends JavaPlugin {
                 JBE
         );
 
+        MPTO.setRepresentative(halliday);
         MPTO.addMember(JB_PRINCIPALITY);
         MPTO.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
 

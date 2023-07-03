@@ -174,6 +174,16 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * The fee paid to exchanges by brokerages.
          */
-        MARKET_FEE;
+        MARKET_FEE,
+
+        /**
+         * The initial capital deposited on actor creation.
+         */
+        ACTOR_INITIAL_CAPITAL,
+
+        /**
+         * Transfer of cash using /pay.
+         */
+        PAY_COMMAND;
     }
 }

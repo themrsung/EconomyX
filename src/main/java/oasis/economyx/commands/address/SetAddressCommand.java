@@ -37,6 +37,6 @@ public final class SetAddressCommand extends EconomyCommand {
 
     @Override
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
-
+        list.add(Messages.ALL_DONE);
     }
 }

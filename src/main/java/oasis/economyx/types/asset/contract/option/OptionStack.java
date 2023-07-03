@@ -2,13 +2,16 @@ package oasis.economyx.types.asset.contract.option;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
+import oasis.economyx.types.asset.contract.Contract;
 import oasis.economyx.types.asset.contract.ContractStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
+import java.text.NumberFormat;
 
 public final class OptionStack extends ContractStack {
     public OptionStack(@NonNull Option asset, @NonNegative long quantity) {
@@ -21,6 +24,12 @@ public final class OptionStack extends ContractStack {
 
     public OptionStack(OptionStack other) {
         super(other);
+    }
+
+    @Override
+    public @NonNull Option getAsset() {
+        if (!(super.getAsset() instanceof Option)) throw new RuntimeException();
+        return (Option) super.getAsset();
     }
 
     @NonNull
@@ -51,6 +60,20 @@ public final class OptionStack extends ContractStack {
     @JsonIgnore
     public @NonNull OptionStack copy() {
         return new OptionStack(this);
+    }
+
+    @Override
+    public @NonNull String format(@NonNull EconomyState state) {
+        return "["
+                + (getAsset().getOptionType().isCall() ? "콜" : "풋")
+                + "옵션] 기초자산 ["
+                + getAsset().getDelivery().format(state)
+                + "] " + "카운터파티: ["
+                + (getAsset().getCounterparty().getName() != null ? getAsset().getCounterparty().getName() : "알 수 없음")
+                + "] 수량: "
+                + NumberFormat.getIntegerInstance().format(getQuantity())
+                + "계약 유형: "
+                + getAsset().getOptionType().toString();
     }
 
     /**

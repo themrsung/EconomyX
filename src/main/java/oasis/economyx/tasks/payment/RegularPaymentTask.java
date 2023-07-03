@@ -15,7 +15,6 @@ public final class RegularPaymentTask extends EconomyTask {
 
     @Override
     public void run() {
-
         for (Banker b : getState().getBankers()) {
             b.payInterest();
         }

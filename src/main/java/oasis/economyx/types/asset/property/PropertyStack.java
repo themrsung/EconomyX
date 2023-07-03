@@ -2,6 +2,7 @@ package oasis.economyx.types.asset.property;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
@@ -108,6 +109,11 @@ public final class PropertyStack implements AssetStack {
     @JsonIgnore
     public @NonNull PropertyStack copy() {
         return new PropertyStack(this);
+    }
+
+    @Override
+    public @NonNull String format(@NonNull EconomyState state) {
+        return "부동산: " + getAsset().getArea().format();
     }
 
     /**

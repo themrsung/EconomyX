@@ -2,6 +2,7 @@ package oasis.economyx.types.asset.cash;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
 import oasis.economyx.types.asset.AssetStack;
@@ -9,6 +10,7 @@ import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.beans.ConstructorProperties;
+import java.text.NumberFormat;
 
 /**
  * A stack of cash
@@ -234,6 +236,11 @@ public final class CashStack implements AssetStack {
     @JsonIgnore
     public @NonNull CashStack copy() {
         return new CashStack(this);
+    }
+
+    @Override
+    public @NonNull String format(@NonNull EconomyState state) {
+        return NumberFormat.getIntegerInstance().format(getQuantity()) + " " + getAsset().getName();
     }
 
     /**

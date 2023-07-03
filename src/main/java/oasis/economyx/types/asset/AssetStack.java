@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.types.asset.chip.ChipStack;
 import oasis.economyx.types.asset.commodity.CommodityStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import oasis.economyx.types.asset.contract.forward.ForwardStack;
@@ -35,7 +34,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = StockStack.class, name = "STOCK"),
         @JsonSubTypes.Type(value = CommodityStack.class, name = "COMMODITY"),
         @JsonSubTypes.Type(value = PropertyStack.class, name = "PROPERTY"),
-        @JsonSubTypes.Type(value = ChipStack.class, name = "CHIP"),
         @JsonSubTypes.Type(value = CollateralStack.class, name = "COLLATERAL"),
         @JsonSubTypes.Type(value = ForwardStack.class, name = "FORWARD"),
         @JsonSubTypes.Type(value = NoteStack.class, name = "NOTE"),
@@ -127,6 +125,13 @@ public interface AssetStack extends References {
      */
     @NonNull
     AssetStack copy();
+
+    /**
+     * Formats this asset stack.
+     * @return Formatted string
+     */
+    @NonNull
+    String format(@NonNull EconomyState state);
 
     @Override
     default void initialize(@NonNull EconomyState state) {

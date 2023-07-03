@@ -3,7 +3,6 @@ package oasis.economyx.types.asset;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.types.asset.cash.CashMeta;
-import oasis.economyx.types.asset.chip.ChipMeta;
 import oasis.economyx.types.asset.commodity.CommodityMeta;
 import oasis.economyx.types.asset.contract.collateral.CollateralMeta;
 import oasis.economyx.types.asset.contract.forward.ForwardMeta;
@@ -27,7 +26,6 @@ import oasis.economyx.types.asset.stock.StockMeta;
         @JsonSubTypes.Type(value = CommodityMeta.class, name = "COMMODITY"),
         @JsonSubTypes.Type(value = StockMeta.class, name = "STOCK"),
         @JsonSubTypes.Type(value = PropertyMeta.class, name = "PROPERTY"),
-        @JsonSubTypes.Type(value = ChipMeta.class, name = "CHIP"),
         @JsonSubTypes.Type(value = CollateralMeta.class, name = "COLLATERAL"),
         @JsonSubTypes.Type(value = ForwardMeta.class, name = "FORWARD"),
         @JsonSubTypes.Type(value = NoteMeta.class, name = "NOTE"),
