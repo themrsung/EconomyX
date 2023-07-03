@@ -3,8 +3,11 @@ package oasis.economyx.commands.sudo;
 import oasis.economyx.EconomyX;
 import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
+import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
+import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
+import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.pay.PayCommand;
@@ -43,23 +46,9 @@ public final class SudoCommand extends EconomyCommand {
             return;
         }
 
-        // Check permissions (Lowest first)
-        AccessLevel level = null;
+        AccessLevel level = AccessLevel.getPermission(executor, actor);
 
-        if (executor instanceof Employer e) {
-            level = e.getEmployees().contains(caller) ? AccessLevel.EMPLOYEE : level;
-            level = e.getDirectors().contains(caller) ? AccessLevel.DIRECTOR : level;
-        }
-
-        if (executor instanceof Representable r) {
-            level = Objects.equals(r.getRepresentative(), caller) ? AccessLevel.DE_FACTO_SELF : level;
-        }
-
-        if (executor instanceof Person p) {
-            level = p.equals(caller) ? AccessLevel.SELF : level;
-        }
-
-        if (level == null) {
+        if (level == AccessLevel.OUTSIDER) {
             player.sendRawMessage(Messages.INSUFFICIENT_PERMISSIONS);
             return;
         }
@@ -96,6 +85,18 @@ public final class SudoCommand extends EconomyCommand {
             case REPLY -> {
                 ReplyCommand reply = new ReplyCommand(getEX(), getState());
                 reply.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case PHYSICALIZE -> {
+                PhysicalizeAssetCommand physicalize = new PhysicalizeAssetCommand(getEX(), getState());
+                physicalize.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case DEPHYSICALIZE -> {
+                DephysicalizeAssetCommand dephysicalize = new DephysicalizeAssetCommand(getEX(), getState());
+                dephysicalize.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case INFO -> {
+                InformationCommand info = new InformationCommand(getEX(), getState());
+                info.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
@@ -145,6 +146,18 @@ public final class SudoCommand extends EconomyCommand {
                 case REPLY -> {
                     ReplyCommand reply = new ReplyCommand(getEX(), getState());
                     reply.onEconomyComplete(list, argsToPass);
+                }
+                case PHYSICALIZE -> {
+                    PhysicalizeAssetCommand physicalize = new PhysicalizeAssetCommand(getEX(), getState());
+                    physicalize.onEconomyComplete(list, argsToPass);
+                }
+                case DEPHYSICALIZE -> {
+                    DephysicalizeAssetCommand dephysicalize = new DephysicalizeAssetCommand(getEX(), getState());
+                    dephysicalize.onEconomyComplete(list, argsToPass);
+                }
+                case INFO -> {
+                    InformationCommand info = new InformationCommand(getEX(), getState());
+                    info.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

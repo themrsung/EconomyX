@@ -11,8 +11,11 @@ import oasis.economyx.classes.actor.sovereignty.federal.Empire;
 import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
+import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
+import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
+import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.pay.PayCommand;
@@ -258,6 +261,11 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("reply", new ReplyCommand(this, state));
 
         registerCommand("setaddress", new SetAddressCommand(this, state));
+
+        registerCommand("physicalize", new PhysicalizeAssetCommand(this, state));
+        registerCommand("dephysicalize", new DephysicalizeAssetCommand(this, state));
+
+        registerCommand("information", new InformationCommand(this, state));
     }
 
     private void registerTask(EconomyTask task) {

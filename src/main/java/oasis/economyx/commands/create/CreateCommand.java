@@ -3,6 +3,7 @@ package oasis.economyx.commands.create;
 import oasis.economyx.EconomyX;
 import oasis.economyx.classes.actor.company.common.Merchant;
 import oasis.economyx.classes.actor.company.finance.Bank;
+import oasis.economyx.classes.actor.company.finance.SecuritiesBroker;
 import oasis.economyx.classes.actor.company.special.HoldingsCompany;
 import oasis.economyx.classes.actor.company.special.Mercenary;
 import oasis.economyx.classes.actor.company.trading.AuctionCompany;
@@ -118,6 +119,7 @@ public final class CreateCommand extends EconomyCommand {
             Corporation corporation = switch (type) {
                 case HOLDINGS_COMPANY -> new HoldingsCompany(UUID.randomUUID(), name, stockId, shareCount, currency);
                 case BANK -> new Bank(UUID.randomUUID(), name, stockId, shareCount, currency);
+                case SECURITIES_BROKER -> new SecuritiesBroker(UUID.randomUUID(), name, stockId, shareCount, currency);
                 case MERCHANT -> new Merchant(UUID.randomUUID(), name, stockId, shareCount, currency);
                 case MERCENARY -> new Mercenary(UUID.randomUUID(), name, stockId, shareCount, currency);
                 case AUCTION_COMPANY -> new AuctionCompany(UUID.randomUUID(), name, stockId, shareCount, currency);
@@ -471,6 +473,7 @@ public final class CreateCommand extends EconomyCommand {
         // CORPORATIONS
         HOLDINGS_COMPANY,
         BANK,
+        SECURITIES_BROKER,
         MERCHANT,
         MERCENARY,
         AUCTION_COMPANY,
@@ -497,6 +500,7 @@ public final class CreateCommand extends EconomyCommand {
 
         private static final List<String> K_HOLDINGS_COMPANY = Arrays.asList("holdingscompany", "hcompany", "지주사", "지주회사");
         private static final List<String> K_BANK = Arrays.asList("bank", "은행");
+        private static final List<String> K_SECURITIES_BROKER = Arrays.asList("securitiesbroker", "brokerage", "브로커리지", "증권사");
         private static final List<String> K_MERCHANT = Arrays.asList("merchant", "소매회사");
         private static final List<String> K_MERCENARY = Arrays.asList("mercenary", "privatemilitary", "pmilitary", "pmc", "용병", "용병회사", "민간군사기업");
         private static final List<String> K_AUCTION_COMPANY = Arrays.asList("auctioneer", "auctionhouse", "auctioncompany", "경매회사", "경매소");
@@ -520,6 +524,7 @@ public final class CreateCommand extends EconomyCommand {
                 case PARTY -> K_PARTY;
                 case HOLDINGS_COMPANY -> K_HOLDINGS_COMPANY;
                 case BANK -> K_BANK;
+                case SECURITIES_BROKER -> K_SECURITIES_BROKER;
                 case MERCHANT -> K_MERCHANT;
                 case MERCENARY -> K_MERCENARY;
                 case AUCTION_COMPANY -> K_AUCTION_COMPANY;
@@ -546,6 +551,7 @@ public final class CreateCommand extends EconomyCommand {
             if (K_PARTY.contains(input.toLowerCase())) return PARTY;
             if (K_HOLDINGS_COMPANY.contains(input.toLowerCase())) return HOLDINGS_COMPANY;
             if (K_BANK.contains(input.toLowerCase())) return BANK;
+            if (K_SECURITIES_BROKER.contains(input.toLowerCase())) return SECURITIES_BROKER;
             if (K_MERCHANT.contains(input.toLowerCase())) return MERCHANT;
             if (K_MERCENARY.contains(input.toLowerCase())) return MERCENARY;
             if (K_AUCTION_COMPANY.contains(input.toLowerCase())) return AUCTION_COMPANY;

@@ -3,6 +3,8 @@ package oasis.economyx.commands;
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.actor.types.employment.Employer;
+import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -86,6 +88,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         PAY,
         MESSAGE,
         REPLY,
+        PHYSICALIZE,
+        DEPHYSICALIZE,
+        INFO,
 
         // Allows recursive sudo by default
         SUDO;
@@ -96,6 +101,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_PAY = Arrays.asList("pay", "송금");
         private static final List<String> K_MESSAGE = Arrays.asList("dm", "msg", "message", "디엠", "메시지");
         private static final List<String> K_REPLY = Arrays.asList("r", "reply", "답변", "답장");
+        private static final List<String> K_PHYSICALIZE = Arrays.asList("physicalize", "실물화");
+        private static final List<String> K_DEPHYSICALIZE = Arrays.asList("dephysicalize", "가상화");
+        private static final List<String> K_INFO = Arrays.asList("i", "info", "information", "정보");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -107,7 +115,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_PAY.contains(input.toLowerCase())) return PAY;
             if (K_MESSAGE.contains(input.toLowerCase())) return MESSAGE;
             if (K_REPLY.contains(input.toLowerCase())) return REPLY;
+            if (K_PHYSICALIZE.contains(input.toLowerCase())) return PHYSICALIZE;
+            if (K_DEPHYSICALIZE.contains(input.toLowerCase())) return DEPHYSICALIZE;
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
+            if (K_INFO.contains(input.toLowerCase())) return INFO;
 
             return null;
         }
@@ -120,6 +131,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case PAY -> K_PAY;
                 case REPLY -> K_REPLY;
                 case MESSAGE -> K_MESSAGE;
+                case PHYSICALIZE -> K_PHYSICALIZE;
+                case DEPHYSICALIZE -> K_DEPHYSICALIZE;
+                case SUDO -> K_SUDO;
+                case INFO -> K_INFO;
                 default -> new ArrayList<>();
             };
         }
@@ -131,6 +146,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static String INVALID_NUMBER = ChatColor.RED + "유효하지 않은 숫자입니다.";
         public static String INVALID_CURRENCY = ChatColor.RED + "유효하지 않은 통화입니다.";
         public static String INVALID_KEYWORD = ChatColor.RED + "유효하지 않은 키워드입니다.";
+        public static String INVALID_ASSET = ChatColor.RED + "유효하지 않은 자산입니다.";
 
         public static String INSERT_NUMBER = "숫자를 입력하세요.";
         public static String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
@@ -162,6 +178,20 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
 
         public static String NO_MESSAGES_RECEIVED = ChatColor.RED + "수신한 메시지가 없습니다.";
+
+        public static String ASSET_NOT_FOUND = ChatColor.RED + "자산을 찾지 못했습니다.";
+        public static String NO_SPACE_IN_INVENTORY = ChatColor.RED + "인벤토리에 빈 공간이 없습니다.";
+        public static String ASSET_PHYSICALIZED = ChatColor.GREEN + "자산을 실물화했습니다.";
+        public static String ASSET_DEPHYSICALIZED = ChatColor.GREEN + "자산을 가상화했습니다.";
+
+        public static List<String> ACTOR_INFORMATION_OUTSIDER(@NonNull Actor actor) {
+            List<String> info = new ArrayList<>();
+
+            info.add(actor.getName() + " 정보");
+            info.add("유형: " + actor.getType().toString());
+
+            return info;
+        }
 
         public static String CASH_BALANCE(@NonNull CashStack cash) {
             return "[현금] " + NumberFormat.getIntegerInstance().format(cash.getQuantity()) + " " + cash.getAsset().getName();
@@ -299,7 +329,12 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         /**
          * When the caller is an employee of the actor
          */
-        EMPLOYEE;
+        EMPLOYEE,
+
+        /**
+         * When the caller is an outsider
+         */
+        OUTSIDER;
 
         public boolean isAtLeast(@NonNull AccessLevel other) {
             switch (other) {
@@ -318,9 +353,32 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case EMPLOYEE -> {
                     return isAtLeast(DIRECTOR) || this == EMPLOYEE;
                 }
+
+                case OUTSIDER -> {
+                    return isAtLeast(EMPLOYEE) || this == OUTSIDER;
+                }
             }
 
             return false;
+        }
+
+        public static AccessLevel getPermission(@NonNull Actor actor, @NonNull Actor checkAs) {
+            if (checkAs instanceof Person person) {
+                if (actor instanceof Person p) {
+                    if (p.equals(checkAs)) return SELF;
+                }
+
+                if (actor instanceof Representable r) {
+                    if (Objects.equals(r.getRepresentative(), person)) return DE_FACTO_SELF;
+                }
+
+                if (actor instanceof Employer e) {
+                    if (e.getDirectors().contains(person)) return DIRECTOR;
+                    if (e.getEmployees().contains(person)) return EMPLOYEE;
+                }
+            }
+
+            return OUTSIDER;
         }
     }
 }

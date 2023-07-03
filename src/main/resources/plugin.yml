@@ -31,3 +31,15 @@ commands:
     description: 수신한 메시지에 답변을 보냅니다.
     usage: /reply [수신인] 내용
     aliases: [r, 답변, 답장]
+  physicalize:
+    description: 자산을 실물화합니다.
+    usage: /physicalize 자산 수량
+    aliases: [physical, 실물화]
+  dephysicalize:
+    description: 실물자산을 가상화합니다.
+    usage: /dephysicalize
+    aliases: [dephysical, 가상화]
+  information:
+    description: 정보를 조회합니다.
+    usage: /information 대상
+    aliases: [i, info, 정보]

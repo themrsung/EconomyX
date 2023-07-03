@@ -50,7 +50,7 @@ public final class MessageCommand extends EconomyCommand {
         if (params.length < 2) {
             list.addAll(Lists.ACTOR_NAMES(getState()));
             if (!params[0].equals("")) list.removeIf(s -> !s.toLowerCase().startsWith(params[0].toLowerCase()));
-        } else if (params.length < 3) {
+        } else {
             list.add(Messages.INSERT_MESSAGE);
         }
     }
