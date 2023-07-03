@@ -1,38 +1,64 @@
 package oasis.economyx;
 
-import oasis.economyx.interfaces.actor.person.Person;
-import oasis.economyx.listeners.*;
-import oasis.economyx.listeners.actor.*;
+import oasis.economyx.listeners.EconomyListener;
+import oasis.economyx.listeners.actor.ActorAddressChangedListener;
+import oasis.economyx.listeners.actor.ActorCreationListener;
+import oasis.economyx.listeners.actor.ActorNameChangedListener;
 import oasis.economyx.listeners.asset.AssetDephysicalizedListener;
 import oasis.economyx.listeners.asset.AssetPhysicalizedListener;
-import oasis.economyx.listeners.banking.*;
+import oasis.economyx.listeners.banking.BankAccountClosedListener;
+import oasis.economyx.listeners.banking.BankAccountOpenedListener;
+import oasis.economyx.listeners.banking.BankDepositListener;
+import oasis.economyx.listeners.banking.BankWithdrawalListener;
 import oasis.economyx.listeners.banknote.BanknoteIssuedListener;
-import oasis.economyx.listeners.card.*;
-import oasis.economyx.listeners.contract.*;
-import oasis.economyx.listeners.dividend.*;
-import oasis.economyx.listeners.guarantee.*;
-import oasis.economyx.listeners.organization.*;
-import oasis.economyx.listeners.payment.*;
-import oasis.economyx.listeners.personal.*;
-import oasis.economyx.listeners.player.*;
-import oasis.economyx.listeners.property.*;
-import oasis.economyx.listeners.stock.*;
-import oasis.economyx.listeners.terminal.*;
+import oasis.economyx.listeners.card.CardActivatedListener;
+import oasis.economyx.listeners.card.CardIssuedListener;
+import oasis.economyx.listeners.card.CardRevokedListener;
+import oasis.economyx.listeners.card.CardUsedListener;
+import oasis.economyx.listeners.contract.ContractCreatedListener;
+import oasis.economyx.listeners.contract.ContractExpiredListener;
+import oasis.economyx.listeners.contract.ContractForgivenListener;
+import oasis.economyx.listeners.contract.OptionExercisedListener;
+import oasis.economyx.listeners.dividend.DividendListener;
+import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
+import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
+import oasis.economyx.listeners.organization.AllianceMemberChangedListener;
+import oasis.economyx.listeners.organization.CartelMemberChangedListener;
+import oasis.economyx.listeners.organization.PartyMemberChangedListener;
+import oasis.economyx.listeners.payment.PaymentListener;
+import oasis.economyx.listeners.personal.EmploymentListener;
+import oasis.economyx.listeners.personal.RepresentableEventListener;
+import oasis.economyx.listeners.player.PlayerDeathHandler;
+import oasis.economyx.listeners.player.PlayerJoinHandler;
+import oasis.economyx.listeners.property.PropertyClaimHandler;
+import oasis.economyx.listeners.property.PropertyProtectionHandler;
+import oasis.economyx.listeners.stock.StockIssuedListener;
+import oasis.economyx.listeners.stock.StockRetiredListener;
+import oasis.economyx.listeners.stock.StockSplitListener;
+import oasis.economyx.listeners.terminal.CardTerminalCreatedListener;
+import oasis.economyx.listeners.terminal.CardTerminalDestroyedListener;
 import oasis.economyx.listeners.trading.listing.AssetDelistedListener;
 import oasis.economyx.listeners.trading.listing.AssetListedListener;
 import oasis.economyx.listeners.trading.order.OrderCancelledListener;
 import oasis.economyx.listeners.trading.order.OrderPlacedListener;
-import oasis.economyx.listeners.vaulting.*;
-import oasis.economyx.listeners.voting.*;
-import oasis.economyx.listeners.warfare.*;
-import oasis.economyx.state.*;
-import oasis.economyx.tasks.*;
-import oasis.economyx.tasks.expiry.*;
-import oasis.economyx.tasks.gaming.*;
-import oasis.economyx.tasks.payment.*;
-import oasis.economyx.tasks.server.*;
-import oasis.economyx.tasks.trading.*;
-import oasis.economyx.tasks.voting.*;
+import oasis.economyx.listeners.vaulting.VaultCreatedListener;
+import oasis.economyx.listeners.vaulting.VaultDestroyedListener;
+import oasis.economyx.listeners.vaulting.VaultOpenedListener;
+import oasis.economyx.listeners.voting.VoteCastListener;
+import oasis.economyx.listeners.voting.VoteProposedListener;
+import oasis.economyx.listeners.warfare.HostilityStateChangedListener;
+import oasis.economyx.state.EconomyState;
+import oasis.economyx.state.EconomyXState;
+import oasis.economyx.tasks.EconomyTask;
+import oasis.economyx.tasks.expiry.CardExpiryTask;
+import oasis.economyx.tasks.expiry.ContractExpiryTask;
+import oasis.economyx.tasks.gaming.CasinoProgressTask;
+import oasis.economyx.tasks.payment.CreditCardSettlementTask;
+import oasis.economyx.tasks.payment.RegularPaymentTask;
+import oasis.economyx.tasks.server.AutoSaveTask;
+import oasis.economyx.tasks.trading.AuctionTickTask;
+import oasis.economyx.tasks.trading.MarketTickTask;
+import oasis.economyx.tasks.voting.VoteProcessTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -42,46 +68,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  *
  * <p>
  * EconomyX uses events to receive input from clients.
- * Direct state access is impossible.
- * States are given out as deep copies to server implementations.
- * They are censored for clients. (see {@link EconomyX#getCensoredState(Person)}}
  * </p>
  */
-public class EconomyX extends JavaPlugin {
+public final class EconomyX extends JavaPlugin {
     private EconomyState state;
-
-    /**
-     * Gets the raw state.
-     * Do NOT give this to anyone.
-     *
-     * @return Direct pointer to state
-     */
-    @NonNull
-    protected final EconomyState getRawState() {
-        return state;
-    }
-
-    /**
-     * Gets a deep copy of the state.
-     * Do NOT give this to clients.
-     *
-     * @return Deep copy
-     */
-    @NonNull
-    public final EconomyState getCopiedState() {
-        return state.copy();
-    }
-
-    /**
-     * Gets a censored deep copy of the state.
-     *
-     * @param viewer Viewer to censor the state as
-     * @return Censored deep copy
-     */
-    @NonNull
-    public final EconomyState getCensoredState(@NonNull Person viewer) {
-        return state.censor(viewer);
-    }
 
     @Override
     public void onEnable() {
