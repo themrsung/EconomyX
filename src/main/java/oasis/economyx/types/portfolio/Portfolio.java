@@ -2,6 +2,8 @@ package oasis.economyx.types.portfolio;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,7 +18,7 @@ import java.util.List;
 @JsonSerialize(as = AssetPortfolio.class)
 @JsonDeserialize(as = AssetPortfolio.class)
 
-public interface Portfolio {
+public interface Portfolio extends References {
     /**
      * Gets every asset in this portfolio.
      *
@@ -105,4 +107,11 @@ public interface Portfolio {
      * @return Whether this portfolio has the asset
      */
     boolean has(@NonNull AssetStack asset, boolean checkMeta);
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        for (AssetStack as : get()) {
+            as.initialize(state);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import oasis.economyx.classes.card.DebitCard;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -29,7 +30,7 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = CreditCard.class, name = "CREDIT_CARD"),
         @JsonSubTypes.Type(value = DebitCard.class, name = "DEBIT_CARD")
 })
-public interface Card {
+public interface Card extends References {
     /**
      * Do not change this after deployment
      */

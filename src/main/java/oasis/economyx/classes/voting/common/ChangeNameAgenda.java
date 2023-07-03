@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.actor.ActorNameChangedEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.voting.Agenda;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -14,7 +16,7 @@ import java.beans.ConstructorProperties;
 /**
  * An agenda to change the name of an actor.
  */
-public final class ChangeNameAgenda implements Agenda {
+public final class ChangeNameAgenda implements Agenda, References {
     public ChangeNameAgenda(@NonNull Actor actor, @NonNull String newName) {
         this.actor = actor;
         this.newName = newName;
@@ -30,7 +32,7 @@ public final class ChangeNameAgenda implements Agenda {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Actor actor;
+    private Actor actor;
     @NonNull
     @JsonProperty
     private final String newName;
@@ -69,5 +71,15 @@ public final class ChangeNameAgenda implements Agenda {
     private ChangeNameAgenda() {
         this.actor = null;
         this.newName = null;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Actor orig : state.getActors()) {
+            if (orig.getUniqueId().equals(actor.getUniqueId())) {
+                actor = orig;
+                break;
+            }
+        }
     }
 }

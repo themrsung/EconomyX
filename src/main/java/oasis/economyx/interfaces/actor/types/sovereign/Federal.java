@@ -5,6 +5,7 @@ import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -23,7 +24,7 @@ import java.util.List;
  * Feel free to change the behavior to suit your needs!
  * </p>
  */
-public interface Federal extends Sovereign {
+public interface Federal extends Sovereign, References {
     /**
      * Gets all member states
      *

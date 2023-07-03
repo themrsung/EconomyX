@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.chip.ChipStack;
 import oasis.economyx.types.asset.commodity.CommodityStack;
@@ -41,7 +43,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = SwapStack.class, name = "SWAP"),
 })
 
-public interface AssetStack {
+public interface AssetStack extends References {
     /**
      * The asset being held by this stack
      *
@@ -125,4 +127,9 @@ public interface AssetStack {
      */
     @NonNull
     AssetStack copy();
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        if (getAsset() instanceof References r) r.initialize(state);
+    }
 }

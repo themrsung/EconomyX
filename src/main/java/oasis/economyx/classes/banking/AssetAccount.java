@@ -6,6 +6,7 @@ import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.collateral.Collateral;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
@@ -61,11 +62,11 @@ public final class AssetAccount implements Account {
 
     @NonNull
     @JsonProperty
-    private final Banker institution;
+    private Banker institution;
 
     @NonNull
     @JsonProperty
-    private final Actor client;
+    private Actor client;
 
     @NonNull
     @JsonProperty
@@ -73,7 +74,7 @@ public final class AssetAccount implements Account {
 
     @NonNull
     @JsonProperty
-    private final CollateralStack collateral;
+    private CollateralStack collateral;
 
     @NonNull
     @Override
@@ -144,5 +145,34 @@ public final class AssetAccount implements Account {
     @Override
     public void onClosed(@NonNull Banker institution) {
         client.getAssets().remove(collateral);
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Banker orig : state.getBankers()) {
+            if (orig.getUniqueId().equals(institution.getUniqueId())) {
+                institution = orig;
+                break;
+            }
+        }
+
+        for (Actor orig : state.getActors()) {
+            if (orig.getUniqueId().equals(client.getUniqueId())) {
+                client = orig;
+
+                for (AssetStack as : orig.getAssets().get()) {
+                    if (as instanceof CollateralStack cs) {
+                        if (cs.equals(collateral)) {
+                            collateral = cs;
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+
+        content.initialize(state);
     }
 }

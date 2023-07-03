@@ -49,7 +49,6 @@ import java.util.UUID;
         @JsonSubTypes.Type(value = PaperMill.class, name = "PAPER_MILL"),
         @JsonSubTypes.Type(value = ConstructionCompany.class, name = "CONSTRUCTION_COMPANY"),
         @JsonSubTypes.Type(value = Distillery.class, name = "DISTILLERY"),
-        @JsonSubTypes.Type(value = Casino.class, name = "CASINO"),
         @JsonSubTypes.Type(value = ExchangeCompany.class, name = "EXCHANGE_COMPANY"),
         @JsonSubTypes.Type(value = AuctionCompany.class, name = "AUCTION_COMPANY"),
         @JsonSubTypes.Type(value = Bank.class, name = "BANK"),
@@ -215,11 +214,6 @@ public interface Actor {
          * Able to create alcohol-based beverages
          */
         DISTILLERY,
-
-        /**
-         * Able offer gambling services
-         */
-        CASINO,
 
         /**
          * Able to run markets

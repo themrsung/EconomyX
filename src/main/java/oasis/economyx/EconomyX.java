@@ -9,7 +9,10 @@ import oasis.economyx.classes.actor.organization.international.Alliance;
 import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.classes.actor.sovereignty.federal.Empire;
 import oasis.economyx.classes.actor.sovereignty.singular.Principality;
-import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.commands.EconomyCommand;
+import oasis.economyx.commands.address.SetAddressCommand;
+import oasis.economyx.commands.balance.BalanceCommand;
+import oasis.economyx.commands.sudo.SudoCommand;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.listeners.actor.ActorAddressChangedListener;
@@ -63,7 +66,6 @@ import oasis.economyx.state.EconomyXState;
 import oasis.economyx.tasks.EconomyTask;
 import oasis.economyx.tasks.expiry.CardExpiryTask;
 import oasis.economyx.tasks.expiry.ContractExpiryTask;
-import oasis.economyx.tasks.gaming.CasinoProgressTask;
 import oasis.economyx.tasks.payment.CreditCardSettlementTask;
 import oasis.economyx.tasks.payment.RegularPaymentTask;
 import oasis.economyx.tasks.server.AutoSaveTask;
@@ -78,8 +80,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -105,6 +106,7 @@ public final class EconomyX extends JavaPlugin {
 
         registerListeners();
         registerTasks();
+        registerCommands();
 
         Bukkit.getLogger().info("EconomyX loaded.");
     }
@@ -124,9 +126,6 @@ public final class EconomyX extends JavaPlugin {
         // Expiry
         registerTask(new CardExpiryTask(this, state));
         registerTask(new ContractExpiryTask(this, state));
-
-        // Gaming
-        registerTask(new CasinoProgressTask(this, state));
 
         // Payments
         registerTask(new RegularPaymentTask(this, state));
@@ -234,12 +233,24 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new HostilityStateChangedListener(this, state));
     }
 
+    private void registerCommands() {
+        registerCommand("balance", new BalanceCommand(this, state));
+        registerCommand("sudo", new SudoCommand(this, state));
+
+        registerCommand("setaddress", new SetAddressCommand(this, state));
+    }
+
     private void registerTask(EconomyTask task) {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, task, task.getDelay(), task.getInterval());
     }
 
     private void registerListener(EconomyListener event) {
         Bukkit.getPluginManager().registerEvents(event, this);
+    }
+
+    private void registerCommand(@NonNull String name, EconomyCommand command) {
+        Objects.requireNonNull(getCommand(name)).setExecutor(command);
+        Objects.requireNonNull(getCommand(name)).setTabCompleter(command);
     }
 
     /**
@@ -260,7 +271,7 @@ public final class EconomyX extends JavaPlugin {
         Stock oasisStock = new Stock(UUID.randomUUID(), "OAS");
         HoldingsCompany oasis = new HoldingsCompany(
                 UUID.randomUUID(),
-                "Oasis Corporation",
+                "OasisCorporation",
                 oasisStock.getUniqueId(),
                 10000L,
                 SERVER_CURRENCY
@@ -271,25 +282,25 @@ public final class EconomyX extends JavaPlugin {
 
         state.addActor(oasis);
 
-        // JBS
-        Principality JBS = new Principality(
+        // JB_PRINCIPALITY
+        Principality JB_PRINCIPALITY = new Principality(
                 UUID.randomUUID(),
-                "JB Server",
+                "자본주의공국",
                 SERVER_CURRENCY,
                 halliday
         );
 
-        JBS.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
-        JBS.addCorporation(oasis);
+        JB_PRINCIPALITY.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
+        JB_PRINCIPALITY.addCorporation(oasis);
 
-        state.addActor(JBS);
+        state.addActor(JB_PRINCIPALITY);
 
         // JB Empire
         Empire JBE = new Empire(
                 UUID.randomUUID(),
-                "JB Empire",
+                "자본주의제국",
                 SERVER_CURRENCY,
-                JBS
+                JB_PRINCIPALITY
         );
 
         JBE.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
@@ -300,7 +311,7 @@ public final class EconomyX extends JavaPlugin {
         CentralBank JB_BANK = new CentralBank(
                 JBE,
                 UUID.randomUUID(),
-                "JB Central Bank",
+                "JB중앙은행",
                 SERVER_CURRENCY
         );
 
@@ -312,7 +323,7 @@ public final class EconomyX extends JavaPlugin {
         Mint JB_MINT = new Mint(
                 JBE,
                 UUID.randomUUID(),
-                "JB Mint",
+                "JB조폐국",
                 SERVER_CURRENCY
         );
         JB_MINT.setRepresentative(halliday);
@@ -323,7 +334,7 @@ public final class EconomyX extends JavaPlugin {
         ResearchCenter JB_RESEARCH = new ResearchCenter(
                 JBE,
                 UUID.randomUUID(),
-                "JB Research",
+                "JB연구소",
                 SERVER_CURRENCY
         );
         JB_RESEARCH.setRepresentative(halliday);
@@ -334,7 +345,7 @@ public final class EconomyX extends JavaPlugin {
         Military JB_PEACEKEEPERS = new Military(
                 JBE,
                 UUID.randomUUID(),
-                "JB Peacekeepers",
+                "JB평화유지군",
                 SERVER_CURRENCY
         );
 
@@ -345,12 +356,12 @@ public final class EconomyX extends JavaPlugin {
         // MPTO
         Alliance MPTO = new Alliance(
                 UUID.randomUUID(),
-                "Mutual Protection Treaty Organization",
+                "상호방위조약기구",
                 SERVER_CURRENCY,
                 JBE
         );
 
-        MPTO.addMember(JBS);
+        MPTO.addMember(JB_PRINCIPALITY);
         MPTO.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
 
         state.addActor(MPTO);

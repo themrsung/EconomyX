@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.classes.voting.common.DummyAgenda;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joda.time.DateTime;
@@ -22,7 +24,7 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 @JsonSerialize(as = Vote.Ballot.class)
 @JsonDeserialize(as = Vote.Ballot.class)
-public interface Vote { // TODO Make a builder; Constructing votes is VERY tedious.
+public interface Vote extends References { // TODO Make a builder; Constructing votes is VERY tedious.
     /**
      * Gets a multiple selection vote.
      *
@@ -171,6 +173,13 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      */
     @JsonIgnore
     void processVotes();
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        for (Candidate c : getCandidates()) {
+            c.initialize(state);
+        }
+    }
 
     // No, I don't do the Impl thing.
     // You are free to modify this code, but do NOT call this class VoteImpl.

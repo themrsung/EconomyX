@@ -184,4 +184,16 @@ public final class Trust extends EconomicActor implements Fund {
     public Type getType() {
         return type;
     }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        if (trustee != null) {
+            for (Person p : state.getPersons()) {
+                if (p.getUniqueId().equals(trustee.getUniqueId())) {
+                    trustee = p;
+                    break;
+                }
+            }
+        }
+    }
 }

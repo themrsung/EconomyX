@@ -8,6 +8,7 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -66,12 +67,12 @@ public final class CreditCard implements Card {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final CardIssuer issuer;
+    private CardIssuer issuer;
 
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Actor holder;
+    private Actor holder;
 
     @NonNull
     @JsonProperty
@@ -179,5 +180,22 @@ public final class CreditCard implements Card {
         onSettled();
 
         issuer.cancelCard(this);
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (CardIssuer orig : state.getCardIssuers()) {
+            if (orig.getUniqueId().equals(issuer.getUniqueId())) {
+                issuer = orig;
+                break;
+            }
+        }
+
+        for (Actor orig : state.getActors()) {
+            if (orig.getUniqueId().equals(holder.getUniqueId())) {
+                holder = orig;
+                break;
+            }
+        }
     }
 }

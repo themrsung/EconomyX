@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.personal.representable.RepresentativeFiredEvent;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.voting.Agenda;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -14,7 +16,7 @@ import java.beans.ConstructorProperties;
 /**
  * An agenda to fire the representative of a representable
  */
-public final class FireRepresentativeAgenda implements Agenda {
+public final class FireRepresentativeAgenda implements Agenda, References {
     public FireRepresentativeAgenda(@NonNull Representable representable) {
         this.representable = representable;
     }
@@ -28,7 +30,7 @@ public final class FireRepresentativeAgenda implements Agenda {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Representable representable;
+    private Representable representable;
 
     @NonNull
     @JsonIgnore
@@ -56,5 +58,15 @@ public final class FireRepresentativeAgenda implements Agenda {
     @ConstructorProperties({"representable"})
     private FireRepresentativeAgenda() {
         this.representable = null;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Representable orig : state.getRepresentables()) {
+            if (orig.getUniqueId().equals(representable.getUniqueId())) {
+                representable = orig;
+                break;
+            }
+        }
     }
 }

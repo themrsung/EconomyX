@@ -3,6 +3,7 @@ package oasis.economyx.interfaces.vaulting;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.commodity.CommodityStack;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +18,7 @@ import java.util.UUID;
  * An interface for a vault block.
  * There is no default implementation for vaults.
  */
-public interface VaultBlock {
+public interface VaultBlock extends References {
     /**
      * Do not change this after deployment.
      */

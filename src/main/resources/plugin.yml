@@ -2,3 +2,16 @@ name: EconomyX
 version: '${version}'
 main: oasis.economyx.EconomyX
 api-version: '1.20'
+commands:
+  balance:
+    description: 내 잔고를 조회합니다.
+    usage: /balance [통화]
+    aliases: [bal, balance, 잔고]
+  sudo:
+    description: 타인의 명의로 명령어를 실행합니다.
+    usage: /sudo 대상 명령어
+    aliases: [s, d, sd, as, 대신, 대변]
+  setaddress:
+    description: 주소지를 설정합니다.
+    usage: /setaddress
+    aliases: [sa, sh, sethome, setaddress, 주소지설정, 주소설정, 홈설정]

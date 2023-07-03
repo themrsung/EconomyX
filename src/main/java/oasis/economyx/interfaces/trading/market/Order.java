@@ -7,6 +7,7 @@ import oasis.economyx.classes.trading.market.AssetOrder;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -22,7 +23,7 @@ import java.util.UUID;
  */
 @JsonSerialize(as = AssetOrder.class)
 @JsonDeserialize(as = AssetOrder.class)
-public interface Order  {
+public interface Order extends References {
     /**
      * Gets the unique ID of this order.
      *

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.trading.PriceProvider;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -51,7 +52,7 @@ public final class Swap implements Contract {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Actor counterparty;
+    private Actor counterparty;
 
     @NonNull
     @JsonProperty
@@ -62,14 +63,14 @@ public final class Swap implements Contract {
      */
     @NonNull
     @JsonProperty
-    private final PriceProvider base;
+    private PriceProvider base;
 
     /**
      * The quote price of this swap
      */
     @NonNull
     @JsonProperty
-    private final PriceProvider quote;
+    private PriceProvider quote;
 
     @Nullable
     @JsonProperty
@@ -184,6 +185,30 @@ public final class Swap implements Contract {
                     negated,
                     PaymentEvent.Cause.SWAP_SETTLED
             ));
+        }
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Actor a : state.getActors()) {
+            if (a.getUniqueId().equals(counterparty.getUniqueId())) {
+                counterparty = a;
+                break;
+            }
+        }
+
+        for (PriceProvider pp : state.getPriceProviders()) {
+            if (pp.getUniqueId().equals(base.getUniqueId())) {
+                base = pp;
+                break;
+            }
+        }
+
+        for (PriceProvider pp : state.getPriceProviders()) {
+            if (pp.getUniqueId().equals(quote.getUniqueId())) {
+                quote = pp;
+                break;
+            }
         }
     }
 }

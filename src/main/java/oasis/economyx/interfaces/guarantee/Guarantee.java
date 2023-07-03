@@ -3,6 +3,7 @@ package oasis.economyx.interfaces.guarantee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -21,7 +22,7 @@ import org.joda.time.DateTime;
  * Initiating payment using a guarantee is not supported.
  * </p>
  */
-public interface Guarantee {
+public interface Guarantee extends References {
     /**
      * Gets the guarantor of this guarantee.
      *

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -14,7 +16,7 @@ import java.beans.ConstructorProperties;
  */
 @JsonSerialize(as = Candidate.Candidacy.class)
 @JsonDeserialize(as = Candidate.Candidacy.class)
-public interface Candidate {
+public interface Candidate extends References {
     /**
      * Gets a candidate instance.
      *
@@ -48,6 +50,13 @@ public interface Candidate {
      */
     @JsonIgnore
     Agenda getAgenda();
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        if (getAgenda() instanceof References r) {
+            r.initialize(state);
+        }
+    }
 
     final class Candidacy implements Candidate {
         @JsonProperty

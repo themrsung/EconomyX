@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
 import oasis.economyx.interfaces.trading.auction.Bid;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -12,12 +13,14 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * An instantiable class of Auctioneer
  */
 public abstract class Auction implements Auctioneer {
     public Auction(@NonNull AssetStack asset, @NonNull DateTime deadline, @NonNull CashStack reservePrice) {
+        this.uniqueId = UUID.randomUUID();
         this.asset = asset;
         this.denotation = reservePrice.getAsset();
         this.deadline = deadline;
@@ -27,6 +30,7 @@ public abstract class Auction implements Auctioneer {
     }
 
     public Auction() {
+        this.uniqueId = null;
         this.asset = null;
         this.denotation = null;
         this.deadline = null;
@@ -36,6 +40,7 @@ public abstract class Auction implements Auctioneer {
     }
 
     public Auction(Auction other) {
+        this.uniqueId = other.uniqueId;
         this.asset = other.asset;
         this.denotation = other.denotation;
         this.deadline = other.deadline;
@@ -43,6 +48,10 @@ public abstract class Auction implements Auctioneer {
         this.price = other.price;
         this.sold = other.sold;
     }
+
+    @JsonProperty
+    @NonNull
+    private final UUID uniqueId;
 
     @JsonProperty
     @NonNull
@@ -66,6 +75,12 @@ public abstract class Auction implements Auctioneer {
 
     @JsonProperty
     private boolean sold;
+
+    @Override
+    @NonNull
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
 
     @Override
     @JsonIgnore

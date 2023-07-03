@@ -8,6 +8,7 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -129,5 +130,42 @@ public final class Principality extends Sovereignty {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        List<Person> citizenRefs = getCitizens();
+        List<Corporation> corporationRefs = getCorporations();
+        List<Institutional> institutionRefs = getInstitutions();
+
+        citizens.clear();
+        corporations.clear();
+        institutions.clear();
+
+        for (Person orig : state.getPersons()) {
+            for (Person ref : citizenRefs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    citizens.add(orig);
+                }
+            }
+        }
+
+        for (Corporation orig : state.getCorporations()) {
+            for (Corporation ref : corporationRefs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    corporations.add(orig);
+                }
+            }
+        }
+
+        for (Institutional orig : state.getInstitutionals()) {
+            for (Institutional ref : institutionRefs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    institutions.add(orig);
+                }
+            }
+        }
     }
 }

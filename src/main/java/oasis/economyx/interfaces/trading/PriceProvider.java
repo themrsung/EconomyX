@@ -6,11 +6,15 @@ import oasis.economyx.classes.trading.auction.EnglishAuction;
 import oasis.economyx.classes.trading.auction.FirstPriceSealedAuction;
 import oasis.economyx.classes.trading.auction.SecondPriceSealedAuction;
 import oasis.economyx.classes.trading.market.Market;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.UUID;
 
 /**
  * Provides fair value of an asset
@@ -30,7 +34,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = FirstPriceSealedAuction.class, name = "FIRST_PRICE_AUCTION"),
         @JsonSubTypes.Type(value = SecondPriceSealedAuction.class, name = "SECOND_PRICE_AUCTION"),
 })
-public interface PriceProvider {
+public interface PriceProvider extends References {
+    /**
+     * Gets the unique ID of this price provider.
+     * @return Unique ID
+     */
+    UUID getUniqueId();
+
     /**
      * The asset of which price is provided for
      * Contract size is determined by quantity of the unit asset
@@ -109,5 +119,10 @@ public interface PriceProvider {
          * A sealed auction where the highest bidder pays the price os the second-highest bidder
          */
         SECOND_PRICE_AUCTION
+    }
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        getAsset().initialize(state);
     }
 }

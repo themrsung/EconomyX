@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.terminal.CardTerminal;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -39,7 +40,7 @@ public final class CardTerminalBlock implements CardTerminal {
 
     @NonNull
     @JsonProperty
-    private final CardAcceptor seller;
+    private CardAcceptor seller;
 
     @NonNull
     @JsonProperty
@@ -68,5 +69,15 @@ public final class CardTerminalBlock implements CardTerminal {
         this.address = null;
         this.seller = null;
         this.price = null;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (CardAcceptor orig : state.getCardAccpetors()) {
+            if (orig.getUniqueId().equals(seller.getUniqueId())) {
+                seller = orig;
+                break;
+            }
+        }
     }
 }

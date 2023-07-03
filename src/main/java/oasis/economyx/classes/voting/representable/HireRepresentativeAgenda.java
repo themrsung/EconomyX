@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.personal.representable.RepresentativeHiredEvent;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.voting.Agenda;
+import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,7 +17,7 @@ import java.beans.ConstructorProperties;
 /**
  * An agenda to hire a person as the representative of a representable
  */
-public final class HireRepresentativeAgenda implements Agenda {
+public final class HireRepresentativeAgenda implements Agenda, References {
     public HireRepresentativeAgenda(@NonNull Representable representable, @NonNull Person candidate) {
         this.representable = representable;
         this.candidate = candidate;
@@ -30,7 +32,7 @@ public final class HireRepresentativeAgenda implements Agenda {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Representable representable;
+    private Representable representable;
     @NonNull
     @JsonProperty
     @JsonIdentityReference
@@ -70,5 +72,15 @@ public final class HireRepresentativeAgenda implements Agenda {
     private HireRepresentativeAgenda() {
         this.representable = null;
         this.candidate = null;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Representable orig : state.getRepresentables()) {
+            if (orig.getUniqueId().equals(representable.getUniqueId())) {
+                representable = orig;
+                break;
+            }
+        }
     }
 }

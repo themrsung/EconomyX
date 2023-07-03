@@ -2,6 +2,7 @@ package oasis.economyx.interfaces.actor.types.warfare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * A faction represents a party during wartime
  */
-public interface Faction extends Actor {
+public interface Faction extends Actor, References {
     /**
      * Gets all factions this faction is hostile to.
      *

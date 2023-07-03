@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -14,7 +16,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 @JsonSerialize(as = Voter.Votable.class)
 @JsonDeserialize(as = Voter.Votable.class)
-public interface Voter {
+public interface Voter extends References {
     /**
      * Gets a voter instance.
      *
@@ -60,7 +62,7 @@ public interface Voter {
         @NonNull
         @JsonProperty
         @JsonIdentityReference
-        private final Actor voter;
+        private Actor voter;
 
         @NonNegative
         @JsonProperty
@@ -84,6 +86,16 @@ public interface Voter {
         @JsonIgnore
         public void onVoted(long votes) {
             this.votes -= votes;
+        }
+
+        @Override
+        public void initialize(@NonNull EconomyState state) {
+            for (Actor orig : state.getActors()) {
+                if (orig.getUniqueId().equals(voter.getUniqueId())) {
+                    voter = orig;
+                    break;
+                }
+            }
         }
     }
 }

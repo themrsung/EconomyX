@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.trading.PriceProvider;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -57,7 +58,7 @@ public final class Option implements Contract {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Actor counterparty;
+    private Actor counterparty;
 
     @NonNull
     @JsonProperty
@@ -70,7 +71,7 @@ public final class Option implements Contract {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final PriceProvider market;
+    private PriceProvider market;
 
     @JsonProperty
     private final Option.Type optionType;
@@ -223,6 +224,25 @@ public final class Option implements Contract {
                 default -> false;
             };
 
+        }
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        delivery.initialize(state);
+
+        for (Actor a : state.getActors()) {
+            if (a.getUniqueId().equals(counterparty.getUniqueId())) {
+                counterparty = a;
+                break;
+            }
+        }
+
+        for (PriceProvider p : state.getPriceProviders()) {
+            if (p.getUniqueId().equals(market.getUniqueId())) {
+                market = p;
+                break;
+            }
         }
     }
 }

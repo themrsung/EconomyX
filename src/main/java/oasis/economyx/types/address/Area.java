@@ -85,4 +85,59 @@ public record Area(
 
         return x >= minX && x <= maxX && z >= minZ && z <= maxZ;
     }
+
+    /**
+     * Checks if this area contains another area.
+     *
+     * @param area Area to check
+     * @return Whether given area is within the bounds of this area
+     * @throws RuntimeException When the worlds are different
+     */
+    @JsonIgnore
+    public boolean contains(@NonNull Area area) throws RuntimeException {
+        if (!Objects.equals(world(), area.world())) throw new RuntimeException();
+
+        // This area
+        double x1 = pointA.x();
+        double x2 = pointB.x();
+
+        double minX1 = Math.min(x1, x2);
+        double maxX1 = Math.max(x1, x2);
+
+        double z1 = pointA.z();
+        double z2 = pointB.z();
+
+        double minZ1 = Math.min(z1, z2);
+        double maxZ1 = Math.max(z1, z2);
+
+        // Given area
+        double x3 = area.pointA.x();
+        double x4 = area.pointB.x();
+
+        double minX2 = Math.min(x3, x4);
+        double maxX2 = Math.max(x3, x4);
+
+        double z3 = area.pointA.z();
+        double z4 = area.pointB.z();
+
+        double minZ2 = Math.min(z3, z4);
+        double maxZ2 = Math.max(z3, z4);
+
+        // Check
+        boolean xContains = minX1 <= minX2 || maxX1 >= maxX2;
+        boolean zContains = minZ1 <= minZ2 || maxZ1 >= maxZ2;
+
+        return xContains || zContains;
+    }
+
+    /**
+     * Gets the world of this area.
+     * @return World
+     * @throws RuntimeException When the worlds of point A and B are different
+     */
+    @JsonIgnore
+    public String world() throws RuntimeException {
+        if (!Objects.equals(pointA.world(), pointB.world())) throw new RuntimeException();
+        return pointA.world();
+    }
 }

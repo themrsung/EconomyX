@@ -310,4 +310,36 @@ public abstract class Company extends EconomicActor implements Corporation {
 
         return holders;
     }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        List<Person> employees = getEmployees();
+        this.employees.clear();
+
+        List<Person> directors = getDirectors();
+        this.directors.clear();
+
+        for (Person orig : state.getPersons()) {
+            for (Person ref : employees) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    this.employees.add(orig);
+                }
+            }
+
+            for (Person ref : directors) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    this.directors.add(orig);
+                }
+            }
+        }
+
+        if (ceo != null) {
+            for (Person p : state.getPersons()) {
+                if (p.getUniqueId().equals(ceo.getUniqueId())) {
+                    p = ceo;
+                    break;
+                }
+            }
+        }
+    }
 }

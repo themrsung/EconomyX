@@ -7,6 +7,7 @@ import oasis.economyx.classes.actor.EconomicActor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -60,7 +61,7 @@ public abstract class Institution extends EconomicActor implements Institutional
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Sovereign parent;
+    private Sovereign parent;
 
     @NonNull
     @JsonIgnore
@@ -176,5 +177,44 @@ public abstract class Institution extends EconomicActor implements Institutional
     @JsonIgnore
     public void setRepresentativePay(@NonNull CashStack representativePay) {
         this.representativePay = representativePay;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Sovereign s : state.getSovereigns()) {
+            if (s.getUniqueId().equals(parent.getUniqueId())) {
+                parent = s;
+                break;
+            }
+        }
+
+        if (representative != null) {
+            for (Person p : state.getPersons()) {
+                if (p.getUniqueId().equals(representative.getUniqueId())) {
+                    representative = p;
+                    break;
+                }
+            }
+        }
+
+        List<Person> employeeRefs = getEmployees();
+        employees.clear();
+
+        List<Person> directorRefs = getDirectors();
+        directors.clear();
+
+        for (Person orig : state.getPersons()) {
+            for (Person ref : employeeRefs) {
+                if (ref.getUniqueId().equals(orig.getUniqueId())) {
+                    employees.add(orig);
+                }
+            }
+
+            for (Person ref : directorRefs) {
+                if (ref.getUniqueId().equals(orig.getUniqueId())) {
+                    directors.add(orig);
+                }
+            }
+        }
     }
 }

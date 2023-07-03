@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.Contract;
@@ -47,7 +48,7 @@ public final class Collateral implements Contract {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Actor counterparty;
+    private Actor counterparty;
     @NonNull
     @JsonProperty
     private final AssetStack delivery;
@@ -97,5 +98,17 @@ public final class Collateral implements Contract {
     @Override
     public void onExpired(Actor holder) {
         // Do nothing
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        delivery.initialize(state);
+
+        for (Actor a : state.getActors()) {
+            if (a.getUniqueId().equals(counterparty.getUniqueId())) {
+                counterparty = a;
+                break;
+            }
+        }
     }
 }

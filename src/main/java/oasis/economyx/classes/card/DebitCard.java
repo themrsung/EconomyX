@@ -10,6 +10,7 @@ import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -64,12 +65,12 @@ public final class DebitCard implements Card {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final CardIssuer issuer;
+    private CardIssuer issuer;
 
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Account account;
+    private Account account;
     @Nullable
     @JsonProperty
     private final DateTime expiry;
@@ -176,5 +177,22 @@ public final class DebitCard implements Card {
     @JsonIgnore
     public void onExpired() {
         issuer.cancelCard(this);
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (CardIssuer orig : state.getCardIssuers()) {
+            if (orig.getUniqueId().equals(issuer.getUniqueId())) {
+                issuer = orig;
+                break;
+            }
+        }
+
+        for (Account orig : state.getAccounts()) {
+            if (orig.getUniqueId().equals(account.getUniqueId())) {
+                account = orig;
+                break;
+            }
+        }
     }
 }

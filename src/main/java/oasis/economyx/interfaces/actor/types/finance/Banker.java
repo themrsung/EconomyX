@@ -6,10 +6,12 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.types.institutional.InterestRateProvider;
 import oasis.economyx.interfaces.banking.Account;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
@@ -114,6 +116,13 @@ public interface Banker extends Corporation, InterestRateProvider {
             } catch (IllegalArgumentException e) {
                 // Account has foreign currency in it content
             }
+        }
+    }
+
+    @Override
+    default void initialize(@NonNull EconomyState state) {
+        for (Account a : getAccounts()) {
+            a.initialize(state);
         }
     }
 }

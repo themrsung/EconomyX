@@ -3,10 +3,12 @@ package oasis.economyx.classes.trading.market;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.market.MarketTick;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -15,6 +17,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * An instantiable class of Marketplace
@@ -27,6 +30,7 @@ public final class Market implements Marketplace {
      * @param currency Quote currency of this market
      */
     public Market(@NonNull AssetStack asset, @NonNull Cash currency) {
+        this.uniqueId = UUID.randomUUID();
         this.asset = asset;
         this.orders = new ArrayList<>();
         this.price = new CashStack(currency, 0L);
@@ -34,6 +38,7 @@ public final class Market implements Marketplace {
     }
 
     public Market() {
+        this.uniqueId = null;
         this.asset = null;
         this.orders = new ArrayList<>();
         this.price = null;
@@ -41,11 +46,16 @@ public final class Market implements Marketplace {
     }
 
     public Market(Market other) {
+        this.uniqueId = other.uniqueId;
         this.asset = other.asset;
         this.orders = other.orders;
         this.price = other.price;
         this.volume = other.volume;
     }
+
+    @JsonProperty
+    @NonNull
+    private final UUID uniqueId;
 
     @JsonProperty
     @NonNull
@@ -60,6 +70,12 @@ public final class Market implements Marketplace {
     @NonNegative
     @JsonIgnore
     private transient long volume;
+
+    @Override
+    @NonNull
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
 
     @NonNull
     @Override

@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.dividend.DividendEvent;
+import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.voting.Agenda;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -15,7 +18,7 @@ import java.beans.ConstructorProperties;
 /**
  * An agenda to pay dividends to shareholders
  */
-public final class DividendAgenda implements Agenda {
+public final class DividendAgenda implements Agenda, References {
     public DividendAgenda(@NonNull Shared shared, @NonNull CashStack dividendPerShare) {
         this.shared = shared;
         this.dividendPerShare = dividendPerShare;
@@ -30,7 +33,7 @@ public final class DividendAgenda implements Agenda {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private final Shared shared;
+    private Shared shared;
 
     @NonNull
     @JsonProperty
@@ -69,5 +72,15 @@ public final class DividendAgenda implements Agenda {
     private DividendAgenda() {
         this.shared = null;
         this.dividendPerShare = null;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Shared orig : state.getShareds()) {
+            if (orig.getUniqueId().equals(shared.getUniqueId())) {
+                shared = orig;
+                break;
+            }
+        }
     }
 }

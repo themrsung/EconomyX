@@ -7,6 +7,7 @@ import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -75,5 +76,21 @@ public final class Military extends Institution implements Faction {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        List<Faction> hostilityRefs = getHostilities();
+        hostilities.clear();
+
+        for (Faction orig : state.getFactions()) {
+            for (Faction ref : hostilityRefs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    hostilities.add(orig);
+                }
+            }
+        }
     }
 }

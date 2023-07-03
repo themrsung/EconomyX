@@ -7,6 +7,7 @@ import oasis.economyx.classes.actor.sovereignty.Sovereignty;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -94,5 +95,30 @@ public final class Empire extends Sovereignty implements Federal {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        List<Sovereign> refs = getMemberStates();
+        memberStates.clear();
+
+        for (Sovereign orig : state.getSovereigns()) {
+            for (Sovereign ref : refs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    memberStates.add(orig);
+                }
+            }
+        }
+
+        if (representativeState != null) {
+            for (Sovereign orig : state.getSovereigns()) {
+                if (representativeState.getUniqueId().equals(orig.getUniqueId())) {
+                    representativeState = orig;
+                    break;
+                }
+            }
+        }
     }
 }

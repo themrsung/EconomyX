@@ -7,6 +7,7 @@ import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.market.Marketplace;
 import oasis.economyx.interfaces.trading.market.Order;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
@@ -78,13 +79,13 @@ public final class AssetOrder implements Order {
     private final UUID uniqueId;
     @JsonProperty
     @JsonIdentityReference
-    private final Marketplace market;
+    private Marketplace market;
     @JsonProperty
     @JsonIdentityReference
-    private final Brokerage broker;
+    private Brokerage broker;
     @JsonProperty
     @JsonIdentityReference
-    private final Actor sender;
+    private Actor sender;
     @JsonProperty
     private Type type;
     @JsonProperty
@@ -240,5 +241,31 @@ public final class AssetOrder implements Order {
         // unregister collateral
         // remove order
         // TODO TODO TODO
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        for (Marketplace orig : state.getMarketplaces()) {
+            if (orig.getUniqueId().equals(market.getUniqueId())) {
+                market = orig;
+                break;
+            }
+        }
+
+        for (Brokerage orig : state.getBrokerages()) {
+            if (orig.getUniqueId().equals(broker.getUniqueId())) {
+                broker = orig;
+                break;
+            }
+        }
+
+        for (Actor orig : state.getActors()) {
+            if (orig.getUniqueId().equals(sender.getUniqueId())) {
+                sender = orig;
+                break;
+            }
+        }
+
+        collateral.initialize(state);
     }
 }

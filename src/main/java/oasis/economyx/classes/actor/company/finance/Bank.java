@@ -8,6 +8,7 @@ import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -140,4 +141,9 @@ public final class Bank extends Company implements Banker, CardIssuer {
         return type;
     }
 
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+        Banker.super.initialize(state);
+    }
 }

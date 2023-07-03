@@ -7,6 +7,7 @@ import oasis.economyx.classes.actor.company.Company;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -69,7 +70,7 @@ public final class Mercenary extends Company implements Faction, PropertyProtect
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private List<Faction> hostilities;
+    private final List<Faction> hostilities;
 
     @NonNull
     @Override
@@ -97,5 +98,21 @@ public final class Mercenary extends Company implements Faction, PropertyProtect
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        List<Faction> hostilities = getHostilities();
+        this.hostilities.clear();
+
+        for (Faction orig : state.getFactions()) {
+            for (Faction ref : hostilities) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    this.hostilities.add(orig);
+                }
+            }
+        }
     }
 }

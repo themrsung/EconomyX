@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.EconomicActor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -91,4 +92,17 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
         this.protectionFee = protectionFee;
     }
 
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        if (representative != null) {
+            for (Person p : state.getPersons()) {
+                if (p.getUniqueId().equals(representative.getUniqueId())) {
+                    representative = p;
+                    break;
+                }
+            }
+        }
+
+
+    }
 }

@@ -2,12 +2,13 @@ package oasis.economyx.interfaces.terminal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public interface CardTerminal {
+public interface CardTerminal extends References {
     /**
      * Do not change this after deployment.
      */

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.classes.banking.AssetAccount;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -25,7 +26,7 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class)
 @JsonSerialize(as = AssetAccount.class)
 @JsonDeserialize(as = AssetAccount.class)
-public interface Account {
+public interface Account extends References {
     /**
      * Gets the unique ID of this account
      *

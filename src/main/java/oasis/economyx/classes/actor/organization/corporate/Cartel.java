@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.organization.AbstractOrganization;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -46,5 +48,21 @@ public final class Cartel extends AbstractOrganization<Corporation> {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        List<Corporation> refs = getMembers();
+        getRawMembers().clear();
+
+        for (Corporation orig : state.getCorporations()) {
+            for (Corporation ref : refs) {
+                if (orig.getUniqueId().equals(ref.getUniqueId())) {
+                    getRawMembers().add(orig);
+                }
+            }
+        }
     }
 }

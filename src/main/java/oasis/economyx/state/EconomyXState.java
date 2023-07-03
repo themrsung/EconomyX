@@ -1,7 +1,6 @@
 package oasis.economyx.state;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -18,7 +17,6 @@ import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.finance.CardIssuer;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
-import oasis.economyx.interfaces.actor.types.gaming.House;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.*;
@@ -35,9 +33,9 @@ import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.interfaces.banking.Account;
 import oasis.economyx.interfaces.card.Card;
-import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.interfaces.physical.Banknote;
+import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.terminal.CardTerminal;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import oasis.economyx.interfaces.trading.auction.Auctioneer;
@@ -451,17 +449,6 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
-    public List<House> getHouses() {
-        List<House> list = new ArrayList<>();
-
-        for (Actor a : getActors()) {
-            if (a instanceof House h) list.add(h);
-        }
-
-        return list;
-    }
-
-    @Override
     public List<Legal> getLegals() {
         List<Legal> list = new ArrayList<>();
 
@@ -569,17 +556,6 @@ public final class EconomyXState implements EconomyState {
         }
 
         return accounts;
-    }
-
-    @Override
-    public List<Table> getTables() {
-        List<Table> tables = new ArrayList<>();
-
-        for (House h : getHouses()) {
-            tables.addAll(h.getTables());
-        }
-
-        return tables;
     }
 
     @Override
@@ -773,6 +749,20 @@ public final class EconomyXState implements EconomyState {
         this.actors = actors;
         this.physicalizedAssets = physicalizedAssets;
         this.burntAssets = burntAssets;
+
+        for (Actor a : this.actors) {
+            if (a instanceof References r) {
+                r.initialize(this);
+            }
+        }
+
+        for (PhysicalAsset pa : physicalizedAssets) {
+            if (pa instanceof References r) {
+                r.initialize(this);
+            }
+        }
+
+        this.burntAssets.initialize(this);
     }
 
     public static final String PATH = "oasis/economy";
