@@ -8,31 +8,23 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 /**
  * Called when a vault has been created.
  */
-public final class VaultCreatedEvent extends EconomyEvent {
+public final class VaultCreatedEvent extends VaultEvent {
     /**
      * Creates a new vault created event.
      *
-     * @param keeper Keeper of this vault
      * @param vault  Physical block of this vault
+     * @param keeper Keeper of this vault
      */
-    public VaultCreatedEvent(@NonNull VaultKeeper keeper, @NonNull VaultBlock vault) {
+    public VaultCreatedEvent(@NonNull VaultBlock vault, @NonNull VaultKeeper keeper) {
+        super(vault);
         this.keeper = keeper;
-        this.vault = vault;
     }
 
     @NonNull
     private final VaultKeeper keeper;
 
     @NonNull
-    private final VaultBlock vault;
-
-    @NonNull
     public VaultKeeper getKeeper() {
         return keeper;
-    }
-
-    @NonNull
-    public VaultBlock getVault() {
-        return vault;
     }
 }

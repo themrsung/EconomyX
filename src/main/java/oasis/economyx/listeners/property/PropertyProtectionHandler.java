@@ -90,15 +90,15 @@ public final class PropertyProtectionHandler extends EconomyListener {
             }
         }
 
-        if (owner == null) return true;
+        if (owner == null) return false;
 
         // Check if protector is assigned
         PropertyProtector protector = property.getMeta().getProtector();
-        if (protector == null) return true;
+        if (protector == null) return false;
 
         // Check solvency of owner
         CashStack fee = protector.getProtectionFee();
-        if (!owner.getPayableAssets(getState()).contains(fee)) return true;
+        if (!owner.getPayableAssets(getState()).contains(fee)) return false;
 
         boolean hasAccess = false;
 
