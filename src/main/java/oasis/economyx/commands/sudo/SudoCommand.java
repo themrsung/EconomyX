@@ -5,6 +5,7 @@ import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
 import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
+import oasis.economyx.commands.asset.SendAssetCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
@@ -98,6 +99,10 @@ public final class SudoCommand extends EconomyCommand {
                 InformationCommand info = new InformationCommand(getEX(), getState());
                 info.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
+            case SEND_ASSET -> {
+                SendAssetCommand sendAsset = new SendAssetCommand(getEX(), getState());
+                sendAsset.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
                 sudo.onEconomyCommand(player, caller, executor, argsToPass, level);
@@ -158,6 +163,10 @@ public final class SudoCommand extends EconomyCommand {
                 case INFO -> {
                     InformationCommand info = new InformationCommand(getEX(), getState());
                     info.onEconomyComplete(list, argsToPass);
+                }
+                case SEND_ASSET -> {
+                    SendAssetCommand sendAsset = new SendAssetCommand(getEX(), getState());
+                    sendAsset.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

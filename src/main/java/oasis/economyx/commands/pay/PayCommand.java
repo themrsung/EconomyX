@@ -21,6 +21,11 @@ public final class PayCommand extends EconomyCommand {
 
     @Override
     public void onEconomyCommand(@NonNull Player player, @NonNull Person caller, @NonNull Actor actor, @NonNull String[] params, @NonNull AccessLevel permission) {
+        if (!permission.isAtLeast(AccessLevel.DIRECTOR)) {
+            player.sendRawMessage(Messages.INSUFFICIENT_PERMISSIONS);
+            return;
+        }
+
         if (params.length < 3) {
             player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
             return;

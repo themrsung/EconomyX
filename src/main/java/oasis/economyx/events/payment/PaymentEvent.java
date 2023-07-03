@@ -184,6 +184,11 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * Transfer of cash using /pay.
          */
-        PAY_COMMAND;
+        PAY_COMMAND,
+
+        /**
+         * Transfer of asset using /sendasset.
+         */
+        SEND_COMMAND;
     }
 }

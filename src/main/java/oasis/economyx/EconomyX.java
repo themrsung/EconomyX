@@ -13,6 +13,7 @@ import oasis.economyx.commands.EconomyCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
 import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
+import oasis.economyx.commands.asset.SendAssetCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
@@ -264,6 +265,7 @@ public final class EconomyX extends JavaPlugin {
 
         registerCommand("physicalize", new PhysicalizeAssetCommand(this, state));
         registerCommand("dephysicalize", new DephysicalizeAssetCommand(this, state));
+        registerCommand("sendasset", new SendAssetCommand(this, state));
 
         registerCommand("information", new InformationCommand(this, state));
     }

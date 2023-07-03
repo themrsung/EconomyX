@@ -6,6 +6,8 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.asset.Asset;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.ChatColor;
@@ -90,6 +92,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         REPLY,
         PHYSICALIZE,
         DEPHYSICALIZE,
+        SEND_ASSET,
         INFO,
 
         // Allows recursive sudo by default
@@ -103,6 +106,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_REPLY = Arrays.asList("r", "reply", "답변", "답장");
         private static final List<String> K_PHYSICALIZE = Arrays.asList("physicalize", "실물화");
         private static final List<String> K_DEPHYSICALIZE = Arrays.asList("dephysicalize", "가상화");
+        private static final List<String> K_SEND_ASSET = Arrays.asList("send", "sasset", "sendasset", "양도");
         private static final List<String> K_INFO = Arrays.asList("i", "info", "information", "정보");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
@@ -117,8 +121,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_REPLY.contains(input.toLowerCase())) return REPLY;
             if (K_PHYSICALIZE.contains(input.toLowerCase())) return PHYSICALIZE;
             if (K_DEPHYSICALIZE.contains(input.toLowerCase())) return DEPHYSICALIZE;
-            if (K_SUDO.contains(input.toLowerCase())) return SUDO;
+            if (K_SEND_ASSET.contains(input.toLowerCase())) return SEND_ASSET;
             if (K_INFO.contains(input.toLowerCase())) return INFO;
+            if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
             return null;
         }
@@ -133,8 +138,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case MESSAGE -> K_MESSAGE;
                 case PHYSICALIZE -> K_PHYSICALIZE;
                 case DEPHYSICALIZE -> K_DEPHYSICALIZE;
-                case SUDO -> K_SUDO;
+                case SEND_ASSET -> K_SEND_ASSET;
                 case INFO -> K_INFO;
+                case SUDO -> K_SUDO;
                 default -> new ArrayList<>();
             };
         }
@@ -283,6 +289,29 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             return null;
         }
+
+        @Nullable
+        public static Asset searchAsset(@NonNull String input, @NonNull EconomyState state) {
+            for (AssetStack as : state.getAssets()) {
+                if (as.getAsset().getName().equalsIgnoreCase(input)) {
+                    return as.getAsset();
+                }
+            }
+
+            for (AssetStack as : state.getAssets()) {
+                if (as.getAsset().getName().toLowerCase().contains(input)) {
+                    return as.getAsset();
+                }
+            }
+
+            for (AssetStack as : state.getAssets()) {
+                if (as.getAsset().getUniqueId().toString().contains(input)) {
+                    return as.getAsset();
+                }
+            }
+
+            return null;
+        }
     }
 
     protected abstract static class Lists {
@@ -301,6 +330,20 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             for (Cash currency : state.getCurrencies()) {
                 results.add(currency.getName());
+            }
+
+            return results;
+        }
+
+        /**
+         * May cause lag. Use with caution.
+         */
+        public static List<String> ASSET_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (AssetStack as : state.getAssets()) {
+                String name = as.getAsset().getName();
+                if (!results.contains(name)) results.add(name);
             }
 
             return results;

@@ -39,6 +39,10 @@ commands:
     description: 실물자산을 가상화합니다.
     usage: /dephysicalize
     aliases: [dephysical, 가상화]
+  sendasset:
+    description: 자산을 양도합니다.
+    usage: /sendasset 수신인 자산 수량
+    aliases: [send, sasset, 양도]
   information:
     description: 정보를 조회합니다.
     usage: /information 대상
