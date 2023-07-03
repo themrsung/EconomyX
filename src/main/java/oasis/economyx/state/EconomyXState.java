@@ -47,6 +47,8 @@ import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.PhysicalAsset;
+import oasis.economyx.types.portfolio.AssetPortfolio;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.commons.io.FileUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -127,6 +129,34 @@ public final class EconomyXState implements EconomyState {
 
         if (!(a instanceof Person)) throw new IllegalArgumentException();
         return (Person) a;
+    }
+
+    @NonNull
+    private final List<PhysicalAsset> physicalizedAssets;
+
+    @NonNull
+    @Override
+    public List<PhysicalAsset> getPhysicalizedAssets() {
+        return new ArrayList<>(physicalizedAssets);
+    }
+
+    @Override
+    public void addPhysicalizedAsset(@NonNull PhysicalAsset asset) {
+        physicalizedAssets.add(asset);
+    }
+
+    @Override
+    public void removePhysicalizedAsset(@NonNull PhysicalAsset asset) {
+        physicalizedAssets.remove(asset);
+    }
+
+    @NonNull
+    private final Portfolio burntAssets;
+
+    @Override
+    @NonNull
+    public Portfolio getBurntAssets() {
+        return burntAssets;
     }
 
     @Override
@@ -715,12 +745,18 @@ public final class EconomyXState implements EconomyState {
      */
     public EconomyXState(@NonNull EconomyX EX) {
         this.EX = EX;
+
         this.actors = new ArrayList<>();
+        this.physicalizedAssets = new ArrayList<>();
+        this.burntAssets = new AssetPortfolio();
     }
 
-    private EconomyXState(@NonNull EconomyX EX, List<Actor> actors) {
+    private EconomyXState(@NonNull EconomyX EX, @NonNull List<Actor> actors, @NonNull List<PhysicalAsset> physicalizedAssets, @NonNull Portfolio burntAssets) {
         this.EX = EX;
+
         this.actors = actors;
+        this.physicalizedAssets = physicalizedAssets;
+        this.burntAssets = burntAssets;
     }
 
     public static final String PATH = "oasis/economy";
@@ -756,7 +792,40 @@ public final class EconomyXState implements EconomyState {
             }
         }
 
-        return new EconomyXState(EX, actors);
+        List<PhysicalAsset> physicalizedAssets = new ArrayList<>();
+
+        File physicalizedAssetsFolder = new File(PATH + "/physicalized-assets");
+        if (!physicalizedAssetsFolder.exists()) {
+            EX.getLogger().info("Physicalized asset data not found.");
+            EX.getLogger().info("Physicalized assets will not be convertible back to normal assets.");
+            return new EconomyXState(EX, actors, new ArrayList<>(), new AssetPortfolio());
+        }
+
+        File[] physicalizedAssetsFiles = physicalizedAssetsFolder.listFiles();
+        if (physicalizedAssetsFiles == null) {
+            EX.getLogger().info("No physicalized assets found. Ignoring data.");
+            return new EconomyXState(EX, actors, new ArrayList<>(), new AssetPortfolio());
+        }
+
+        for (File f : physicalizedAssetsFiles) {
+            try {
+                physicalizedAssets.add(mapper.readValue(f, PhysicalAsset.class));
+            } catch (IOException e) {
+                EX.getLogger().info("Error loading physicalized asset: " + e.getMessage());
+            }
+        }
+
+        Portfolio burntAssets;
+
+        try {
+            File f = new File(PATH + "/burnt-assets.yml");
+            burntAssets = mapper.readValue(f, Portfolio.class);
+        } catch (IOException e) {
+            burntAssets = new AssetPortfolio();
+            EX.getLogger().info("Burnt asset data not found. Contract expiry may cause issues.");
+        }
+
+        return new EconomyXState(EX, actors, physicalizedAssets, burntAssets);
     }
 
     @Override
@@ -790,6 +859,37 @@ public final class EconomyXState implements EconomyState {
                 getEX().getLogger().info("Error saving actor " + a.getUniqueId().toString().substring(0, 10) + " (" + e.getMessage() + ")");
                 getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue if you have not edited the base code.");
             }
+        }
+
+        File physicalizedAssetsFolder = new File(PATH + "/physicalized-assets");
+        if (!physicalizedAssetsFolder.exists() && !physicalizedAssetsFolder.mkdirs()) {
+            getEX().getLogger().info("Failed to initialize physicalized assets directory.");
+            getEX().getLogger().info("Save is continuing, but data if faulty.");
+        }
+
+        try {
+            FileUtils.cleanDirectory(physicalizedAssetsFolder);
+        } catch (IOException e) {
+            getEX().getLogger().info("Failed to clean physicalized assets directory.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
+        }
+
+        for (PhysicalAsset a : getPhysicalizedAssets()) {
+            try {
+                File f = new File(PATH + "/physicalized-assets/" + a.getUniqueId().toString() + ".yml");
+                mapper.writeValue(f, a);
+            } catch (IOException e) {
+                getEX().getLogger().info("Error saving physical asset " + a.getUniqueId().toString().substring(0, 10) + " (" + e.getMessage() + ")");
+                getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue is you have not edited the base code.");
+            }
+        }
+
+        File burntAssetsFile = new File(PATH + "/burnt-assets.yml");
+        try {
+            mapper.writeValue(burntAssetsFile, getBurntAssets());
+        } catch (IOException e) {
+            getEX().getLogger().info("Error saving burnt assets.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
         }
     }
 }

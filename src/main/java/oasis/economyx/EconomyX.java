@@ -3,7 +3,10 @@ package oasis.economyx;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.*;
 import oasis.economyx.listeners.actor.*;
+import oasis.economyx.listeners.asset.AssetDephysicalizedListener;
+import oasis.economyx.listeners.asset.AssetPhysicalizedListener;
 import oasis.economyx.listeners.banking.*;
+import oasis.economyx.listeners.banknote.BanknoteIssuedListener;
 import oasis.economyx.listeners.card.*;
 import oasis.economyx.listeners.contract.*;
 import oasis.economyx.listeners.dividend.*;
@@ -136,11 +139,18 @@ public class EconomyX extends JavaPlugin {
         registerListener(new ActorCreationListener(this, state));
         registerListener(new ActorNameChangedListener(this, state));
 
+        // Asset
+        registerListener(new AssetDephysicalizedListener(this, state));
+        registerListener(new AssetPhysicalizedListener(this, state));
+
         // Banking
         registerListener(new BankDepositListener(this, state));
         registerListener(new BankWithdrawalListener(this, state));
         registerListener(new BankAccountOpenedListener(this, state));
         registerListener(new BankAccountClosedListener(this, state));
+
+        // Banknote
+        registerListener(new BanknoteIssuedListener(this, state));
 
         // Card
         registerListener(new CardActivatedListener(this, state));
@@ -175,6 +185,7 @@ public class EconomyX extends JavaPlugin {
 
         // Player
         registerListener(new PlayerJoinHandler(this, state));
+        registerListener(new PlayerDeathHandler(this, state));
 
         // Property
         registerListener(new PropertyClaimHandler(this, state));

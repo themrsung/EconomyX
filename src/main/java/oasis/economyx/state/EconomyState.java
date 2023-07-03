@@ -49,6 +49,7 @@ import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.portfolio.Portfolio;
 import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -131,6 +132,34 @@ public interface EconomyState {
      */
     @NonNull
     Person getPerson(UUID uniqueId) throws IllegalArgumentException;
+
+    /**
+     * Gets all physicalized assets in circulation.
+     * See {@link PhysicalAsset}
+     *
+     * @return A copied list of physicalized assets
+     */
+    @NonNull
+    List<PhysicalAsset> getPhysicalizedAssets();
+
+    /**
+     * Adds a physicalized asset.
+     * @param asset Asset to add
+     */
+    void addPhysicalizedAsset(@NonNull PhysicalAsset asset);
+
+    /**
+     * Removes a physicalized asset.
+     * @param asset Asset to remove
+     */
+    void removePhysicalizedAsset(@NonNull PhysicalAsset asset);
+
+    /**
+     * Gets burnt assets.
+     * Assets get burnt when an in-game player dies while holding them.
+     * @return A copied list of burnt assets
+     */
+    Portfolio getBurntAssets();
 
     // Actor type interface getters
 
@@ -840,9 +869,16 @@ public interface EconomyState {
                     throw new RuntimeException();
                 }
             }
+
+            this.physicalizedAssets = state.getPhysicalizedAssets();
+            this.burntAssets = state.getBurntAssets();
         }
 
         private final @NonNull List<Actor> actors;
+
+        private final @NonNull List<PhysicalAsset> physicalizedAssets;
+
+        private final @NonNull Portfolio burntAssets;
 
 
         /**
@@ -917,6 +953,27 @@ public interface EconomyState {
             }
 
             throw new IllegalArgumentException();
+        }
+
+        @Override
+        public @NonNull List<PhysicalAsset> getPhysicalizedAssets() {
+            return new ArrayList<>(physicalizedAssets);
+        }
+
+        @Override
+        public void addPhysicalizedAsset(@NonNull PhysicalAsset asset) {
+            physicalizedAssets.add(asset);
+        }
+
+        @Override
+        public void removePhysicalizedAsset(@NonNull PhysicalAsset asset) {
+            physicalizedAssets.remove(asset);
+        }
+
+        @Override
+        @NonNull
+        public Portfolio getBurntAssets() {
+            return burntAssets;
         }
 
         @Override
