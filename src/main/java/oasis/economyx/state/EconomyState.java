@@ -1,6 +1,8 @@
 package oasis.economyx.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import oasis.economyx.EconomyX;
@@ -66,6 +68,8 @@ import java.util.UUID;
  * Every instance of every type can be accessed through this state.
  * There are getters for every interface type.
  */
+@JsonSerialize(as = EconomyXState.class) // Serialized when sent over network
+@JsonDeserialize(as = EconomyXState.class)
 public interface EconomyState {
     /**
      * Gets the plugin instance.

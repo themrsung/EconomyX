@@ -1,5 +1,8 @@
 package oasis.economyx.state;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -64,10 +67,12 @@ public final class EconomyXState implements EconomyState {
      * EconomyX instance
      */
     @NonNull
+    @JsonIgnore
     private final EconomyX EX;
 
     @Override
     @NonNull
+    @JsonIgnore
     public EconomyX getEX() {
         return EX;
     }
@@ -75,14 +80,18 @@ public final class EconomyXState implements EconomyState {
     /**
      * A list of every actor within this state
      */
+    @JsonProperty
+    @JsonIdentityReference
     private final List<Actor> actors;
 
     @Override
+    @JsonIgnore
     public List<Actor> getActors() {
         return new ArrayList<>(actors);
     }
 
     @Override
+    @JsonIgnore
     public boolean isActor(UUID uniqueId) {
         for (Actor a : getActors()) {
             if (a.getUniqueId().equals(uniqueId)) {
@@ -94,6 +103,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public @NonNull Actor getActor(UUID uniqueId) throws IllegalArgumentException {
         for (Actor a : getActors()) {
             if (a.getUniqueId().equals(uniqueId)) {
@@ -105,16 +115,19 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public void addActor(@NonNull Actor actor) {
         actors.add(actor);
     }
 
     @Override
+    @JsonIgnore
     public void removeActor(@NonNull Actor actor) {
         actors.remove(actor);
     }
 
     @Override
+    @JsonIgnore
     public boolean isPerson(UUID uniqueId) {
         try {
             return getActor(uniqueId) instanceof Person;
@@ -124,6 +137,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public @NonNull Person getPerson(UUID uniqueId) throws IllegalArgumentException {
         Actor a = getActor(uniqueId);
 
@@ -132,34 +146,42 @@ public final class EconomyXState implements EconomyState {
     }
 
     @NonNull
+    @JsonProperty
+    @JsonIdentityReference
     private final List<PhysicalAsset> physicalizedAssets;
 
     @NonNull
     @Override
+    @JsonIgnore
     public List<PhysicalAsset> getPhysicalizedAssets() {
         return new ArrayList<>(physicalizedAssets);
     }
 
     @Override
+    @JsonIgnore
     public void addPhysicalizedAsset(@NonNull PhysicalAsset asset) {
         physicalizedAssets.add(asset);
     }
 
     @Override
+    @JsonIgnore
     public void removePhysicalizedAsset(@NonNull PhysicalAsset asset) {
         physicalizedAssets.remove(asset);
     }
 
     @NonNull
+    @JsonProperty
     private final Portfolio burntAssets;
 
     @Override
     @NonNull
+    @JsonIgnore
     public Portfolio getBurntAssets() {
         return burntAssets;
     }
 
     @Override
+    @JsonIgnore
     public List<Corporation> getCorporations() {
         List<Corporation> list = new ArrayList<>();
 
@@ -171,6 +193,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Fund> getFunds() {
         List<Fund> list = new ArrayList<>();
 
@@ -182,6 +205,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Organization<?>> getOrganizations() {
         List<Organization<?>> list = new ArrayList<>();
 
@@ -193,6 +217,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Person> getPersons() {
         List<Person> list = new ArrayList<>();
 
@@ -204,6 +229,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Employer> getEmployers() {
         List<Employer> list = new ArrayList<>();
 
@@ -215,6 +241,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Banker> getBankers() {
         List<Banker> list = new ArrayList<>();
 
@@ -226,6 +253,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Brokerage> getBrokerages() {
         List<Brokerage> list = new ArrayList<>();
 
@@ -237,6 +265,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Credible> getCredibles() {
         List<Credible> list = new ArrayList<>();
 
@@ -248,6 +277,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Representable> getRepresentables() {
         List<Representable> list = new ArrayList<>();
 
@@ -259,6 +289,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Administrative> getAdministratives() {
         List<Administrative> list = new ArrayList<>();
 
@@ -270,6 +301,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Sovereign> getSovereigns() {
         List<Sovereign> list = new ArrayList<>();
 
@@ -281,6 +313,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<BanknoteIssuer> getBanknoteIssuers() {
         List<BanknoteIssuer> list = new ArrayList<>();
 
@@ -292,6 +325,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<CurrencyIssuer> getCurrencyIssuers() {
         List<CurrencyIssuer> list = new ArrayList<>();
 
@@ -303,6 +337,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Institutional> getInstitutionals() {
         List<Institutional> list = new ArrayList<>();
 
@@ -314,6 +349,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<InterestRateProvider> getInterestRateProviders() {
         List<InterestRateProvider> list = new ArrayList<>();
 
@@ -325,6 +361,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Judicial> getJudicials() {
         List<Judicial> list = new ArrayList<>();
 
@@ -336,6 +373,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Legislative> getLegislatives() {
         List<Legislative> list = new ArrayList<>();
 
@@ -347,6 +385,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Minter> getBillCreators() {
         List<Minter> list = new ArrayList<>();
 
@@ -358,6 +397,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Distiller> getDistillers() {
         List<Distiller> list = new ArrayList<>();
 
@@ -369,6 +409,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Producer> getProducers() {
         List<Producer> list = new ArrayList<>();
 
@@ -380,6 +421,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Scientific> getScientifics() {
         List<Scientific> list = new ArrayList<>();
 
@@ -391,6 +433,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Private> getPrivates() {
         List<Private> list = new ArrayList<>();
 
@@ -402,6 +445,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Shared> getShareds() {
         List<Shared> list = new ArrayList<>();
 
@@ -413,6 +457,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Builder> getBuilders() {
         List<Builder> list = new ArrayList<>();
 
@@ -424,6 +469,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<CardAcceptor> getCardAccpetors() {
         List<CardAcceptor> list = new ArrayList<>();
 
@@ -435,6 +481,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Faction> getFactions() {
         List<Faction> list = new ArrayList<>();
 
@@ -446,6 +493,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<House> getHouses() {
         List<House> list = new ArrayList<>();
 
@@ -457,6 +505,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Legal> getLegals() {
         List<Legal> list = new ArrayList<>();
 
@@ -468,6 +517,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<PropertyProtector> getProtectors() {
         List<PropertyProtector> list = new ArrayList<>();
 
@@ -479,6 +529,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<VaultKeeper> getVaultKeepers() {
         List<VaultKeeper> list = new ArrayList<>();
 
@@ -490,6 +541,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Federal> getFederals() {
         List<Federal> list = new ArrayList<>();
 
@@ -501,6 +553,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<AuctionHouse> getAuctionHosts() {
         List<AuctionHouse> list = new ArrayList<>();
 
@@ -512,6 +565,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Exchange> getMarketHosts() {
         List<Exchange> list = new ArrayList<>();
 
@@ -523,6 +577,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<CardIssuer> getCardIssuers() {
         List<CardIssuer> list = new ArrayList<>();
 
@@ -534,6 +589,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<CardTerminal> getCardTerminals() {
         List<CardTerminal> terminals = new ArrayList<>();
 
@@ -545,6 +601,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Democratic> getDemocratics() {
         List<Democratic> list = new ArrayList<>();
 
@@ -556,6 +613,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Account> getAccounts() {
         List<Account> accounts = new ArrayList<>();
 
@@ -567,6 +625,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Table> getTables() {
         List<Table> tables = new ArrayList<>();
 
@@ -578,6 +637,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Guarantee> getGuarantees() {
         List<Guarantee> guarantees = new ArrayList<>();
 
@@ -591,6 +651,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Banknote> getBanknotes() {
         List<Banknote> notes = new ArrayList<>();
 
@@ -602,6 +663,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Auctioneer> getAuctioneers() {
         List<Auctioneer> auctioneers = new ArrayList<>();
 
@@ -613,6 +675,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Bid> getBids() {
         List<Bid> bids = new ArrayList<>();
 
@@ -624,6 +687,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Marketplace> getMarketplaces() {
         List<Marketplace> markets = new ArrayList<>();
 
@@ -635,6 +699,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
 
@@ -646,6 +711,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<PriceProvider> getPriceProviders() {
         List<PriceProvider> providers = new ArrayList<>();
 
@@ -661,6 +727,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<VaultBlock> getVaultBlocks() {
         List<VaultBlock> vaults = new ArrayList<>();
 
@@ -672,6 +739,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Portfolio> getPortfolios() {
         List<Portfolio> portfolios = new ArrayList<>();
 
@@ -686,6 +754,7 @@ public final class EconomyXState implements EconomyState {
      * Searching within contracts is not necessary.
      */
     @Override
+    @JsonIgnore
     public List<AssetStack> getAssets() {
         List<AssetStack> stacks = new ArrayList<>();
 
@@ -697,6 +766,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Card> getCards() {
         List<Card> cards = new ArrayList<>();
 
@@ -708,6 +778,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Vote> getVotes() {
         List<Vote> votes = new ArrayList<>();
 
@@ -719,6 +790,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Candidate> getCandidates() {
         List<Candidate> candidates = new ArrayList<>();
 
@@ -730,6 +802,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public List<Voter> getVoters() {
         List<Voter> voters = new ArrayList<>();
 
@@ -759,10 +832,13 @@ public final class EconomyXState implements EconomyState {
         this.burntAssets = burntAssets;
     }
 
+    @JsonIgnore
     public static final String PATH = "oasis/economy";
+    @JsonIgnore
     private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory())
             .registerModule(new JodaModule());
 
+    @JsonIgnore
     public static EconomyXState load(@NonNull EconomyX EX) {
         File path = new File(PATH);
         if (!path.exists()) {
@@ -829,6 +905,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
+    @JsonIgnore
     public void save() {
         File path = new File(PATH);
 

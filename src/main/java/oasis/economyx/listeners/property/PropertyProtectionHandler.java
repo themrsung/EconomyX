@@ -133,11 +133,13 @@ public final class PropertyProtectionHandler extends EconomyListener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlaced(BlockPlaceEvent e) {
+        if (e.isCancelled()) return;
         e.setCancelled(onPropertyAccessAttempted(e.getPlayer(), e.getBlockPlaced().getLocation()));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBroken(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         e.setCancelled(onPropertyAccessAttempted(e.getPlayer(), e.getBlock().getLocation()));
     }
 
