@@ -1,9 +1,6 @@
 package oasis.economyx.interfaces.trading;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.classes.trading.auction.DutchAuction;
 import oasis.economyx.classes.trading.auction.EnglishAuction;
 import oasis.economyx.classes.trading.auction.FirstPriceSealedAuction;
@@ -12,7 +9,6 @@ import oasis.economyx.classes.trading.market.Market;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -34,7 +30,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
         @JsonSubTypes.Type(value = FirstPriceSealedAuction.class, name = "FIRST_PRICE_AUCTION"),
         @JsonSubTypes.Type(value = SecondPriceSealedAuction.class, name = "SECOND_PRICE_AUCTION"),
 })
-public interface PriceProvider extends Sensitive {
+public interface PriceProvider {
     /**
      * The asset of which price is provided for
      * Contract size is determined by quantity of the unit asset
@@ -42,6 +38,7 @@ public interface PriceProvider extends Sensitive {
      * @return Unit asset
      */
     @NonNull
+    @JsonIgnore
     AssetStack getAsset();
 
     /**
@@ -50,6 +47,7 @@ public interface PriceProvider extends Sensitive {
      * @return Contract size
      */
     @NonNegative
+    @JsonIgnore
     default long getContractSize() {
         return getAsset().getQuantity();
     }
@@ -60,6 +58,7 @@ public interface PriceProvider extends Sensitive {
      * @return Price
      */
     @NonNull
+    @JsonIgnore
     CashStack getPrice();
 
     /**
@@ -67,6 +66,7 @@ public interface PriceProvider extends Sensitive {
      *
      * @return Currency
      */
+    @JsonIgnore
     default Cash getCurrency() {
         return getPrice().getAsset();
     }
@@ -77,6 +77,7 @@ public interface PriceProvider extends Sensitive {
      * @return Volume
      */
     @NonNegative
+    @JsonIgnore
     long getVolume();
 
     enum Type {

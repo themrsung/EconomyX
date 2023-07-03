@@ -62,12 +62,6 @@ public final class BlackjackTable implements Table {
 
     }
 
-    @Override
-    @JsonIgnore
-    public void nuke() {
-
-    }
-
     @JsonProperty
     private final Type type = Type.BLACKJACK;
 

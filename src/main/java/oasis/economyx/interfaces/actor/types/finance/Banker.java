@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.finance;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
@@ -26,6 +27,7 @@ public interface Banker extends Corporation, InterestRateProvider {
      *
      * @return Copied list of accounts
      */
+    @JsonIgnore
     List<Account> getAccounts();
 
     /**
@@ -35,6 +37,7 @@ public interface Banker extends Corporation, InterestRateProvider {
      * @return Account if found, null if not
      */
     @Nullable
+    @JsonIgnore
     default Account getAccount(UUID uniqueId) {
         for (Account a : getAccounts()) {
             if (a.getUniqueId().equals(uniqueId)) return a;
@@ -49,6 +52,7 @@ public interface Banker extends Corporation, InterestRateProvider {
      * @param client Client to query for
      * @return List of found accounts
      */
+    @JsonIgnore
     default List<Account> getAccount(Actor client) {
         List<Account> results = new ArrayList<>();
 
@@ -64,6 +68,7 @@ public interface Banker extends Corporation, InterestRateProvider {
      *
      * @param account Account to add
      */
+    @JsonIgnore
     void addAccount(Account account);
 
     /**
@@ -71,10 +76,12 @@ public interface Banker extends Corporation, InterestRateProvider {
      *
      * @param account Account to remove
      */
+    @JsonIgnore
     void removeAccount(Account account);
 
     @Override
     @NonNegative
+    @JsonIgnore
     float getInterestRate();
 
     /**
@@ -84,12 +91,14 @@ public interface Banker extends Corporation, InterestRateProvider {
      * @throws IllegalArgumentException When given rate is negative
      */
     @Override
+    @JsonIgnore
     void setInterestRate(@NonNegative float rate) throws IllegalArgumentException;
 
     /**
      * Called every hour
      * Interest rate is converted to hourly rate so that the compounded interest over a year will equal the annual rate
      */
+    @JsonIgnore
     default void payInterest() {
         for (Account a : getAccounts()) {
             AssetStack content = a.getContent();

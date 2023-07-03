@@ -2,6 +2,7 @@ package oasis.economyx.types.asset.property;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.errorprone.annotations.DoNotCall;
 import oasis.economyx.types.address.Area;
 import oasis.economyx.types.asset.Asset;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -39,6 +40,19 @@ public final class Property implements Asset {
     @JsonIgnore
     public @NonNull UUID getUniqueId() {
         return uniqueId;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull String getName() {
+        return getType().toString();
+    }
+
+    @Override
+    @DoNotCall
+    @JsonIgnore
+    public void setName(@NonNull String name) {
+
     }
 
     @NonNull

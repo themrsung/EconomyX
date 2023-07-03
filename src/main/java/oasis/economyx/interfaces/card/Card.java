@@ -1,9 +1,6 @@
 package oasis.economyx.interfaces.card;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.classes.card.CreditCard;
 import oasis.economyx.classes.card.DebitCard;
 import oasis.economyx.interfaces.actor.Actor;
@@ -36,6 +33,7 @@ public interface Card {
     /**
      * Do not change this after deployment
      */
+    @JsonIgnore
     Material CARD_ITEM = Material.BOOK;
 
     /**
@@ -44,6 +42,7 @@ public interface Card {
      * @return Unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -52,6 +51,7 @@ public interface Card {
      * @return Issuer
      */
     @NonNull
+    @JsonIgnore
     CardIssuer getIssuer();
 
     /**
@@ -60,6 +60,7 @@ public interface Card {
      * @return Holder
      */
     @NonNull
+    @JsonIgnore
     Actor getHolder();
 
     /**
@@ -68,6 +69,7 @@ public interface Card {
      * @return Payable balance
      */
     @NonNull
+    @JsonIgnore
     CashStack getPayable();
 
     /**
@@ -77,6 +79,7 @@ public interface Card {
      * @return Expiry
      */
     @Nullable
+    @JsonIgnore
     DateTime getExpiry();
 
     /**
@@ -84,6 +87,7 @@ public interface Card {
      *
      * @return Active
      */
+    @JsonIgnore
     boolean isActive();
 
     /**
@@ -91,6 +95,7 @@ public interface Card {
      *
      * @param active Active
      */
+    @JsonIgnore
     void setActive(boolean active);
 
     /**
@@ -101,11 +106,13 @@ public interface Card {
      * @throws IllegalArgumentException When amount is greater than payable balance, or currencies are unequal
      */
     @NonNull
+    @JsonIgnore
     CashStack onUsed(@NonNull CardAcceptor seller, @NonNull CashStack amount) throws IllegalArgumentException;
 
     /**
      * Called when this card has expired.
      */
+    @JsonIgnore
     void onExpired();
 
     /**
@@ -113,6 +120,7 @@ public interface Card {
      *
      * @return Card type
      */
+    @JsonIgnore
     Card.Type getType();
 
     enum Type {

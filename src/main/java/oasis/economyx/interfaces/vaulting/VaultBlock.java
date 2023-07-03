@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.vaulting;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.types.asset.commodity.CommodityStack;
@@ -28,6 +29,7 @@ public interface VaultBlock {
      * @return Unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -39,6 +41,7 @@ public interface VaultBlock {
      * @return Vault keeper
      */
     @Nullable
+    @JsonIgnore
     VaultKeeper getKeeper();
 
     /**
@@ -47,6 +50,7 @@ public interface VaultBlock {
      * @return Client
      */
     @NonNull
+    @JsonIgnore
     Actor getClient();
 
     /**
@@ -55,6 +59,7 @@ public interface VaultBlock {
      * @return copied list of items
      */
     @NonNull
+    @JsonIgnore
     List<CommodityStack> getItems();
 
     /**
@@ -62,6 +67,7 @@ public interface VaultBlock {
      *
      * @param item Item to add
      */
+    @JsonIgnore
     void addItem(@NonNull CommodityStack item);
 
     /**
@@ -69,6 +75,7 @@ public interface VaultBlock {
      *
      * @param item Item to remove
      */
+    @JsonIgnore
     void removeItem(@NonNull CommodityStack item);
 
     /**
@@ -77,6 +84,7 @@ public interface VaultBlock {
      * @param item Item to check for
      * @return Whether there is enough empty space
      */
+    @JsonIgnore
     boolean canFit(@NonNull CommodityStack item);
 
     /**
@@ -85,6 +93,7 @@ public interface VaultBlock {
      * @param item Item to check for
      * @return Whether this vault contains the item
      */
+    @JsonIgnore
     boolean contains(@NonNull CommodityStack item);
 
     /**
@@ -93,6 +102,7 @@ public interface VaultBlock {
      * @return Maximum size
      */
     @NonNegative
+    @JsonIgnore
     long getMaxSize();
 
     /**
@@ -101,6 +111,7 @@ public interface VaultBlock {
      * @return Maximum stack size
      */
     @NonNegative
+    @JsonIgnore
     long getMaxStackSize();
 
     /**
@@ -109,11 +120,13 @@ public interface VaultBlock {
      * @return Location
      */
     @NonNull
+    @JsonIgnore
     Location getLocation();
 
     /**
      * Handles vault destruction.
      * Called when the physical block is destroyed.
      */
+    @JsonIgnore
     void onDestroyed();
 }

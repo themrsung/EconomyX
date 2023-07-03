@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.ownership;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 
@@ -12,6 +13,7 @@ public interface Private extends Representable {
      *
      * @return Owner
      */
+    @JsonIgnore
     Actor getOwner();
 
     /**
@@ -19,5 +21,6 @@ public interface Private extends Representable {
      *
      * @param owner New owner
      */
+    @JsonIgnore
     void setOwner(Actor owner);
 }

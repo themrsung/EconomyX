@@ -1,9 +1,9 @@
 package oasis.economyx.interfaces.actor.types.gaming;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.gaming.table.Table;
 import oasis.economyx.types.asset.chip.Chip;
-import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
@@ -11,13 +11,14 @@ import java.util.List;
 /**
  * A house can host games
  */
-public interface House extends Actor, Sensitive {
+public interface House extends Actor {
     /**
      * Gets all games currently open
      *
      * @return Copied list of games
      */
     @NonNull
+    @JsonIgnore
     List<Table> getTables();
 
     /**
@@ -25,6 +26,7 @@ public interface House extends Actor, Sensitive {
      *
      * @param table Table to add
      */
+    @JsonIgnore
     void addTable(Table table);
 
     /**
@@ -32,6 +34,7 @@ public interface House extends Actor, Sensitive {
      *
      * @param table Table to remove
      */
+    @JsonIgnore
     void removeTable(Table table);
 
     /**
@@ -40,12 +43,6 @@ public interface House extends Actor, Sensitive {
      * @return Chip
      */
     @NonNull
+    @JsonIgnore
     Chip getIssuedChip();
-
-    @Override
-    default void nuke() {
-        for (Table t : getTables()) {
-            t.nuke();
-        }
-    }
 }

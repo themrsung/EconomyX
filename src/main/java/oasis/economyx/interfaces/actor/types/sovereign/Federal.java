@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.sovereign;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
@@ -29,6 +30,7 @@ public interface Federal extends Sovereign {
      * @return A copied list of member states
      */
     @NonNull
+    @JsonIgnore
     List<Sovereign> getMemberStates();
 
     /**
@@ -36,6 +38,7 @@ public interface Federal extends Sovereign {
      *
      * @param state State to add
      */
+    @JsonIgnore
     void addMemberState(@NonNull Sovereign state);
 
     /**
@@ -43,6 +46,7 @@ public interface Federal extends Sovereign {
      *
      * @param state State to remove
      */
+    @JsonIgnore
     void removeMemberState(@NonNull Sovereign state);
 
     /**
@@ -51,6 +55,7 @@ public interface Federal extends Sovereign {
      * @return State if found, null if not
      */
     @Nullable
+    @JsonIgnore
     Sovereign getRepresentativeState();
 
     /**
@@ -60,6 +65,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @Nullable
+    @JsonIgnore
     default Person getRepresentative() {
         if (getRepresentativeState() == null) return null;
 
@@ -72,6 +78,7 @@ public interface Federal extends Sovereign {
      * @param state State to set
      * @throws IllegalArgumentException When the state is not a member of this federal
      */
+    @JsonIgnore
     void setRepresentativeState(@NonNull Sovereign state) throws IllegalArgumentException;
 
     /**
@@ -80,6 +87,7 @@ public interface Federal extends Sovereign {
      * @param representative Representative
      */
     @Override
+    @JsonIgnore
     default void setRepresentative(@Nullable Person representative) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().setRepresentative(representative);
@@ -92,6 +100,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @NonNull
+    @JsonIgnore
     default List<Person> getCitizens() {
         List<Person> citizens = new ArrayList<>();
 
@@ -108,6 +117,7 @@ public interface Federal extends Sovereign {
      * @param citizen Citizen to add
      */
     @Override
+    @JsonIgnore
     default void addCitizen(@NonNull Person citizen) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().addCitizen(citizen);
@@ -119,6 +129,7 @@ public interface Federal extends Sovereign {
      * @param citizen Citizen to remove
      */
     @Override
+    @JsonIgnore
     default void removeCitizen(@NonNull Person citizen) {
         for (Sovereign m : getMemberStates()) {
             m.removeCitizen(citizen);
@@ -132,6 +143,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @NonNull
+    @JsonIgnore
     default List<Corporation> getCorporations() {
         List<Corporation> corporations = new ArrayList<>();
 
@@ -148,6 +160,7 @@ public interface Federal extends Sovereign {
      * @param corporation Corporation to add
      */
     @Override
+    @JsonIgnore
     default void addCorporation(@NonNull Corporation corporation) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().addCorporation(corporation);
@@ -159,6 +172,7 @@ public interface Federal extends Sovereign {
      * @param corporation Corporation to remove
      */
     @Override
+    @JsonIgnore
     default void removeCorporation(@NonNull Corporation corporation) {
         for (Sovereign m : getMemberStates()) {
             m.removeCorporation(corporation);
@@ -172,6 +186,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @NonNull
+    @JsonIgnore
     default List<Institutional> getInstitutions() {
         List<Institutional> institutions = new ArrayList<>();
 
@@ -188,6 +203,7 @@ public interface Federal extends Sovereign {
      * @param institution Institution to add
      */
     @Override
+    @JsonIgnore
     default void addInstitution(@NonNull Institutional institution) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().addInstitution(institution);
@@ -199,6 +215,7 @@ public interface Federal extends Sovereign {
      * @param institution Institution to remove
      */
     @Override
+    @JsonIgnore
     default void removeInstitution(@NonNull Institutional institution) {
         for (Sovereign m : getMemberStates()) {
             m.removeInstitution(institution);
@@ -212,6 +229,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @NonNull
+    @JsonIgnore
     default CashStack getRepresentativePay() {
         if (getRepresentativeState() == null) throw new RuntimeException();
         return getRepresentativeState().getRepresentativePay();
@@ -223,6 +241,7 @@ public interface Federal extends Sovereign {
      * @param pay Hourly pay
      */
     @Override
+    @JsonIgnore
     default void setRepresentativePay(@NonNull CashStack pay) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().setRepresentativePay(pay);
@@ -235,6 +254,7 @@ public interface Federal extends Sovereign {
      */
     @Override
     @NonNull
+    @JsonIgnore
     default CashStack getProtectionFee() {
         if (getRepresentativeState() == null) throw new RuntimeException();
         return getRepresentativeState().getProtectionFee();
@@ -246,6 +266,7 @@ public interface Federal extends Sovereign {
      * @param fee Protection fee
      */
     @Override
+    @JsonIgnore
     default void setProtectionFee(@NonNull CashStack fee) {
         if (getRepresentativeState() == null) throw new RuntimeException();
         getRepresentativeState().setProtectionFee(fee);

@@ -198,17 +198,6 @@ public final class PokerTable implements Table {
     }
 
     @Override
-    @JsonIgnore
-    public void nuke() {
-        dealer.nuke();
-        burnt.nuke();
-
-        for (CardPlayer cp : getPlayers()) {
-            cp.getHand().nuke();
-        }
-    }
-
-    @Override
     @NonNull
     @JsonIgnore
     public UUID getUniqueId() {

@@ -13,24 +13,43 @@ import java.util.UUID;
 public final class Cash implements Asset {
     public Cash() {
         this.uniqueId = UUID.randomUUID();
+        this.name = null;
     }
 
-    public Cash(@NonNull UUID uniqueId) {
+    public Cash(@NonNull UUID uniqueId, @NonNull String name) {
         this.uniqueId = uniqueId;
+        this.name = name;
     }
 
     public Cash(Cash other) {
         this.uniqueId = other.uniqueId;
+        this.name = other.name;
     }
 
     @NonNull
     @JsonProperty
     private final UUID uniqueId;
 
+    @NonNull
+    @JsonProperty
+    private String name;
+
     @Override
     @JsonIgnore
     public @NonNull UUID getUniqueId() {
         return uniqueId;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull String getName() {
+        return name;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setName(@NonNull String name) {
+        this.name = name;
     }
 
     @JsonProperty

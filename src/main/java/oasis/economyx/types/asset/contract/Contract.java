@@ -1,5 +1,6 @@
 package oasis.economyx.types.asset.contract;
 
+import com.google.errorprone.annotations.DoNotCall;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
@@ -42,4 +43,15 @@ public interface Contract extends Asset {
      * @param holder Current holder of the contract
      */
     void onExpired(Actor holder);
+
+    @Override
+    default @NonNull String getName() {
+        return getType().toString();
+    }
+
+    @Override
+    @DoNotCall
+    default void setName(@NonNull String name) {
+
+    }
 }

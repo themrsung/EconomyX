@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -15,6 +16,7 @@ public interface CurrencyIssuer extends Institutional {
      * @return Currency
      */
     @NonNull
+    @JsonIgnore
     Cash getIssuedCurrency();
 
     /**
@@ -24,6 +26,7 @@ public interface CurrencyIssuer extends Institutional {
      * @param amount Amount to print
      * @throws IllegalArgumentException When a different denotation is provided
      */
+    @JsonIgnore
     void printCurrency(CashStack amount) throws IllegalArgumentException;
 
     /**
@@ -32,5 +35,6 @@ public interface CurrencyIssuer extends Institutional {
      * @param amount Amount to burn
      * @throws IllegalArgumentException When a different denotation is provided
      */
+    @JsonIgnore
     void burnCurrency(CashStack amount) throws IllegalArgumentException;
 }

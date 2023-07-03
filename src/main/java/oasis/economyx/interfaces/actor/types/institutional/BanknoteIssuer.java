@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.physical.Banknote;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,6 +16,7 @@ public interface BanknoteIssuer extends Institutional {
      *
      * @return A copied list of banknotes
      */
+    @JsonIgnore
     List<Banknote> getIssuedBanknotes();
 
     /**
@@ -24,5 +26,6 @@ public interface BanknoteIssuer extends Institutional {
      * @return The physical item that can be given to a player
      * @throws IllegalArgumentException When the issuer has insufficient cash, parent sovereign does not have a currency, or the denotation is different
      */
+    @JsonIgnore
     ItemStack issueBanknote(Banknote note) throws IllegalArgumentException;
 }

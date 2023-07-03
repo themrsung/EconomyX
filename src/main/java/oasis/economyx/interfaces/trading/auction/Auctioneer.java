@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.trading.auction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.trading.AuctionHouse;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -22,6 +23,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @return Auction type
      */
+    @JsonIgnore
     PriceProvider.Type getType();
 
     /**
@@ -30,6 +32,7 @@ public interface Auctioneer extends PriceProvider {
      * @return When the price is confirmed
      */
     @NonNull
+    @JsonIgnore
     DateTime getDeadline();
 
     /**
@@ -37,6 +40,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @return True if auction has closed
      */
+    @JsonIgnore
     default boolean hasExpired() {
         return getDeadline().isBeforeNow();
     }
@@ -48,6 +52,7 @@ public interface Auctioneer extends PriceProvider {
      * @return A copied list of bids
      */
     @NonNull
+    @JsonIgnore
     List<Bid> getBids();
 
     /**
@@ -55,6 +60,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @param bid Bid to place
      */
+    @JsonIgnore
     void placeBid(@NonNull Bid bid);
 
     /**
@@ -63,6 +69,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @param auctioneer The actor who runs this auction
      */
+    @JsonIgnore
     void processBids(AuctionHouse auctioneer);
 
     /**
@@ -70,6 +77,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @param auctioneer The actor who runs this auction
      */
+    @JsonIgnore
     void onDeadlineReached(AuctionHouse auctioneer);
 
     /**
@@ -77,6 +85,7 @@ public interface Auctioneer extends PriceProvider {
      *
      * @return True if at least one bid was successful
      */
+    @JsonIgnore
     boolean isSold();
 
     /**
@@ -86,6 +95,7 @@ public interface Auctioneer extends PriceProvider {
      */
     @Override
     @NonNegative
+    @JsonIgnore
     default long getVolume() {
         return isSold() ? getAsset().getQuantity() : 0L;
     }

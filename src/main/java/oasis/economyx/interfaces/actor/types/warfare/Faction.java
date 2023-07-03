@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.warfare;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -17,6 +18,7 @@ public interface Faction extends Actor {
      * @return Hostile factions
      */
     @NonNull
+    @JsonIgnore
     List<Faction> getHostilities();
 
     /**
@@ -24,6 +26,7 @@ public interface Faction extends Actor {
      *
      * @param faction Faction to declare hostility on
      */
+    @JsonIgnore
     void addHostility(@NonNull Faction faction);
 
     /**
@@ -31,6 +34,7 @@ public interface Faction extends Actor {
      *
      * @param faction Faction to remove hostility from
      */
+    @JsonIgnore
     void removeHostility(@NonNull Faction faction);
 
     /**
@@ -38,6 +42,7 @@ public interface Faction extends Actor {
      *
      * @return Enemies
      */
+    @JsonIgnore
     default List<Faction> getEnemies(@NonNull EconomyState state) {
         List<Faction> enemies = new ArrayList<>();
 

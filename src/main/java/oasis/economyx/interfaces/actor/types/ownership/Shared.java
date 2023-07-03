@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.ownership;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.state.EconomyState;
@@ -19,6 +20,7 @@ public interface Shared extends Representable {
      * @return Stock's unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getStockId();
 
     /**
@@ -29,6 +31,7 @@ public interface Shared extends Representable {
      * @return Total issued share count
      */
     @NonNegative
+    @JsonIgnore
     long getShareCount();
 
     /**
@@ -36,6 +39,7 @@ public interface Shared extends Representable {
      *
      * @param shares New share count
      */
+    @JsonIgnore
     void setShareCount(@NonNegative long shares);
 
     /**
@@ -44,6 +48,7 @@ public interface Shared extends Representable {
      *
      * @param delta Amount of shares to add
      */
+    @JsonIgnore
     void addShareCount(@NonNegative long delta);
 
     /**
@@ -53,6 +58,7 @@ public interface Shared extends Representable {
      * @param delta Amount of shares to remove
      * @throws IllegalArgumentException when the resulting share count is less than 1
      */
+    @JsonIgnore
     void reduceShareCount(@NonNegative long delta) throws IllegalArgumentException;
 
     /**
@@ -62,6 +68,7 @@ public interface Shared extends Representable {
      * @param state Current running state
      * @return List of shareholders
      */
+    @JsonIgnore
     List<Actor> getShareholders(EconomyState state);
 
     /**
@@ -72,5 +79,6 @@ public interface Shared extends Representable {
      * @param state Current running state
      * @return List of majority shareholders
      */
+    @JsonIgnore
     List<Actor> getMajorityShareholders(EconomyState state);
 }

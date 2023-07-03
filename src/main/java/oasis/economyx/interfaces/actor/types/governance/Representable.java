@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.governance;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -18,6 +19,7 @@ public interface Representable extends Actor {
      * @return Current representative
      */
     @Nullable
+    @JsonIgnore
     Person getRepresentative();
 
     /**
@@ -25,6 +27,7 @@ public interface Representable extends Actor {
      *
      * @param representative New representative
      */
+    @JsonIgnore
     void setRepresentative(@Nullable Person representative);
 
     /**
@@ -33,6 +36,7 @@ public interface Representable extends Actor {
      * @return Hourly pay
      */
     @NonNull
+    @JsonIgnore
     CashStack getRepresentativePay();
 
     /**
@@ -40,11 +44,13 @@ public interface Representable extends Actor {
      *
      * @param pay Hourly pay
      */
+    @JsonIgnore
     void setRepresentativePay(@NonNull CashStack pay);
 
     /**
      * Pays the representative. Called every hour.
      */
+    @JsonIgnore
     default void payRepresentative() {
         if (getRepresentative() == null) return;
 

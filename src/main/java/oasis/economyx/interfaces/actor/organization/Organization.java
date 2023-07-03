@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.organization;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -18,6 +19,7 @@ public interface Organization<M extends Actor> extends Representable {
      * @return A copied list of members
      */
     @NonNull
+    @JsonIgnore
     List<M> getMembers();
 
     /**
@@ -25,6 +27,7 @@ public interface Organization<M extends Actor> extends Representable {
      *
      * @param member Member to add
      */
+    @JsonIgnore
     void addMember(@NonNull M member);
 
     /**
@@ -32,5 +35,6 @@ public interface Organization<M extends Actor> extends Representable {
      *
      * @param member Member to remove
      */
+    @JsonIgnore
     void removeMember(@NonNull M member);
 }

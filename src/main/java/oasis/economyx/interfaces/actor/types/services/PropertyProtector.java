@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.services;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,7 +17,9 @@ public interface PropertyProtector extends Actor {
      * @return Protection fee per interaction.
      */
     @NonNull
+    @JsonIgnore
     CashStack getProtectionFee();
 
+    @JsonIgnore
     void setProtectionFee(@NonNull CashStack fee);
 }

@@ -31,6 +31,7 @@ public interface Voter {
      *
      * @return Voter
      */
+    @JsonIgnore
     Actor getVoter();
 
     /**
@@ -38,6 +39,7 @@ public interface Voter {
      *
      * @return Remaining votes
      */
+    @JsonIgnore
     long getVotes();
 
     /**
@@ -46,6 +48,7 @@ public interface Voter {
      *
      * @param votes Votes cast
      */
+    @JsonIgnore
     void onVoted(long votes);
 
     class Votable implements Voter {

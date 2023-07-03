@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.banking;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -31,6 +32,7 @@ public interface Account {
      * @return Unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -39,6 +41,7 @@ public interface Account {
      * @return Banker
      */
     @NonNull
+    @JsonIgnore
     Banker getInstitution();
 
     /**
@@ -48,6 +51,7 @@ public interface Account {
      * @return Client
      */
     @NonNull
+    @JsonIgnore
     Actor getClient();
 
     /**
@@ -56,6 +60,7 @@ public interface Account {
      * @return Asset stored in this account
      */
     @NonNull
+    @JsonIgnore
     AssetStack getContent();
 
     /**
@@ -64,6 +69,7 @@ public interface Account {
      * @return Collateral
      */
     @NonNull
+    @JsonIgnore
     CollateralStack getCollateral();
 
     /**
@@ -73,6 +79,7 @@ public interface Account {
      * @param asset Asset to be added to this account
      * @throws IllegalArgumentException When an incompatible is given
      */
+    @JsonIgnore
     void deposit(@NonNull AssetStack asset) throws IllegalArgumentException;
 
     /**
@@ -82,6 +89,7 @@ public interface Account {
      * @param asset Asset to be removed from this account
      * @throws IllegalArgumentException When the account does not hold the asset
      */
+    @JsonIgnore
     void withdraw(@NonNull AssetStack asset) throws IllegalArgumentException;
 
     /**
@@ -90,6 +98,7 @@ public interface Account {
      *
      * @param institution Institution holding this account
      */
+    @JsonIgnore
     void onOpened(@NonNull Banker institution);
 
     /**
@@ -98,5 +107,6 @@ public interface Account {
      *
      * @param institution Institution holding this account
      */
+    @JsonIgnore
     void onClosed(@NonNull Banker institution);
 }

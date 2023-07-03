@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -14,6 +15,7 @@ public interface InterestRateProvider extends Institutional {
      *
      * @return Annual interest rate
      */
+    @JsonIgnore
     float getInterestRate();
 
     /**
@@ -22,6 +24,7 @@ public interface InterestRateProvider extends Institutional {
      *
      * @return Daily interest rate
      */
+    @JsonIgnore
     default float getDailyInterestRate() {
         LocalDate now = new LocalDate();
         int days = Days.daysBetween(now, now.plusYears(1)).getDays();
@@ -34,6 +37,7 @@ public interface InterestRateProvider extends Institutional {
      *
      * @return Hourly interest rate
      */
+    @JsonIgnore
     default float getHourlyInterestRate() {
         return (float) (Math.pow(getDailyInterestRate() + 1, (double) 1 / 24) - 1);
     }
@@ -44,5 +48,6 @@ public interface InterestRateProvider extends Institutional {
      *
      * @param rate Annual interest rate
      */
+    @JsonIgnore
     void setInterestRate(float rate);
 }

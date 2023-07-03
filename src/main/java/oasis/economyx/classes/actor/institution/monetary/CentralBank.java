@@ -47,17 +47,21 @@ public final class CentralBank extends Institution implements InterestRateProvid
     }
 
     @NonNull
+    @JsonProperty
     private final Cash issuedCurrency;
 
+    @JsonProperty
     private float interestRate;
 
     @NonNull
     @Override
+    @JsonIgnore
     public Cash getIssuedCurrency() {
         return new Cash(issuedCurrency);
     }
 
     @Override
+    @JsonIgnore
     public void printCurrency(CashStack amount) throws IllegalArgumentException {
         if (!amount.getAsset().equals(getIssuedCurrency())) throw new IllegalArgumentException();
 
@@ -65,6 +69,7 @@ public final class CentralBank extends Institution implements InterestRateProvid
     }
 
     @Override
+    @JsonIgnore
     public void burnCurrency(CashStack amount) throws IllegalArgumentException {
         if (!amount.getAsset().equals(getIssuedCurrency())) throw new IllegalArgumentException();
 
@@ -72,11 +77,13 @@ public final class CentralBank extends Institution implements InterestRateProvid
     }
 
     @Override
+    @JsonIgnore
     public float getInterestRate() {
         return interestRate;
     }
 
     @Override
+    @JsonIgnore
     public void setInterestRate(float interestRate) {
         this.interestRate = interestRate;
     }

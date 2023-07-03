@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.guarantee;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.types.finance.Credible;
 import oasis.economyx.types.asset.AssetStack;
@@ -27,6 +28,7 @@ public interface Guarantee {
      * @return Guarantor who issued this guarantee
      */
     @NonNull
+    @JsonIgnore
     Credible getGuarantor();
 
     /**
@@ -35,6 +37,7 @@ public interface Guarantee {
      * @return Warrantee who received this guarantee
      */
     @NonNull
+    @JsonIgnore
     Actor getWarrantee();
 
     /**
@@ -43,6 +46,7 @@ public interface Guarantee {
      * @return Expiry
      */
     @Nullable
+    @JsonIgnore
     DateTime getExpiry();
 
     /**
@@ -52,6 +56,7 @@ public interface Guarantee {
      * @return Limit
      */
     @NonNull
+    @JsonIgnore
     AssetStack getLimit();
 
     /**
@@ -59,5 +64,6 @@ public interface Guarantee {
      * @param amount Amount used
      * @throws IllegalArgumentException When amount is over limit
      */
+    @JsonIgnore
     void onUsed(@NonNull AssetStack amount) throws IllegalArgumentException;
 }

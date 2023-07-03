@@ -41,20 +41,24 @@ public final class Guarantor extends Company implements Credible {
         this.guarantees = other.guarantees;
     }
 
+    @JsonProperty
     private final List<Guarantee> guarantees;
 
     @NonNull
     @Override
+    @JsonIgnore
     public List<Guarantee> getGuarantees() {
         return new ArrayList<>(guarantees);
     }
 
     @Override
+    @JsonIgnore
     public void addGuarantee(@NonNull Guarantee guarantee) {
         guarantees.add(guarantee);
     }
 
     @Override
+    @JsonIgnore
     public void removeGuarantee(@NonNull Guarantee guarantee) {
         guarantees.remove(guarantee);
     }

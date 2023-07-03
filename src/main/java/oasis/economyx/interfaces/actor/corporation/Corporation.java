@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.corporation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
@@ -14,6 +15,7 @@ public interface Corporation extends Employer, Shared, Democratic {
      *
      * @return Currency
      */
+    @JsonIgnore
     Cash getCurrency();
 }
 

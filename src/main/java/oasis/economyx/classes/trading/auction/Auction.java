@@ -116,12 +116,4 @@ public abstract class Auction implements Auctioneer {
     public void placeBid(@NonNull Bid bid) {
         bids.add(bid);
     }
-
-    @Override
-    @JsonIgnore
-    public void nuke() {
-        for (Bid bid : getBids()) {
-            bid.nuke();
-        }
-    }
 }

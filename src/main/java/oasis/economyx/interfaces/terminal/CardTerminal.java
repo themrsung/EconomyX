@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.terminal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.services.CardAcceptor;
 import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.cash.CashStack;
@@ -11,6 +12,7 @@ public interface CardTerminal {
      * Do not change this after deployment.
      */
     @NonNull
+    @JsonIgnore
     Material TERMINAL_ITEM = Material.COMMAND_BLOCK;
 
     /**
@@ -19,6 +21,7 @@ public interface CardTerminal {
      * @return Address
      */
     @NonNull
+    @JsonIgnore
     Address getAddress();
 
     /**
@@ -27,6 +30,7 @@ public interface CardTerminal {
      * @return Seller
      */
     @NonNull
+    @JsonIgnore
     CardAcceptor getSeller();
 
     /**
@@ -35,5 +39,6 @@ public interface CardTerminal {
      * @return Price
      */
     @NonNull
+    @JsonIgnore
     CashStack getPrice();
 }

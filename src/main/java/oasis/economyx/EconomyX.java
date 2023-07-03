@@ -1,5 +1,16 @@
 package oasis.economyx;
 
+import oasis.economyx.classes.actor.company.special.HoldingsCompany;
+import oasis.economyx.classes.actor.institution.monetary.CentralBank;
+import oasis.economyx.classes.actor.institution.monetary.Mint;
+import oasis.economyx.classes.actor.institution.warfare.Military;
+import oasis.economyx.classes.actor.institution.warfare.ResearchCenter;
+import oasis.economyx.classes.actor.organization.international.Alliance;
+import oasis.economyx.classes.actor.person.NaturalPerson;
+import oasis.economyx.classes.actor.sovereignty.federal.Empire;
+import oasis.economyx.classes.actor.sovereignty.singular.Principality;
+import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.listeners.actor.ActorAddressChangedListener;
 import oasis.economyx.listeners.actor.ActorCreationListener;
@@ -59,9 +70,17 @@ import oasis.economyx.tasks.server.AutoSaveTask;
 import oasis.economyx.tasks.trading.AuctionTickTask;
 import oasis.economyx.tasks.trading.MarketTickTask;
 import oasis.economyx.tasks.voting.VoteProcessTask;
+import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
+import oasis.economyx.types.asset.stock.Stock;
+import oasis.economyx.types.asset.stock.StockStack;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Main class of EconomyX.
@@ -73,11 +92,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class EconomyX extends JavaPlugin {
     private EconomyState state;
 
+    // Server settings
+    public static Cash SERVER_CURRENCY = new Cash(UUID.fromString("85045e1c-2a32-41af-8728-950b9fad1368"), "CR");
+
     @Override
     public void onEnable() {
         Bukkit.getLogger().info("Loading EconomyX.");
 
         this.state = EconomyXState.load(this);
+
+        if (state.getActors().size() == 0) initializeDefaultState();
 
         registerListeners();
         registerTasks();
@@ -216,5 +240,119 @@ public final class EconomyX extends JavaPlugin {
 
     private void registerListener(EconomyListener event) {
         Bukkit.getPluginManager().registerEvents(event, this);
+    }
+
+    /**
+     * Called on first startup.
+     * Customize this before running the plugin.
+     */
+    private void initializeDefaultState() {
+        // Founder
+        Person halliday = new NaturalPerson(
+                UUID.fromString("43c8a60f-e288-4ed3-a4af-fb220faad455"),
+                "themrsung"
+        );
+
+        halliday.getAssets().add(new CashStack(SERVER_CURRENCY, 10000L));
+        state.addActor(halliday);
+
+        // Oasis
+        Stock oasisStock = new Stock(UUID.randomUUID(), "OAS");
+        HoldingsCompany oasis = new HoldingsCompany(
+                UUID.randomUUID(),
+                "Oasis Corporation",
+                oasisStock.getUniqueId(),
+                10000L,
+                SERVER_CURRENCY
+        );
+
+        halliday.getAssets().add(new StockStack(oasisStock, 10000L));
+        oasis.getAssets().add(new CashStack(SERVER_CURRENCY, 1000000000000000000L));
+
+        state.addActor(oasis);
+
+        // JBS
+        Principality JBS = new Principality(
+                UUID.randomUUID(),
+                "JB Server",
+                SERVER_CURRENCY,
+                halliday
+        );
+
+        JBS.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
+        JBS.addCorporation(oasis);
+
+        state.addActor(JBS);
+
+        // JB Empire
+        Empire JBE = new Empire(
+                UUID.randomUUID(),
+                "JB Empire",
+                SERVER_CURRENCY,
+                JBS
+        );
+
+        JBE.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
+
+        state.addActor(JBE);
+
+        // JB Bank
+        CentralBank JB_BANK = new CentralBank(
+                JBE,
+                UUID.randomUUID(),
+                "JB Central Bank",
+                SERVER_CURRENCY
+        );
+
+        JB_BANK.setRepresentative(halliday);
+        state.addActor(JB_BANK);
+        JBE.addInstitution(JB_BANK);
+
+        // JB Mint
+        Mint JB_MINT = new Mint(
+                JBE,
+                UUID.randomUUID(),
+                "JB Mint",
+                SERVER_CURRENCY
+        );
+        JB_MINT.setRepresentative(halliday);
+        state.addActor(JB_MINT);
+        JBE.addInstitution(JB_MINT);
+
+        // JB Research Center
+        ResearchCenter JB_RESEARCH = new ResearchCenter(
+                JBE,
+                UUID.randomUUID(),
+                "JB Research",
+                SERVER_CURRENCY
+        );
+        JB_RESEARCH.setRepresentative(halliday);
+        state.addActor(JB_RESEARCH);
+        JBE.addInstitution(JB_RESEARCH);
+
+        // JB Peacekeepers
+        Military JB_PEACEKEEPERS = new Military(
+                JBE,
+                UUID.randomUUID(),
+                "JB Peacekeepers",
+                SERVER_CURRENCY
+        );
+
+        JB_PEACEKEEPERS.setRepresentative(halliday);
+        state.addActor(JB_PEACEKEEPERS);
+        JBE.addInstitution(JB_PEACEKEEPERS);
+
+        // MPTO
+        Alliance MPTO = new Alliance(
+                UUID.randomUUID(),
+                "Mutual Protection Treaty Organization",
+                SERVER_CURRENCY,
+                JBE
+        );
+
+        MPTO.addMember(JBS);
+        MPTO.getAssets().add(new CashStack(SERVER_CURRENCY, 10000000L));
+
+        state.addActor(MPTO);
     }
 }

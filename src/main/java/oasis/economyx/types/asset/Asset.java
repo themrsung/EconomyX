@@ -60,12 +60,34 @@ public interface Asset {
     Asset.Type getType();
 
     /**
+     * Gets the display name of this asset.
+     * @return Name
+     */
+    @NonNull
+    String getName();
+
+    /**
+     * Sets the display name of this asset.
+     * @param name Name
+     */
+    void setName(@NonNull String name);
+
+    /**
      * Copies this asset
      *
      * @return An identical copy of this asset
      */
     @NonNull
     Asset copy();
+
+    /**
+     * Ensures that only UUID will be compared.
+     * @param other Other asset
+     * @return Whether this asset equals the other.
+     */
+    default boolean equals(@NonNull Asset other) {
+        return getUniqueId().equals(other.getUniqueId());
+    }
 
     enum Type {
         // Basic assets

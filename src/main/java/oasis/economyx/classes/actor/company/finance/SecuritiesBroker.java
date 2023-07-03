@@ -64,22 +64,26 @@ public final class SecuritiesBroker extends Company implements Brokerage {
     }
 
     @Override
+    @JsonIgnore
     public void addAccount(Account account) {
         this.accounts.add(account);
         account.onOpened(this);
     }
 
     @Override
+    @JsonIgnore
     public void removeAccount(Account account) {
         if (accounts.remove(account)) account.onClosed(this);
     }
 
     @Override
+    @JsonIgnore
     public float getInterestRate() {
         return interestRate;
     }
 
     @Override
+    @JsonIgnore
     public void setInterestRate(float rate) {
         // Do nothing
     }

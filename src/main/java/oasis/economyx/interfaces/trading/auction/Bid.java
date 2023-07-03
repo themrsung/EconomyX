@@ -1,8 +1,8 @@
 package oasis.economyx.interfaces.trading.auction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.types.asset.cash.CashStack;
-import oasis.economyx.types.security.Sensitive;
 import org.joda.time.DateTime;
 
 /**
@@ -10,12 +10,13 @@ import org.joda.time.DateTime;
  * Unlike orders, there is no collateral backing the bid
  * A bid is not cancellable
  */
-public interface Bid extends Sensitive {
+public interface Bid  {
     /**
      * The bidder of this bid
      *
      * @return Bidder
      */
+    @JsonIgnore
     Actor getBidder();
 
     /**
@@ -23,6 +24,7 @@ public interface Bid extends Sensitive {
      *
      * @return Time of bid
      */
+    @JsonIgnore
     DateTime getTime();
 
     /**
@@ -31,6 +33,7 @@ public interface Bid extends Sensitive {
      *
      * @return Price
      */
+    @JsonIgnore
     CashStack getPrice();
 
     /**
@@ -39,5 +42,6 @@ public interface Bid extends Sensitive {
      * @param auctioneer The actor who runs the auction
      * @param price      Actual price the bidder must pay
      */
+    @JsonIgnore
     void onSucceeded(Actor auctioneer, CashStack price);
 }

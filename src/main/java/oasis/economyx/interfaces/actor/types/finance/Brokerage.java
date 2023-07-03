@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.finance;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.checkerframework.checker.index.qual.NonNegative;
 
 /**
@@ -14,6 +15,7 @@ public interface Brokerage extends Banker {
      * @return Rate (e.g. 2.3% -> 0.023f)
      */
     @NonNegative
+    @JsonIgnore
     float getBrokerageFeeRate();
 
     /**
@@ -21,6 +23,7 @@ public interface Brokerage extends Banker {
      *
      * @param rate Rate (e.g. 2.3% -> 0.023f)
      */
+    @JsonIgnore
     void setBrokerageFeeRate(@NonNegative float rate);
 
 }

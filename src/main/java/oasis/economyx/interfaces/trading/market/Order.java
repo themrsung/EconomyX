@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.trading.market;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.classes.trading.market.AssetOrder;
@@ -8,7 +9,6 @@ import oasis.economyx.interfaces.actor.types.finance.Brokerage;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.contract.collateral.CollateralStack;
-import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -22,12 +22,13 @@ import java.util.UUID;
  */
 @JsonSerialize(as = AssetOrder.class)
 @JsonDeserialize(as = AssetOrder.class)
-public interface Order extends Sensitive {
+public interface Order  {
     /**
      * Gets the unique ID of this order.
      *
      * @return Unique ID
      */
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -35,6 +36,7 @@ public interface Order extends Sensitive {
      *
      * @return Market
      */
+    @JsonIgnore
     Marketplace getMarket();
 
     /**
@@ -42,6 +44,7 @@ public interface Order extends Sensitive {
      *
      * @return Broker
      */
+    @JsonIgnore
     Brokerage getBroker();
 
     /**
@@ -49,6 +52,7 @@ public interface Order extends Sensitive {
      *
      * @return Sender
      */
+    @JsonIgnore
     Actor getSender();
 
     /**
@@ -57,6 +61,7 @@ public interface Order extends Sensitive {
      *
      * @return Whether this order was sent by the broker themselves
      */
+    @JsonIgnore
     default boolean isProprietaryOrder() {
         return getBroker().equals(getSender());
     }
@@ -64,6 +69,7 @@ public interface Order extends Sensitive {
     /**
      * Gets the type of this order.
      */
+    @JsonIgnore
     Type getType();
 
     /**
@@ -72,6 +78,7 @@ public interface Order extends Sensitive {
      * @param type New type
      * @throws IllegalArgumentException When order cannot be changed to the new type
      */
+    @JsonIgnore
     void setType(Type type) throws IllegalArgumentException;
 
     /**
@@ -79,6 +86,7 @@ public interface Order extends Sensitive {
      *
      * @return Whether this is a buy order
      */
+    @JsonIgnore
     default boolean isBuy() {
         return getType().isBuy();
     }
@@ -88,6 +96,7 @@ public interface Order extends Sensitive {
      *
      * @return Whether this is a market order
      */
+    @JsonIgnore
     default boolean isMarket() {
         return getType().isMarket();
     }
@@ -97,6 +106,7 @@ public interface Order extends Sensitive {
      *
      * @return Whether this is an immediate order
      */
+    @JsonIgnore
     default boolean isImmediate() {
         return getType().isImmediate();
     }
@@ -106,6 +116,7 @@ public interface Order extends Sensitive {
      *
      * @return Whether this is order allows partial fulfillment
      */
+    @JsonIgnore
     default boolean allowsPartialFulfillment() {
         return getType().allowsPartialFulfillment();
     }
@@ -115,6 +126,7 @@ public interface Order extends Sensitive {
      *
      * @return Order time
      */
+    @JsonIgnore
     DateTime getTime();
 
     /**
@@ -123,11 +135,13 @@ public interface Order extends Sensitive {
      * @return Price
      */
     @NonNull
+    @JsonIgnore
     CashStack getPrice();
 
     /**
      * Changes the price of this order.
      */
+    @JsonIgnore
     void setPrice(@NonNull CashStack price);
 
     /**
@@ -136,6 +150,7 @@ public interface Order extends Sensitive {
      * @return Quantity
      */
     @NonNegative
+    @JsonIgnore
     long getQuantity();
 
     /**
@@ -145,6 +160,7 @@ public interface Order extends Sensitive {
      * @return Collateral if there is one, null if not
      */
     @Nullable
+    @JsonIgnore
     CollateralStack getCollateral();
 
     /**
@@ -153,6 +169,7 @@ public interface Order extends Sensitive {
      *
      * @param exchange The actor running this market
      */
+    @JsonIgnore
     void onSubmitted(Exchange exchange);
 
     /**
@@ -163,6 +180,7 @@ public interface Order extends Sensitive {
      * @param price    Price of fulfillment
      * @param quantity Quantity of fulfillment
      */
+    @JsonIgnore
     void onFulfilled(Exchange exchange, @NonNull CashStack price, @NonNegative long quantity);
 
     /**
@@ -171,6 +189,7 @@ public interface Order extends Sensitive {
      *
      * @param exchange The actor running this market
      */
+    @JsonIgnore
     void onCancelled(Exchange exchange);
 
     enum Type {

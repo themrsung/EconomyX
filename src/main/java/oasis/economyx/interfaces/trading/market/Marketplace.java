@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.trading.market;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.trading.PriceProvider;
 import org.checkerframework.checker.index.qual.NonNegative;
@@ -19,6 +20,7 @@ public interface Marketplace extends PriceProvider {
      *
      * @return A copied list or orders
      */
+    @JsonIgnore
     List<Order> getOrders();
 
     /**
@@ -26,6 +28,7 @@ public interface Marketplace extends PriceProvider {
      *
      * @return List of buy orders
      */
+    @JsonIgnore
     default List<Order> getBuyOrders() {
         List<Order> buyOrders = new ArrayList<>();
 
@@ -55,6 +58,7 @@ public interface Marketplace extends PriceProvider {
      *
      * @return List of sell orders
      */
+    @JsonIgnore
     default List<Order> getSellOrders() {
         List<Order> sellOrders = new ArrayList<>();
 
@@ -85,6 +89,7 @@ public interface Marketplace extends PriceProvider {
      * @param order    Order to place
      * @param exchange The actor running this market
      */
+    @JsonIgnore
     void placeOrder(@NonNull Order order, @NonNull Exchange exchange);
 
     /**
@@ -93,6 +98,7 @@ public interface Marketplace extends PriceProvider {
      * @param order    Order to place
      * @param exchange The actor running this market
      */
+    @JsonIgnore
     void cancelOrder(@NonNull Order order, @NonNull Exchange exchange);
 
     /**
@@ -101,11 +107,13 @@ public interface Marketplace extends PriceProvider {
      *
      * @param exchange The actor running this market
      */
+    @JsonIgnore
     void processOrders(Exchange exchange);
 
     /**
      * Gets structured buy tick data sorted by price descending
      */
+    @JsonIgnore
     default List<MarketTick> getBidTicks() {
         List<MarketTick> ticks = new ArrayList<>();
 
@@ -135,6 +143,7 @@ public interface Marketplace extends PriceProvider {
      * Gets lowest bid
      */
     @Nullable
+    @JsonIgnore
     default MarketTick getLowestBid() {
         List<MarketTick> bids = getBidTicks();
         return bids.size() > 0 ? bids.get(0) : null;
@@ -143,6 +152,7 @@ public interface Marketplace extends PriceProvider {
     /**
      * Gets structured sell tick data sorted by price ascending
      */
+    @JsonIgnore
     default List<MarketTick> getAskTicks() {
         List<MarketTick> ticks = new ArrayList<>();
 
@@ -172,6 +182,7 @@ public interface Marketplace extends PriceProvider {
      * Gets highest ask
      */
     @Nullable
+    @JsonIgnore
     default MarketTick getHighestAsk() {
         List<MarketTick> asks = getAskTicks();
         return asks.size() > 0 ? asks.get(0) : null;
@@ -182,14 +193,8 @@ public interface Marketplace extends PriceProvider {
      * All orders non-compliant will be cancelled
      */
     @NonNegative
+    @JsonIgnore
     default double getTickSize() {
         return getAsset().getQuantity();
-    }
-
-    @Override
-    default void nuke() {
-        for (Order o : getOrders()) {
-            o.nuke();
-        }
     }
 }

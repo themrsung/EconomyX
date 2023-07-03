@@ -14,24 +14,43 @@ import java.util.UUID;
 public final class Chip implements Asset {
     public Chip() {
         this.uniqueId = UUID.randomUUID();
+        this.name = null;
     }
 
-    public Chip(@NonNull UUID uniqueId) {
+    public Chip(@NonNull UUID uniqueId, @NonNull String name) {
         this.uniqueId = uniqueId;
+        this.name = name;
     }
 
     public Chip(Chip other) {
         this.uniqueId = other.uniqueId;
+        this.name = other.name;
     }
 
     @NonNull
     @JsonProperty
     private final UUID uniqueId;
 
+    @NonNull
+    @JsonProperty
+    private String name;
+
+
     @Override
     @JsonIgnore
     public @NonNull UUID getUniqueId() {
         return uniqueId;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNull String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(@NonNull String name) {
+        this.name = name;
     }
 
     @JsonProperty

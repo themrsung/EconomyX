@@ -62,12 +62,6 @@ public final class BaccaratTable implements Table {
 
     }
 
-    @Override
-    @JsonIgnore
-    public void nuke() {
-        // NUKE
-    }
-
     @JsonProperty
     private final Type type = Type.BACCARAT;
 

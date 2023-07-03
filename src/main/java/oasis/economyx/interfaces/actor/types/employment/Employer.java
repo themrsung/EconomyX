@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.actor.types.employment;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
@@ -20,7 +21,7 @@ public interface Employer extends Representable {
      *
      * @return Copied list of employees
      */
-    @JsonIdentityReference
+    @JsonIgnore
     List<Person> getEmployees();
 
     /**
@@ -28,6 +29,7 @@ public interface Employer extends Representable {
      *
      * @param employee Employee to hire
      */
+    @JsonIgnore
     void addEmployee(Person employee);
 
     /**
@@ -35,6 +37,7 @@ public interface Employer extends Representable {
      *
      * @param employee Employee to fire
      */
+    @JsonIgnore
     void removeEmployee(Person employee);
 
     /**
@@ -42,7 +45,7 @@ public interface Employer extends Representable {
      *
      * @return Copied list of directors
      */
-    @JsonIdentityReference
+    @JsonIgnore
     List<Person> getDirectors();
 
     /**
@@ -50,6 +53,7 @@ public interface Employer extends Representable {
      *
      * @param director Director to hire
      */
+    @JsonIgnore
     void addDirector(Person director);
 
     /**
@@ -57,6 +61,7 @@ public interface Employer extends Representable {
      *
      * @param director Director to fire
      */
+    @JsonIgnore
     void removeDirector(Person director);
 
     /**
@@ -65,6 +70,7 @@ public interface Employer extends Representable {
      * @return Hourly pay
      */
     @NonNull
+    @JsonIgnore
     CashStack getEmployeePay();
 
     /**
@@ -72,6 +78,7 @@ public interface Employer extends Representable {
      *
      * @param pay Hourly pay
      */
+    @JsonIgnore
     void setEmployeePay(@NonNull CashStack pay);
 
     /**
@@ -80,6 +87,7 @@ public interface Employer extends Representable {
      * @return Hourly pay
      */
     @NonNull
+    @JsonIgnore
     CashStack getDirectorPay();
 
     /**
@@ -87,6 +95,7 @@ public interface Employer extends Representable {
      *
      * @param pay Hourly pay
      */
+    @JsonIgnore
     void setDirectorPay(@NonNull CashStack pay);
 
     /**
@@ -94,6 +103,7 @@ public interface Employer extends Representable {
      *
      * @return List of every member
      */
+    @JsonIgnore
     default List<Person> getMembers() {
         List<Person> members = new ArrayList<>();
 
@@ -111,6 +121,7 @@ public interface Employer extends Representable {
      * Pays employees and directors.
      * Called every hour.
      */
+    @JsonIgnore
     default void paySalaries() {
         for (Person e : getEmployees()) {
             Bukkit.getPluginManager().callEvent(new PaymentEvent(

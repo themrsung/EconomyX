@@ -1,6 +1,8 @@
 package oasis.economyx.interfaces.voting;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -75,6 +77,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -83,6 +86,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Name
      */
     @NonNull
+    @JsonIgnore
     String getName();
 
     /**
@@ -91,6 +95,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return A copied list of candidates
      */
     @NonNull
+    @JsonIgnore
     List<Candidate> getCandidates();
 
     /**
@@ -99,6 +104,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return A copied list of voters
      */
     @NonNull
+    @JsonIgnore
     List<Voter> getVoters();
 
     /**
@@ -107,6 +113,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Total castable votes
      */
     @NonNegative
+    @JsonIgnore
     long getTotalCastableVotes();
 
     /**
@@ -115,6 +122,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Total cast votes
      */
     @NonNegative
+    @JsonIgnore
     long getCastVotes();
 
     /**
@@ -124,6 +132,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Expiry
      */
     @NonNull
+    @JsonIgnore
     DateTime getExpiry();
 
     /**
@@ -133,6 +142,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Required approval ratio
      */
     @NonNegative
+    @JsonIgnore
     float getRequiredApprovalRatio();
 
     /**
@@ -142,6 +152,7 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @return Required votes to pass
      */
     @NonNegative
+    @JsonIgnore
     long getRequiredVotesToPass();
 
     /**
@@ -152,11 +163,13 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
      * @param votes     Number of votes to cast.
      * @throws IllegalArgumentException When candidate is invalid, or voter has insufficient votes.
      */
+    @JsonIgnore
     void vote(@NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) throws IllegalArgumentException;
 
     /**
      * Handles internal processing of a vote.
      */
+    @JsonIgnore
     void processVotes();
 
     // No, I don't do the Impl thing.
@@ -186,75 +199,94 @@ public interface Vote { // TODO Make a builder; Constructing votes is VERY tedio
         }
 
         @NonNull
+        @JsonProperty
         private final UUID uniqueId;
         @NonNull
+        @JsonProperty
         private final String name;
 
         @NonNull
+        @JsonProperty
         private final List<Candidate> candidates;
         @NonNull
+        @JsonProperty
         private final List<Voter> voters;
         @NonNegative
+        @JsonProperty
         private final long totalCastableVotes;
         @NonNegative
+        @JsonProperty
         private long castVotes;
 
         @NonNull
+        @JsonProperty
         private final DateTime expiry;
         @NonNegative
+        @JsonProperty
         private final float requiredApprovalRatio;
         @NonNegative
+        @JsonProperty
         private final long requiredVotesToPass;
 
         @NonNull
         @Override
+        @JsonIgnore
         public UUID getUniqueId() {
             return uniqueId;
         }
 
         @NonNull
         @Override
+        @JsonIgnore
         public String getName() {
             return name;
         }
 
         @Override
+        @JsonIgnore
         public @NonNull List<Candidate> getCandidates() {
             return new ArrayList<>(candidates);
         }
 
         @Override
+        @JsonIgnore
         public @NonNull List<Voter> getVoters() {
             return new ArrayList<>(voters);
         }
 
         @Override
+        @JsonIgnore
         public long getTotalCastableVotes() {
             return totalCastableVotes;
         }
 
         @Override
+        @JsonIgnore
         public long getCastVotes() {
             return castVotes;
         }
 
         @Override
         @NonNull
+        @JsonIgnore
         public DateTime getExpiry() {
             return expiry;
         }
 
         @Override
+        @JsonIgnore
         public float getRequiredApprovalRatio() {
             return requiredApprovalRatio;
         }
 
         @Override
+        @JsonIgnore
         public long getRequiredVotesToPass() {
             return requiredVotesToPass;
         }
 
         @Override
+        @JsonIgnore
         public void processVotes() {
             candidates.sort((c1, c2) -> Long.compare(c2.getAcquiredVotes(), c1.getAcquiredVotes()));
             if (candidates.size() == 0) throw new RuntimeException();

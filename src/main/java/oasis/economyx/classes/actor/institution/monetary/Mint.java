@@ -49,14 +49,17 @@ public final class Mint extends Institution implements BanknoteIssuer {
         this.issuedBanknotes = other.issuedBanknotes;
     }
 
+    @JsonProperty
     private final List<Banknote> issuedBanknotes;
 
     @Override
+    @JsonIgnore
     public List<Banknote> getIssuedBanknotes() {
         return new ArrayList<>(issuedBanknotes);
     }
 
     @Override
+    @JsonIgnore
     public ItemStack issueBanknote(Banknote note) throws IllegalArgumentException {
         Sovereign parent = getParent();
         for (Institutional i : parent.getInstitutions()) {

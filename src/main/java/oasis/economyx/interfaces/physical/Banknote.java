@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.physical;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -24,6 +25,7 @@ public interface Banknote {
     /**
      * Do not change this after deployment
      */
+    @JsonIgnore
     Material NOTE_ITEM = Material.PAPER;
 
     /**
@@ -32,6 +34,7 @@ public interface Banknote {
      * @return Unique ID
      */
     @NonNull
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -40,5 +43,6 @@ public interface Banknote {
      * @return Denotation
      */
     @NonNull
+    @JsonIgnore
     CashStack getDenotation();
 }

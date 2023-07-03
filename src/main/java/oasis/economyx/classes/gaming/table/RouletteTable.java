@@ -62,12 +62,6 @@ public final class RouletteTable implements Table {
 
     }
 
-    @Override
-    @JsonIgnore
-    public void nuke() {
-
-    }
-
     @JsonProperty
     private final Type type = Type.ROULETTE;
 

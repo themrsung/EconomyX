@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.voting;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import oasis.economyx.classes.voting.common.ChangeNameAgenda;
@@ -36,6 +37,7 @@ public interface Agenda extends Runnable {
      * @return Description
      */
     @NonNull
+    @JsonIgnore
     String getDescription();
 
     /**
@@ -43,6 +45,7 @@ public interface Agenda extends Runnable {
      *
      * @return Type
      */
+    @JsonIgnore
     Type getType();
 
     enum Type {

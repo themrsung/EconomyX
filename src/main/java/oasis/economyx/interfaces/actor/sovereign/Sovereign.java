@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.sovereign;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -21,6 +22,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      * @return A copied list of citizens
      */
     @NonNull
+    @JsonIgnore
     List<Person> getCitizens();
 
     /**
@@ -28,6 +30,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param citizen Citizen to add
      */
+    @JsonIgnore
     void addCitizen(@NonNull Person citizen);
 
     /**
@@ -35,6 +38,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param citizen Citizen to remove
      */
+    @JsonIgnore
     void removeCitizen(@NonNull Person citizen);
 
     /**
@@ -43,6 +47,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      * @return A copied list of corporations
      */
     @NonNull
+    @JsonIgnore
     List<Corporation> getCorporations();
 
     /**
@@ -50,6 +55,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param corporation Corporation to add
      */
+    @JsonIgnore
     void addCorporation(@NonNull Corporation corporation);
 
     /**
@@ -57,6 +63,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param corporation Corporation to remove
      */
+    @JsonIgnore
     void removeCorporation(@NonNull Corporation corporation);
 
     /**
@@ -65,6 +72,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      * @return A copied list of institutions
      */
     @NonNull
+    @JsonIgnore
     List<Institutional> getInstitutions();
 
     /**
@@ -72,6 +80,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param institution Institution to add
      */
+    @JsonIgnore
     void addInstitution(@NonNull Institutional institution);
 
     /**
@@ -79,6 +88,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      *
      * @param institution Institution to remove
      */
+    @JsonIgnore
     void removeInstitution(@NonNull Institutional institution);
 
     /**
@@ -87,6 +97,7 @@ public interface Sovereign extends Representable, PropertyProtector {
      * @return A list of all members
      */
     @NonNull
+    @JsonIgnore
     default List<Actor> getMembers() {
         List<Actor> members = new ArrayList<>();
 

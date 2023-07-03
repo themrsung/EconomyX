@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.services;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
@@ -24,6 +25,7 @@ public interface VaultKeeper extends Actor {
      * @return A copied list of vaults
      */
     @NonNull
+    @JsonIgnore
     List<VaultBlock> getVaults();
 
     /**
@@ -32,6 +34,7 @@ public interface VaultKeeper extends Actor {
      *
      * @param vault Vault ot add
      */
+    @JsonIgnore
     void addVault(@NonNull VaultBlock vault);
 
     /**
@@ -40,6 +43,7 @@ public interface VaultKeeper extends Actor {
      *
      * @param vault Vault to remove
      */
+    @JsonIgnore
     void removeVault(@NonNull VaultBlock vault);
 
     /**
@@ -49,6 +53,7 @@ public interface VaultKeeper extends Actor {
      * @return Hourly fee
      */
     @NonNull
+    @JsonIgnore
     CashStack getHourlyVaultFee();
 
     /**
@@ -56,11 +61,13 @@ public interface VaultKeeper extends Actor {
      *
      * @param fee Hourly fee
      */
+    @JsonIgnore
     void setHourlyVaultFee(@NonNull CashStack fee);
 
     /**
      * Collects fees from clients
      */
+    @JsonIgnore
     default void collectHourlyVaultFee() {
         for (VaultBlock v : getVaults()) {
             Bukkit.getPluginManager().callEvent(new PaymentEvent(

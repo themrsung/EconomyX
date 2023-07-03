@@ -241,13 +241,4 @@ public final class AssetOrder implements Order {
         // remove order
         // TODO TODO TODO
     }
-
-    @Override
-    @JsonIgnore
-    public void nuke() {
-        type = null;
-        price = null;
-        quantity = 0L;
-        time = null;
-    }
 }

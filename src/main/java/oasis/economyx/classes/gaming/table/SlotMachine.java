@@ -59,12 +59,6 @@ public final class SlotMachine implements Table {
 
     }
 
-    @Override
-    @JsonIgnore
-    public void nuke() {
-
-    }
-
     private final Type type = Type.SLOT_MACHINE;
 
     @Override

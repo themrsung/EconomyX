@@ -2,6 +2,7 @@ package oasis.economyx.types.asset.commodity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.errorprone.annotations.DoNotCall;
 import oasis.economyx.types.asset.Asset;
 import org.bukkit.Material;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -50,6 +51,17 @@ public final class Commodity implements Asset {
     @JsonIgnore
     public UUID getUniqueId() {
         return UUID.nameUUIDFromBytes(getItemType().toString().getBytes());
+    }
+
+    @Override
+    public @NonNull String getName() {
+        return itemType.toString();
+    }
+
+    @Override
+    @DoNotCall
+    public void setName(@NonNull String name) {
+
     }
 
     @JsonProperty

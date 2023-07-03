@@ -1,5 +1,6 @@
 package oasis.economyx.interfaces.actor.types.institutional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,6 +16,7 @@ public interface Legislative extends Institutional, Democratic {
      * @return Copied list of laws
      */
     @NonNull
+    @JsonIgnore
     List<String> getLaws();
 
     /**
@@ -22,6 +24,7 @@ public interface Legislative extends Institutional, Democratic {
      *
      * @param law Law to add
      */
+    @JsonIgnore
     void passLaw(@NonNull String law);
 
     /**
@@ -29,5 +32,6 @@ public interface Legislative extends Institutional, Democratic {
      *
      * @param law law to remove
      */
+    @JsonIgnore
     void repealLaw(@NonNull String law);
 }

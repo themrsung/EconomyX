@@ -32,6 +32,7 @@ public interface Candidate {
      * @return Acquired votes
      */
     @NonNegative
+    @JsonIgnore
     long getAcquiredVotes();
 
     /**
@@ -39,11 +40,13 @@ public interface Candidate {
      *
      * @param votes Number of votes acquired.
      */
+    @JsonIgnore
     void onVotesAcquired(@NonNegative long votes);
 
     /**
      * Called when this candidate is declared the winner.
      */
+    @JsonIgnore
     Agenda getAgenda();
 
     final class Candidacy implements Candidate {

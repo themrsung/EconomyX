@@ -1,9 +1,6 @@
 package oasis.economyx.interfaces.actor;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import oasis.economyx.classes.actor.company.common.*;
 import oasis.economyx.classes.actor.company.finance.Bank;
 import oasis.economyx.classes.actor.company.finance.Guarantor;
@@ -96,6 +93,7 @@ public interface Actor {
      *
      * @return Unique ID
      */
+    @JsonIgnore
     UUID getUniqueId();
 
     /**
@@ -105,6 +103,7 @@ public interface Actor {
      * @return Name
      */
     @Nullable
+    @JsonIgnore
     String getName();
 
     /**
@@ -112,6 +111,7 @@ public interface Actor {
      *
      * @param name Can be null and does not require uniqueness
      */
+    @JsonIgnore
     void setName(@Nullable String name);
 
     /**
@@ -119,6 +119,7 @@ public interface Actor {
      *
      * @return Assets
      */
+    @JsonIgnore
     Portfolio getAssets();
 
     /**
@@ -127,6 +128,7 @@ public interface Actor {
      * @param state Current running state
      * @return Collaterals
      */
+    @JsonIgnore
     Portfolio getOutstandingCollateral(EconomyState state);
 
     /**
@@ -135,6 +137,7 @@ public interface Actor {
      * @param state Current running state
      * @return Liabilities
      */
+    @JsonIgnore
     Portfolio getLiabilities(EconomyState state);
 
     /**
@@ -144,6 +147,7 @@ public interface Actor {
      * @param state Current running state
      * @return Payable assets.
      */
+    @JsonIgnore
     Portfolio getPayableAssets(EconomyState state);
 
     /**
@@ -153,6 +157,7 @@ public interface Actor {
      * @param state Current running state
      * @return Net assets
      */
+    @JsonIgnore
     Portfolio getNetAssets(EconomyState state);
 
     /**
@@ -161,6 +166,7 @@ public interface Actor {
      * @return Address
      */
     @Nullable
+    @JsonIgnore
     Address getAddress();
 
     /**
@@ -168,6 +174,7 @@ public interface Actor {
      *
      * @param address New address
      */
+    @JsonIgnore
     void setAddress(@Nullable Address address);
 
     /**
@@ -175,6 +182,7 @@ public interface Actor {
      *
      * @return Type
      */
+    @JsonIgnore
     Type getType();
 
     /**

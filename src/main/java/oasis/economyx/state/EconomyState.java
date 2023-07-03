@@ -1,12 +1,6 @@
 package oasis.economyx.state;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 import oasis.economyx.EconomyX;
-import oasis.economyx.classes.actor.company.finance.Guarantor;
 import oasis.economyx.classes.actor.company.trading.AuctionCompany;
 import oasis.economyx.classes.actor.company.trading.ExchangeCompany;
 import oasis.economyx.interfaces.actor.Actor;
@@ -52,15 +46,11 @@ import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
+import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.portfolio.Portfolio;
-import oasis.economyx.types.security.Sensitive;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -68,8 +58,6 @@ import java.util.UUID;
  * Every instance of every type can be accessed through this state.
  * There are getters for every interface type.
  */
-@JsonSerialize(as = EconomyXState.class) // Serialized when sent over network
-@JsonDeserialize(as = EconomyXState.class)
 public interface EconomyState {
     /**
      * Gets the plugin instance.
@@ -796,6 +784,13 @@ public interface EconomyState {
      * @return Voters
      */
     List<Voter> getVoters();
+
+    /**
+     * Gets all currencies in circulation.
+     *
+     * @return Currencies
+     */
+    List<Cash> getCurrencies();
 
     /**
      * Attempts to save
