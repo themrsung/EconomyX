@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
+import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.institutional.Legislative;
 import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,5 +106,30 @@ public final class Legislature extends Institution implements Legislative {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<Voter> getVoters(@NonNull EconomyState state) {
+        final List<Voter> voters;
+        if (getParent() instanceof Democratic d) {
+            voters = d.getVoters(state);
+        } else {
+            voters = new ArrayList<>();
+            if (getParent().getRepresentative() != null) {
+                voters.add(Voter.get(getParent().getRepresentative(), 1L));
+            }
+        }
+
+        return voters;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        super.initialize(state);
+
+        for (Vote v : getOpenVotes()) {
+            v.initialize(state);
+        }
     }
 }

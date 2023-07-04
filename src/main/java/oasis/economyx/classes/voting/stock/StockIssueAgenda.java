@@ -27,7 +27,7 @@ public final class StockIssueAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Issue " + NumberFormat.getIntegerInstance().format(shares) + " shares";
+        return "신주 " + NumberFormat.getIntegerInstance().format(shares) + "주를 발행합니다.";
     }
 
     @NonNull

@@ -8,10 +8,14 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.asset.stock.Stock;
+import oasis.economyx.types.asset.stock.StockStack;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -312,6 +316,23 @@ public abstract class Company extends EconomicActor implements Corporation {
     }
 
     @Override
+    @JsonIgnore
+    public List<Voter> getVoters(@NonNull EconomyState state) {
+        List<Voter> voters = new ArrayList<>();
+
+        for (Actor a : getShareholders(state)) {
+            Stock stock = new Stock(getStockId());
+            AssetStack shares = a.getAssets().get(stock);
+            if (shares instanceof StockStack ss) {
+                voters.add(Voter.get(a, ss.getQuantity()));
+            }
+        }
+
+        return voters;
+    }
+
+    @Override
+    @JsonIgnore
     public void initialize(@NonNull EconomyState state) {
         List<Person> employees = getEmployees();
         this.employees.clear();
@@ -336,10 +357,14 @@ public abstract class Company extends EconomicActor implements Corporation {
         if (ceo != null) {
             for (Person p : state.getPersons()) {
                 if (p.getUniqueId().equals(ceo.getUniqueId())) {
-                    p = ceo;
+                    ceo = p;
                     break;
                 }
             }
+        }
+
+        for (Vote v : getOpenVotes()) {
+            v.initialize(state);
         }
     }
 }

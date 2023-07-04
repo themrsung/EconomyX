@@ -45,7 +45,7 @@ public final class Property implements Asset {
     @Override
     @JsonIgnore
     public @NonNull String getName() {
-        return getType().toString();
+        return getType().toString() + "_" + getUniqueId().toString().substring(0, 10);
     }
 
     @Override

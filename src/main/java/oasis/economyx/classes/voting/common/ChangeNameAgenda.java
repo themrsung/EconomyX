@@ -26,7 +26,7 @@ public final class ChangeNameAgenda implements Agenda, References {
     @NonNull
     @JsonIgnore
     public String getDescription() {
-        return "Change name of " + actor.getName() + " to " + newName;
+        return  actor.getName() + "의 이름을 " + newName + "(으)로 변경합니다.";
     }
 
     @NonNull

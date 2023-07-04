@@ -26,7 +26,7 @@ public final class DividendAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Pay dividends";
+        return "배당금을 지급합니다.";
     }
 
     @NonNull

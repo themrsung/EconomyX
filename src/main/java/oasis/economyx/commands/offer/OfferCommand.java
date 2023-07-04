@@ -85,6 +85,11 @@ public final class OfferCommand extends EconomyCommand {
                     return;
                 }
 
+                if (type == Offer.Type.REPRESENTATIVE_OFFER) {
+                    player.sendRawMessage(Messages.ILLEGAL_OFFER_SIGNATURE);
+                    return;
+                }
+
                 Actor recipient = Inputs.searchActor(params[2], getState());
                 if (recipient == null) {
                     player.sendRawMessage(Messages.ACTOR_NOT_FOUND);
@@ -115,9 +120,9 @@ public final class OfferCommand extends EconomyCommand {
     @Override
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
         if (params.length < 2) {
-            list.addAll(Keyword.ACCEPT.toInput());
-            list.addAll(Keyword.DENY.toInput());
-            list.addAll(Keyword.CREATE.toInput());
+            list.addAll(Offer.Type.EMPLOYEE_OFFER.toInput());
+            list.addAll(Offer.Type.DIRECTOR_OFFER.toInput());
+            list.addAll(Offer.Type.MEMBERSHIP_OFFER.toInput());
             if (!params[0].equals("")) list.removeIf(s -> !s.toLowerCase().startsWith(params[0].toLowerCase()));
         } else if (params.length < 3) {
             Keyword k = Keyword.fromInput(params[0]);

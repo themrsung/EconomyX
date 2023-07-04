@@ -26,7 +26,7 @@ public final class HireRepresentativeAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Hire " + candidate.getName() + " as the representative of " + representable.getName();
+        return candidate.getName() + "을 " + representable.getName() + "의 대표로 선임합니다.";
     }
 
     @NonNull

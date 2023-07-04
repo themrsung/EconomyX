@@ -27,7 +27,7 @@ public final class StockSplitAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Retire " + NumberFormat.getIntegerInstance().format(newSharesPerShare) + " shares";
+        return "주식을 분할합니다. (기존 주식 1주당 " + NumberFormat.getIntegerInstance().format(newSharesPerShare) + " 주 지급)";
     }
 
     @NonNull

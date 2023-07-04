@@ -2,6 +2,7 @@ package oasis.economyx.commands.sudo;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.commands.EconomyCommand;
+import oasis.economyx.commands.address.AddressCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
 import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
@@ -13,7 +14,11 @@ import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
 import oasis.economyx.commands.pay.PayCommand;
+import oasis.economyx.commands.property.PropertyAbandonCommand;
+import oasis.economyx.commands.property.PropertyClaimCommand;
+import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
+import oasis.economyx.commands.voting.VoteCommand;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.state.EconomyState;
@@ -48,11 +53,6 @@ public final class SudoCommand extends EconomyCommand {
 
         AccessLevel level = AccessLevel.getPermission(executor, actor);
 
-        if (level == AccessLevel.OUTSIDER) {
-            player.sendRawMessage(Messages.INSUFFICIENT_PERMISSIONS);
-            return;
-        }
-
         final Keyword action = Keyword.fromInput(params[1]);
         final String[] argsToPass = params.length >= 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[]{};
 
@@ -73,6 +73,10 @@ public final class SudoCommand extends EconomyCommand {
             case SET_ADDRESS -> {
                 SetAddressCommand setAddress = new SetAddressCommand(getEX(), getState());
                 setAddress.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case ADDRESS -> {
+                AddressCommand address = new AddressCommand(getEX(), getState());
+                address.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case PAY -> {
                 PayCommand pay = new PayCommand(getEX(), getState());
@@ -110,6 +114,22 @@ public final class SudoCommand extends EconomyCommand {
                 RetireCommand retire = new RetireCommand(getEX(), getState());
                 retire.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
+            case CLAIM_PROPERTY -> {
+                PropertyClaimCommand claim = new PropertyClaimCommand(getEX(), getState());
+                claim.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case ABANDON_PROPERTY -> {
+                PropertyAbandonCommand abandon = new PropertyAbandonCommand(getEX(), getState());
+                abandon.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case SET_PROPERTY_PROTECTOR -> {
+                PropertySetProtectorCommand setProtector = new PropertySetProtectorCommand(getEX(), getState());
+                setProtector.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case VOTE -> {
+                VoteCommand vote = new VoteCommand(getEX(), getState());
+                vote.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
                 sudo.onEconomyCommand(player, caller, executor, argsToPass, level);
@@ -124,10 +144,12 @@ public final class SudoCommand extends EconomyCommand {
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
         if (params.length < 2) {
             list.addAll(Lists.ACTOR_NAMES(getState()));
+            if (!(params[0].equals(""))) list.removeIf(s -> !s.toLowerCase().startsWith(params[0].toLowerCase()));
         } else if (params.length < 3) {
             for (Keyword k : Keyword.values()) {
                 list.addAll(k.toInput());
             }
+            if (!(params[1].equals(""))) list.removeIf(s -> !s.toLowerCase().startsWith(params[1].toLowerCase()));
         } else {
             final String[] argsToPass = Arrays.copyOfRange(params, 2, params.length);
             final Keyword action = Keyword.fromInput(params[1]);
@@ -146,6 +168,10 @@ public final class SudoCommand extends EconomyCommand {
                 case SET_ADDRESS -> {
                     SetAddressCommand setAddress = new SetAddressCommand(getEX(), getState());
                     setAddress.onEconomyComplete(list, argsToPass);
+                }
+                case ADDRESS -> {
+                    AddressCommand address = new AddressCommand(getEX(), getState());
+                    address.onEconomyComplete(list, argsToPass);
                 }
                 case PAY -> {
                     PayCommand pay = new PayCommand(getEX(), getState());
@@ -182,6 +208,22 @@ public final class SudoCommand extends EconomyCommand {
                 case RETIRE -> {
                     RetireCommand retire = new RetireCommand(getEX(), getState());
                     retire.onEconomyComplete(list, argsToPass);
+                }
+                case CLAIM_PROPERTY -> {
+                    PropertyClaimCommand claim = new PropertyClaimCommand(getEX(), getState());
+                    claim.onEconomyComplete(list, argsToPass);
+                }
+                case ABANDON_PROPERTY -> {
+                    PropertyAbandonCommand abandon = new PropertyAbandonCommand(getEX(), getState());
+                    abandon.onEconomyComplete(list, argsToPass);
+                }
+                case SET_PROPERTY_PROTECTOR -> {
+                    PropertySetProtectorCommand setProtector = new PropertySetProtectorCommand(getEX(), getState());
+                    setProtector.onEconomyComplete(list, argsToPass);
+                }
+                case VOTE -> {
+                    VoteCommand vote = new VoteCommand(getEX(), getState());
+                    vote.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

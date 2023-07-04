@@ -19,6 +19,10 @@ commands:
     description: 주소지를 설정합니다.
     usage: /setaddress
     aliases: [ sa, sh, sethome, setaddress, 주소지설정, 주소설정, 홈설정 ]
+  address:
+    description: 주소지를 조회합니다.
+    usage: /address [대상]
+    aliases: [a, address, h, home, 홈, 집, 주소, 주소지]
   pay:
     description: 송금 명령어입니다.
     usage: /pay 수신인 통화 금액
@@ -26,7 +30,7 @@ commands:
   message:
     description: 메시지를 발신합니다.
     usage: /message 수신인 내용
-    aliases: [ w, dm, msg, t, tell, 디엠, 메시지 ]
+    aliases: [ w, dm, m, msg, t, tell, 디엠, 메시지 ]
   reply:
     description: 수신한 메시지에 답변을 보냅니다.
     usage: /reply [수신인] 내용
@@ -55,3 +59,19 @@ commands:
     description: 조직이나 기업에서 탈퇴합니다.
     usage: /retire 조직
     aliases: [ leave, resign, 은퇴, 사직, 탈퇴 ]
+  claim:
+    description: 부동산을 클레임합니다.
+    usage: /claim 반경
+    aliases: [pclaim, claimproperty, propertyclaim, 클레임]
+  abandon:
+    description: 부동산을 포기합니다.
+    usage: /abandon 자산명
+    aliases: [unclaim, punclaim, abandonproperty, unclaimproperty, propertyunclaim, 언클레임, 클레임해제]
+  setprotector:
+    description: 부동산의 보호인을 지정합니다.
+    usage: /setprotector 자산명 보호인
+    aliases: [sp, spp, setpropertyprotector, 보호자설정, 보호인설정]
+  vote:
+    description: 투표 명령어입니다.
+    usage: /vote
+    aliases: [v, vote, e, elect, election, meeting, 투표, 의결, 주총, 주주총회, 선거]

@@ -7,6 +7,7 @@ import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.asset.stock.Stock;
 import oasis.economyx.types.asset.stock.StockStack;
 import org.bukkit.event.EventHandler;
@@ -29,6 +30,12 @@ public final class StockSplitListener extends EconomyListener {
             final AssetStack as = a.getAssets().get(new Stock(issuer.getStockId()));
             if (as instanceof StockStack ss) {
                 ss.setQuantity(ss.getQuantity() * (1 + shares));
+            }
+        }
+
+        for (PhysicalAsset pa : getState().getPhysicalizedAssets()) {
+            if (pa.getAsset().getAsset().getUniqueId().equals(issuer.getStockId())) {
+                pa.getAsset().setQuantity(pa.getAsset().getQuantity() * (1 + shares));
             }
         }
     }

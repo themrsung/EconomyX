@@ -9,6 +9,7 @@ import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -127,6 +128,19 @@ public final class Federation extends Sovereignty implements Federal, Democratic
     }
 
     @Override
+    @JsonIgnore
+    public List<Voter> getVoters(@NonNull EconomyState state) {
+        List<Voter> voters = new ArrayList<>();
+
+        for (Sovereign s : getMemberStates()) {
+            voters.add(Voter.get(s, s.getCitizens().size()));
+        }
+
+        return voters;
+    }
+
+    @Override
+    @JsonIgnore
     public void initialize(@NonNull EconomyState state) {
         super.initialize(state);
 
@@ -148,6 +162,10 @@ public final class Federation extends Sovereignty implements Federal, Democratic
                     break;
                 }
             }
+        }
+
+        for (Vote v : getOpenVotes()) {
+            v.initialize(state);
         }
     }
 }

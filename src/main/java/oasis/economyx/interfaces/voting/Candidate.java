@@ -12,7 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.beans.ConstructorProperties;
 
 /**
- * A candidate represents an option the voter can choose in a vote.
+ * A candidate represents an option the voter can choose in a voting.
  */
 @JsonSerialize(as = Candidate.Candidacy.class)
 @JsonDeserialize(as = Candidate.Candidacy.class)
@@ -20,13 +20,21 @@ public interface Candidate extends References {
     /**
      * Gets a candidate instance.
      *
-     * @param agenda   Agenda of this candidate.
-     * @param onChosen Action to execute when this candidate is chosen.
+     * @param name   Agenda of this candidate.
+     * @param agenda Action to execute when this candidate is chosen.
      * @return Instance
      */
-    static Candidate get(@NonNull String agenda, @NonNull Agenda onChosen) {
-        return new Candidacy(onChosen);
+    static Candidate get(@NonNull String name, @NonNull Agenda agenda) {
+        return new Candidacy(name, agenda);
     }
+
+    /**
+     * Gets the semantic name of this candidate.
+     * @return Name
+     */
+    @NonNull
+    @JsonIgnore
+    String getName();
 
     /**
      * Gets the cumulative acquired votes of this candidate.
@@ -60,13 +68,24 @@ public interface Candidate extends References {
 
     final class Candidacy implements Candidate {
         @JsonProperty
+        @NonNull
+        private final String name;
+        @JsonProperty
         private @NonNegative long acquiredVotes;
         @JsonProperty
         private final @NonNull Agenda agenda;
 
-        Candidacy(@NonNull @JsonProperty Agenda agenda) {
+        Candidacy(@NonNull String name, @NonNull Agenda agenda) {
+            this.name = name;
             this.acquiredVotes = 0L;
             this.agenda = agenda;
+        }
+
+        @NonNull
+        @Override
+        @JsonIgnore
+        public String getName() {
+            return name;
         }
 
         @Override
@@ -92,8 +111,9 @@ public interface Candidate extends References {
         /**
          * Used for IO
          */
-        @ConstructorProperties({"agenda", "acquiredVotes", "getAgenda"})
+        @ConstructorProperties({"name", "agenda", "acquiredVotes"})
         private Candidacy() {
+            this.name = null;
             this.acquiredVotes = 0L;
             this.agenda = null;
         }

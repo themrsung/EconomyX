@@ -10,6 +10,7 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Democratic;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.interfaces.voting.Vote;
+import oasis.economyx.interfaces.voting.Voter;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -166,6 +167,19 @@ public final class Republic extends Sovereignty implements Democratic {
     }
 
     @Override
+    @JsonIgnore
+    public List<Voter> getVoters(@NonNull EconomyState state) {
+        List<Voter> voters = new ArrayList<>();
+
+        for (Person p : getCitizens()) {
+            voters.add(Voter.get(p, 1));
+        }
+
+        return voters;
+    }
+
+    @Override
+    @JsonIgnore
     public void initialize(@NonNull EconomyState state) {
         super.initialize(state);
 
@@ -199,6 +213,10 @@ public final class Republic extends Sovereignty implements Democratic {
                     institutions.add(orig);
                 }
             }
+        }
+
+        for (Vote v : getOpenVotes()) {
+            v.initialize(state);
         }
     }
 }

@@ -8,11 +8,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.state.EconomyState;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.beans.ConstructorProperties;
+
 /**
- * A voter represents an actor within a vote.
+ * A voter represents an actor within a voting.
  */
 @JsonSerialize(as = Voter.Votable.class)
 @JsonDeserialize(as = Voter.Votable.class)
@@ -33,7 +36,6 @@ public interface Voter extends References {
      *
      * @return Voter
      */
-    @JsonIgnore
     Actor getVoter();
 
     /**
@@ -41,7 +43,6 @@ public interface Voter extends References {
      *
      * @return Remaining votes
      */
-    @JsonIgnore
     long getVotes();
 
     /**
@@ -96,6 +97,12 @@ public interface Voter extends References {
                     break;
                 }
             }
+        }
+
+        @ConstructorProperties({"voter", "votes"})
+        private Votable() {
+            this.voter = null;
+            this.votes = 0L;
         }
     }
 }

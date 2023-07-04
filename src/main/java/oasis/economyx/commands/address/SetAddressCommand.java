@@ -7,6 +7,9 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.address.Address;
+import oasis.economyx.types.address.Area;
+import oasis.economyx.types.asset.AssetStack;
+import oasis.economyx.types.asset.property.PropertyStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,10 +32,13 @@ public final class SetAddressCommand extends EconomyCommand {
         final Location location = player.getLocation();
         final Address address = Address.fromLocation(location);
 
+        // No need to check for existing property claims; Setting an address does not provide protection.
+
         Bukkit.getPluginManager().callEvent(new ActorAddressChangedEvent(
                 actor,
                 address
         ));
+        player.sendRawMessage(Messages.ADDRESS_CHANGED);
     }
 
     @Override

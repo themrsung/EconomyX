@@ -14,7 +14,7 @@ import oasis.economyx.classes.voting.stock.StockSplitAgenda;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * An agenda is a potential action executable on its parent candidates' winning of a vote.
+ * An agenda is a potential action executable on its parent candidates' winning of a voting.
  */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,

@@ -5,7 +5,11 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import oasis.economyx.interfaces.voting.Candidate;
+import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.state.EconomyState;
+import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
@@ -88,6 +92,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         CREATE,
         BALANCE,
         SET_ADDRESS,
+        ADDRESS,
         PAY,
         MESSAGE,
         REPLY,
@@ -99,6 +104,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         ACCEPT,
         DENY,
         RETIRE,
+        CLAIM_PROPERTY,
+        ABANDON_PROPERTY,
+        SET_PROPERTY_PROTECTOR,
+        VOTE,
 
         // Allows recursive sudo by default
         SUDO;
@@ -106,8 +115,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_CREATE = Arrays.asList("create", "new", "추가", "신규", "생성");
         private static final List<String> K_BALANCE = Arrays.asList("bal", "balance", "잔고");
         private static final List<String> K_SET_ADDRESS = Arrays.asList("sethome", "setaddress", "집설정", "주소설정", "주소지설정");
+        private static final List<String> K_ADDRESS = Arrays.asList("home", "address", "홈", "주소", "주소지");
         private static final List<String> K_PAY = Arrays.asList("pay", "송금");
-        private static final List<String> K_MESSAGE = Arrays.asList("dm", "msg", "message", "디엠", "메시지");
+        private static final List<String> K_MESSAGE = Arrays.asList("dm", "msg", "m", "message", "디엠", "메시지");
         private static final List<String> K_REPLY = Arrays.asList("r", "reply", "답변", "답장");
         private static final List<String> K_PHYSICALIZE = Arrays.asList("physicalize", "실물화");
         private static final List<String> K_DEPHYSICALIZE = Arrays.asList("dephysicalize", "가상화");
@@ -117,6 +127,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_ACCEPT = Arrays.asList("a", "accept", "y", "yes", "수락", "동의");
         private static final List<String> K_DENY = Arrays.asList("d", "deny", "n", "no", "거부", "거절");
         private static final List<String> K_RETIRE = Arrays.asList("retire", "leave", "resign", "은퇴", "사직", "탈퇴");
+        private static final List<String> K_CLAIM_PROPERTY = Arrays.asList("claim", "pclaim", "claimproperty", "propertyclaim", "클레임");
+        private static final List<String> K_ABANDON_PROPERTY = Arrays.asList("unclaim", "punclaim", "abandon", "abandonproperty", "unclaimproperty", "propertyunclaim", "언클레임", "클레임포기");
+        private static final List<String> K_SET_PROPERTY_PROTECTOR = Arrays.asList("sp", "spp", "setprotector", "setpropertyprotector", "보호자설정", "보호인설정");
+        private static final List<String> K_VOTE = Arrays.asList("v", "vote", "voting", "voting", "e", "elect", "election", "meeting", "투표", "의결", "주총", "주주총회", "선거");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -125,6 +139,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_CREATE.contains(input.toLowerCase())) return CREATE;
             if (K_BALANCE.contains(input.toLowerCase())) return BALANCE;
             if (K_SET_ADDRESS.contains(input.toLowerCase())) return SET_ADDRESS;
+            if (K_ADDRESS.contains(input.toLowerCase())) return ADDRESS;
             if (K_PAY.contains(input.toLowerCase())) return PAY;
             if (K_MESSAGE.contains(input.toLowerCase())) return MESSAGE;
             if (K_REPLY.contains(input.toLowerCase())) return REPLY;
@@ -136,6 +151,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_ACCEPT.contains(input.toLowerCase())) return ACCEPT;
             if (K_DENY.contains(input.toLowerCase())) return DENY;
             if (K_RETIRE.contains(input.toLowerCase())) return RETIRE;
+            if (K_CLAIM_PROPERTY.contains(input.toLowerCase())) return CLAIM_PROPERTY;
+            if (K_ABANDON_PROPERTY.contains(input.toLowerCase())) return ABANDON_PROPERTY;
+            if (K_VOTE.contains(input.toLowerCase())) return VOTE;
+            if (K_SET_PROPERTY_PROTECTOR.contains(input.toLowerCase())) return SET_PROPERTY_PROTECTOR;
 
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
@@ -147,6 +166,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case CREATE -> K_CREATE;
                 case BALANCE -> K_BALANCE;
                 case SET_ADDRESS -> K_SET_ADDRESS;
+                case ADDRESS -> K_ADDRESS;
                 case PAY -> K_PAY;
                 case REPLY -> K_REPLY;
                 case MESSAGE -> K_MESSAGE;
@@ -158,6 +178,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case ACCEPT -> K_ACCEPT;
                 case DENY -> K_DENY;
                 case RETIRE -> K_RETIRE;
+                case CLAIM_PROPERTY -> K_CLAIM_PROPERTY;
+                case ABANDON_PROPERTY -> K_ABANDON_PROPERTY;
+                case SET_PROPERTY_PROTECTOR -> K_SET_PROPERTY_PROTECTOR;
+                case VOTE -> K_VOTE;
                 case SUDO -> K_SUDO;
                 default -> new ArrayList<>();
             };
@@ -179,6 +203,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String INSERT_MESSAGE = "메시지를 입력하세요.";
         public static final String ALL_DONE = "필요한 항목을 전부 입력했습니다.";
         public static final String INSERT_CURRENCY_TO_ISSUE = "발행할 통화의 이름을 입력하세요. (영문 3글자 이하, 중복 불가)";
+        public static final String INSERT_CANDIDATES = "후보 명단을 입력하세요. (본명, 띄어쓰기로 구분)";
 
         public static String NAME_TOO_LONG(int maxLength) {
             return ChatColor.RED + "이름은 " + NumberFormat.getIntegerInstance().format(maxLength) + "글자를 초과할 수 없습니다.";
@@ -217,6 +242,33 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String RETIRED_FROM_ORGANIZATION = ChatColor.GREEN + "조직에서 탈퇴했습니다.";
         public static final String ILLEGAL_RETIRE_SIGNATURE = ChatColor.RED + "회원 또는 조직의 유형이 유효하지 않습니다.";
 
+        public static final String PROPERTY_OVERLAPS_ANOTHER = ChatColor.RED + "범위가 다른 부동산을 침범합니다.";
+        public static final String PROPERTY_CLAIM_OVER_LIMIT = ChatColor.RED + "범위가 1회 설정한도를 초과합니다.";
+        public static final String PROPERTY_CLAIMED = ChatColor.GREEN + "부동산이 설정되었습니다. 보호인을 설정하려면 /spp를 실행해주세요. 보호인 없이는 부동산이 보호되지 않습니다.";
+        public static final String PROPERTY_ABANDONED = ChatColor.GREEN + "부동산을 포기했습니다.";
+        public static final String PROPERTY_PROTECTOR_NOT_FOUND = ChatColor.RED + "부동산 보호인을 찾을 수 없습니다.";
+        public static final String PROPERTY_PROTECTOR_CHANGED = ChatColor.GREEN + "부동산 보호인이 변경되었습니다.";
+        public static final String ADDRESS_NOT_FOUND = ChatColor.RED + "주소지를 찾을 수 없습니다.";
+        public static final String ADDRESS_CHANGED = ChatColor.GREEN + "주소지가 변경되었습니다.";
+
+        public static final String ACTOR_CANNOT_HOST_VOTES = ChatColor.RED + "투표를 주최할 수 없습니다.";
+        public static final String VOTE_NOT_FOUND = ChatColor.RED + "투표를 찾을 수 없습니다.";
+        public static final String INVALID_VOTE_TYPE = ChatColor.RED + "유효하지 않은 투표 유형입니다.";
+        public static final String CANDIDATE_NOT_FOUND = ChatColor.RED + "후보를 찾을 수 없습니다.";
+        public static final String NO_REMAINING_VOTES = ChatColor.RED + "의결권이 부족합니다.";
+
+        public static final String REPRESENTATIVE_ALREADY_NULL = ChatColor.RED + "대표자가 이미 공석입니다.";
+        public static final String ACTOR_CANNOT_ISSUE_SHARES = ChatColor.RED + "주식을 발행할 수 없습니다.";
+        public static final String ACTOR_CANNOT_HAVE_PRESIDENT = ChatColor.RED + "대통령을 선임할 수 없습니다.";
+        public static final String ACTOR_NOT_LEGISLATURE = ChatColor.RED + "의회가 아닙니다.";
+        public static final String VOTE_PROPOSED = ChatColor.GREEN + "투표가 시작되었습니다.";
+        public static final String VOTE_CAST = ChatColor.GREEN + "의결이 완료되었습니다.";
+
+        public static String ADDRESS_OF_ACTOR(@NonNull Actor actor, @NonNull Address address) {
+            return actor.getName() + "의 주소지: " + address.format();
+        }
+
+
         public static List<String> ACTOR_INFORMATION_OUTSIDER(@NonNull Actor actor) {
             List<String> info = new ArrayList<>();
 
@@ -228,6 +280,18 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
         public static String CASH_BALANCE(@NonNull CashStack cash) {
             return "[현금] " + NumberFormat.getIntegerInstance().format(cash.getQuantity()) + " " + cash.getAsset().getName();
+        }
+
+        public static List<String> VOTE_INFO(@NonNull Vote vote) {
+            List<String> info = new ArrayList<>();
+
+            info.add(vote.getName() + " 정보");
+            info.add("후보 목록:");
+            for (Candidate c : vote.getCandidates()) {
+                info.add("- " + c.getName() + " (" + c.getAgenda().getDescription() + ")");
+            }
+
+            return info;
         }
     }
 
@@ -339,6 +403,55 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             return null;
         }
+
+        @Nullable
+        public static Vote searchVote(@NonNull String input, @NonNull EconomyState state) {
+            for (Vote v : state.getVotes()) {
+                if (v.getName().equalsIgnoreCase(input)) {
+                    return v;
+                }
+            }
+
+            for (Vote v : state.getVotes()) {
+                if (v.getName().toLowerCase().contains(input.toLowerCase())) {
+                    return v;
+                }
+            }
+
+            for (Vote v : state.getVotes()) {
+                if (v.getUniqueId().toString().contains(input)) {
+                    return v;
+                }
+            }
+
+            return null;
+        }
+
+        @Nullable
+        public static Person searchPerson(@NonNull String input, @NonNull EconomyState state) {
+            for (Person p : state.getPersons()) {
+                if (Objects.equals(p.getName(), input)) {
+                    return p;
+                }
+            }
+
+            for (Person p : state.getPersons()) {
+                String name = p.getName();
+                if (name != null) {
+                    if (name.toLowerCase().contains(input.toLowerCase())) {
+                        return p;
+                    }
+                }
+            }
+
+            for (Person p : state.getPersons()) {
+                if (p.getUniqueId().toString().contains(input)) {
+                    return p;
+                }
+            }
+
+            return null;
+        }
     }
 
     protected abstract static class Lists {
@@ -371,6 +484,26 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             for (AssetStack as : state.getAssets()) {
                 String name = as.getAsset().getName();
                 if (!results.contains(name)) results.add(name);
+            }
+
+            return results;
+        }
+
+        public static List<String> PROPERTY_PROTECTOR_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (PropertyProtector pp : state.getProtectors()) {
+                results.add(pp.getName());
+            }
+
+            return results;
+        }
+
+        public static List<String> VOTE_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (Vote vote : state.getVotes()) {
+                results.add(vote.getName());
             }
 
             return results;

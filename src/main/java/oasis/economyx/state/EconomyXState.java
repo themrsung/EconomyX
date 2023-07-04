@@ -749,6 +749,10 @@ public final class EconomyXState implements EconomyState {
             stacks.addAll(p.get());
         }
 
+        for (PhysicalAsset pa : getPhysicalizedAssets()) {
+            stacks.add(pa.getAsset());
+        }
+
         return stacks;
     }
 

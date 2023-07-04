@@ -10,6 +10,7 @@ import oasis.economyx.classes.actor.person.NaturalPerson;
 import oasis.economyx.classes.actor.sovereignty.federal.Empire;
 import oasis.economyx.classes.actor.sovereignty.singular.Principality;
 import oasis.economyx.commands.EconomyCommand;
+import oasis.economyx.commands.address.AddressCommand;
 import oasis.economyx.commands.address.SetAddressCommand;
 import oasis.economyx.commands.asset.DephysicalizeAssetCommand;
 import oasis.economyx.commands.asset.PhysicalizeAssetCommand;
@@ -21,8 +22,11 @@ import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
 import oasis.economyx.commands.pay.PayCommand;
+import oasis.economyx.commands.property.PropertyClaimCommand;
+import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
+import oasis.economyx.commands.voting.VoteCommand;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.listeners.actor.ActorAddressChangedListener;
@@ -268,6 +272,7 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("reply", new ReplyCommand(this, state));
 
         registerCommand("setaddress", new SetAddressCommand(this, state));
+        registerCommand("address", new AddressCommand(this, state));
 
         registerCommand("physicalize", new PhysicalizeAssetCommand(this, state));
         registerCommand("dephysicalize", new DephysicalizeAssetCommand(this, state));
@@ -277,6 +282,12 @@ public final class EconomyX extends JavaPlugin {
 
         registerCommand("offer", new OfferCommand(this, state));
         registerCommand("retire", new RetireCommand(this, state));
+
+        registerCommand("claim", new PropertyClaimCommand(this, state));
+        registerCommand("abandon", new PhysicalizeAssetCommand(this, state));
+        registerCommand("setprotector", new PropertySetProtectorCommand(this, state));
+
+        registerCommand("vote", new VoteCommand(this, state));
     }
 
     private void registerTask(EconomyTask task) {

@@ -8,14 +8,14 @@ import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * Represents a vote cast to a candidate.
+ * Represents a voting cast to a candidate.
  */
 public final class VoteCastEvent extends EconomyEvent {
     /**
-     * Creates a new vote cast event.
+     * Creates a new voting cast event.
      *
-     * @param vote      Ongoing vote
-     * @param candidate Candidate to vote in
+     * @param vote      Ongoing voting
+     * @param candidate Candidate to voting in
      * @param votes     How many votes to exercise
      */
     public VoteCastEvent(@NonNull Vote vote, @NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) {

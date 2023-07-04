@@ -24,7 +24,7 @@ public final class FireRepresentativeAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Fire the representative of " + representable.getName();
+        return representable.getName() + "의 대표를 해임합니다.";
     }
 
     @NonNull

@@ -27,7 +27,7 @@ public final class StockRetireAgenda implements Agenda, References {
     @Override
     @JsonIgnore
     public @NonNull String getDescription() {
-        return "Retire " + NumberFormat.getIntegerInstance().format(shares) + " shares";
+        return "자사주 " + NumberFormat.getIntegerInstance().format(shares) + "주를 소각합니다.";
     }
 
     @NonNull

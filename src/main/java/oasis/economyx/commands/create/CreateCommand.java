@@ -45,7 +45,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.*;
 
 public final class CreateCommand extends EconomyCommand {
-    private static final int MAX_NAME_LENGTH = 20;
+    public static final int MAX_NAME_LENGTH = 20;
 
     public CreateCommand(@NonNull EconomyX EX, @NonNull EconomyState state) {
         super(EX, state);
