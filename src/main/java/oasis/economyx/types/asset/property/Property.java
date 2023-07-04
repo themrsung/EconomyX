@@ -3,10 +3,12 @@ package oasis.economyx.types.asset.property;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.errorprone.annotations.DoNotCall;
+import oasis.economyx.types.address.Address;
 import oasis.economyx.types.address.Area;
 import oasis.economyx.types.asset.Asset;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.text.NumberFormat;
 import java.util.UUID;
 
 /**
@@ -45,7 +47,12 @@ public final class Property implements Asset {
     @Override
     @JsonIgnore
     public @NonNull String getName() {
-        return getType().toString() + "_" + getUniqueId().toString().substring(0, 10);
+        Address center = area.center();
+
+        return getType().toString() + "_" +
+                center.world() + "_" +
+                NumberFormat.getIntegerInstance().format(center.x()) + "_" +
+                NumberFormat.getIntegerInstance().format(center.z());
     }
 
     @Override

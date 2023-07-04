@@ -57,7 +57,7 @@ public final class PropertyClaimCommand extends EconomyCommand {
         for (AssetStack as : getState().getAssets()) {
             if (as instanceof PropertyStack ps) {
                 try {
-                    if (ps.getAsset().getArea().contains(area)) {
+                    if (ps.getAsset().getArea().overlaps(area)) {
                         player.sendRawMessage(Messages.PROPERTY_OVERLAPS_ANOTHER);
                         return;
                     }

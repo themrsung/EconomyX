@@ -22,6 +22,7 @@ import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
 import oasis.economyx.commands.pay.PayCommand;
+import oasis.economyx.commands.property.PropertyAbandonCommand;
 import oasis.economyx.commands.property.PropertyClaimCommand;
 import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
@@ -284,7 +285,7 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("retire", new RetireCommand(this, state));
 
         registerCommand("claim", new PropertyClaimCommand(this, state));
-        registerCommand("abandon", new PhysicalizeAssetCommand(this, state));
+        registerCommand("abandon", new PropertyAbandonCommand(this, state));
         registerCommand("setprotector", new PropertySetProtectorCommand(this, state));
 
         registerCommand("vote", new VoteCommand(this, state));

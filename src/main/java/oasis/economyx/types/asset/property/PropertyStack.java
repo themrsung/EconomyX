@@ -18,33 +18,28 @@ public final class PropertyStack implements AssetStack {
     public PropertyStack(@NonNull Property asset) {
         this.asset = asset;
         this.meta = new PropertyMeta();
+        this.quantity = 1L;
     }
 
     public PropertyStack(@NonNull Property asset, @NonNull PropertyMeta meta) {
         this.asset = asset;
         this.meta = meta;
+        this.quantity = 1L;
     }
 
     public PropertyStack(PropertyStack other) {
         this.asset = other.asset;
         this.meta = other.meta;
+        this.quantity = other.quantity;
     }
 
     @NonNull
     @JsonProperty
     private final Property asset;
 
-    // TODO add location
-
-    /**
-     * Properties cannot be plural
-     * This is required to be a constant variable due to IO
-     * Do NOT inline this to getQuantity()
-     * TODO Check if IO works without this being a constant (unchecked)
-     */
     @NonNegative
     @JsonProperty
-    private final long quantity = 1L;
+    private long quantity;
 
     @NonNull
     @JsonProperty
@@ -63,22 +58,28 @@ public final class PropertyStack implements AssetStack {
         return quantity;
     }
 
+    /**
+     * Sets the quantity of this stack.
+     * @param quantity New quantity (either 1 or 0)
+     * @throws IllegalArgumentException When given quantity is not within bounds (0 <= q <= 1)
+     */
     @Override
     @JsonIgnore
-    public void setQuantity(long quantity) {
-        // Does nothing; properties cannot be plural
+    public void setQuantity(long quantity) throws IllegalArgumentException {
+        if (!(quantity == 1L || quantity == 0L)) throw new IllegalArgumentException();
+        this.quantity = quantity;
     }
 
     @Override
     @JsonIgnore
-    public void addQuantity(@NonNegative long delta) {
-        // Does nothing; properties cannot be plural
+    public void addQuantity(@NonNegative long delta) throws IllegalArgumentException {
+        setQuantity(getQuantity() + delta);
     }
 
     @Override
     @JsonIgnore
-    public void removeQuantity(@NonNegative long delta) {
-        // Does nothing; properties cannot be plural
+    public void removeQuantity(@NonNegative long delta) throws IllegalArgumentException {
+        setQuantity(getQuantity() - delta);
     }
 
     @NonNull

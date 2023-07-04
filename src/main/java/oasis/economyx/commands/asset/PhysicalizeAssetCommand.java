@@ -2,11 +2,13 @@ package oasis.economyx.commands.asset;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.commands.EconomyCommand;
+import oasis.economyx.events.asset.AssetPhysicalizedEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -46,26 +48,7 @@ public final class PhysicalizeAssetCommand extends EconomyCommand {
                 AssetStack asset = as.copy();
                 asset.setQuantity(quantity);
 
-                PhysicalAsset physical = PhysicalAsset.physicalizeAsset(asset);
-
-                actor.getAssets().remove(asset);
-                getState().addPhysicalizedAsset(physical);
-
-                boolean hasEmptySlot = false;
-
-                for (ItemStack stack : player.getInventory().getContents()) {
-                    if (stack == null) {
-                        hasEmptySlot = true;
-                        break;
-                    }
-                }
-
-                if (!hasEmptySlot) {
-                    player.sendRawMessage(Messages.NO_SPACE_IN_INVENTORY);
-                    return;
-                }
-
-                player.getInventory().addItem(physical.getPhysicalItem());
+                Bukkit.getPluginManager().callEvent(new AssetPhysicalizedEvent(actor, asset, player));
 
                 player.sendRawMessage(Messages.ASSET_PHYSICALIZED);
                 return;

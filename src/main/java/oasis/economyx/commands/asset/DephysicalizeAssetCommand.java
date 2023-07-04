@@ -2,11 +2,13 @@ package oasis.economyx.commands.asset;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.commands.EconomyCommand;
+import oasis.economyx.events.asset.AssetDephysicalizedEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,8 +40,7 @@ public final class DephysicalizeAssetCommand extends EconomyCommand {
                         if (pa.getUniqueId().equals(uuid)) {
                             item.setAmount(0);
 
-                            AssetStack asset = pa.getAsset();
-                            caller.getAssets().add(asset);
+                            Bukkit.getPluginManager().callEvent(new AssetDephysicalizedEvent(pa, actor));
 
                             player.sendRawMessage(Messages.ASSET_DEPHYSICALIZED);
                             return;

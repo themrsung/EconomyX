@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -97,37 +99,34 @@ public record Area(
     public boolean contains(@NonNull Area area) throws RuntimeException {
         if (!Objects.equals(world(), area.world())) throw new RuntimeException();
 
-        // This area
-        double x1 = pointA.x();
-        double x2 = pointB.x();
+        List<Address> points = new ArrayList<>();
+        points.add(area.pointA);
+        points.add(area.pointB);
+        points.add(new Address(area.world(), area.pointA.x(), 0d, area.pointB.z(), 0f, 0f));
+        points.add(new Address(area.world(), area.pointB.x(), 0d, area.pointA.z(), 0f, 0f));
 
-        double minX1 = Math.min(x1, x2);
-        double maxX1 = Math.max(x1, x2);
+        for (Address point : points) {
+            if (!contains(point)) return false;
+        }
 
-        double z1 = pointA.z();
-        double z2 = pointB.z();
+        return true;
+    }
 
-        double minZ1 = Math.min(z1, z2);
-        double maxZ1 = Math.max(z1, z2);
+    @JsonIgnore
+    public boolean overlaps(@NonNull Area area) throws RuntimeException {
+        if (!Objects.equals(world(), area.world())) throw new RuntimeException();
 
-        // Given area
-        double x3 = area.pointA.x();
-        double x4 = area.pointB.x();
+        List<Address> points = new ArrayList<>();
+        points.add(area.pointA);
+        points.add(area.pointB);
+        points.add(new Address(area.world(), area.pointA.x(), 0d, area.pointB.z(), 0f, 0f));
+        points.add(new Address(area.world(), area.pointB.x(), 0d, area.pointA.z(), 0f, 0f));
 
-        double minX2 = Math.min(x3, x4);
-        double maxX2 = Math.max(x3, x4);
+        for (Address point : points) {
+            if (contains(point)) return true;
+        }
 
-        double z3 = area.pointA.z();
-        double z4 = area.pointB.z();
-
-        double minZ2 = Math.min(z3, z4);
-        double maxZ2 = Math.max(z3, z4);
-
-        // Check
-        boolean xContains = minX1 <= minX2 || maxX1 >= maxX2;
-        boolean zContains = minZ1 <= minZ2 || maxZ1 >= maxZ2;
-
-        return xContains || zContains;
+        return false;
     }
 
     /**

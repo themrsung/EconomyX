@@ -117,6 +117,10 @@ public final class PropertyProtectionHandler extends EconomyListener {
             // TODO Add construction contracts
             // TODO Check if person is employee of contractor
 
+            if (owner instanceof Person p) {
+                if (p.equals(person)) hasAccess = true;
+            }
+
             if (owner instanceof Representable r) {
                 if (Objects.equals(r.getRepresentative(), person)) hasAccess = true;
             }
