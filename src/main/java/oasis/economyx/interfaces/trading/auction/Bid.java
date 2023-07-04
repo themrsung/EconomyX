@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
  * Unlike orders, there is no collateral backing the bid
  * A bid is not cancellable
  */
-public interface Bid  {
+public interface Bid {
     /**
      * The bidder of this bid
      *

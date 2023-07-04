@@ -6,44 +6,52 @@ commands:
   create:
     description: 생성 명령어입니다.
     usage: /create
-    aliases: [new, 신규, 생성, 추가]
+    aliases: [ new, 신규, 생성, 추가 ]
   balance:
     description: 내 잔고를 조회합니다.
     usage: /balance [통화]
-    aliases: [bal, balance, 잔고]
+    aliases: [ bal, balance, 잔고 ]
   sudo:
     description: 타인의 명의로 명령어를 실행합니다.
     usage: /sudo 대상 명령어
-    aliases: [s, d, sd, as, 대신, 대변]
+    aliases: [ s, d, sd, as, 대신, 대변 ]
   setaddress:
     description: 주소지를 설정합니다.
     usage: /setaddress
-    aliases: [sa, sh, sethome, setaddress, 주소지설정, 주소설정, 홈설정]
+    aliases: [ sa, sh, sethome, setaddress, 주소지설정, 주소설정, 홈설정 ]
   pay:
     description: 송금 명령어입니다.
     usage: /pay 수신인 통화 금액
-    aliases: [p, 송금]
+    aliases: [ p, 송금 ]
   message:
     description: 메시지를 발신합니다.
     usage: /message 수신인 내용
-    aliases: [w, dm, msg, t, tell, 디엠, 메시지]
+    aliases: [ w, dm, msg, t, tell, 디엠, 메시지 ]
   reply:
     description: 수신한 메시지에 답변을 보냅니다.
     usage: /reply [수신인] 내용
-    aliases: [r, 답변, 답장]
+    aliases: [ r, 답변, 답장 ]
   physicalize:
     description: 자산을 실물화합니다.
     usage: /physicalize 자산 수량
-    aliases: [physical, 실물화]
+    aliases: [ physical, 실물화 ]
   dephysicalize:
     description: 실물자산을 가상화합니다.
     usage: /dephysicalize
-    aliases: [dephysical, 가상화]
+    aliases: [ dephysical, 가상화 ]
   sendasset:
     description: 자산을 양도합니다.
     usage: /sendasset 수신인 자산 수량
-    aliases: [send, sasset, 양도]
+    aliases: [ send, sasset, 양도 ]
   information:
     description: 정보를 조회합니다.
     usage: /information 대상
-    aliases: [i, info, 정보]
+    aliases: [ i, info, 정보 ]
+  offer:
+    description: 제안을 관리합니다.
+    usage: /offer
+    aliases: [ o, offers, invite, invites, 제안, 초대 ]
+  retire:
+    description: 조직이나 기업에서 탈퇴합니다.
+    usage: /retire 조직
+    aliases: [ leave, resign, 은퇴, 사직, 탈퇴 ]

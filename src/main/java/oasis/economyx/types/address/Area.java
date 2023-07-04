@@ -132,6 +132,7 @@ public record Area(
 
     /**
      * Gets the world of this area.
+     *
      * @return World
      * @throws RuntimeException When the worlds of point A and B are different
      */

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.organization.AbstractOrganization;
 import oasis.economyx.interfaces.actor.Actor;
-import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.state.EconomyState;

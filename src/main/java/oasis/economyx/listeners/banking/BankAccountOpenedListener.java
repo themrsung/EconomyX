@@ -1,7 +1,6 @@
 package oasis.economyx.listeners.banking;
 
 import oasis.economyx.EconomyX;
-import oasis.economyx.events.banking.BankAccountClosedEvent;
 import oasis.economyx.events.banking.BankAccountOpenedEvent;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.banking.Account;

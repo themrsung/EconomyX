@@ -3,7 +3,6 @@ package oasis.economyx.events.banking;
 import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.interfaces.actor.types.finance.Banker;
 import oasis.economyx.interfaces.banking.Account;
-import oasis.economyx.types.asset.AssetStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**

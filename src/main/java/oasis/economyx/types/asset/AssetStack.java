@@ -128,6 +128,7 @@ public interface AssetStack extends References {
 
     /**
      * Formats this asset stack.
+     *
      * @return Formatted string
      */
     @NonNull

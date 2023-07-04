@@ -62,6 +62,7 @@ public interface Guarantee extends References {
 
     /**
      * Uses this guarantee.
+     *
      * @param amount Amount used
      * @throws IllegalArgumentException When amount is over limit
      */

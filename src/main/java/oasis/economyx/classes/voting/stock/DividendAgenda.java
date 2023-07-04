@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.events.dividend.DividendEvent;
-import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.ownership.Shared;
 import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.interfaces.voting.Agenda;

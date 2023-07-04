@@ -1,6 +1,5 @@
 package oasis.economyx.events.vaulting;
 
-import oasis.economyx.events.EconomyEvent;
 import oasis.economyx.interfaces.actor.types.services.VaultKeeper;
 import oasis.economyx.interfaces.vaulting.VaultBlock;
 import org.checkerframework.checker.nullness.qual.NonNull;

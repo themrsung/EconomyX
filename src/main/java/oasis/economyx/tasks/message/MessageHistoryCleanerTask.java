@@ -8,6 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class MessageHistoryCleanerTask extends EconomyTask {
     private static final int MESSAGE_LIFETIME_HOURS = 3;
+
     public MessageHistoryCleanerTask(@NonNull EconomyX EX, @NonNull EconomyState state) {
         super(EX, state);
     }

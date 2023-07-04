@@ -37,6 +37,7 @@ import java.util.UUID;
 public interface PriceProvider extends References {
     /**
      * Gets the unique ID of this price provider.
+     *
      * @return Unique ID
      */
     UUID getUniqueId();

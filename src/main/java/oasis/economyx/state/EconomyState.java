@@ -46,6 +46,7 @@ import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.message.Message;
+import oasis.economyx.types.offer.Offer;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -135,12 +136,14 @@ public interface EconomyState {
 
     /**
      * Adds a physicalized asset.
+     *
      * @param asset Asset to add
      */
     void addPhysicalizedAsset(@NonNull PhysicalAsset asset);
 
     /**
      * Removes a physicalized asset.
+     *
      * @param asset Asset to remove
      */
     void removePhysicalizedAsset(@NonNull PhysicalAsset asset);
@@ -148,6 +151,7 @@ public interface EconomyState {
     /**
      * Gets burnt assets.
      * Assets get burnt when an in-game player dies while holding them.
+     *
      * @return A copied list of burnt assets
      */
     Portfolio getBurntAssets();
@@ -155,6 +159,7 @@ public interface EconomyState {
     /**
      * Gets all messages.
      * Sorted by time descending. (latest is first)
+     *
      * @return Copied list of messages
      */
     @NonNull
@@ -163,6 +168,7 @@ public interface EconomyState {
     /**
      * Gets all messages recipient has received.
      * Sorted by time descending.
+     *
      * @param recipient Recipient to query
      * @return Messages
      */
@@ -172,6 +178,7 @@ public interface EconomyState {
     /**
      * Gets all messages sender has sent.
      * Sorted by time descending.
+     *
      * @param sender Sender to query
      * @return Messages
      */
@@ -180,15 +187,57 @@ public interface EconomyState {
 
     /**
      * Adds a message. Message will be automatically shown when a potential recipient logs in.
+     *
      * @param message Message to add
      */
     void addMessage(@NonNull Message message);
 
     /**
      * Removes a message.
+     *
      * @param message Message to remove
      */
     void removeMessage(@NonNull Message message);
+
+    /**
+     * Gets all open offers.
+     *
+     * @return Copied list of offers
+     */
+    @NonNull
+    List<Offer> getOffers();
+
+    /**
+     * Gets offers by recipient.
+     *
+     * @param recipient Recipient to query
+     * @return Offers
+     */
+    @NonNull
+    List<Offer> getOffersByRecipient(@NonNull Actor recipient);
+
+    /**
+     * Gets offers by sender.
+     *
+     * @param sender Sender to query
+     * @return Offers
+     */
+    @NonNull
+    List<Offer> getOffersBySender(@NonNull Actor sender);
+
+    /**
+     * Adds an offer.
+     *
+     * @param offer Offer to add
+     */
+    void addOffer(@NonNull Offer offer);
+
+    /**
+     * Removes an offer.
+     *
+     * @param offer Offer to remove
+     */
+    void removeOffer(@NonNull Offer offer);
 
     // Actor type interface getters
 

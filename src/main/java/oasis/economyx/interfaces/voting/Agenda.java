@@ -11,7 +11,6 @@ import oasis.economyx.classes.voting.stock.DividendAgenda;
 import oasis.economyx.classes.voting.stock.StockIssueAgenda;
 import oasis.economyx.classes.voting.stock.StockRetireAgenda;
 import oasis.economyx.classes.voting.stock.StockSplitAgenda;
-import oasis.economyx.interfaces.reference.References;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**

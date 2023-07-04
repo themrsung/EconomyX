@@ -11,18 +11,17 @@ import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
+import oasis.economyx.commands.offer.OfferCommand;
 import oasis.economyx.commands.pay.PayCommand;
+import oasis.economyx.commands.retire.RetireCommand;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
-import oasis.economyx.interfaces.actor.types.employment.Employer;
-import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.state.EconomyState;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public final class SudoCommand extends EconomyCommand {
     public SudoCommand(@NonNull EconomyX EX, @NonNull EconomyState state) {
@@ -55,7 +54,7 @@ public final class SudoCommand extends EconomyCommand {
         }
 
         final Keyword action = Keyword.fromInput(params[1]);
-        final String[] argsToPass = params.length >= 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[] {};
+        final String[] argsToPass = params.length >= 3 ? Arrays.copyOfRange(params, 2, params.length) : new String[]{};
 
         if (action == null) {
             player.sendRawMessage(Messages.INVALID_KEYWORD);
@@ -103,6 +102,14 @@ public final class SudoCommand extends EconomyCommand {
                 SendAssetCommand sendAsset = new SendAssetCommand(getEX(), getState());
                 sendAsset.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
+            case OFFER -> {
+                OfferCommand offer = new OfferCommand(getEX(), getState());
+                offer.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case RETIRE -> {
+                RetireCommand retire = new RetireCommand(getEX(), getState());
+                retire.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
                 sudo.onEconomyCommand(player, caller, executor, argsToPass, level);
@@ -117,7 +124,7 @@ public final class SudoCommand extends EconomyCommand {
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
         if (params.length < 2) {
             list.addAll(Lists.ACTOR_NAMES(getState()));
-        }else if (params.length < 3) {
+        } else if (params.length < 3) {
             for (Keyword k : Keyword.values()) {
                 list.addAll(k.toInput());
             }
@@ -167,6 +174,14 @@ public final class SudoCommand extends EconomyCommand {
                 case SEND_ASSET -> {
                     SendAssetCommand sendAsset = new SendAssetCommand(getEX(), getState());
                     sendAsset.onEconomyComplete(list, argsToPass);
+                }
+                case OFFER -> {
+                    OfferCommand offer = new OfferCommand(getEX(), getState());
+                    offer.onEconomyComplete(list, argsToPass);
+                }
+                case RETIRE -> {
+                    RetireCommand retire = new RetireCommand(getEX(), getState());
+                    retire.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

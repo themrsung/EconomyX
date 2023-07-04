@@ -7,7 +7,6 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
-import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.message.Message;
 import org.bukkit.Bukkit;
@@ -19,6 +18,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class PaymentListener extends EconomyListener {
     private static final String PAYMENT_CANCELLED_EXTERNALLY = ChatColor.RED + "거래가 서버에 의해 취소되었습니다.";
     private static final String PAYMENT_CANCELLED_INSUFFICIENT_ASSETS = ChatColor.RED + "잔고 부족으로 거래가 취소되었습니다.";
+
     private static String PAYMENT_SENT(@NonNull PaymentEvent event, @NonNull EconomyState state) {
         return "["
                 + (event.getSender().getName() != null ? event.getSender().getName() : "알 수 없음")
@@ -28,7 +28,7 @@ public final class PaymentListener extends EconomyListener {
                 + event.getAsset().format(state);
     }
 
-    private static String PAYMENT_RECEIVED(@NonNull PaymentEvent event,@NonNull EconomyState state) {
+    private static String PAYMENT_RECEIVED(@NonNull PaymentEvent event, @NonNull EconomyState state) {
         return "["
                 + (event.getSender().getName() != null ? event.getSender().getName() : "알 수 없음")
                 + " -> "
@@ -56,7 +56,7 @@ public final class PaymentListener extends EconomyListener {
         final Actor recipient = event.getRecipient();
         final AssetStack asset = event.getAsset();
 
-        if (!sender.getPayableAssets(getState()).contains(asset)){
+        if (!sender.getPayableAssets(getState()).contains(asset)) {
             // Sender is illiquid. Search for guarantees.
 
             boolean guaranteed = false;

@@ -19,7 +19,9 @@ import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
+import oasis.economyx.commands.offer.OfferCommand;
 import oasis.economyx.commands.pay.PayCommand;
+import oasis.economyx.commands.retire.RetireCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
@@ -45,6 +47,7 @@ import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
 import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
 import oasis.economyx.listeners.message.MessageSentListener;
+import oasis.economyx.listeners.offer.OfferEventListener;
 import oasis.economyx.listeners.organization.AllianceMemberChangedListener;
 import oasis.economyx.listeners.organization.CartelMemberChangedListener;
 import oasis.economyx.listeners.organization.PartyMemberChangedListener;
@@ -202,6 +205,9 @@ public final class EconomyX extends JavaPlugin {
         // Message
         registerListener(new MessageSentListener(this, state));
 
+        // Offer
+        registerListener(new OfferEventListener(this, state));
+
         // Organization
         registerListener(new AllianceMemberChangedListener(this, state));
         registerListener(new CartelMemberChangedListener(this, state));
@@ -268,6 +274,9 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("sendasset", new SendAssetCommand(this, state));
 
         registerCommand("information", new InformationCommand(this, state));
+
+        registerCommand("offer", new OfferCommand(this, state));
+        registerCommand("retire", new RetireCommand(this, state));
     }
 
     private void registerTask(EconomyTask task) {

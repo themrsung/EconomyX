@@ -31,6 +31,7 @@ public interface PhysicalAsset {
 
     /**
      * Gets a new physical asset instance
+     *
      * @param asset Asset to physicalize
      * @return Phsycialized asset
      */
@@ -41,6 +42,7 @@ public interface PhysicalAsset {
 
     /**
      * Gets the unique ID of this physically issued asset.
+     *
      * @return Unique ID
      */
     @NonNull
@@ -49,6 +51,7 @@ public interface PhysicalAsset {
 
     /**
      * Gets the asset this represents.
+     *
      * @return Asset
      */
     @NonNull
@@ -57,13 +60,14 @@ public interface PhysicalAsset {
 
     /**
      * Gets the item to give to an in-game player.
+     *
      * @return Physical item
      */
     @JsonIgnore
     @NonNull
     ItemStack getPhysicalItem();
 
-    record PhysicalAssetItem (
+    record PhysicalAssetItem(
             @NonNull @JsonProperty UUID uniqueId,
             @NonNull @JsonProperty @JsonIdentityReference AssetStack asset
     ) implements PhysicalAsset {

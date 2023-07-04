@@ -602,7 +602,8 @@ public final class CreateCommand extends EconomyCommand {
 
         public boolean isCorporation() {
             return switch (this) {
-                case HOLDINGS_COMPANY, BANK, MERCHANT, MERCENARY, AUCTION_COMPANY, EXCHANGE_COMPANY, VAULT_COMPANY -> true;
+                case HOLDINGS_COMPANY, BANK, MERCHANT, MERCENARY, AUCTION_COMPANY, EXCHANGE_COMPANY, VAULT_COMPANY ->
+                        true;
                 default -> false;
             };
         }

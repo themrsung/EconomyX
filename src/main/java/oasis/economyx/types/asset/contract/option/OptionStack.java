@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
-import oasis.economyx.types.asset.contract.Contract;
 import oasis.economyx.types.asset.contract.ContractStack;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;

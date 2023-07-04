@@ -1,6 +1,5 @@
 package oasis.economyx.interfaces.actor.types.employment;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.interfaces.actor.person.Person;

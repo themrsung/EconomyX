@@ -64,10 +64,11 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
     /**
      * Called when command is executed. (either by oneself or by sudo executor)
-     * @param player Actual player who typed in the command
-     * @param caller Actual person who called the command
-     * @param actor Actor to execute the command as
-     * @param params Command parameters
+     *
+     * @param player     Actual player who typed in the command
+     * @param caller     Actual person who called the command
+     * @param actor      Actor to execute the command as
+     * @param params     Command parameters
      * @param permission Permission level of the caller (see {@link AccessLevel})
      */
     public abstract void onEconomyCommand(@NonNull Player player, @NonNull Person caller, @NonNull Actor actor, @NonNull String[] params, @NonNull AccessLevel permission);
@@ -94,6 +95,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         DEPHYSICALIZE,
         SEND_ASSET,
         INFO,
+        OFFER,
+        ACCEPT,
+        DENY,
+        RETIRE,
 
         // Allows recursive sudo by default
         SUDO;
@@ -108,6 +113,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_DEPHYSICALIZE = Arrays.asList("dephysicalize", "가상화");
         private static final List<String> K_SEND_ASSET = Arrays.asList("send", "sasset", "sendasset", "양도");
         private static final List<String> K_INFO = Arrays.asList("i", "info", "information", "정보");
+        private static final List<String> K_OFFER = Arrays.asList("o", "offer", "offers", "invite", "invites", "제안", "초대");
+        private static final List<String> K_ACCEPT = Arrays.asList("a", "accept", "y", "yes", "수락", "동의");
+        private static final List<String> K_DENY = Arrays.asList("d", "deny", "n", "no", "거부", "거절");
+        private static final List<String> K_RETIRE = Arrays.asList("retire", "leave", "resign", "은퇴", "사직", "탈퇴");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -123,6 +132,11 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_DEPHYSICALIZE.contains(input.toLowerCase())) return DEPHYSICALIZE;
             if (K_SEND_ASSET.contains(input.toLowerCase())) return SEND_ASSET;
             if (K_INFO.contains(input.toLowerCase())) return INFO;
+            if (K_OFFER.contains(input.toLowerCase())) return OFFER;
+            if (K_ACCEPT.contains(input.toLowerCase())) return ACCEPT;
+            if (K_DENY.contains(input.toLowerCase())) return DENY;
+            if (K_RETIRE.contains(input.toLowerCase())) return RETIRE;
+
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
             return null;
@@ -140,6 +154,10 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case DEPHYSICALIZE -> K_DEPHYSICALIZE;
                 case SEND_ASSET -> K_SEND_ASSET;
                 case INFO -> K_INFO;
+                case OFFER -> K_OFFER;
+                case ACCEPT -> K_ACCEPT;
+                case DENY -> K_DENY;
+                case RETIRE -> K_RETIRE;
                 case SUDO -> K_SUDO;
                 default -> new ArrayList<>();
             };
@@ -147,48 +165,57 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
     }
 
     protected abstract static class Messages {
-        public static String UNKNOWN_ERROR = ChatColor.RED + "알 수 없는 오류가 발생했습니다. 관리자에게 제보 부탁드립니다.";
-        public static String INVALID_TYPE = ChatColor.RED + "유효하지 않은 유형입니다.";
-        public static String INVALID_NUMBER = ChatColor.RED + "유효하지 않은 숫자입니다.";
-        public static String INVALID_CURRENCY = ChatColor.RED + "유효하지 않은 통화입니다.";
-        public static String INVALID_KEYWORD = ChatColor.RED + "유효하지 않은 키워드입니다.";
-        public static String INVALID_ASSET = ChatColor.RED + "유효하지 않은 자산입니다.";
+        public static final String UNKNOWN_ERROR = ChatColor.RED + "알 수 없는 오류가 발생했습니다. 관리자에게 제보 부탁드립니다.";
+        public static final String INVALID_TYPE = ChatColor.RED + "유효하지 않은 유형입니다.";
+        public static final String INVALID_NUMBER = ChatColor.RED + "유효하지 않은 숫자입니다.";
+        public static final String INVALID_CURRENCY = ChatColor.RED + "유효하지 않은 통화입니다.";
+        public static final String INVALID_KEYWORD = ChatColor.RED + "유효하지 않은 키워드입니다.";
+        public static final String INVALID_ASSET = ChatColor.RED + "유효하지 않은 자산입니다.";
 
-        public static String INSERT_NUMBER = "숫자를 입력하세요.";
-        public static String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
-        public static String INSERT_SHARE_COUNT = "발행할 주식수를 입력하세요. (정수)";
-        public static String INSERT_CAPITAL = "자본금을 입력하세요. (정수)";
-        public static String INSERT_MESSAGE = "메시지를 입력하세요.";
-        public static String ALL_DONE = "필요한 항목을 전부 입력했습니다.";
-        public static String INSERT_CURRENCY_TO_ISSUE = "발행할 통화의 이름을 입력하세요. (영문 3글자 이하, 중복 불가)";
+        public static final String INSERT_NUMBER = "숫자를 입력하세요.";
+        public static final String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
+        public static final String INSERT_SHARE_COUNT = "발행할 주식수를 입력하세요. (정수)";
+        public static final String INSERT_CAPITAL = "자본금을 입력하세요. (정수)";
+        public static final String INSERT_MESSAGE = "메시지를 입력하세요.";
+        public static final String ALL_DONE = "필요한 항목을 전부 입력했습니다.";
+        public static final String INSERT_CURRENCY_TO_ISSUE = "발행할 통화의 이름을 입력하세요. (영문 3글자 이하, 중복 불가)";
 
         public static String NAME_TOO_LONG(int maxLength) {
             return ChatColor.RED + "이름은 " + NumberFormat.getIntegerInstance().format(maxLength) + "글자를 초과할 수 없습니다.";
         }
-        public static String ACTOR_ONLY_CREATABLE_BY_SOVEREIGNS = ChatColor.RED + "국가만 설립 가능합니다.";
-        public static String ACTOR_ONLY_CREATABLE_BY_CORPORATIONS = ChatColor.RED + "기업만 설립 가능합니다.";
-        public static String ACTOR_ONLY_CREATABLE_BY_PERSONS = ChatColor.RED + "플레이어만 설립 가능합니다.";
 
-        public static String NAME_TAKEN = ChatColor.RED + "이름이 이미 사용 중입니다.";
+        public static final String ACTOR_ONLY_CREATABLE_BY_SOVEREIGNS = ChatColor.RED + "국가만 설립 가능합니다.";
+        public static final String ACTOR_ONLY_CREATABLE_BY_CORPORATIONS = ChatColor.RED + "기업만 설립 가능합니다.";
+        public static final String ACTOR_ONLY_CREATABLE_BY_PERSONS = ChatColor.RED + "플레이어만 설립 가능합니다.";
 
-        public static String INSUFFICIENT_CASH = ChatColor.RED + "잔고가 부족합니다.";
-        public static String INSUFFICIENT_ASSETS = ChatColor.RED + "자산이 부족합니다.";
-        public static String INSUFFICIENT_PERMISSIONS = ChatColor.RED + "권한이 부족합니다.";
-        public static String INSUFFICIENT_ARGS = ChatColor.RED + "입력이 부족합니다.";
-        public static String ACTOR_NOT_FOUND = ChatColor.RED + "대상을 찾을 수 없습니다.";
+        public static final String NAME_TAKEN = ChatColor.RED + "이름이 이미 사용 중입니다.";
 
-        public static String CORPORATION_CREATED = ChatColor.GREEN + "기업이 설립되었습니다.";
-        public static String FUND_CREATED = ChatColor.GREEN + "펀드가 설립되었습니다.";
-        public static String INSTITUTION_CREATED = ChatColor.GREEN + "기관이 설립되었습니다.";
-        public static String SOVEREIGNTY_CREATED = ChatColor.GREEN + "국가가 설립되었습니다.";
-        public static String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
+        public static final String INSUFFICIENT_CASH = ChatColor.RED + "잔고가 부족합니다.";
+        public static final String INSUFFICIENT_ASSETS = ChatColor.RED + "자산이 부족합니다.";
+        public static final String INSUFFICIENT_PERMISSIONS = ChatColor.RED + "권한이 부족합니다.";
+        public static final String INSUFFICIENT_ARGS = ChatColor.RED + "입력이 부족합니다.";
+        public static final String ACTOR_NOT_FOUND = ChatColor.RED + "대상을 찾을 수 없습니다.";
 
-        public static String NO_MESSAGES_RECEIVED = ChatColor.RED + "수신한 메시지가 없습니다.";
+        public static final String CORPORATION_CREATED = ChatColor.GREEN + "기업이 설립되었습니다.";
+        public static final String FUND_CREATED = ChatColor.GREEN + "펀드가 설립되었습니다.";
+        public static final String INSTITUTION_CREATED = ChatColor.GREEN + "기관이 설립되었습니다.";
+        public static final String SOVEREIGNTY_CREATED = ChatColor.GREEN + "국가가 설립되었습니다.";
+        public static final String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
 
-        public static String ASSET_NOT_FOUND = ChatColor.RED + "자산을 찾지 못했습니다.";
-        public static String NO_SPACE_IN_INVENTORY = ChatColor.RED + "인벤토리에 빈 공간이 없습니다.";
-        public static String ASSET_PHYSICALIZED = ChatColor.GREEN + "자산을 실물화했습니다.";
-        public static String ASSET_DEPHYSICALIZED = ChatColor.GREEN + "자산을 가상화했습니다.";
+        public static final String NO_MESSAGES_RECEIVED = ChatColor.RED + "수신한 메시지가 없습니다.";
+
+        public static final String ASSET_NOT_FOUND = ChatColor.RED + "자산을 찾지 못했습니다.";
+        public static final String NO_SPACE_IN_INVENTORY = ChatColor.RED + "인벤토리에 빈 공간이 없습니다.";
+        public static final String ASSET_PHYSICALIZED = ChatColor.GREEN + "자산을 실물화했습니다.";
+        public static final String ASSET_DEPHYSICALIZED = ChatColor.GREEN + "자산을 가상화했습니다.";
+
+        public static final String NO_OFFERS_RECEIVED = ChatColor.RED + "수신한 제안이 없습니디.";
+        public static final String OFFER_ALREADY_SENT = ChatColor.RED + "이미 발신한 제안이 있습니다.";
+        public static final String ILLEGAL_OFFER_SIGNATURE = ChatColor.RED + "빌신인 또는 수신인의 유형이 유효하지 않습니다.";
+        public static final String RETIRED_FROM_EMPLOYER = ChatColor.GREEN + "사직이 완료되었습니다.";
+        public static final String RETIRED_FROM_REPRESENTABLE = ChatColor.GREEN + "대표직에서 은퇴했습니다.";
+        public static final String RETIRED_FROM_ORGANIZATION = ChatColor.GREEN + "조직에서 탈퇴했습니다.";
+        public static final String ILLEGAL_RETIRE_SIGNATURE = ChatColor.RED + "회원 또는 조직의 유형이 유효하지 않습니다.";
 
         public static List<String> ACTOR_INFORMATION_OUTSIDER(@NonNull Actor actor) {
             List<String> info = new ArrayList<>();

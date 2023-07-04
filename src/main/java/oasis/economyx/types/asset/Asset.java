@@ -59,6 +59,7 @@ public interface Asset {
 
     /**
      * Gets the display name of this asset.
+     *
      * @return Name
      */
     @NonNull
@@ -66,6 +67,7 @@ public interface Asset {
 
     /**
      * Sets the display name of this asset.
+     *
      * @param name Name
      */
     void setName(@NonNull String name);
@@ -80,6 +82,7 @@ public interface Asset {
 
     /**
      * Ensures that only UUID will be compared.
+     *
      * @param other Other asset
      * @return Whether this asset equals the other.
      */

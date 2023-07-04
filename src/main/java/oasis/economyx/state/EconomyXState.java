@@ -51,6 +51,7 @@ import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.message.Message;
+import oasis.economyx.types.offer.Offer;
 import oasis.economyx.types.portfolio.AssetPortfolio;
 import oasis.economyx.types.portfolio.Portfolio;
 import org.apache.commons.io.FileUtils;
@@ -211,6 +212,40 @@ public final class EconomyXState implements EconomyState {
     @Override
     public void removeMessage(@NonNull Message message) {
         messages.remove(message);
+    }
+
+    @NonNull
+    private final List<Offer> offers;
+
+    @Override
+    public @NonNull List<Offer> getOffers() {
+        return new ArrayList<>(offers);
+    }
+
+    @Override
+    public @NonNull List<Offer> getOffersByRecipient(@NonNull Actor recipient) {
+        List<Offer> results = getOffers();
+        results.removeIf(r -> !r.getRecipient().equals(recipient));
+
+        return results;
+    }
+
+    @Override
+    public @NonNull List<Offer> getOffersBySender(@NonNull Actor sender) {
+        List<Offer> results = getOffers();
+        results.removeIf(r -> !r.getSender().equals(sender));
+
+        return results;
+    }
+
+    @Override
+    public void addOffer(@NonNull Offer offer) {
+        offers.add(offer);
+    }
+
+    @Override
+    public void removeOffer(@NonNull Offer offer) {
+        offers.remove(offer);
     }
 
     @Override
@@ -782,15 +817,17 @@ public final class EconomyXState implements EconomyState {
         this.physicalizedAssets = new ArrayList<>();
         this.burntAssets = new AssetPortfolio();
         this.messages = new ArrayList<>();
+        this.offers = new ArrayList<>();
     }
 
-    private EconomyXState(@NonNull EconomyX EX, @NonNull List<Actor> actors, @NonNull List<PhysicalAsset> physicalizedAssets, @NonNull Portfolio burntAssets, @NonNull List<Message> messages) {
+    private EconomyXState(@NonNull EconomyX EX, @NonNull List<Actor> actors, @NonNull List<PhysicalAsset> physicalizedAssets, @NonNull Portfolio burntAssets, @NonNull List<Message> messages, @NonNull List<Offer> offers) {
         this.EX = EX;
 
         this.actors = actors;
         this.physicalizedAssets = physicalizedAssets;
         this.burntAssets = burntAssets;
         this.messages = messages;
+        this.offers = offers;
 
         for (Actor a : this.actors) {
             if (a instanceof References r) {
@@ -808,6 +845,10 @@ public final class EconomyXState implements EconomyState {
 
         for (Message msg : messages) {
             msg.initialize(this);
+        }
+
+        for (Offer o : offers) {
+            o.initialize(this);
         }
     }
 
@@ -838,6 +879,7 @@ public final class EconomyXState implements EconomyState {
         List<PhysicalAsset> physicalizedAssets = new ArrayList<>();
         Portfolio burntAssets = new AssetPortfolio();
         List<Message> messages = new ArrayList<>();
+        List<Offer> offers = new ArrayList<>();
 
         for (File f : actorFiles) {
             try {
@@ -891,7 +933,25 @@ public final class EconomyXState implements EconomyState {
             }
         }
 
-        return new EconomyXState(EX, actors, physicalizedAssets, burntAssets, messages);
+        File offersFolder = new File(PATH + "/offers");
+        if (!offersFolder.exists()) {
+            EX.getLogger().info("Offers folder not found. Ignoring data.");
+        }
+
+        File[] offerFiles = offersFolder.listFiles();
+        if (offerFiles == null) {
+            EX.getLogger().info("No offers found. Ignoring data.");
+        } else {
+            for (File f : offerFiles) {
+                try {
+                    offers.add(mapper.readValue(f, Offer.class));
+                } catch (IOException e) {
+                    EX.getLogger().info("Error loading offer: " + e.getMessage());
+                }
+            }
+        }
+
+        return new EconomyXState(EX, actors, physicalizedAssets, burntAssets, messages, offers);
     }
 
     @Override
@@ -972,6 +1032,29 @@ public final class EconomyXState implements EconomyState {
                 mapper.writeValue(f, m);
             } catch (IOException e) {
                 getEX().getLogger().info("Error saving message " + m.getUniqueId().toString().substring(0, 10) + "(" + e.getMessage() + ")");
+                getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue if you have not edited the base code.");
+            }
+        }
+
+        File offersFolder = new File(PATH + "/offers");
+        if (!offersFolder.exists() && !offersFolder.mkdirs()) {
+            getEX().getLogger().info("Failed to initialize offers directory.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
+        }
+
+        try {
+            FileUtils.cleanDirectory(offersFolder);
+        } catch (IOException e) {
+            getEX().getLogger().info("Failed to clean offers directory.");
+            getEX().getLogger().info("Save is continuing, but data is faulty.");
+        }
+
+        for (Offer o : getOffers()) {
+            try {
+                File f = new File(PATH + "/offers/" + o.getUniqueId().toString() + ".yml");
+                mapper.writeValue(f, o);
+            } catch (IOException e) {
+                getEX().getLogger().info("Error saving offer " + o.getUniqueId().toString().substring(0, 10) + "(" + e.getMessage() + ")");
                 getEX().getLogger().info("Save is continuing, but data is faulty. Please report this issue if you have not edited the base code.");
             }
         }
