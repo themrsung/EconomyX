@@ -38,6 +38,18 @@ public final class PhysicalizeAssetCommand extends EconomyCommand {
             return;
         }
 
+        int emptySlots = 0;
+
+        for (ItemStack is : player.getInventory().getContents()) {
+            if (is == null) emptySlots++;
+        }
+
+        // 4 armor slots + left hand
+        if (emptySlots < 6) {
+            player.sendRawMessage(Messages.NO_SPACE_IN_INVENTORY);
+            return;
+        }
+
         for (AssetStack as : actor.getAssets().get()) {
             if (as.getAsset().getName().equalsIgnoreCase(params[0])) {
                 if (quantity > as.getQuantity()) {

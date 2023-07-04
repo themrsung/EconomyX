@@ -214,8 +214,6 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String ACTOR_ONLY_CREATABLE_BY_CORPORATIONS = ChatColor.RED + "기업만 설립 가능합니다.";
         public static final String ACTOR_ONLY_CREATABLE_BY_PERSONS = ChatColor.RED + "플레이어만 설립 가능합니다.";
 
-        public static final String UNSUPPORTED_ITEM_TYPE = ChatColor.RED + "지원되지 않는 아이템입니다.";
-
         public static final String NAME_TAKEN = ChatColor.RED + "이름이 이미 사용 중입니다.";
 
         public static final String INSUFFICIENT_CASH = ChatColor.RED + "잔고가 부족합니다.";
