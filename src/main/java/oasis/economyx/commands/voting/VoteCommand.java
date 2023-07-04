@@ -104,6 +104,33 @@ public final class VoteCommand extends EconomyCommand {
                                     (long) (totalVotes * 0.5f)
                             );
                         }
+                        case HIRE_REPRESENTATIVE -> {
+                            if (params.length < 3) {
+                                player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
+                                return;
+                            }
+
+                            if (d.getRepresentative() != null) {
+                                player.sendRawMessage(Messages.REPRESENTATIVE_NOT_NULL);
+                                return;
+                            }
+
+                            Person person = Inputs.searchPerson(params[2], getState());
+                            if (person == null) {
+                                player.sendRawMessage(Messages.ACTOR_NOT_FOUND);
+                                return;
+                            }
+
+                            vote = Vote.getBooleanVote(
+                                    UUID.randomUUID(),
+                                    type.toName(d),
+                                    voters,
+                                    new HireRepresentativeAgenda(d, person),
+                                    new DateTime().plusDays(VOTE_LIFETIME_DAYS),
+                                    0.5f,
+                                    (long) (totalVotes * 0.25f)
+                            );
+                        }
                         case CHANGE_NAME -> {
                             if (params.length < 3) {
                                 player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
@@ -220,6 +247,13 @@ public final class VoteCommand extends EconomyCommand {
                         return;
                     }
 
+                    for (Vote existing : d.getOpenVotes()) {
+                        if (existing.getName().equalsIgnoreCase(type.toName(d))) {
+                            player.sendRawMessage(Messages.SAME_VOTE_ALREADY_OPEN);
+                            return;
+                        }
+                    }
+
                     Bukkit.getPluginManager().callEvent(new VoteProposedEvent(d, vote));
                     player.sendRawMessage(Messages.VOTE_PROPOSED);
                 }
@@ -315,6 +349,7 @@ public final class VoteCommand extends EconomyCommand {
                             VoteType vt = VoteType.fromInput(params[1]);
                             if (vt != null) {
                                 switch (vt) {
+                                    case HIRE_REPRESENTATIVE -> list.addAll(Lists.ACTOR_NAMES(getState()));
                                     case CHANGE_NAME -> list.add(Messages.INSERT_NAME);
                                     case DIVIDEND -> list.addAll(Lists.ASSET_NAMES(getState()));
                                     case STOCK_ISSUE, STOCK_RETIRE, STOCK_SPLIT -> list.add(Messages.INSERT_NUMBER);

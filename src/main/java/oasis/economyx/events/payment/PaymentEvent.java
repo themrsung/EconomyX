@@ -189,6 +189,11 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * Transfer of asset using /sendasset.
          */
-        SEND_COMMAND;
+        SEND_COMMAND,
+
+        /**
+         * When a property is protected.
+         */
+        PROPERTY_PROTECTION_FEE;
     }
 }

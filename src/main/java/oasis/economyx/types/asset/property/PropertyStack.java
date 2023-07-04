@@ -116,6 +116,13 @@ public final class PropertyStack implements AssetStack {
         return "부동산: " + getAsset().getArea().format();
     }
 
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        AssetStack.super.initialize(state);
+
+        meta.initialize(state);
+    }
+
     /**
      * Used for IO
      */

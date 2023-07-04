@@ -117,6 +117,13 @@ public final class StockStack implements AssetStack {
         return "오류";
     }
 
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        AssetStack.super.initialize(state);
+
+        meta.initialize(state);
+    }
+
     /**
      * Used for IO
      */

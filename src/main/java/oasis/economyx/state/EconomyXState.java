@@ -854,6 +854,10 @@ public final class EconomyXState implements EconomyState {
         for (Offer o : offers) {
             o.initialize(this);
         }
+
+        for (AssetStack as : getAssets()) {
+            as.initialize(this);
+        }
     }
 
     public static final String PATH = "oasis/economy";

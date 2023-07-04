@@ -15,6 +15,7 @@ import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -213,6 +214,8 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String ACTOR_ONLY_CREATABLE_BY_CORPORATIONS = ChatColor.RED + "기업만 설립 가능합니다.";
         public static final String ACTOR_ONLY_CREATABLE_BY_PERSONS = ChatColor.RED + "플레이어만 설립 가능합니다.";
 
+        public static final String UNSUPPORTED_ITEM_TYPE = ChatColor.RED + "지원되지 않는 아이템입니다.";
+
         public static final String NAME_TAKEN = ChatColor.RED + "이름이 이미 사용 중입니다.";
 
         public static final String INSUFFICIENT_CASH = ChatColor.RED + "잔고가 부족합니다.";
@@ -258,6 +261,8 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String NO_REMAINING_VOTES = ChatColor.RED + "의결권이 부족합니다.";
 
         public static final String REPRESENTATIVE_ALREADY_NULL = ChatColor.RED + "대표자가 이미 공석입니다.";
+        public static final String REPRESENTATIVE_NOT_NULL = ChatColor.RED + "대표자가 공석이 아닙니다.";
+        public static final String SAME_VOTE_ALREADY_OPEN = ChatColor.RED + "같은 투표가 이미 진행 중입니다.";
         public static final String ACTOR_CANNOT_ISSUE_SHARES = ChatColor.RED + "주식을 발행할 수 없습니다.";
         public static final String ACTOR_CANNOT_HAVE_PRESIDENT = ChatColor.RED + "대통령을 선임할 수 없습니다.";
         public static final String ACTOR_NOT_LEGISLATURE = ChatColor.RED + "의회가 아닙니다.";
@@ -329,6 +334,15 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 return Long.parseLong(input);
             } catch (NumberFormatException e) {
                 return -1L;
+            }
+        }
+
+        @Nullable
+        public static Material searchMaterial(@NonNull String input) {
+            try {
+                return Material.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                return null;
             }
         }
 

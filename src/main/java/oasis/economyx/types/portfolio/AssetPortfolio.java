@@ -109,8 +109,9 @@ public class AssetPortfolio implements Portfolio {
     @Override
     @JsonIgnore
     public boolean contains(@NonNull AssetStack asset) {
-        AssetStack existing = get(asset.getAsset());
+        if (asset.getQuantity() == 0L) return true;
 
+        AssetStack existing = get(asset.getAsset());
         if (existing == null) return false;
 
         return existing.getQuantity() >= asset.getQuantity();

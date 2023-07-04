@@ -2,11 +2,14 @@ package oasis.economyx.types.asset.stock;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class StockMeta implements AssetMeta {
+public final class StockMeta implements AssetMeta, References {
     public StockMeta() {
         this.voter = null;
     }
@@ -39,5 +42,17 @@ public final class StockMeta implements AssetMeta {
     @JsonProperty
     public Asset.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        if (voter != null) {
+            for (Actor orig : state.getActors()) {
+                if (orig.getUniqueId().equals(voter.getUniqueId())) {
+                    voter = orig;
+                    break;
+                }
+            }
+        }
     }
 }

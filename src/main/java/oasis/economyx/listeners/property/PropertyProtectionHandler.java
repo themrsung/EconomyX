@@ -1,6 +1,7 @@
 package oasis.economyx.listeners.property;
 
 import oasis.economyx.EconomyX;
+import oasis.economyx.events.payment.PaymentEvent;
 import oasis.economyx.events.property.PropertyProtectedEvent;
 import oasis.economyx.events.property.PropertyProtectorChangedEvent;
 import oasis.economyx.interfaces.actor.Actor;
@@ -61,7 +62,14 @@ public final class PropertyProtectionHandler extends EconomyListener {
         // Whether protector is null should be checked before throwing this event.
         if (protector == null) throw new RuntimeException();
 
+        CashStack fee = protector.getProtectionFee();
 
+        Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                owner,
+                protector,
+                fee,
+                PaymentEvent.Cause.PROPERTY_PROTECTION_FEE
+        ));
     }
 
     //
@@ -114,7 +122,7 @@ public final class PropertyProtectionHandler extends EconomyListener {
             }
 
             if (owner instanceof Employer e) {
-                hasAccess = e.getEmployees().contains(person) || e.getDirectors().contains(person);
+                hasAccess = hasAccess || e.getEmployees().contains(person) || e.getDirectors().contains(person);
             }
 
             if (!hasAccess) {
@@ -125,9 +133,9 @@ public final class PropertyProtectionHandler extends EconomyListener {
                 ));
             }
 
-            return hasAccess;
+            return !hasAccess;
         } catch (IllegalArgumentException e) {
-            return true;
+            return false;
         }
     }
 

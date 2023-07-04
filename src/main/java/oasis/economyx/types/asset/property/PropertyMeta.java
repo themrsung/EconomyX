@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import oasis.economyx.interfaces.reference.References;
+import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.Asset;
 import oasis.economyx.types.asset.AssetMeta;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public final class PropertyMeta implements AssetMeta {
+public final class PropertyMeta implements AssetMeta, References {
     public PropertyMeta(@Nullable PropertyProtector protector) {
         this.protector = protector;
     }
@@ -44,5 +47,17 @@ public final class PropertyMeta implements AssetMeta {
     @JsonIgnore
     public Asset.Type getType() {
         return type;
+    }
+
+    @Override
+    public void initialize(@NonNull EconomyState state) {
+        if (protector != null) {
+            for (PropertyProtector orig : state.getProtectors()) {
+                if (protector.getUniqueId().equals(orig.getUniqueId())) {
+                    protector = orig;
+                    break;
+                }
+            }
+        }
     }
 }
