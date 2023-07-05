@@ -26,7 +26,7 @@ import java.util.UUID;
 @JsonDeserialize(as = Vote.Ballot.class)
 public interface Vote extends References { // TODO Make a builder; Constructing votes is VERY tedious.
     /**
-     * Gets a multiple selection voting.
+     * Gets a multiple selection vote.
      *
      * @param uniqueId              Unique ID of this voting
      * @param name                  Name of this voting
@@ -48,7 +48,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     }
 
     /**
-     * Gets a boolean selection voting. (Yes or No)
+     * Gets a boolean selection vote. (Yes or No)
      *
      * @param uniqueId              Unique ID of this voting
      * @param name                  Name of this voting
@@ -74,7 +74,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     }
 
     /**
-     * Gets the unique ID of this voting.
+     * Gets the unique ID of this vote.
      *
      * @return Unique ID
      */
@@ -83,7 +83,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     UUID getUniqueId();
 
     /**
-     * Gets the name of this voting.
+     * Gets the name of this vote.
      *
      * @return Name
      */
@@ -92,7 +92,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     String getName();
 
     /**
-     * Gets the candidates of this voting.
+     * Gets the candidates of this vote.
      *
      * @return A copied list of candidates
      */
@@ -101,7 +101,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     List<Candidate> getCandidates();
 
     /**
-     * Gets the voter of this voting.
+     * Gets the voter of this vote.
      *
      * @return A copied list of voters
      */
@@ -110,7 +110,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     List<Voter> getVoters();
 
     /**
-     * Gets the total castable votes of this voting.
+     * Gets the total castable votes of this vote.
      *
      * @return Total castable votes
      */
@@ -128,7 +128,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     long getCastVotes();
 
     /**
-     * Gets the expiry of this voting.
+     * Gets the expiry of this vote.
      * Votes will automatically fail on expiry.
      *
      * @return Expiry
@@ -138,7 +138,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     DateTime getExpiry();
 
     /**
-     * Gets the required approval ratio of this voting.
+     * Gets the required approval ratio of this vote.
      * (e.g. 50% -> A candidate requires at least 50% of cast votes)
      *
      * @return Required approval ratio
@@ -158,9 +158,9 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     long getRequiredVotesToPass();
 
     /**
-     * Casts a voting.
+     * Casts a vote.
      *
-     * @param voter     Voter casting the voting.
+     * @param voter     Voter casting the vote.
      * @param candidate Candidate this voter has chosen.
      * @param votes     Number of votes to cast.
      * @throws IllegalArgumentException When candidate is invalid, or voter has insufficient votes.
@@ -169,7 +169,7 @@ public interface Vote extends References { // TODO Make a builder; Constructing 
     void vote(@NonNull Voter voter, @NonNull Candidate candidate, @NonNegative long votes) throws IllegalArgumentException;
 
     /**
-     * Handles internal processing of a voting.
+     * Handles internal processing of a vote.
      */
     @JsonIgnore
     void processVotes();

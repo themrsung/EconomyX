@@ -12,7 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.beans.ConstructorProperties;
 
 /**
- * A candidate represents an option the voter can choose in a voting.
+ * A candidate represents an option the voter can choose in a vote.
  */
 @JsonSerialize(as = Candidate.Candidacy.class)
 @JsonDeserialize(as = Candidate.Candidacy.class)

@@ -14,7 +14,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.beans.ConstructorProperties;
 
 /**
- * A voter represents an actor within a voting.
+ * A voter represents an actor within a vote.
  */
 @JsonSerialize(as = Voter.Votable.class)
 @JsonDeserialize(as = Voter.Votable.class)
