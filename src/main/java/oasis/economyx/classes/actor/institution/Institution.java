@@ -65,6 +65,7 @@ public abstract class Institution extends EconomicActor implements Institutional
 
     @NonNull
     @JsonIgnore
+    @Override
     public Sovereign getParent() {
         return parent;
     }

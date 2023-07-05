@@ -1,6 +1,7 @@
 package oasis.economyx.interfaces.actor.types.sovereign;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
@@ -273,5 +274,12 @@ public interface Federal extends Sovereign, References {
         getRepresentativeState().setProtectionFee(fee);
     }
 
-
+    @Override
+    @NonNull
+    @JsonIgnore
+    default List<Actor> getMembers() {
+        List<Actor> members = Sovereign.super.getMembers();
+        members.addAll(getMemberStates());
+        return members;
+    }
 }

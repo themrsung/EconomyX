@@ -37,6 +37,7 @@ public interface Democratic extends Representable {
 
     /**
      * Gets all applicable voters at this time.
+     *
      * @return Voters
      */
     @JsonIgnore

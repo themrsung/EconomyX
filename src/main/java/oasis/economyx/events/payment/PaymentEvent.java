@@ -194,6 +194,21 @@ public final class PaymentEvent extends EconomyEvent {
         /**
          * When a property is protected.
          */
-        PROPERTY_PROTECTION_FEE;
+        PROPERTY_PROTECTION_FEE,
+
+        /**
+         * Tax on salaries
+         */
+        INCOME_TAX,
+
+        /**
+         * Tax on interest
+         */
+        INTEREST_TAX,
+
+        /**
+         * Tax on dividends
+         */
+        DIVIDEND_TAX;
     }
 }

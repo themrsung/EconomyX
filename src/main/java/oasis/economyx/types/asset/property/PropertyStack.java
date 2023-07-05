@@ -60,6 +60,7 @@ public final class PropertyStack implements AssetStack {
 
     /**
      * Sets the quantity of this stack.
+     *
      * @param quantity New quantity (either 1 or 0)
      * @throws IllegalArgumentException When given quantity is not within bounds (0 <= q <= 1)
      */

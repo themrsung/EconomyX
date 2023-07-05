@@ -9,6 +9,7 @@ import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.cash.Cash;
 import oasis.economyx.types.asset.cash.CashStack;
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -24,20 +25,32 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
         this.representative = null;
         this.representativePay = new CashStack(currency, 0L);
         this.protectionFee = new CashStack(currency, 0L);
+
+        this.incomeTaxRate = 0f;
+        this.interestTaxRate = 0f;
+        this.dividendTaxRate = 0f;
     }
 
     public Sovereignty() {
         this.representative = null;
         this.representativePay = null;
         this.protectionFee = null;
+
+        this.incomeTaxRate = 0f;
+        this.interestTaxRate = 0f;
+        this.dividendTaxRate = 0f;
     }
 
     public Sovereignty(Sovereignty other) {
         super(other);
 
         this.representative = other.representative;
-        this.protectionFee = other.protectionFee;
         this.representativePay = other.representativePay;
+        this.protectionFee = other.protectionFee;
+
+        this.incomeTaxRate = other.incomeTaxRate;
+        this.interestTaxRate = other.interestTaxRate;
+        this.dividendTaxRate = other.dividendTaxRate;
     }
 
     @Nullable
@@ -52,6 +65,18 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
     @NonNull
     @JsonProperty
     private CashStack protectionFee;
+
+    @NonNegative
+    @JsonProperty
+    private float incomeTaxRate;
+
+    @NonNegative
+    @JsonProperty
+    private float interestTaxRate;
+
+    @NonNegative
+    @JsonProperty
+    private float dividendTaxRate;
 
     @Override
     @JsonIgnore
@@ -93,6 +118,42 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
     }
 
     @Override
+    @JsonIgnore
+    public @NonNegative float getIncomeTaxRate() {
+        return incomeTaxRate;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNegative float getInterestTaxRate() {
+        return interestTaxRate;
+    }
+
+    @Override
+    @JsonIgnore
+    public @NonNegative float getDividendTaxRate() {
+        return dividendTaxRate;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setIncomeTaxRate(@NonNegative float rate) {
+        incomeTaxRate = rate;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setInterestTaxRate(@NonNegative float rate) {
+        interestTaxRate = rate;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setDividendTaxRate(@NonNegative float rate) {
+        dividendTaxRate = rate;
+    }
+
+    @Override
     public void initialize(@NonNull EconomyState state) {
         if (representative != null) {
             for (Person p : state.getPersons()) {
@@ -102,7 +163,5 @@ public abstract class Sovereignty extends EconomicActor implements Sovereign {
                 }
             }
         }
-
-
     }
 }

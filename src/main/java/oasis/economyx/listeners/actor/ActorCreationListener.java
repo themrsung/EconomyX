@@ -2,6 +2,7 @@ package oasis.economyx.listeners.actor;
 
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.actor.ActorCreatedEvent;
+import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
 import org.bukkit.event.EventHandler;
@@ -21,5 +22,8 @@ public final class ActorCreationListener extends EconomyListener {
         if (e.isCancelled()) return;
 
         getState().addActor(e.getActor());
+        if (e.getActor() instanceof Institutional i) {
+            i.getParent().addInstitution(i);
+        }
     }
 }

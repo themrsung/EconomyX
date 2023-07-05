@@ -22,7 +22,7 @@ commands:
   address:
     description: 주소지를 조회합니다.
     usage: /address [대상]
-    aliases: [a, address, h, home, 홈, 집, 주소, 주소지]
+    aliases: [ a, address, h, home, 홈, 집, 주소, 주소지 ]
   pay:
     description: 송금 명령어입니다.
     usage: /pay 수신인 통화 금액
@@ -62,16 +62,40 @@ commands:
   claim:
     description: 부동산을 클레임합니다.
     usage: /claim 반경
-    aliases: [pclaim, claimproperty, propertyclaim, 클레임]
+    aliases: [ pclaim, claimproperty, propertyclaim, 클레임 ]
   abandon:
     description: 부동산을 포기합니다.
     usage: /abandon 자산명
-    aliases: [unclaim, punclaim, abandonproperty, unclaimproperty, propertyunclaim, 언클레임, 클레임해제]
+    aliases: [ unclaim, punclaim, abandonproperty, unclaimproperty, propertyunclaim, 언클레임, 클레임해제 ]
   setprotector:
     description: 부동산의 보호인을 지정합니다.
     usage: /setprotector 자산명 보호인
-    aliases: [sp, spp, setpropertyprotector, 보호자설정, 보호인설정]
+    aliases: [ sp, spp, setpropertyprotector, 보호자설정, 보호인설정 ]
   vote:
     description: 투표 명령어입니다.
     usage: /vote
-    aliases: [v, vote, e, elect, election, meeting, 투표, 의결, 주총, 주주총회, 선거]
+    aliases: [ v, vote, e, elect, election, meeting, 투표, 의결, 주총, 주주총회, 선거 ]
+  propertyprotection:
+    description: 지역보호 설정을 관리합니다. 지역보호인만 실행 가능합니다.
+    usage: /propertyprotection
+    aliases: [ pp, pprotect, pprotection, propertyprotection, 지역보호 ]
+  manageinstitution:
+    description: 국가의 기관을 관리합니다.
+    usage: /manageinstitution
+    aliases: [ mi, inst, institution, 기관, 기관관리, 기관설정 ]
+  issuecurrency:
+    description: 통화를 발행합니다. 중앙은행만 실행 가능합니다.
+    usage: /issuecurrency 금액
+    aliases: [ ic, pm, icurrency, issuecurrency, printmoney, 통화발행 ]
+  changetaxrate:
+    description: 국가의 세율을 변경합니다. 입법부 대표만 실행 가능합니다.
+    usage: /changetaxrate 유형 세율
+    aliases: [ ctr, ctaxrate, taxrate, str, staxrate, settaxrate, 세율변경, 세율설정 ]
+  join:
+    description: 국가에 가입합니다.
+    usage: /join 국가명
+    aliases: [ j, 가입 ]
+  hostility:
+    description: 전쟁 명령어입니다.
+    usage: /hostility
+    aliases: [ hostile, hostility, hostilities, enemy, enemies, 적, 전투, 전쟁 ]

@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 /**
  * An interest rate provide provides a base rate for banking
  */
-public interface InterestRateProvider extends Institutional {
+public interface InterestRateProvider {
     /**
      * Gets the interest rate of this provider
      * Interest is only paid to deposits in cash with the same currency as this banker

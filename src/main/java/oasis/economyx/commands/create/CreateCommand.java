@@ -133,7 +133,7 @@ public final class CreateCommand extends EconomyCommand {
                 return;
             }
 
-            actor.getAssets().add(new StockStack(new Stock(stockId), shareCount));
+            actor.getAssets().add(new StockStack(new Stock(stockId, name), shareCount));
 
             Bukkit.getPluginManager().callEvent(new ActorCreatedEvent(corporation, actor, ActorCreatedEvent.Type.CREATED_BY_PLAYER));
             Bukkit.getPluginManager().callEvent(new PaymentEvent(actor, corporation, capital, PaymentEvent.Cause.ACTOR_INITIAL_CAPITAL));
@@ -182,7 +182,9 @@ public final class CreateCommand extends EconomyCommand {
                 return;
             }
 
-            actor.getAssets().add(new StockStack(new Stock(stockId), shareCount));
+            fund.setRepresentative(caller);
+
+            actor.getAssets().add(new StockStack(new Stock(stockId, name), shareCount));
 
             Bukkit.getPluginManager().callEvent(new ActorCreatedEvent(fund, actor, ActorCreatedEvent.Type.CREATED_BY_PLAYER));
             Bukkit.getPluginManager().callEvent(new PaymentEvent(actor, fund, capital, PaymentEvent.Cause.ACTOR_INITIAL_CAPITAL));
@@ -238,6 +240,15 @@ public final class CreateCommand extends EconomyCommand {
                 return;
             }
 
+            if (institution.getType() == Actor.Type.CENTRAL_BANK) {
+                for (Institutional i : parent.getInstitutions()) {
+                    if (i.getType() == Actor.Type.CENTRAL_BANK) {
+                        player.sendRawMessage(Messages.ONLY_ONE_CENTRAL_BANK_ALLOWED_PER_SOVEREIGN);
+                        return;
+                    }
+                }
+            }
+
             Bukkit.getPluginManager().callEvent(new ActorCreatedEvent(institution, actor, ActorCreatedEvent.Type.CREATED_BY_PLAYER));
 
             player.sendRawMessage(Messages.INSTITUTION_CREATED);
@@ -281,6 +292,8 @@ public final class CreateCommand extends EconomyCommand {
                 player.sendRawMessage(Messages.UNKNOWN_ERROR);
                 return;
             }
+
+            sovereign.setRepresentative(caller);
 
             Bukkit.getPluginManager().callEvent(new ActorCreatedEvent(sovereign, person, ActorCreatedEvent.Type.CREATED_BY_PLAYER));
             Bukkit.getPluginManager().callEvent(new PaymentEvent(person, sovereign, capital, PaymentEvent.Cause.ACTOR_INITIAL_CAPITAL));
@@ -402,7 +415,7 @@ public final class CreateCommand extends EconomyCommand {
             final Type type = Type.fromInput(params[0]);
             if (type == null) return;
 
-            if (type.isCorporation()) {
+            if (type.isCorporation() || type.isFund()) {
                 if (params.length < 4) {
                     list.add(Messages.INSERT_SHARE_COUNT);
                 } else if (params.length < 5) {

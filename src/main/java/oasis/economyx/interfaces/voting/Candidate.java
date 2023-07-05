@@ -30,6 +30,7 @@ public interface Candidate extends References {
 
     /**
      * Gets the semantic name of this candidate.
+     *
      * @return Name
      */
     @NonNull

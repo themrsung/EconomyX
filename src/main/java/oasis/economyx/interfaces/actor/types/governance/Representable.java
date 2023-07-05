@@ -55,11 +55,13 @@ public interface Representable extends Actor, References {
     default void payRepresentative() {
         if (getRepresentative() == null) return;
 
-        Bukkit.getPluginManager().callEvent(new PaymentEvent(
-                this,
-                getRepresentative(),
-                getRepresentativePay(),
-                PaymentEvent.Cause.REPRESENTATIVE_PAYMENT
-        ));
+        if (getRepresentativePay().getQuantity() > 0L) {
+            Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                    this,
+                    getRepresentative(),
+                    getRepresentativePay(),
+                    PaymentEvent.Cause.REPRESENTATIVE_PAYMENT
+            ));
+        }
     }
 }

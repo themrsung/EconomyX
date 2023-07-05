@@ -7,6 +7,7 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -108,5 +109,24 @@ public interface Sovereign extends Representable, PropertyProtector {
         return members;
     }
 
+    @NonNegative
+    @JsonIgnore
+    float getIncomeTaxRate();
 
+    @NonNegative
+    @JsonIgnore
+    float getInterestTaxRate();
+
+    @NonNegative
+    @JsonIgnore
+    float getDividendTaxRate();
+
+    @JsonIgnore
+    void setIncomeTaxRate(@NonNegative float rate);
+
+    @JsonIgnore
+    void setInterestTaxRate(@NonNegative float rate);
+
+    @JsonIgnore
+    void setDividendTaxRate(@NonNegative float rate);
 }

@@ -2,6 +2,7 @@ package oasis.economyx.interfaces.actor.types.warfare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.reference.References;
 import oasis.economyx.state.EconomyState;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -55,4 +56,7 @@ public interface Faction extends Actor, References {
 
         return enemies;
     }
+
+    @JsonIgnore
+    List<Person> getCombatants();
 }

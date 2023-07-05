@@ -7,7 +7,6 @@ import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.asset.AssetStack;
-import oasis.economyx.types.asset.PhysicalAsset;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

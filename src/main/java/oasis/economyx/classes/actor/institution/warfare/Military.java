@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.classes.actor.institution.Institution;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.state.EconomyState;
@@ -48,7 +49,7 @@ public final class Military extends Institution implements Faction {
     @NonNull
     @JsonProperty
     @JsonIdentityReference
-    private List<Faction> hostilities;
+    private final List<Faction> hostilities;
 
     @NonNull
     @Override
@@ -76,6 +77,20 @@ public final class Military extends Institution implements Faction {
     @JsonIgnore
     public Actor.Type getType() {
         return type;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<Person> getCombatants() {
+        List<Person> combatants = new ArrayList<>();
+
+        combatants.addAll(getEmployees());
+        combatants.addAll(getDirectors());
+        if (getRepresentative() != null) combatants.add(getRepresentative());
+
+        combatants.addAll(getParent().getCitizens());
+
+        return combatants;
     }
 
     @Override

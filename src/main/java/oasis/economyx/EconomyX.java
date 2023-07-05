@@ -18,6 +18,11 @@ import oasis.economyx.commands.asset.SendAssetCommand;
 import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
+import oasis.economyx.commands.join.JoinCommand;
+import oasis.economyx.commands.management.ChangeTaxRateCommand;
+import oasis.economyx.commands.management.IssueCurrencyCommand;
+import oasis.economyx.commands.management.ManageInstitutionCommand;
+import oasis.economyx.commands.management.PropertyProtectionCommand;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
@@ -28,6 +33,7 @@ import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
 import oasis.economyx.commands.voting.VoteCommand;
+import oasis.economyx.commands.warfare.HostilityCommand;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.listeners.actor.ActorAddressChangedListener;
@@ -48,9 +54,11 @@ import oasis.economyx.listeners.contract.ContractCreatedListener;
 import oasis.economyx.listeners.contract.ContractExpiredListener;
 import oasis.economyx.listeners.contract.ContractForgivenListener;
 import oasis.economyx.listeners.contract.OptionExercisedListener;
+import oasis.economyx.listeners.currency.CurrencyIssuedListener;
 import oasis.economyx.listeners.dividend.DividendListener;
 import oasis.economyx.listeners.guarantee.GuaranteeIssuedListener;
 import oasis.economyx.listeners.guarantee.GuaranteeRevokedListener;
+import oasis.economyx.listeners.management.PropertyProtectorManagedListener;
 import oasis.economyx.listeners.message.MessageSentListener;
 import oasis.economyx.listeners.offer.OfferEventListener;
 import oasis.economyx.listeners.organization.AllianceMemberChangedListener;
@@ -63,9 +71,11 @@ import oasis.economyx.listeners.player.PlayerDeathHandler;
 import oasis.economyx.listeners.player.PlayerJoinHandler;
 import oasis.economyx.listeners.property.PropertyClaimHandler;
 import oasis.economyx.listeners.property.PropertyProtectionHandler;
+import oasis.economyx.listeners.sovereign.SovereignMemberChangedListener;
 import oasis.economyx.listeners.stock.StockIssuedListener;
 import oasis.economyx.listeners.stock.StockRetiredListener;
 import oasis.economyx.listeners.stock.StockSplitListener;
+import oasis.economyx.listeners.tax.TaxListener;
 import oasis.economyx.listeners.terminal.CardTerminalCreatedListener;
 import oasis.economyx.listeners.terminal.CardTerminalDestroyedListener;
 import oasis.economyx.listeners.trading.listing.AssetDelistedListener;
@@ -200,12 +210,18 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new ContractForgivenListener(this, state));
         registerListener(new OptionExercisedListener(this, state));
 
+        // Currency
+        registerListener(new CurrencyIssuedListener(this, state));
+
         // Dividend
         registerListener(new DividendListener(this, state));
 
         // Guarantee
         registerListener(new GuaranteeIssuedListener(this, state));
         registerListener(new GuaranteeRevokedListener(this, state));
+
+        // Management
+        registerListener(new PropertyProtectorManagedListener(this, state));
 
         // Message
         registerListener(new MessageSentListener(this, state));
@@ -233,10 +249,16 @@ public final class EconomyX extends JavaPlugin {
         registerListener(new PropertyClaimHandler(this, state));
         registerListener(new PropertyProtectionHandler(this, state));
 
+        // Sovereign
+        registerListener(new SovereignMemberChangedListener(this, state));
+
         // Stock
         registerListener(new StockIssuedListener(this, state));
         registerListener(new StockSplitListener(this, state));
         registerListener(new StockRetiredListener(this, state));
+
+        // Tax
+        registerListener(new TaxListener(this, state));
 
         // Terminal
         registerListener(new CardTerminalCreatedListener(this, state));
@@ -283,12 +305,19 @@ public final class EconomyX extends JavaPlugin {
 
         registerCommand("offer", new OfferCommand(this, state));
         registerCommand("retire", new RetireCommand(this, state));
+        registerCommand("join", new JoinCommand(this, state));
 
         registerCommand("claim", new PropertyClaimCommand(this, state));
         registerCommand("abandon", new PropertyAbandonCommand(this, state));
         registerCommand("setprotector", new PropertySetProtectorCommand(this, state));
 
         registerCommand("vote", new VoteCommand(this, state));
+
+        registerCommand("propertyprotection", new PropertyProtectionCommand(this, state));
+        registerCommand("manageinstitution", new ManageInstitutionCommand(this, state));
+        registerCommand("issuecurrency", new IssueCurrencyCommand(this, state));
+        registerCommand("changetaxrate", new ChangeTaxRateCommand(this, state));
+        registerCommand("hostility", new HostilityCommand(this, state));
     }
 
     private void registerTask(EconomyTask task) {

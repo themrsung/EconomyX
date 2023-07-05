@@ -9,6 +9,7 @@ import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
 import oasis.economyx.types.address.Address;
@@ -81,7 +82,7 @@ public final class PropertyProtectionHandler extends EconomyListener {
      *
      * @param player   Player
      * @param location Location
-     * @return Whether player has access to location
+     * @return Whether player has access to location inverted
      */
     private boolean onPropertyAccessAttempted(Player player, Location location) {
         Actor owner = null;
@@ -114,8 +115,16 @@ public final class PropertyProtectionHandler extends EconomyListener {
         try {
             Person person = getState().getPerson(player.getUniqueId());
 
-            // TODO Add construction contracts
-            // TODO Check if person is employee of contractor
+            // Check for protector's hostilities
+            if (protector instanceof Faction) {
+                for (Faction f : getState().getFactions()) {
+                    if (f.getCombatants().contains(person)) {
+                        if (f.getEnemies(getState()).contains(protector)) {
+                            hasAccess = true;
+                        }
+                    }
+                }
+            }
 
             if (owner instanceof Person p) {
                 if (p.equals(person)) hasAccess = true;

@@ -106,13 +106,14 @@ public interface Banker extends Corporation, InterestRateProvider {
             AssetStack content = a.getContent();
             if (content instanceof CashStack c) try {
                 CashStack i = c.multiply(getDailyInterestRate());
-                Bukkit.getPluginManager().callEvent(new PaymentEvent(
-                        this,
-                        a.getClient(),
-                        i,
-                        PaymentEvent.Cause.INTEREST_PAYMENT
-                ));
-
+                if (i.getQuantity() > 0L) {
+                    Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                            this,
+                            a.getClient(),
+                            i,
+                            PaymentEvent.Cause.INTEREST_PAYMENT
+                    ));
+                }
             } catch (IllegalArgumentException e) {
                 // Account has foreign currency in it content
             }

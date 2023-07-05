@@ -11,7 +11,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.List;
 
 /**
- * A vault keeper can host and manage vaults
+ * A vault keeper can host and management vaults
  * <p>
  * Vaults are a special in-game block which only permits the keeper and client to access it.
  * This is intended to be used with a mod which creates this block for the plugin.

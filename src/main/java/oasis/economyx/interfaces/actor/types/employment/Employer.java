@@ -122,22 +122,26 @@ public interface Employer extends Representable {
      */
     @JsonIgnore
     default void paySalaries() {
-        for (Person e : getEmployees()) {
-            Bukkit.getPluginManager().callEvent(new PaymentEvent(
-                    this,
-                    e,
-                    getEmployeePay(),
-                    PaymentEvent.Cause.SALARY_PAYMENT
-            ));
+        if (getEmployeePay().getQuantity() > 0L) {
+            for (Person e : getEmployees()) {
+                Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                        this,
+                        e,
+                        getEmployeePay(),
+                        PaymentEvent.Cause.SALARY_PAYMENT
+                ));
+            }
         }
 
-        for (Person d : getDirectors()) {
-            Bukkit.getPluginManager().callEvent(new PaymentEvent(
-                    this,
-                    d,
-                    getDirectorPay(),
-                    PaymentEvent.Cause.SALARY_PAYMENT
-            ));
+        if (getDirectorPay().getQuantity() > 0L) {
+            for (Person d : getDirectors()) {
+                Bukkit.getPluginManager().callEvent(new PaymentEvent(
+                        this,
+                        d,
+                        getDirectorPay(),
+                        PaymentEvent.Cause.SALARY_PAYMENT
+                ));
+            }
         }
     }
 }

@@ -11,12 +11,14 @@ import oasis.economyx.events.organization.party.PartyMemberRemovedEvent;
 import oasis.economyx.events.personal.employment.DirectorFiredEvent;
 import oasis.economyx.events.personal.employment.EmployeeFiredEvent;
 import oasis.economyx.events.personal.representable.RepresentativeFiredEvent;
+import oasis.economyx.events.sovereign.SovereignMemberRemovedEvent;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.corporation.Corporation;
 import oasis.economyx.interfaces.actor.person.Person;
 import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.actor.types.sovereign.Federal;
 import oasis.economyx.state.EconomyState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -91,6 +93,14 @@ public final class RetireCommand extends EconomyCommand {
             if (par.getMembers().contains(per)) {
                 Bukkit.getPluginManager().callEvent(new PartyMemberRemovedEvent(par, per));
                 player.sendRawMessage(Messages.RETIRED_FROM_ORGANIZATION);
+                return;
+            }
+        }
+
+        if (organization instanceof Federal f && actor instanceof Sovereign s) {
+            if (f.getMemberStates().contains(s)) {
+                Bukkit.getPluginManager().callEvent(new SovereignMemberRemovedEvent(f, s));
+                player.sendRawMessage(Messages.RETIRED_FROM_FEDERAL);
                 return;
             }
         }

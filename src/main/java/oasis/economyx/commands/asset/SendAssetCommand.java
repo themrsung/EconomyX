@@ -70,7 +70,7 @@ public final class SendAssetCommand extends EconomyCommand {
     public void onEconomyComplete(@NonNull List<String> list, @NonNull String[] params) {
         if (params.length < 2) {
             list.addAll(Lists.ACTOR_NAMES(getState()));
-            if (!params[0].equals("")) list.removeIf(s -> s.toLowerCase().startsWith(params[0].toLowerCase()));
+            if (!params[0].equals("")) list.removeIf(s -> !s.toLowerCase().startsWith(params[0].toLowerCase()));
         } else if (params.length < 3) {
             list.addAll(Lists.ASSET_NAMES(getState()));
             if (!params[1].equals("")) list.removeIf(s -> !s.toLowerCase().startsWith(params[1].toLowerCase()));

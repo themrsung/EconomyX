@@ -3,9 +3,12 @@ package oasis.economyx.commands;
 import oasis.economyx.EconomyX;
 import oasis.economyx.interfaces.actor.Actor;
 import oasis.economyx.interfaces.actor.person.Person;
+import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
+import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import oasis.economyx.interfaces.actor.types.warfare.Faction;
 import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.state.EconomyState;
@@ -109,6 +112,12 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         ABANDON_PROPERTY,
         SET_PROPERTY_PROTECTOR,
         VOTE,
+        PROPERTY_PROTECTION,
+        MANAGE_INSTITUTION,
+        ISSUE_CURRENCY,
+        CHANGE_TAX_RATE,
+        JOIN,
+        HOSTILTIY,
 
         // Allows recursive sudo by default
         SUDO;
@@ -132,6 +141,12 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_ABANDON_PROPERTY = Arrays.asList("unclaim", "punclaim", "abandon", "abandonproperty", "unclaimproperty", "propertyunclaim", "언클레임", "클레임포기");
         private static final List<String> K_SET_PROPERTY_PROTECTOR = Arrays.asList("sp", "spp", "setprotector", "setpropertyprotector", "보호자설정", "보호인설정");
         private static final List<String> K_VOTE = Arrays.asList("v", "vote", "voting", "voting", "e", "elect", "election", "meeting", "투표", "의결", "주총", "주주총회", "선거");
+        private static final List<String> K_PROPERTY_PROTECTION = Arrays.asList("pp", "pprotect", "pprotection", "propertyprotection", "지역보호", "지보호");
+        private static final List<String> K_MANAGE_INSTITUTION = Arrays.asList("mi", "inst", "institution", "manageinstitution", "기관", "기관관리", "기관설정");
+        private static final List<String> K_ISSUE_CURRENCY = Arrays.asList("ic", "icurrency", "issuecurrency", "pm", "printmoney", "통화발행");
+        private static final List<String> K_CHANGE_TAX_RATE = Arrays.asList("ctr", "ctaxrate", "taxrate", "changetaxrate", "str", "staxrate", "settaxrate", "세율변경", "세율설정");
+        private static final List<String> K_JOIN = Arrays.asList("j", "join", "가입");
+        private static final List<String> K_HOSTILITY = Arrays.asList("hostile", "hostility", "hostilities", "enemy", "enemies", "적", "전투", "전쟁");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -156,6 +171,12 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_ABANDON_PROPERTY.contains(input.toLowerCase())) return ABANDON_PROPERTY;
             if (K_VOTE.contains(input.toLowerCase())) return VOTE;
             if (K_SET_PROPERTY_PROTECTOR.contains(input.toLowerCase())) return SET_PROPERTY_PROTECTOR;
+            if (K_PROPERTY_PROTECTION.contains(input.toLowerCase())) return PROPERTY_PROTECTION;
+            if (K_MANAGE_INSTITUTION.contains(input.toLowerCase())) return MANAGE_INSTITUTION;
+            if (K_ISSUE_CURRENCY.contains(input.toLowerCase())) return ISSUE_CURRENCY;
+            if (K_CHANGE_TAX_RATE.contains(input.toLowerCase())) return CHANGE_TAX_RATE;
+            if (K_JOIN.contains(input.toLowerCase())) return JOIN;
+            if (K_HOSTILITY.contains(input.toLowerCase())) return HOSTILTIY;
 
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
@@ -183,8 +204,14 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case ABANDON_PROPERTY -> K_ABANDON_PROPERTY;
                 case SET_PROPERTY_PROTECTOR -> K_SET_PROPERTY_PROTECTOR;
                 case VOTE -> K_VOTE;
+                case PROPERTY_PROTECTION -> K_PROPERTY_PROTECTION;
+                case MANAGE_INSTITUTION -> K_MANAGE_INSTITUTION;
+                case ISSUE_CURRENCY -> K_ISSUE_CURRENCY;
+                case CHANGE_TAX_RATE -> K_CHANGE_TAX_RATE;
+                case JOIN -> K_JOIN;
+                case HOSTILTIY -> K_HOSTILITY;
+
                 case SUDO -> K_SUDO;
-                default -> new ArrayList<>();
             };
         }
     }
@@ -198,6 +225,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String INVALID_ASSET = ChatColor.RED + "유효하지 않은 자산입니다.";
 
         public static final String INSERT_NUMBER = "숫자를 입력하세요.";
+        public static final String INSERT_PERCENT = "퍼센트를 입력하세요. (예: 23 -> 23%)";
         public static final String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
         public static final String INSERT_SHARE_COUNT = "발행할 주식수를 입력하세요. (정수)";
         public static final String INSERT_CAPITAL = "자본금을 입력하세요. (정수)";
@@ -228,6 +256,8 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String SOVEREIGNTY_CREATED = ChatColor.GREEN + "국가가 설립되었습니다.";
         public static final String ORGANIZATION_CREATED = ChatColor.GREEN + "조직이 설립되었습니다.";
 
+        public static final String ONLY_ONE_CENTRAL_BANK_ALLOWED_PER_SOVEREIGN = ChatColor.RED + "국가당 1개의 중앙은행만 설립 가능합니다.";
+
         public static final String NO_MESSAGES_RECEIVED = ChatColor.RED + "수신한 메시지가 없습니다.";
 
         public static final String ASSET_NOT_FOUND = ChatColor.RED + "자산을 찾지 못했습니다.";
@@ -241,6 +271,7 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String RETIRED_FROM_EMPLOYER = ChatColor.GREEN + "사직이 완료되었습니다.";
         public static final String RETIRED_FROM_REPRESENTABLE = ChatColor.GREEN + "대표직에서 은퇴했습니다.";
         public static final String RETIRED_FROM_ORGANIZATION = ChatColor.GREEN + "조직에서 탈퇴했습니다.";
+        public static final String RETIRED_FROM_FEDERAL = ChatColor.GREEN + "연방국에서 탈퇴했습니다.";
         public static final String ILLEGAL_RETIRE_SIGNATURE = ChatColor.RED + "회원 또는 조직의 유형이 유효하지 않습니다.";
 
         public static final String PROPERTY_OVERLAPS_ANOTHER = ChatColor.RED + "범위가 다른 부동산을 침범합니다.";
@@ -266,6 +297,37 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String ACTOR_NOT_LEGISLATURE = ChatColor.RED + "의회가 아닙니다.";
         public static final String VOTE_PROPOSED = ChatColor.GREEN + "투표가 시작되었습니다.";
         public static final String VOTE_CAST = ChatColor.GREEN + "의결이 완료되었습니다.";
+
+        public static final String ACTOR_NOT_PROPERTY_PROTECTOR = ChatColor.RED + "지역보호인이 아닙니다.";
+        public static final String PROPERTY_PROTECTION_FEE_CHANGED = ChatColor.GREEN + "지역보호비가 변경되었습니다.";
+
+        public static String OWNER_OF_ADDRESS(@Nullable Actor owner, @NonNull Address address) {
+            return address.format() + "의 소유주는 " + (owner != null ? owner.getName() : "익명의 소유주") + "입니다.";
+        }
+
+        public static String OWNER_NOT_FOUND = ChatColor.RED + "소유주를 찾을 수 없습니다.";
+
+        public static String ACTOR_NOT_SOVEREIGN = ChatColor.RED + "국가가 아닙니다.";
+        public static String REPRESENTATIVE_OF_LEGISLATURE_MUST_BE_ELECTED = ChatColor.RED + "입법부의 대표는 선출직입니다.";
+        public static String REPRESENTATIVE_CHANGED = ChatColor.GREEN + "대표가 변경되었습니다.";
+
+        public static String ACTOR_NOT_CURRENCY_ISSUER = ChatColor.RED + "통화를 발행할 수 없습니다.";
+        public static String CURRENCY_ISSUED = ChatColor.GREEN + "통화가 발행되었습니다.";
+
+        public static String TAX_RATE_CHANGED = ChatColor.GREEN + "세율이 변경되었습니다.";
+
+        public static String ALREADY_MEMBER_OF_SOVEREIGN = ChatColor.RED + "이미 국가에 가입되어있습니다.";
+        public static String JOINED_SOVEREIGN = ChatColor.GREEN + "국가에 가입했습니다.";
+
+        public static String ACTOR_NOT_FACTION = ChatColor.RED + "참전이 불가능합니다.";
+
+        public static String HOSTILITY_DECLARED = ChatColor.GREEN + "전쟁이 선포되었습니다.";
+        public static String HOSTILITY_REVOKED = ChatColor.GREEN + "전쟁을 종료했습니다. 상대측에서도 종료해야 전쟁이 종결됩니다.";
+        public static String CANNOT_DECLARE_WAR_ON_ONESELF = ChatColor.RED + "스스로에게 전쟁을 선포할 수 없습니다.";
+
+        public static String HOSTILITY_INFORMATION(@NonNull Faction f1, @NonNull Faction f2) {
+            return f1.getName() + " vs " + f2.getName();
+        }
 
         public static String ADDRESS_OF_ACTOR(@NonNull Actor actor, @NonNull Address address) {
             return actor.getName() + "의 주소지: " + address.format();
@@ -464,6 +526,84 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             return null;
         }
+
+        @Nullable
+        public static Institutional searchInstitution(@NonNull String input, @NonNull EconomyState state) {
+            for (Institutional i : state.getInstitutionals()) {
+                if (Objects.equals(i.getName(), input)) {
+                    return i;
+                }
+            }
+
+            for (Institutional i : state.getInstitutionals()) {
+                String name = i.getName();
+                if (name != null) {
+                    if (name.toLowerCase().contains(input.toLowerCase())) {
+                        return i;
+                    }
+                }
+            }
+
+            for (Institutional i : state.getInstitutionals()) {
+                if (i.getUniqueId().toString().contains(input)) {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
+        @Nullable
+        public static Sovereign searchSovereign(@NonNull String input, @NonNull EconomyState state) {
+            for (Sovereign s : state.getSovereigns()) {
+                if (Objects.equals(s.getName(), input)) {
+                    return s;
+                }
+            }
+
+            for (Sovereign s : state.getSovereigns()) {
+                String name = s.getName();
+                if (name != null) {
+                    if (name.toLowerCase().contains(input.toLowerCase())) {
+                        return s;
+                    }
+                }
+            }
+
+            for (Sovereign s : state.getSovereigns()) {
+                if (s.getUniqueId().toString().contains(input)) {
+                    return s;
+                }
+            }
+
+            return null;
+        }
+
+        @Nullable
+        public static Faction searchFaction(@NonNull String input, @NonNull EconomyState state) {
+            for (Faction f : state.getFactions()) {
+                if (Objects.equals(f.getName(), input)) {
+                    return f;
+                }
+            }
+
+            for (Faction f : state.getFactions()) {
+                String name = f.getName();
+                if (name != null) {
+                    if (name.toLowerCase().contains(input.toLowerCase())) {
+                        return f;
+                    }
+                }
+            }
+
+            for (Faction f : state.getFactions()) {
+                if (f.getUniqueId().toString().contains(input)) {
+                    return f;
+                }
+            }
+
+            return null;
+        }
     }
 
     protected abstract static class Lists {
@@ -516,6 +656,36 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             for (Vote vote : state.getVotes()) {
                 results.add(vote.getName());
+            }
+
+            return results;
+        }
+
+        public static List<String> INSTITUTION_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (Institutional i : state.getInstitutionals()) {
+                results.add(i.getName());
+            }
+
+            return results;
+        }
+
+        public static List<String> SOVEREIGN_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (Sovereign s : state.getSovereigns()) {
+                results.add(s.getName());
+            }
+
+            return results;
+        }
+
+        public static List<String> FACTION_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (Faction f : state.getFactions()) {
+                results.add(f.getName());
             }
 
             return results;

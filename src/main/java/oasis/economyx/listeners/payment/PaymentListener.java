@@ -3,7 +3,10 @@ package oasis.economyx.listeners.payment;
 import oasis.economyx.EconomyX;
 import oasis.economyx.events.message.MessageSentEvent;
 import oasis.economyx.events.payment.PaymentEvent;
+import oasis.economyx.events.tax.TaxType;
+import oasis.economyx.events.tax.TaxedEvent;
 import oasis.economyx.interfaces.actor.Actor;
+import oasis.economyx.interfaces.actor.sovereign.Sovereign;
 import oasis.economyx.interfaces.guarantee.Guarantee;
 import oasis.economyx.listeners.EconomyListener;
 import oasis.economyx.state.EconomyState;
@@ -14,6 +17,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class PaymentListener extends EconomyListener {
     private static final String PAYMENT_CANCELLED_EXTERNALLY = ChatColor.RED + "거래가 서버에 의해 취소되었습니다.";
@@ -103,5 +109,41 @@ public final class PaymentListener extends EconomyListener {
                 recipient,
                 PAYMENT_RECEIVED(event, getState())
         )));
+
+        switch (event.getCause()) {
+            case SALARY_PAYMENT, REPRESENTATIVE_PAYMENT, INTEREST_PAYMENT, DIVIDEND_PAYMENT -> {
+                List<Sovereign> nationalities = new ArrayList<>();
+
+                for (Sovereign s : getState().getSovereigns()) {
+                    if (s.getMembers().contains(recipient)) nationalities.add(s);
+                }
+
+                for (Sovereign n : nationalities) {
+                    AssetStack tax = copy.copy();
+                    tax.setQuantity((long) Math.floor(tax.getQuantity() * switch (event.getCause()) {
+                        case SALARY_PAYMENT, REPRESENTATIVE_PAYMENT -> n.getIncomeTaxRate();
+                        case INTEREST_PAYMENT -> n.getInterestTaxRate();
+                        case DIVIDEND_PAYMENT -> n.getDividendTaxRate();
+                        default -> -1f;
+                    }));
+
+                    TaxType taxType = switch (event.getCause()) {
+                        case SALARY_PAYMENT, REPRESENTATIVE_PAYMENT -> TaxType.INCOME_TAX;
+                        case INTEREST_PAYMENT -> TaxType.INTEREST_TAX;
+                        case DIVIDEND_PAYMENT -> TaxType.DIVIDEND_TAX;
+                        default -> null;
+                    };
+
+                    if (tax.getQuantity() > 0L && taxType != null) {
+                        Bukkit.getPluginManager().callEvent(new TaxedEvent(
+                                recipient,
+                                n,
+                                tax,
+                                taxType
+                        ));
+                    }
+                }
+            }
+        }
     }
 }

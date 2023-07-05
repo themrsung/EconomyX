@@ -52,13 +52,20 @@ public final class VoteCommand extends EconomyCommand {
 
         if (k != null) {
             switch (k) {
-                case CREATE ->  {
-                    if (!(actor instanceof Democratic d)) {
+                case CREATE -> {
+                    if (params.length < 3) {
+                        player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
+                        return;
+                    }
+
+                    Actor host = Inputs.searchActor(params[1], getState());
+
+                    if (!(host instanceof Democratic d)) {
                         player.sendRawMessage(Messages.ACTOR_CANNOT_HOST_VOTES);
                         return;
                     }
 
-                    VoteType type = VoteType.fromInput(params[1]);
+                    VoteType type = VoteType.fromInput(params[2]);
                     if (type == null) {
                         player.sendRawMessage(Messages.INVALID_VOTE_TYPE);
                         return;
@@ -71,7 +78,6 @@ public final class VoteCommand extends EconomyCommand {
                     boolean isVoter = false;
                     for (Voter voter : voters) {
                         if (voter.getVoter().equals(caller)) {
-                            Bukkit.getLogger().info("TTT");
                             isVoter = true;
                             break;
                         }
@@ -105,7 +111,7 @@ public final class VoteCommand extends EconomyCommand {
                             );
                         }
                         case HIRE_REPRESENTATIVE -> {
-                            if (params.length < 3) {
+                            if (params.length < 4) {
                                 player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
                                 return;
                             }
@@ -115,7 +121,7 @@ public final class VoteCommand extends EconomyCommand {
                                 return;
                             }
 
-                            Person person = Inputs.searchPerson(params[2], getState());
+                            Person person = Inputs.searchPerson(params[3], getState());
                             if (person == null) {
                                 player.sendRawMessage(Messages.ACTOR_NOT_FOUND);
                                 return;
@@ -132,12 +138,12 @@ public final class VoteCommand extends EconomyCommand {
                             );
                         }
                         case CHANGE_NAME -> {
-                            if (params.length < 3) {
+                            if (params.length < 4) {
                                 player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
                                 return;
                             }
 
-                            String name = params[2];
+                            String name = params[3];
                             if (name.length() > CreateCommand.MAX_NAME_LENGTH) {
                                 player.sendRawMessage(Messages.NAME_TOO_LONG(CreateCommand.MAX_NAME_LENGTH));
                                 return;
@@ -161,7 +167,7 @@ public final class VoteCommand extends EconomyCommand {
                             );
                         }
                         case STOCK_ISSUE, STOCK_RETIRE, STOCK_SPLIT -> {
-                            if (params.length < 3) {
+                            if (params.length < 4) {
                                 player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
                                 return;
                             }
@@ -171,7 +177,7 @@ public final class VoteCommand extends EconomyCommand {
                                 return;
                             }
 
-                            long shares = Inputs.fromNumber(params[2]);
+                            long shares = Inputs.fromNumber(params[3]);
                             if (shares < 0L) {
                                 player.sendRawMessage(Messages.INVALID_NUMBER);
                                 return;
@@ -195,7 +201,7 @@ public final class VoteCommand extends EconomyCommand {
                             );
                         }
                         case PRESIDENTIAL_ELECTION, GENERAL_ELECTION -> {
-                            if (params.length < 3) {
+                            if (params.length < 4) {
                                 player.sendRawMessage(Messages.INSUFFICIENT_ARGS);
                                 return;
                             }
@@ -215,12 +221,13 @@ public final class VoteCommand extends EconomyCommand {
                                 }
                             }
 
-                            String[] candidateNames = Arrays.copyOfRange(params, 2, params.length);
+                            String[] candidateNames = Arrays.copyOfRange(params, 3, params.length);
                             List<Candidate> candidates = new ArrayList<>();
 
                             for (String s : candidateNames) {
                                 Person person = Inputs.searchPerson(s, getState());
-                                if (person != null) candidates.add(Candidate.get(s, new HireRepresentativeAgenda(d, person)));
+                                if (person != null)
+                                    candidates.add(Candidate.get(s, new HireRepresentativeAgenda(d, person)));
                             }
 
                             if (candidates.size() == 0) {
@@ -327,7 +334,7 @@ public final class VoteCommand extends EconomyCommand {
                 if (k != null) {
                     switch (k) {
                         case CREATE -> {
-                            for (VoteType vt : VoteType.values()) list.addAll(vt.toInput());
+                            list.addAll(Lists.ACTOR_NAMES(getState()));
                         }
                         case INFO -> {
                             list.addAll(Lists.VOTE_NAMES(getState()));
@@ -346,18 +353,7 @@ public final class VoteCommand extends EconomyCommand {
                 if (k != null) {
                     switch (k) {
                         case CREATE -> {
-                            VoteType vt = VoteType.fromInput(params[1]);
-                            if (vt != null) {
-                                switch (vt) {
-                                    case HIRE_REPRESENTATIVE -> list.addAll(Lists.ACTOR_NAMES(getState()));
-                                    case CHANGE_NAME -> list.add(Messages.INSERT_NAME);
-                                    case DIVIDEND -> list.addAll(Lists.ASSET_NAMES(getState()));
-                                    case STOCK_ISSUE, STOCK_RETIRE, STOCK_SPLIT -> list.add(Messages.INSERT_NUMBER);
-                                    case PRESIDENTIAL_ELECTION, GENERAL_ELECTION -> list.add(Messages.INSERT_CANDIDATES);
-                                    default -> list.add(Messages.ALL_DONE);
-
-                                }
-                            }
+                            for (VoteType vt : VoteType.values()) list.addAll(vt.toInput());
                         }
                         case INFO -> {
                             list.addAll(Lists.VOTE_NAMES(getState()));
@@ -368,8 +364,23 @@ public final class VoteCommand extends EconomyCommand {
                 } else {
                     list.add(Messages.ALL_DONE);
                 }
+            } else if (params.length < 5) {
+                VoteType vt = VoteType.fromInput(params[2]);
+                if (vt == null) {
+                    list.add(Messages.ALL_DONE);
+                } else {
+                    switch (vt) {
+                        case HIRE_REPRESENTATIVE -> list.addAll(Lists.ACTOR_NAMES(getState()));
+                        case CHANGE_NAME -> list.add(Messages.INSERT_NAME);
+                        case DIVIDEND -> list.addAll(Lists.ASSET_NAMES(getState()));
+                        case STOCK_ISSUE, STOCK_RETIRE, STOCK_SPLIT -> list.add(Messages.INSERT_NUMBER);
+                        case PRESIDENTIAL_ELECTION, GENERAL_ELECTION -> list.add(Messages.INSERT_CANDIDATES);
+                        default -> list.add(Messages.ALL_DONE);
+
+                    }
+                }
             } else {
-                VoteType vt = VoteType.fromInput(params[1]);
+                VoteType vt = VoteType.fromInput(params[2]);
                 if (vt == null) {
                     list.add(Messages.ALL_DONE);
                 } else {
@@ -377,6 +388,7 @@ public final class VoteCommand extends EconomyCommand {
                         case PRESIDENTIAL_ELECTION, GENERAL_ELECTION -> list.add(Messages.INSERT_CANDIDATES);
                         default -> list.add(Messages.ALL_DONE);
                     }
+
                 }
             }
         }
