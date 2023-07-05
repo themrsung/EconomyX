@@ -7,6 +7,7 @@ _(Migrated from Sponge)_
 EconomyX provides a versatile backbone for any type of economy server.
 A basic command interface is provided by default, but a custom implementation is required for more advanced UIs.
 Commands are coded in Korean. If you wish to use another language, you will need to change the following files/directories.
+All localization is done via constant variables for easy configuration.
 (There may be more)
 - [voting](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fclasses%2Fvoting)
 - [EconomyCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2FEconomyCommand.java)
