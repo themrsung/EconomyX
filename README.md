@@ -5,12 +5,21 @@ _(Migrated from Sponge)_
 ### Latest version: 1.0 _(unfinished)_
 
 EconomyX provides a versatile backbone for any type of economy server.
-As there is no built-in front end, a custom UI is required for it to be a functional product.
-This can be a big time saver for server developers who want to focus on the front-end part of their server.
+A basic command interface is provided by default, but a custom implementation is required for more advanced UIs.
+Commands are coded in Korean. If you wish to use another language, you will need to change the following files/directories.
+(There may be more)
+- [voting](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fclasses%2Fvoting)
+- [EconomyCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2FEconomyCommand.java)
+- [CreateCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2Fcreate%2FCreateCommand.java)
+- [ManageInstitutionCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2Fmanagement%2FManageInstitutionCommand.java)
+- [PropertyProtectionCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2Fmanagement%2FPropertyProtectionCommand.java)
+- [VoteCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2Fvoting%2FVoteCommand.java)
+- [HostilityCommand.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fcommands%2Fwarfare%2FHostilityCommand.java)
+- [address](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Faddress)
+- [asset](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Fasset)
+- [Offer.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Foffer%2FOffer.java)
+- [TaxType.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fevents%2Ftax%2FTaxType.java)
 
-**An example implementation: https://github.com/themrsung/OasisServer**
-
-UI will be closed source for security reasons. Create your own front-end to use this platform.
 
 ### Assets
 EconomyX assets are capable of representing any kind of ownership.
