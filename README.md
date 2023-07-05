@@ -99,16 +99,16 @@ Price providers offer fair pricing of assets by means of market forces.
 These prices are used to derive the value of options and swap agreements.
 
 #### Markets
-Markets([Marketplace.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Ftrading%2Fmarket%2FMarketplace.java)) are a subtype of PriceProvider, and offer pricing via buy/sell orders.
+Markets([Marketplace.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Ftrading%2Fmarket%2FMarketplace.java))
+are a subtype of PriceProvider, and offer pricing via buy/sell orders.
 Every major order type is supported,
 including complex types such as **FoK**(Fill or kill) and **IoC**(Immediate or cancel).
 Orders are automatically processed in regular intervals.
 See [MarketTickTask.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftasks%2Ftrading%2FMarketTickTask.java)
 
 #### Auctions
-Auctions([Auctioneer.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Ftrading%2Fauction%2FAuctioneer.java)) are a subtype of PriceProvider, and offer pricing via buyers' bids.
-Overpricing of an asset is prevented by a simple mechanism:
-Auction Houses have to buy the asset at the reserve price if there is no bidder.
+Auctions([Auctioneer.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Ftrading%2Fauction%2FAuctioneer.java))
+are a subtype of PriceProvider, and offer pricing via buyers' bids.
 Auctions are processed automatically in regular intervals.
 See [AuctionTickTask.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftasks%2Ftrading%2FAuctionTickTask.java)
 
