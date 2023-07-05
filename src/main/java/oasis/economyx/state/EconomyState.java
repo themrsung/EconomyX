@@ -1,5 +1,6 @@
 package oasis.economyx.state;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import oasis.economyx.EconomyX;
 import oasis.economyx.classes.actor.company.trading.AuctionCompany;
 import oasis.economyx.classes.actor.company.trading.ExchangeCompany;
@@ -42,14 +43,20 @@ import oasis.economyx.interfaces.vaulting.VaultBlock;
 import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.interfaces.voting.Voter;
+import oasis.economyx.types.address.Address;
 import oasis.economyx.types.asset.AssetStack;
 import oasis.economyx.types.asset.PhysicalAsset;
 import oasis.economyx.types.asset.cash.Cash;
+import oasis.economyx.types.asset.cash.CashStack;
 import oasis.economyx.types.message.Message;
 import oasis.economyx.types.offer.Offer;
+import oasis.economyx.types.portfolio.AssetPortfolio;
 import oasis.economyx.types.portfolio.Portfolio;
+import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +66,7 @@ import java.util.UUID;
  * There are getters for every interface type.
  */
 public interface EconomyState {
+
     /**
      * Gets the plugin instance.
      *
@@ -685,7 +693,7 @@ public interface EconomyState {
      *
      * @return Market hosts
      */
-    List<Exchange> getMarketHosts();
+    List<Exchange> getExchanges();
 
     /**
      * Gets all card issuers.
@@ -859,4 +867,232 @@ public interface EconomyState {
      * Attempts to save
      */
     void save();
+
+
+    static Brokerage TEMP_BROKER = new Brokerage() {
+        @Override
+        public @NonNegative float getBrokerageFeeRate() {
+            return 0;
+        }
+
+        @Override
+        public void setBrokerageFeeRate(@NonNegative float rate) {
+
+        }
+
+        @Override
+        public List<Account> getAccounts() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public void addAccount(Account account) {
+
+        }
+
+        @Override
+        public void removeAccount(Account account) {
+
+        }
+
+        @Override
+        public @NonNegative float getInterestRate() {
+            return 0;
+        }
+
+        @Override
+        public void setInterestRate(@NonNegative float rate) throws IllegalArgumentException {
+
+        }
+
+        @Override
+        public Cash getCurrency() {
+            return EconomyX.SERVER_CURRENCY;
+        }
+
+        @Override
+        public List<Person> getEmployees() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public void addEmployee(Person employee) {
+
+        }
+
+        @Override
+        public void removeEmployee(Person employee) {
+
+        }
+
+        @Override
+        public List<Person> getDirectors() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public void addDirector(Person director) {
+
+        }
+
+        @Override
+        public void removeDirector(Person director) {
+
+        }
+
+        @Override
+        public @NonNull CashStack getEmployeePay() {
+            return null;
+        }
+
+        @Override
+        public void setEmployeePay(@NonNull CashStack pay) {
+
+        }
+
+        @Override
+        public @NonNull CashStack getDirectorPay() {
+            return null;
+        }
+
+        @Override
+        public void setDirectorPay(@NonNull CashStack pay) {
+
+        }
+
+        @Override
+        public @NonNull List<Vote> getOpenVotes() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public void openVote(@NonNull Vote vote) {
+
+        }
+
+        @Override
+        public void cleanVotes() {
+
+        }
+
+        @Override
+        public List<Voter> getVoters(@NonNull EconomyState state) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public @NonNull UUID getStockId() {
+            return uuid;
+        }
+
+        @Override
+        public @NonNegative long getShareCount() {
+            return 0;
+        }
+
+        @Override
+        public void setShareCount(@NonNegative long shares) {
+
+        }
+
+        @Override
+        public void addShareCount(@NonNegative long delta) {
+
+        }
+
+        @Override
+        public void reduceShareCount(@NonNegative long delta) throws IllegalArgumentException {
+
+        }
+
+        @Override
+        public List<Actor> getShareholders(EconomyState state) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public List<Actor> getMajorityShareholders(EconomyState state) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public @Nullable Person getRepresentative() {
+            return null;
+        }
+
+        @Override
+        public void setRepresentative(@Nullable Person representative) {
+
+        }
+
+        @Override
+        public @NonNull CashStack getRepresentativePay() {
+            return null;
+        }
+
+        @Override
+        public void setRepresentativePay(@NonNull CashStack pay) {
+
+        }
+
+        private static final UUID uuid = UUID.randomUUID();
+        @Override
+        public UUID getUniqueId() {
+            return uuid;
+        }
+
+        @Override
+        public @Nullable String getName() {
+            return "TEMP_BROKERAGE";
+        }
+
+        @Override
+        public void setName(@Nullable String name) {
+
+        }
+
+        @Override
+        public Portfolio getAssets() {
+            return new AssetPortfolio();
+        }
+
+        @Override
+        public Portfolio getOutstandingCollateral(EconomyState state) {
+            return new AssetPortfolio();
+        }
+
+        @Override
+        public Portfolio getLiabilities(EconomyState state) {
+            return new AssetPortfolio();
+        }
+
+        @Override
+        public Portfolio getPayableAssets(EconomyState state) {
+            return new AssetPortfolio();
+        }
+
+        @Override
+        public Portfolio getNetAssets(EconomyState state) {
+            return new AssetPortfolio();
+        }
+
+        @Override
+        public @Nullable Address getAddress() {
+            return null;
+        }
+
+        @Override
+        public void setAddress(@Nullable Address address) {
+
+        }
+
+        @JsonProperty
+        private final Type type = Type.SECURITIES_BROKER;
+
+        @Override
+        @JsonProperty
+        public Type getType() {
+            return Type.SECURITIES_BROKER;
+        }
+    };
 }

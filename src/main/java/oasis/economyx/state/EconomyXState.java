@@ -579,7 +579,7 @@ public final class EconomyXState implements EconomyState {
     }
 
     @Override
-    public List<Exchange> getMarketHosts() {
+    public List<Exchange> getExchanges() {
         List<Exchange> list = new ArrayList<>();
 
         for (Actor a : getActors()) {
@@ -683,7 +683,7 @@ public final class EconomyXState implements EconomyState {
     public List<Marketplace> getMarketplaces() {
         List<Marketplace> markets = new ArrayList<>();
 
-        for (Exchange h : getMarketHosts()) {
+        for (Exchange h : getExchanges()) {
             markets.addAll(h.getMarkets());
         }
 
@@ -705,7 +705,7 @@ public final class EconomyXState implements EconomyState {
     public List<PriceProvider> getPriceProviders() {
         List<PriceProvider> providers = new ArrayList<>();
 
-        for (Exchange h : getMarketHosts()) {
+        for (Exchange h : getExchanges()) {
             providers.addAll(h.getMarkets());
         }
 

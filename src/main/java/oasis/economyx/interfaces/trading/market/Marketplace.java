@@ -36,9 +36,6 @@ public interface Marketplace extends PriceProvider {
             if (o.isBuy()) buyOrders.add(o);
         }
 
-        // Time ascending
-        buyOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
-
         // Agent orders / proprietary orders
         buyOrders.sort((o1, o2) -> {
             int b1 = o1.isProprietaryOrder() ? 1 : 0;
@@ -46,6 +43,9 @@ public interface Marketplace extends PriceProvider {
 
             return Integer.compare(b1, b2);
         });
+
+        // Time ascending
+        buyOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
 
         // Price descending
         buyOrders.sort((o1, o2) -> o2.getPrice().compare(o1.getPrice()));
@@ -66,9 +66,6 @@ public interface Marketplace extends PriceProvider {
             if (!o.isBuy()) sellOrders.add(o);
         }
 
-        // Time ascending
-        sellOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
-
         // Agent orders / proprietary orders
         sellOrders.sort((o1, o2) -> {
             int b1 = o1.isProprietaryOrder() ? 1 : 0;
@@ -76,6 +73,10 @@ public interface Marketplace extends PriceProvider {
 
             return Integer.compare(b1, b2);
         });
+
+
+        // Time ascending
+        sellOrders.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime()));
 
         // Price ascending
         sellOrders.sort((o1, o2) -> o1.getPrice().compare(o2.getPrice()));

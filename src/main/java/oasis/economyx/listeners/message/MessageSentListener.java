@@ -13,6 +13,13 @@ public final class MessageSentListener extends EconomyListener {
         super(EX, state);
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void TEMP_BROKERAGE_MESSAGE_CANCELLER(MessageSentEvent e) {
+        if (e.getMessage().getRecipient().getUniqueId().equals(EconomyState.TEMP_BROKER.getUniqueId())) {
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMessageSent(MessageSentEvent e) {
         if (e.isCancelled()) return;

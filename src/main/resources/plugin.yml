@@ -99,3 +99,11 @@ commands:
     description: 전쟁 명령어입니다.
     usage: /hostility
     aliases: [ hostile, hostility, hostilities, enemy, enemies, 적, 전투, 전쟁 ]
+  assetlisting:
+    description: 상장자산을 관리합니다. 거래소만 실행 가능합니다.
+    usage: /assetlisting
+    aliases: [al, alisting, assetlist, 상장, 상장자산]
+  order:
+    description: 주문을 관리합니다.
+    usage: /order
+    aliases: [o, buy, sell, trade, market, 주문, 시장, 거래, 매매]

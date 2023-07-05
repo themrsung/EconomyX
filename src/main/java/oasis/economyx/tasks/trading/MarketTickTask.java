@@ -14,7 +14,7 @@ public final class MarketTickTask extends EconomyTask {
 
     @Override
     public void run() {
-        for (Exchange h : getState().getMarketHosts()) {
+        for (Exchange h : getState().getExchanges()) {
             for (Marketplace m : h.getMarkets()) {
                 m.processOrders(h);
             }

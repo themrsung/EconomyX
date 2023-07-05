@@ -11,10 +11,7 @@ import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.join.JoinCommand;
-import oasis.economyx.commands.management.ChangeTaxRateCommand;
-import oasis.economyx.commands.management.IssueCurrencyCommand;
-import oasis.economyx.commands.management.ManageInstitutionCommand;
-import oasis.economyx.commands.management.PropertyProtectionCommand;
+import oasis.economyx.commands.management.*;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
@@ -23,6 +20,7 @@ import oasis.economyx.commands.property.PropertyAbandonCommand;
 import oasis.economyx.commands.property.PropertyClaimCommand;
 import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
+import oasis.economyx.commands.trading.order.OrderCommand;
 import oasis.economyx.commands.voting.VoteCommand;
 import oasis.economyx.commands.warfare.HostilityCommand;
 import oasis.economyx.interfaces.actor.Actor;
@@ -138,27 +136,35 @@ public final class SudoCommand extends EconomyCommand {
             }
             case PROPERTY_PROTECTION -> {
                 PropertyProtectionCommand propertyProtection = new PropertyProtectionCommand(getEX(), getState());
-                propertyProtection.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                propertyProtection.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case MANAGE_INSTITUTION -> {
                 ManageInstitutionCommand manageInstitution = new ManageInstitutionCommand(getEX(), getState());
-                manageInstitution.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                manageInstitution.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case ISSUE_CURRENCY -> {
                 IssueCurrencyCommand issueCurrency = new IssueCurrencyCommand(getEX(), getState());
-                issueCurrency.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                issueCurrency.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case CHANGE_TAX_RATE -> {
                 ChangeTaxRateCommand changeTaxRate = new ChangeTaxRateCommand(getEX(), getState());
-                changeTaxRate.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                changeTaxRate.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case JOIN -> {
                 JoinCommand join = new JoinCommand(getEX(), getState());
-                join.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                join.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
-            case HOSTILTIY -> {
+            case HOSTILITY -> {
                 HostilityCommand hostility = new HostilityCommand(getEX(), getState());
-                hostility.onEconomyCommand(player, caller, executor, argsToPass, permission);
+                hostility.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case ASSET_LISTING -> {
+                AssetListingCommand assetListing = new AssetListingCommand(getEX(), getState());
+                assetListing.onEconomyCommand(player, caller, executor, argsToPass, level);
+            }
+            case ORDER -> {
+                OrderCommand order = new OrderCommand(getEX(), getState());
+                order.onEconomyCommand(player, caller, executor, argsToPass, level);
             }
             case SUDO -> {
                 SudoCommand sudo = new SudoCommand(getEX(), getState());
@@ -275,9 +281,17 @@ public final class SudoCommand extends EconomyCommand {
                     JoinCommand join = new JoinCommand(getEX(), getState());
                     join.onEconomyComplete(list, argsToPass);
                 }
-                case HOSTILTIY -> {
+                case HOSTILITY -> {
                     HostilityCommand hostility = new HostilityCommand(getEX(), getState());
                     hostility.onEconomyComplete(list, argsToPass);
+                }
+                case ASSET_LISTING -> {
+                    AssetListingCommand assetListing = new AssetListingCommand(getEX(), getState());
+                    assetListing.onEconomyComplete(list, argsToPass);
+                }
+                case ORDER -> {
+                    OrderCommand order = new OrderCommand(getEX(), getState());
+                    order.onEconomyComplete(list, argsToPass);
                 }
                 case SUDO -> {
                     SudoCommand sudo = new SudoCommand(getEX(), getState());

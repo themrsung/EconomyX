@@ -89,7 +89,7 @@ public final class AssetOrder implements Order {
     @JsonProperty
     private Type type;
     @JsonProperty
-    private DateTime time;
+    private final DateTime time;
     @JsonProperty
     private CashStack price;
     @NonNegative
@@ -233,6 +233,8 @@ public final class AssetOrder implements Order {
                 marketFee,
                 PaymentEvent.Cause.MARKET_FEE
         ));
+
+        this.quantity -= quantity;
     }
 
     @Override

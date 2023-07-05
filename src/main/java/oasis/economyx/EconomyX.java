@@ -19,10 +19,7 @@ import oasis.economyx.commands.balance.BalanceCommand;
 import oasis.economyx.commands.create.CreateCommand;
 import oasis.economyx.commands.info.InformationCommand;
 import oasis.economyx.commands.join.JoinCommand;
-import oasis.economyx.commands.management.ChangeTaxRateCommand;
-import oasis.economyx.commands.management.IssueCurrencyCommand;
-import oasis.economyx.commands.management.ManageInstitutionCommand;
-import oasis.economyx.commands.management.PropertyProtectionCommand;
+import oasis.economyx.commands.management.*;
 import oasis.economyx.commands.message.MessageCommand;
 import oasis.economyx.commands.message.ReplyCommand;
 import oasis.economyx.commands.offer.OfferCommand;
@@ -32,6 +29,7 @@ import oasis.economyx.commands.property.PropertyClaimCommand;
 import oasis.economyx.commands.property.PropertySetProtectorCommand;
 import oasis.economyx.commands.retire.RetireCommand;
 import oasis.economyx.commands.sudo.SudoCommand;
+import oasis.economyx.commands.trading.order.OrderCommand;
 import oasis.economyx.commands.voting.VoteCommand;
 import oasis.economyx.commands.warfare.HostilityCommand;
 import oasis.economyx.interfaces.actor.person.Person;
@@ -318,6 +316,9 @@ public final class EconomyX extends JavaPlugin {
         registerCommand("issuecurrency", new IssueCurrencyCommand(this, state));
         registerCommand("changetaxrate", new ChangeTaxRateCommand(this, state));
         registerCommand("hostility", new HostilityCommand(this, state));
+        registerCommand("assetlisting", new AssetListingCommand(this, state));
+
+        registerCommand("order", new OrderCommand(this, state));
     }
 
     private void registerTask(EconomyTask task) {

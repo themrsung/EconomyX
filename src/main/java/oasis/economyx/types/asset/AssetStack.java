@@ -139,3 +139,32 @@ public interface AssetStack extends References {
         if (getAsset() instanceof References r) r.initialize(state);
     }
 }
+
+// NOTE
+// This is a personal note; Feel free to ignore.
+/*
+When creating asset types, always remember that an INSTANCE will be used at runtime.
+Try using final primitive types next time to prevent this issue entirely. (Just use a record)
+For example, when coding an asset:
+
+Asset {
+    final String symbol;
+    final long quantity;
+
+    Asset setQuantity(long q) {
+        return new Asset(symbol, q);
+    }
+}
+
+And in AssetStack:
+
+AssetStack {
+    Asset asset;
+    void setQuantity(long q) {
+        asset = asset.setQuantity(q);
+    }
+}
+
+This will probably be less efficient, but will speed up development dramatically.
+This has been bugging me this entire project.
+ */

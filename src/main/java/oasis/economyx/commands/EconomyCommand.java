@@ -8,7 +8,10 @@ import oasis.economyx.interfaces.actor.types.employment.Employer;
 import oasis.economyx.interfaces.actor.types.governance.Representable;
 import oasis.economyx.interfaces.actor.types.institutional.Institutional;
 import oasis.economyx.interfaces.actor.types.services.PropertyProtector;
+import oasis.economyx.interfaces.actor.types.trading.Exchange;
 import oasis.economyx.interfaces.actor.types.warfare.Faction;
+import oasis.economyx.interfaces.trading.market.Marketplace;
+import oasis.economyx.interfaces.trading.market.Order;
 import oasis.economyx.interfaces.voting.Candidate;
 import oasis.economyx.interfaces.voting.Vote;
 import oasis.economyx.state.EconomyState;
@@ -117,7 +120,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         ISSUE_CURRENCY,
         CHANGE_TAX_RATE,
         JOIN,
-        HOSTILTIY,
+        HOSTILITY,
+        ASSET_LISTING,
+        ORDER,
 
         // Allows recursive sudo by default
         SUDO;
@@ -147,6 +152,8 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         private static final List<String> K_CHANGE_TAX_RATE = Arrays.asList("ctr", "ctaxrate", "taxrate", "changetaxrate", "str", "staxrate", "settaxrate", "세율변경", "세율설정");
         private static final List<String> K_JOIN = Arrays.asList("j", "join", "가입");
         private static final List<String> K_HOSTILITY = Arrays.asList("hostile", "hostility", "hostilities", "enemy", "enemies", "적", "전투", "전쟁");
+        private static final List<String> K_ASSET_LISTING = Arrays.asList("listing", "assetlisting", "상장", "상장자산");
+        private static final List<String> K_ORDER = Arrays.asList("o", "order", "buy", "sell", "trade", "market", "주문", "시장", "거래", "매매");
 
         private static final List<String> K_SUDO = Arrays.asList("sudo", "as", "대신", "대변");
 
@@ -176,7 +183,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
             if (K_ISSUE_CURRENCY.contains(input.toLowerCase())) return ISSUE_CURRENCY;
             if (K_CHANGE_TAX_RATE.contains(input.toLowerCase())) return CHANGE_TAX_RATE;
             if (K_JOIN.contains(input.toLowerCase())) return JOIN;
-            if (K_HOSTILITY.contains(input.toLowerCase())) return HOSTILTIY;
+            if (K_HOSTILITY.contains(input.toLowerCase())) return HOSTILITY;
+            if (K_ASSET_LISTING.contains(input.toLowerCase())) return ASSET_LISTING;
+            if (K_ORDER.contains(input.toLowerCase())) return ORDER;
 
             if (K_SUDO.contains(input.toLowerCase())) return SUDO;
 
@@ -209,7 +218,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
                 case ISSUE_CURRENCY -> K_ISSUE_CURRENCY;
                 case CHANGE_TAX_RATE -> K_CHANGE_TAX_RATE;
                 case JOIN -> K_JOIN;
-                case HOSTILTIY -> K_HOSTILITY;
+                case HOSTILITY -> K_HOSTILITY;
+                case ASSET_LISTING -> K_ASSET_LISTING;
+                case ORDER -> K_ORDER;
 
                 case SUDO -> K_SUDO;
             };
@@ -229,6 +240,9 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static final String INSERT_NAME = "이름을 입력하세요. (띄어쓰기 불가)";
         public static final String INSERT_SHARE_COUNT = "발행할 주식수를 입력하세요. (정수)";
         public static final String INSERT_CAPITAL = "자본금을 입력하세요. (정수)";
+        public static final String INSERT_ORDER_NUMBER = "주문번호를 입력하세요. (부분입력 지원)";
+        public static final String INSERT_PRICE = "가격을 입력하세요.";
+        public static final String INSERT_QUANTITY = "수량을 입력하세요.";
         public static final String INSERT_MESSAGE = "메시지를 입력하세요.";
         public static final String ALL_DONE = "필요한 항목을 전부 입력했습니다.";
         public static final String INSERT_CURRENCY_TO_ISSUE = "발행할 통화의 이름을 입력하세요. (영문 3글자 이하, 중복 불가)";
@@ -324,6 +338,24 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
         public static String HOSTILITY_DECLARED = ChatColor.GREEN + "전쟁이 선포되었습니다.";
         public static String HOSTILITY_REVOKED = ChatColor.GREEN + "전쟁을 종료했습니다. 상대측에서도 종료해야 전쟁이 종결됩니다.";
         public static String CANNOT_DECLARE_WAR_ON_ONESELF = ChatColor.RED + "스스로에게 전쟁을 선포할 수 없습니다.";
+        public static String ACTOR_NOT_EXCHANGE = ChatColor.RED + "거래소가 아닙니다.";
+        public static String ASSET_LISTED = ChatColor.GREEN + "자산이 상장되었습니다.";
+        public static String ASSET_DELISTED = ChatColor.GREEN + "자산이 상장폐지되었습니다.";
+        public static String ASSET_NOT_LISTED = ChatColor.RED + "상장된 자산이 아닙니다.";
+        public static String ASSET_ALREADY_LISTED = ChatColor.RED + "이미 상장된 자산입니다.";
+        public static String ORDER_NOT_FOUND = ChatColor.RED + "주문을 찾을 수 없습니다.";
+        public static String ORDER_CANCELLED = ChatColor.RED + "주문이 취소되었습니다.";
+        public static String ORDER_SUBMITTED = ChatColor.GREEN + "주문이 접수되었습니다.";
+        public static String MARKET_INFORMATION(@NonNull Marketplace market, @NonNull EconomyState state) {
+            return market.getAsset().format(state) + " / 현재가: " + market.getPrice().format(state);
+        }
+        public static String ORDER_INFORMATION(@NonNull Order order, @NonNull EconomyState state) {
+            return "[주문] " +
+                    order.getMarket().getAsset().format(state) + " 가격: " +
+                    order.getPrice().format(state) + " 수량: " +
+                    NumberFormat.getIntegerInstance().format(order.getQuantity()) + " 주문번호: " +
+                    order.getUniqueId().toString().substring(0, 15);
+        }
 
         public static String HOSTILITY_INFORMATION(@NonNull Faction f1, @NonNull Faction f2) {
             return f1.getName() + " vs " + f2.getName();
@@ -604,6 +636,32 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             return null;
         }
+
+        @Nullable
+        public static Exchange searchExchange(@NonNull String input, @NonNull EconomyState state) {
+            for (Exchange e : state.getExchanges()) {
+                if (Objects.equals(e.getName(), input)) {
+                    return e;
+                }
+            }
+
+            for (Exchange e : state.getExchanges()) {
+                String name = e.getName();
+                if (name != null) {
+                    if (name.toLowerCase().contains(input.toLowerCase())) {
+                        return e;
+                    }
+                }
+            }
+
+            for (Exchange e : state.getExchanges()) {
+                if (e.getUniqueId().toString().contains(input)) {
+                    return e;
+                }
+            }
+
+            return null;
+        }
     }
 
     protected abstract static class Lists {
@@ -686,6 +744,16 @@ public abstract class EconomyCommand implements CommandExecutor, TabCompleter {
 
             for (Faction f : state.getFactions()) {
                 results.add(f.getName());
+            }
+
+            return results;
+        }
+
+        public static List<String> EXCHANGE_NAMES(@NonNull EconomyState state) {
+            List<String> results = new ArrayList<>();
+
+            for (Exchange e : state.getExchanges()) {
+                results.add(e.getName());
             }
 
             return results;

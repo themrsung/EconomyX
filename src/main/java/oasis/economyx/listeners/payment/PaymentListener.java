@@ -93,7 +93,7 @@ public final class PaymentListener extends EconomyListener {
             return;
         }
 
-        final AssetStack copy = asset.copy();
+        final AssetStack copy = asset.copy(); // Requires copy; Pointer to original will be invalidated after asset is removed from sender.
 
         sender.getAssets().remove(copy);
         recipient.getAssets().add(copy);
