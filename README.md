@@ -19,6 +19,7 @@ Commands are coded in Korean. If you wish to use another language, you will need
 - [asset](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Fasset)
 - [Offer.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Foffer%2FOffer.java)
 - [TaxType.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fevents%2Ftax%2FTaxType.java)
+- [Vote.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Fvoting%2FVote.java)
 
 
 ### Assets
