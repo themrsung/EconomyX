@@ -21,6 +21,7 @@ Commands are coded in Korean. If you wish to use another language, you will need
 - [TaxType.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Fevents%2Ftax%2FTaxType.java)
 - [Vote.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Fvoting%2FVote.java)
 
+**Code is commented in English.**
 
 ### Assets
 EconomyX assets are capable of representing any kind of ownership.
@@ -32,7 +33,6 @@ Basic asset types:
 - Cash
 - Commodity (represented by an in-game item: [Commodity.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Fasset%2Fcommodity%2FCommodity.java))
 - Stock (issued by a shared actor: [Shared.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Factor%2Ftypes%2Fownership%2FShared.java))
-- Chip (issued by a casino: [House.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Factor%2Ftypes%2Fservices%2FHouse.java))
 - Property (a claim on in-game land: [Property.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftypes%2Fasset%2Fproperty%2FProperty.java))
 
 Contracts (A right to receive an asset in the future):
@@ -81,7 +81,6 @@ The current type hierarchy is as follows. (i: interface, a: abstract class, **bo
       - **HoldingsCompany**
       - **ConstructionCompany**
       - **Bank** _Any asset can be deposited_
-      - **Casino** _Can run gambling tables_
       - **Merchant** _Can accept credit card payments_
       - **SecuritiesBroker** _Can broker orders sent to exchanges_
       - **Manufacturer**
@@ -110,11 +109,6 @@ Overpricing of an asset is prevented by a simple mechanism:
 Auction Houses have to buy the asset at the reserve price if there is no bidder.
 Auctions are processed automatically in regular intervals.
 See [AuctionTickTask.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftasks%2Ftrading%2FAuctionTickTask.java)
-
-### Casinos
-Casinos([House.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Finterfaces%2Factor%2Ftypes%2Fservices%2FHouse.java))
-can host gambling tables. These tables are fully automated and processed in regular intervals.
-See [CasinoProgressTask.java](src%2Fmain%2Fjava%2Foasis%2Feconomyx%2Ftasks%2Fgaming%2FCasinoProgressTask.java)
 
 ### Implementing EconomyX
 - Forking this repository and adding in any code you desire is recommended.
